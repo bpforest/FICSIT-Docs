@@ -1,294 +1,288 @@
-= Required Software
+= 필수 소프트웨어
 
-To get started with modding Satisfactory,
-you'll need multiple other pieces of software installed first.
-Don't worry, we'll guide you through each step
-of downloading and installing these dependencies.
+새티스팩토리 모딩을 시작하려면 먼저
+여러 소프트웨어를 설치해야 합니다.
+겁먹지 않으셔도 됩니다. 이러한 의존성을 다운로드하고
+설치하는 각 단계를 안내해 드리겠습니다.
 
-This can be a very lengthy process,
-so if you take a break,
-make a note of where you left off so it's easier to resume later.
+이 과정은 매우 길 수 있으므로
+휴식을 취할 경우 까먹지 않도록
+중단한 부분을 메모해 두는 것을 권장합니다.
 
-Beware that the modding environment can take up a lot of space
-once everything is installed and built - 30+ GB is possible.
-Keep this in mind when deciding where put all your files
-- don't keep them on a drive with very little space left. 
+모딩 환경은 모든 것이 설치되고 구축되면
+30GB 이상의 많은 공간을 차지할 수 있으므로 주의하십시오.
+파일들을 어디에 두는지 결정할 때는 공간이 거의 남지 않은
+드라이브에 보관하지 말고 이 점을 염두에 두십시오.
 
-== Before you Begin
+== 계속하기 전에
 
-Make sure you've read the starting information on the
-xref:Development/BeginnersGuide/index.adoc[Getting Started title page]
-to learn important information about how to use these docs.
+이 문서를 사용하는 방법에 대한 중요한 정보를 알아보려면
+xref:Development/BeginnersGuide/index.adoc[시작하기 제목 페이지]에서
+시작 정보를 읽었는지 확인하십시오.
 
 [IMPORTANT]
 ====
-Are you a returning Satisfactory modder who already has a past modding environment set up?
-Make sure to follow the
-xref:Development/UpdatingToNewVersions.adoc[_Updating your Mod_]
-guide before following these directions.
+기존에 모딩 환경을 설정한 새티스팩토리 모더입니까?
+이러한 안내를 따르기 전
+xref:Development/UpdatingToNewVersions.adoc[_모드 업데이트_]
+안내서를 먼저 따르십시오.
 ====
 
-== Satisfactory
+== 새티스팩토리
 
-This one should be pretty straightforward, and odds are, you've already done it.
-Simply buy, download, and install Satisfactory from the
-https://store.epicgames.com/en-US/p/satisfactory[Epic Games Store]
-or https://store.steampowered.com/app/526870/Satisfactory/[Steam].
-Launch the game at least once to ensure all files get set up correctly.
+이 과정은 꽤 간단하며, 이미 완료했을 수도 있습니다.
+https://store.epicgames.com/en-US/p/satisfactory[에픽게임즈 스토어]
+또는 https://store.steampowered.com/app/526870/Satisfactory/[스팀]에서 새티스팩토리를 구매, 다운로드 및 설치하기만 하면 됩니다.
+모든 파일이 올바르게 설정되도록 게임을 한 번 이상 실행하십시오.
 
 == Visual Studio
 
-Visit the https://visualstudio.microsoft.com/downloads/[Microsoft Visual Studio downloads page]
-and select the button for Visual Studio 2022 Community, which is free of charge.
+https://visualstudio.microsoft.com/downloads/[Microsoft Visual Studio 다운로드 페이지]를 방문하여
+무료로 제공되는 Visual Studio 2022 커뮤니티 버튼을 누르십시오.
 
-If you already have Visual Studio installed,
-you'll need to run installer again and follow the steps below to modify your existing installation.
+이미 Visual Studio가 설치되어 있는 경우, 설치 프로그램을 다시 실행하고 아래 단계를 따라 기존 설치를 수정해야 합니다.
 
-After the installer has downloaded, run it and agree to any authorization prompts you receive along the way.
-Once you are prompted to install Visual Studio 2022
-you have two options for selecting the relevant components.
+설치 프로그램을 다운로드 후 실행하고 도중에 나타나는 모든 권한 부여 프롬프트에 동의하십시오.
+Visual Studio 2022를 설치하라는 메시지가 나타나면
+관련 구성 요소를 선택할 수 있는 두 가지 옵션이 있습니다.
 
 [id="ImportConfiguration"]
-=== Option 1: Import an Installer Configuration
+=== 옵션 1: 설치 구성 가져오기
 
-If the installer took you directly to the Workflow or Component selection screen
-you'll have to use the smaller X button in the top right to close out of that prompt first.
+설치 프로그램이 작업 환경 또는 구성 요소 선택 화면으로 직접 이동한 경우,
+오른쪽 상단의 작은 X 버튼을 눌러 먼저 해당 프롬프트를 종료해야 합니다.
 
-Instead of clicking "Install" next to Visual Studio 2022,
-click the 'More' dropdown and select `Import Configuration`.
-If the option does not appear, make sure that your existing installation is not "pending"
-by allowing it to finish installing.
+Visual Studio 2022 옆에 있는 "설치"를 클릭하는 대신,
+'자세히' 드롭다운을 클릭하고 `구성 가져오기` 를 선택합니다.
+옵션이 나타나지 않으면, 설치를 완료하여
+기존 설치가 "보류 중"이 아닌지 확인하십시오.
 
 // cspell:ignore vsconfig
-Download link:{attachmentsdir}/BeginnersGuide/dependencies/SML.vsconfig[this configuration file]
-and select it in the installer's prompt.
-Next, press `Review details` and continue with the installation.
+link:{attachmentsdir}/BeginnersGuide/dependencies/SML.vsconfig[이 구성 파일]을 다운로드하고
+설치 프로그램의 프롬프트에서 선택합니다.
+그 후 `세부 정보 검토` 를 누르고 설치를 계속 진행합니다.
 
 [id="ManuallySelectComponents"]
-=== Option 2: Manually Select Components
+=== 옵션 2: 직접 구성 요소 선택
 
-From the "Workloads" tab, select:
+"워크로드" 탭에서 선택:
 
-- `Desktop & Mobile` > `Desktop development with {cpp}`
-- `Gaming` > `Game development with {cpp}`.
+- `데스크톱 및 모바일` > `{cpp}를 사용한 데스크톱 개발`
+- `게임` > `{cpp}를 사용한 게임 개발`
 
-You might have to scroll a bit to find them.
+스크롤 해야 보일 수 있습니다.
 
-Next, from the "Individual Components" tab,
-search for and select:
+다음으로 "개별 구성 요소" 탭에서
+검색 후 선택:
 
-- `MSVC v143 - VS2022 C++ x64/x86 build tools (v14.34-17.4)`
-- `.NET 6.0 Runtime (Long Term Support)`
+- `MSVC v143 - VS 2022 C++ x64/x86 빌드 도구 (v14.34-17.4)(지원 중단)`
+- `.NET 6.0 Runtime (Out of support)`
 - `.NET Framework 4.8.1 SDK`
 
-=== While Visual Studio Installs
+=== Visual Studio가 설치되는 동안
 
-Downloading and installing Visual Studio can take a while.
-We advise you to find some lizard doggos to pet while you wait,
-or work on some of the other install steps below.
+Visual Studio의 설치 및 다운로드는 오래 걸릴 수 있습니다.
+도마멍멍이와 좀 놀다 오거나
+다른 설치 단계를 작업하는 것을 추천합니다.
 
 [TIP]
 ====
-An alternative to Visual Studio which is very popular among {cpp} modders is
-https://www.jetbrains.com/lp/rider-unreal/[Rider for Unreal Engine].
-If you consider using it, make sure you still have Visual Studio and the necessary VS-{cpp} packages installed,
-as they are used by Unreal's own compiler systems,
-and make sure to use the `.sln` project model.
+{cpp} 모더들 사이에서 아주 인기있는 Visual Studio의 대체제는
+https://www.jetbrains.com/lp/rider-unreal/[Rider for Unreal Engine]입니다.
+사용을 고려하고 있다면, 언리얼의 자체 컴파일러 시스템에서 사용되는 Visual Studio와 필요한 VS-{cpp} 패키지가
+여전히 설치되어 있는지 확인하고,
+`.sln` 프로젝트 모델을 사용해야 합니다.
 ====
 
 [id="ClangToolchain"]
-== Clang Toolchain for Linux Dedicated Server Support
+== 리눅스 전용 서버 지원을 위한 클랭 툴체인
 
-Satisfactory's dedicated servers typically run on Linux.
-Cross-compiling from Windows to Linux requires
-the compatible version of Unreal Engine specific CLang Toolchain to be installed
-prior to building for Linux Dedicated Servers.
-The download link for these files can be found on the Unreal documentation page for 
-https://dev.epicgames.com/documentation/en-us/unreal-engine/linux-development-requirements-for-unreal-engine?application_version=5.3#nativetoolchain[Cross-Compiling for Linux].
+새티스팩토리 전용 서버는 일반적으로 리눅스에서 실행됩니다.
+Windows에서 리눅스로 크로스 컴파일하려면
+리눅스 전용 서버를 구축하기 전에 언리얼 엔진 전용
+클랭 툴체인의 호환되는 버전을 설치해야 합니다.
+이 파일들의 다운로드 링크는 언리얼 문서 페이지의
+https://dev.epicgames.com/documentation/en-us/unreal-engine/linux-development-requirements-for-unreal-engine?application_version=5.3#nativetoolchain[리눅스용 크로스 컴파일]에서 찾을 수 있습니다.
 
-Currently, Satisfactory uses Unreal Engine 5.3.2 with custom changes provided by Coffee Stain Studios.
-Therefore, the Cross-Compile Toolchain version required is `-v22` or `clang-16.0.6-based`.
+현재 새티스팩토리는 Coffee Stain Studios에서 제공하는 Unreal Engine 5.3.2의 맞춤형 변경을 사용하고 있습니다.
+따라서 필요한 Cross-Compile Toolchain 버전은 `-v22` 또는 `clang-16.0.6-based` 입니다.
 
-Download the correct Cross-Compile Toolchain from the link above and run it to install the relevant files.
-The default options that the installer offers are fine.
+위 링크에서 올바른 크로스 컴파일 툴체인을 다운로드하고 실행하여 관련 파일을 설치하십시오.
+설치 프로그램이 제공하는 기본 옵션은 괜찮습니다.
 
 [id="CustomEngine"]
-== Custom Unreal Engine Version
+== 맞춤형 버전 언리얼 엔진
 
-Because Satisfactory uses a modified version of Unreal Engine,
-we modders need to be using that same version as well to develop our mods.
+새티스팩토리는 언리얼 엔진의 수정된 버전을 사용하기 때문에,
+우리 모더들도 동일한 버전을 사용하여 모드를 개발해야 합니다.
 
-If you already have Unreal Engine installed for something else,
-that installation **will not work** for Satisfactory modding
-- you will still have to follow the below steps.
+이미 다른 용도로 언리얼 엔진이 설치되어 있어도
+그 설치는 새티스팩토리 모딩을 위해선 **작동하지 않을 것이니**
+아래 단계를 계속해서 따르십시오.
 
-=== Link your GitHub as an Epic Games Developer Account
+=== 깃허브를 에픽게임즈 개발자 계정으로 연결
 
-For this step, you'll need a GitHub account,
-so https://github.com/signup[sign up for one]
-if you don't already have one.
+이 단계에서는 깃허브 계정이 필요하므로
+아직 없다면 가서 하나
+https://github.com/signup[만드십시오].
 
-Once you've got a GitHub account,
-you'll need to register it with Epic Games and join the Epic Games GitHub organization to be able to download this special version.
-Directions on how to link so can be found
-https://www.unrealengine.com/en-US/ue-on-github[here].
+깃허브 계정을 확보한 후,
+이 특별 버전을 다운로드하려면 에픽게임즈에 등록하고 에픽게임즈 깃허브 조직에 가입해야 합니다.
+연결 방법에 대한 지침은 https://www.unrealengine.com/en-US/ue-on-github[여기]에서 확인할 수 있습니다.
 
-If the page says, "Sorry, the service is temporarily unavailable. Please try back later."
-try turning off any ad-blockers or content filters you may have enabled and refreshing the page without cache (Ctrl+Shift+R).
+페이지에 "죄송합니다. 서비스를 일시적으로 사용할 수 없습니다. 나중에 다시 시도해 주세요."
+라고 표시되면 활성화한 광고 차단기나 콘텐츠 필터를 끄고 캐시 없이 페이지를 새로고침 해보십시오(Ctrl+Shift+R).
 
-You will probably have to check your email and confirm from there,
-as well as making sure you're logged into your linked GitHub account when you follow the upcoming link.
+링크를 들어갈 때 이메일을 확인해야 할 뿐만 아니라
+연결된 깃허브 계정에 로그인했는지 확인해야 할 것입니다.
 
-Verify this step has worked by visiting this repository link:
-https://github.com/EpicGames/UnrealEngine/
-(or https://github.com/EpicGames-Mirror-A/UnrealEngine/ since June 2024)
-If it worked, you will see a private GitHub repository.
-If it didn't work, you'll get a 404 page, so try the other link.
-If neither link works, try again in a few minutes and make sure you didn't miss any steps in Unreal's instructions.
+연결되었는지 확인하려면
+이 https://github.com/EpicGames/UnrealEngine/[저장소 링크]
+(또는 https://github.com/EpicGames-Mirror-A/UnrealEngine/[2024년 6월 이후])를 방문하십시오.
+연결되었다면 비공개 깃허브 저장소를 보게 될 것입니다.
+404 페이지가 표시되며 작동하지 않으면 다른 링크를 시도해 보십시오.
+두 링크 모두 작동하지 않는다면 몇 분 후에 다시 시도해보고 언리얼의 지침을 놓치지 않도록 주의하십시오.
 
-Once you're sure it works, close that browser tab - we don't need any files from this repository.
-Visiting there was just to verify that you have access.
+연결을 확인했다면 이 저장소에서 파일이 필요하지 않으므로 브라우저 탭을 닫습니다.
+그곳을 방문한 것은 단지 당신이 접근할 수 있는지 확인하기 위해서였습니다.
 
 [id="UnrealLinker"]
-=== Link Your GitHub Account to Our Repository
+=== 깃허브 계정을 커뮤니티 리포지토리에 연결
 
-In addition to the changes Coffee Stain has made to Unreal Engine,
-the modding community has also applied some engine changes of our own.
+Coffee Stain이 언리얼 엔진에 적용한 변경 사항 외에도
+모딩 커뮤니티에서는 자체 엔진 변경 사항도 적용했습니다.
 
-You'll have to link your account through a tool we created
-in order to view our repository and download the required files.
-To use the tool, visit the following link: https://linker.ficsit.app/link
+저장소를 보고 필요한 파일을 다운로드하려면
+저희가 만든 도구를 통해 계정을 연결해야 합니다.
+도구를 사용하려면 이 https://linker.ficsit.app/link[링크]를 방문하십시오.
 
-After the linking process is complete you should be redirected to the engine GitHub repository.
+연결 과정이 완료되면 엔진 깃허브 저장소로 리디렉션될 것입니다.
 
-After you have access to the custom engine repository it's safe to remove the application's permissions
-by visiting your https://github.com/settings/connections/applications/bdde02a7b3318bf2b84d[GitHub settings page].
+맞춤형 엔진 저장소에 접근한 후에는 https://github.com/settings/connections/applications/bdde02a7b3318bf2b84d[깃허브 설정 페이지]에
+방문하여 애플리케이션의 권한을 제거하는 것이 안전합니다.
 
 [TIP]
 ====
-If you're curious, you can find the source code for the tool used to perform the linking process
-https://github.com/satisfactorymodding/unreal-linker[here].
+궁금하다면 연결 과정에 사용된 도구의 소스 코드를
+https://github.com/satisfactorymodding/unreal-linker[여기]에서 찾아볼 수 있습니다.
 ====
 
-=== Download the Custom Engine
+=== 맞춤형 엔진 다운로드
 
-Next, navigate to the Satisfactory Modding custom Unreal Engine GitHub project to download some installer files.
+다음으로, 새티스팩토리 모딩 커스텀 언리얼 엔진 깃허브 프로젝트로 이동하여 설치 파일을 다운로드하십시오.
 
-The below box will contain a link to the specific release that you should download.
-It's imperative that you download the correct engine for the version of the game you're modding
-or you will have to repeat a large amount of the setup process again.
+아래 상자에는 다운로드해야 하는 특정 릴리스에 대한 링크가 포함되어 있습니다.
+모딩 중인 게임 버전에 맞는 올바른 엔진을 다운로드하지 않으면
+설정 과정을 다시 많이 반복해야 합니다.
 
-// When updating the below, remember to update StaterProjectViaClone.adoc, StarterProjectViaZip.adoc, and dependencies.adoc (engine)
+// 링크 업데이트 할 때 StaterProjectViaClone.adoc, StarterProjectViaZip.adoc, dependencies.adoc 도 같이 업데이트하기 (엔진)
 ====
-This is the *latest stable* version of the docs.
-// This is the *development* version of the docs.
+이는 문서의 *최신 안정적* 버전입니다.
+// 이는 문서의 *개발* 버전입니다.
 
-Stable (Release) and Experimental are currently both the same version - 1.0 Release.
+안정적 (릴리스) 및 실험은 현재 둘 다 1.0 릴리스로 동일한 버전입니다.
 
-You should download from the *latest engine release*,
-which an be found at the top of this page:
-https://github.com/satisfactorymodding/UnrealEngine/releases
+https://github.com/satisfactorymodding/UnrealEngine/releases[릴리스 페이지]의 상단에 있는
+*최신 엔진 릴리스* 에서 다운로드하십시오.
 ====
 
-Download the following files from the release linked above:
+위의 링크된 릴리스에서 다음 파일을 다운로드하십시오:
 
 - `UnrealEngine-CSS-Editor-Win64-1.bin`
 - `UnrealEngine-CSS-Editor-Win64-2.bin`
 - `UnrealEngine-CSS-Editor-Win64.exe`
 
-Save all 3 files in the same folder,
-and make sure that their names are _exactly the same as listed above_
-otherwise the installer will not work.
+세 개의 파일을 모두 같은 폴더에 저장하고,
+그 이름이 _위에 나열된 것과 정확히 일치하는지_ 확인하십시오.
+그렇지 않으면 설치 프로그램이 작동하지 않습니다.
 
 [WARNING]
 ====
-If you see a "404 This is not the web page you are looking for" error,
-then you didn't finish linking your account.
-The page is _not_ dead, this is what GitHub displays as a security measure
-when someone tries to access a private repo and is not part of the correct organization.
+"404 This is not the web page you are looking for"라는 오류가 표시되면
+계정 연결을 완료하지 않은 것입니다.
+페이지가 _죽은 것이_ 아니며, 누군가 개인 저장소에 접근하려고 할 때
+깃허브가 보안 조치로 표시하는 내용이며 올바른 조직의 일부가 아닙니다.
 
-Check for emails from both Epic and GitHub, and be sure that you followed the above steps.
-You can verify that you've correctly joined the GitHub organization by checking for "EpicGames" on the
-https://github.com/settings/organizations[GitHub Account Organizations page].
-If your GitHub account is already listed as linked on the Epic Games page you can unlink and relink it re-send the GitHub organization invitation.
+에픽과 깃허브의 이메일을 확인하고 위의 단계를 따랐는지 확인하십시오.
+https://github.com/settings/organizations[깃허브 계정 조직 페이지]에서 "에픽게임즈"를 확인하여
+깃허브 조직에 올바르게 가입했는지 확인할 수 있습니다.
+깃허브 계정이 이미 에픽게임즈 페이지에 연결된 것으로 나열되어 있는 경우 연결을 해제하고 다시 연결을 시도해 보십시오.
 
-You also must have used the link:#UnrealLinker[Unreal Linker] tool described above to link your GitHub account to our repository.
+또한 위에서 설명한 link:#UnrealLinker[Unreal Linker] 도구를 사용하여 깃허브 계정을 저장소에 연결했어야 합니다.
 ====
 
-=== Install the Custom Engine
-
-Once all files have finished downloading,
-run the `.exe` and follow through its prompts
-to install the custom Unreal Engine version and corresponding Editor.
+=== 맞춤형 엔진 설치
+모든 파일의 다운로드를 완료하면 `.exe` 파일을 실행 후 프롬프트를 따라
+맞춤형 언리얼 엔진 버전과 해당 에디터를 설치하십시오.
 
 [IMPORTANT]
 ====
-Are you a returning Satisfactory modder who already has a past modding environment set up?
-Make sure to back up your past engine version as described in the
-xref:Development/UpdatingToNewVersions.adoc[_Updating your Mod_]
-guide before following these directions.
+기존에 모딩 환경을 설정한 새티스팩토리 모더입니까?
+이러한 안내를 따르기 전
+xref:Development/UpdatingToNewVersions.adoc[_모드 업데이트_]
+안내서를 먼저 따르십시오.
 ====
 
 [WARNING]
 ====
-If the installer asks you to select the folder with the next medium files or insert the next disc,
-select the folder that contains the `.bin` files you downloaded.
+설치 프로그램에서 다음 중간 파일이 있는 폴더를 선택하거나 다음 디스크를 삽입하라고 요청하면
+다운로드한 `.bin` 파일이 포함된 폴더를 선택하십시오.
 
-Additionally, make sure to name the downloaded files exactly as stated above,
-otherwise the installer may be unable to locate the `.bin` files.
+또한, 위에서 언급한 대로 다운로드한 파일의 이름을 정확히 지정해야 합니다.
+그렇지 않으면 설치 관리자가 `.bin` 파일을 찾을 수 없을 수도 있습니다.
 ====
 
-This install process, and opening Unreal for the first time afterwards, can take some time.
-Don't worry about opening Unreal yet, though.
-It will probably ask you to compile things you haven't properly set up yet.
+이 설치 과정과 이후 처음으로 언리얼을 여는 데는 시간이 좀 걸릴 수 있습니다.
+언리얼을 여는 것에 대해 벌써 걱정할 필요는 없습니다.
+아직 제대로 설정하지 않은 항목을 컴파일해야 할 수도 있습니다.
 
-=== Install the Visual Studio Extension (Optional)
+=== Visual Studio 확장 설치 (선택)
 
-Once the installer is done you can optionally install a Visual Studio extension shipped with the Editor.
-This extension allows you to directly open {cpp} files from the Unreal editor.
+설치가 완료되면 에디터와 함께 제공된 Visual Studio 확장 프로그램을 선택적으로 설치할 수 있습니다.
+이 확장 프로그램을 사용하면 언리얼 편집기에서 {cpp} 파일을 직접 열 수 있습니다.
 
-Navigate to where you installed the Editor, which is likely
-`C:\Program Files\Unreal Engine - CSS\`,
-then navigate to the folder `\Engine\Extras\UnrealVS\`.
-Open the sub folder for the version of Visual Studio you have installed (probably 2022)
+편집기를 설치한 위치로 이동합니다.
+`C:\Program Files\Unreal Engine - CSS\` 일 가능성이 높습니다.
+그런 다음 `\Engine\Extras\UnrealVS\` 폴더로 이동합니다.
+설치한 Visual Studio 버전 (아마 2022) 의 하위 폴더를 열고
 // cspell:ignore vsix
-and run the `.vsix` installer.
+`.vsix` 설치 프로그램을 실행합니다.
 
 == Wwise
 
-Wwise is a sound engine used by Coffee Stain,
-and in order to develop mods,
-you'll need to install and integrate Wwise with your mod project,
-even if you do not plan to modify sounds.
+Wwise는 Coffee Stain에서 사용하는 사운드 엔진으로,
+모드를 개발하려면 사운드를 수정할 계획이
+없더라도 Wwise를 설치하고
+모드 프로젝트와 통합해야 합니다.
 
-Visit https://www.audiokinetic.com/en/download/[Wwise] and click on the
-`+Download Audiokinetic Launcher+` button.
-Clicking the button will probably redirect you to a sign in page.
-Create an account if you don't have one yet, or sign in, to download and run the installer.
+https://www.audiokinetic.com/en/download/[Wwise]를 방문하여
+`+Download Audiokinetic Launcher+` 버튼을 클릭합니다.
+버튼을 클릭하면 페이지에 있는 로그인으로 리디렉션될 수 있습니다.
+아직 계정이 없는 경우 계정을 만들거나 로그인하여 설치 프로그램을 다운로드하고 실행합니다.
 
-After the installer is complete it should open the launcher for you.
-In the launcher, select the topmost `Wwise` section from the sidebar
-(note: not the Wwise Audio Lab section).
-Click the `Latest` drop-down and change it to `All`.
-Select `2022.1` from the next dropdown.
-Select version `2022.1.10.8393` from the final dropdown.
-Click `Install`.
+설치가 완료되면 런처가 열릴 것입니다.
+런처에서 사이드바에서 가장 위쪽의 `Wwise` 섹션을 선택합니다
+(참고: Wwise Audio Lab 섹션이 아님).
+`Latest` 드롭다운을 클릭하고 `All` 로 변경합니다.
+다음 드롭다운에서 `2022.1` 을 선택합니다.
+마지막 드롭다운에서 버전 `2022.1.10.8393` 을 선택합니다.
+`설치` 를 클릭합니다.
 
 [WARNING]
 ====
-Watch out - most older versions of Wwise don't have support for Unreal Engine 5, which this project needs.
-Newer versions of Wwise __might__ work,
-but they are likely to have other incompatible changes that will break the setup process.
+주의: 대부분의 이전 버전의 Wwise는 이 프로젝트에 필요한 언리얼 엔진 5를 지원하지 않습니다.
+최신 버전의 Wwise는 __작동할 수__ 있지만,
+다른 호환되지 않는 변경 사항이 있어 설정 과정이 중단될 가능성이 높습니다.
 
-**Try to download the exact Wwise version mentioned above**.
-If you don't see it,
-try any other version starting with `2022.1.10`, preferring newer versions,
-or asking for help on the Discord.
+**위에서 언급한 정확한 버전의 Wwise를 다운로드하십시오**.
+만약 보이지 않는다면,
+`2022.1.10` 으로 시작하는 다른 버전을 시도해 보거나, 최신 버전을 선호하거나,
+디스코드에서 도움을 요청하십시오.
 ====
 
-Once presented with options on what to install, select:
+설치 할 내용에 대한 옵션이 제시되면 선택하십시오:
 
-// Inline HTML to make checkmarks green
+// 체크 표시 초록색으로 만드는 Inline HTML
 // https://docs.asciidoctor.org/asciidoc/latest/pass/pass-block/
 // https://docs.asciidoctor.org/asciidoc/latest/pass/pass-macro/
 [pass]
@@ -304,28 +298,27 @@ Once presented with options on what to install, select:
 **** pass:[<span class="green-check">✔</span>] Visual Studio 2019
 **** pass:[<span class="green-check">✔</span>] Visual Studio 2022
 
-If anything is selected by default, do not uncheck them. They are required for Visual Studio to work.
+기본적으로 선택된 항목이 있으면 선택을 취소하지 마십시오. Visual Studio가 작동하려면 이러한 항목이 필요합니다.
 
-Click `Next` (you may need to scroll down to see the button).
-You don't need to add any plugins,
-so press `Select None` in the top right then `Install` in the bottom left to begin the installation process.
-Accept the terms and conditions prompts that appear along the way.
+`Next` 를 클릭합니다 (스크롤 해야 보일 수 있습니다).
+플러그인을 추가할 필요가 없으므로
+우측 상단의 `Select None` 을 누른 다음 좌측 하단에 `Install` 을 눌러 설치 과정을 시작합니다.
+도중에 표시되는 약관 프롬프트를 수락합니다.
 
-== Satisfactory Mod Manager
+== 새티스팩토리 모드 관리자
 
-xref:index.adoc#_satisfactory_mod_manager_aka_smm[Satisfactory Mod Manager]
-is a powerful tool that automatically install the correct versions of mod dependencies for you.
-Basically all end users will be using this tool to install your mods.
+xref:index.adoc#_satisfactory_mod_manager_aka_smm[새티스팩토리 모드 관리자]는
+사용자에게 적합한 모드 의존성 버전을 자동으로 설치하는 강력한 도구입니다.
+기본적으로 모든 최종 사용자는 이 도구를 사용하여 모드를 설치하게 됩니다.
 
-As a developer, you can use it to install the https://ficsit.app/mod/SML[Satisfactory Mod Loader (SML)] mod
-and install other mods to test with.
+개발자는 이를 사용하여 https://ficsit.app/mod/SML[새티스팩토리 모드 로더 (SML)] 모드를 설치하고 테스트할 다른 모드를 설치할 수 있습니다.
 
-Alternatively, once your modding environment is set up,
-you can use Alpakit to automatically build and install SML.
-This process will be explained on the next page.
+또는 모딩 환경이 설정되면 알파킷을 사용하여
+SML을 자동으로 빌드하고 설치할 수 있습니다.
+이 프로세스는 다음 페이지에서 설명합니다.
 
-== Next Steps
+== 다음 단계
 
-The last dependency to obtain is a copy of the modding Starter Project.
-Check out the xref:Development/BeginnersGuide/StarterProject/ObtainStarterProject.adoc[next section]
-for directions on how to obtain it.
+마지막으로 받아야 하는 의존성은 모딩 시작 프로젝트의 사본입니다.
+얻는 방법에 대한 지침은
+xref:Development/BeginnersGuide/StarterProject/ObtainStarterProject.adoc[다음 섹션]에서 확인하십시오.

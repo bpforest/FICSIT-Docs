@@ -1,159 +1,152 @@
-= Starter Project Structure
+= 시작 프로젝트 구조
 
-Now that you've got your modding environment set up, let's go over what files and folders came with the Starter Project.
-This page obviously can't cover every single file in the project,
-but it will describe the most important ones.
+이제 모딩 환경을 설정했으니, 시작 프로젝트와 함께 제공된 파일과 폴더에 대해 살펴보겠습니다.
+이 페이지는 프로젝트의 모든 파일을 다룰 수는 없지만,
+가장 중요한 파일들에 대해 설명할 것입니다.
 
 ====
-The goal of this page is to provide a _high-level overview_ of what you just downloaded and set up,
-teaching you about why certain files are there and what you should (or shouldn't) do with them.
+이 페이지의 목표는 방금 다운로드하고 설정한 내용에 대한 _고급 개요_를 제공하여,
+특정 파일이 왜 존재하는지, 그리고 무엇을 해야 하거나 하지 말아야 하는지를 가르치는 것입니다.
 
-There are no "directions" to follow along with on this page,
-but feel free to explore the project in the editor and file explorer as you read.
+이 페이지에서는 따라 할 "지침"이 없지만,
+읽으면서 편집기와 파일 탐색기를 탐색해 보십시오.
 ====
 
-== Content Folder
+== 콘텐츠 폴더
 
-If you open up the Unreal Editor and check out a Content Browser, there's already quite a bit of stuff in the `All` > `Content` folder.
-On disk, these files can be found in the `Content/` folder of your Project.
+언리얼 에디터를 열고 콘텐츠 브라우저를 확인하면, `All` > `콘텐츠` 폴더에 이미 많은 내용이 있습니다.
+디스크에서는 이러한 파일이 프로젝트의 `Content/` 폴더에 있습니다.
 
-However, as described in the next section,
-these files are _data-only placeholders_ that exist for reference purposes
-- editing them is not useful.
+그러나 다음 섹션에서 설명하듯이,
+이 파일들은 참조 목적으로 존재하는 _데이터 전용 자리 표시자_입니다.
+이들을 편집하는 것은 유용하지 않습니다.
 
-.Content Browser open to the `All` > `Content` folder
-image::BeginnersGuide/StarterProjectStructure/ContentFolder.png[Content Browser screenshot, align="center"]
+.`All` > `콘텐츠` 폴더를 열고 있는 콘텐츠 브라우저
+image::BeginnersGuide/StarterProjectStructure/ContentFolder.png[콘텐츠 브라우저 스크린샷, align="center"]
 
 [id="PlaceholderSystem"]
-=== The Placeholder System
+=== 자리 표시자 시스템
 
-For copyright and download size reasons, the Starter Project does not include the "real" source files for the base game's assets.
-Instead, it contains **placeholders** for those assets.
-They are essentially fake assets that are in the same place as game's the "real" content,
-with some of their data filled in, but that don't have any code that makes their "real" counterparts work.
-The SML team produces these placeholders using an automated tool when the game is updated.
+저작권 및 다운로드 크기 문제로 인해, 시작 프로젝트에는 기본 게임 애셋의 "실제" 소스 파일이 포함되어 있지 않습니다.
+대신, 해당 애셋에 대한 **자리 표시자 (Placeholders)**가 포함되어 있습니다.
+이들은 기본 게임의 "실제" 콘텐츠와 동일한 위치에 있는 가짜 애셋으로,
+일부 데이터가 채워져 있지만, "실제" 애셋이 작동하도록 하는 코드가 없습니다.
+SML 팀은 게임이 업데이트될 때 자동화 도구를 사용하여 이러한 자리 표시자를 생성합니다.
 
-These placeholders exist so you can reference base-game content from your own mods.
-For example, you can use Iron Rods as an ingredient in your own recipes
-because there is an Iron Rod placeholder asset present in the Starter Project.
+이 자리 표시자는 자신의 모드에서 기본 게임 콘텐츠를 참조할 수 있도록 존재합니다.
+예를 들어, 시작 프로젝트에 있는 철봉 자리 표시자 자산 덕분에 자신의 제작법에서 철봉을 재료로 사용할 수 있습니다.
 
-The placeholder generator makes a best effort to fill in fields with the correct values,
- but it's not always possible to do so,
-or the content is purposefully excluded.
-For example, recipe ingredients and quantities will be present,
-but models and textures are intentionally replaced with blanks.
-You could open up the placeholders to look at them in the editor,
-but they won't look much like the real game assets.
+자리 표시자 생성기는 필드를 올바른 값으로 채우기 위해 최선을 다하지만,
+항상 가능하지 않거나, 콘텐츠가 의도적으로 제외될 수 있습니다.
+예를 들어, 제작법 재료와 수량은 존재하지만, 모델과 텍스처는 의도적으로 비워져 있습니다.
+자리 표시자를 열어 에디터에서 확인할 수 있지만,
+실제 게임 애셋과는 그다지 유사하지 않을 것입니다.
 
-For example, here's a screenshot of the placeholder for Iron Rods open in the editor.
-Note the correct item name and description, but white-cube model and white-box icon.
+예를 들어, 에디터에서 열린 철봉 자리 표시자의 스크린샷입니다.
+올바른 아이템 이름과 설명이 있지만, 흰색 큐브 모델과 흰색 상자 아이콘이 있습니다.
 
-.Iron Rod Placeholder (`/Game/FactoryGame/Resource/Parts/IronRod/Desc_IronRod.Desc_IronRod`)
-image::BeginnersGuide/StarterProjectStructure/IronRodPlaceholder.png[Iron Rod placeholder editor screenshot, align="center"]
+.철봉 자리 표시자 (`/Game/FactoryGame/Resource/Parts/IronRod/Desc_IronRod.Desc_IronRod`)
+image::BeginnersGuide/StarterProjectStructure/IronRodPlaceholder.png[철봉 자리 표시자 에디터 스크린샷, align="center"]
 
 [NOTE]
 ====
-Only placeholders for the more common assets types are included in the Starter Project.
-You may need to manually create placeholders for less common assets
-like particle systems, animations, and such if you wish to reference them.
+시작 프로젝트에는 더 일반적인 애셋 유형에 대한 자리 표시자만 포함되어 있습니다.
+덜 일반적인 애셋(예: 입자 시스템, 애니메이션 등)을 참조하려면 수동으로 자리 표시자를 생성해야 할 수 있습니다.
 ====
 
-Although it is _possible_ to edit these files,
-it is _rarely productive to do so_.
-Think of modifying these files like drawing something in the margin of a textbook you own.
-You have changed what your book contains,
-but the textbook publisher is still printing the same original book without your changes.
-Editing a placeholder asset only changes what it contains for your editor,
-the game itself never gets those changes.
-For example, if you edited the iron plates recipe to produce 10 plates per operation, then packaged your mod,
-the game would be completely unaffected because the changes were never part of a mod.
-The xref:Development/BeginnersGuide/overwriting.adoc[correct process]
-for modifying existing game content will be covered later in this documentation.
+이 파일들을 _편집하는 것이 가능하긴 하지만_,
+_그게 유의미하진 않을 겁니다_.
+이 파일을 수정하는 것을 소유한 교과서의 여백에 무언가를 그리는 것과 같다고 생각해보십시오.
+당신은 책의 내용을 변경했지만,
+교과서 출판사는 여전히 당신의 변경 사항 없이 동일한 원본 책을 인쇄하고 있습니다.
+자리 표시자 애셋을 편집하는 것은 에디터에서만 해당 내용을 변경할 뿐,
+게임 자체는 이러한 변경 사항을 반영하지 않습니다.
+예를 들어, 철판 제작법을 수정하여 작업당 10개의 철판을 생산하도록 하고 모드를 패키징하더라도
+게임은 전혀 영향을 받지 않습니다. 왜냐하면 변경 사항이 모드의 일부가 아니기 때문입니다.
+기존 게임 콘텐츠를 수정하는 올바른 과정은 이 문서의 나중에 다룰 것입니다.
 
-Don't worry, your mods' files are kept totally separate from these base game placeholders,
-so it's easy to keep track of what's yours.
+걱정하지 마세요, 당신의 모드 파일은 이러한 기본 게임 자리 표시자와 완전히 분리되어 보관되므로,
+자신의 파일을 쉽게 추적할 수 있습니다.
 
 [TIP]
 ====
-It is possible to generate a personal copy of the Starter Project
-that includes "real" versions of most of these base game files,
-allowing you to preview them more accurately in-editor.
+개인적인 시작 프로젝트 복사본을 생성하여 대부분의 기본 게임 파일의 "실제" 버전을 포함할 수 있습니다.
+이를 통해 에디터에서 더 정확하게 미리 볼 수 있습니다.
 
-This process can be very involved and should only be done once you have more modding experience.
-At that future point in time, more information can be found on the
-xref:Development/ExtractGameFiles.adoc#_generating_a_complete_starter_project[Extracting Game Files page].
+이 과정은 매우 복잡할 수 있으며, 모딩 경험이 쌓인 후에만 수행해야 합니다.
+그 시점에서 더 많은 정보는
+xref:Development/ExtractGameFiles.adoc#_generating_a_complete_starter_project[게임 파일 추출 페이지]에서 찾을 수 있습니다.
 ====
 
-== Source Folder
+== 소스 폴더
 
-There are a lot of {cpp} header and source files included in your project.
-On disk, they can be found in the `Source/` folder.
-These don't appear in the Content Browser unless you have "Show {cpp} Classes" enabled in your content browser settings.
+프로젝트에는 많은 {cpp} 헤더 및 소스 파일이 포함되어 있습니다.
+디스크에서는 이 파일들이 `Source/` 폴더에 있습니다.
+이들은 콘텐츠 브라우저에서 "{cpp} 클래스 표시"가 활성화되지 않으면 나타나지 않습니다.
 
-These are **header files** (.h) and **auto-generated {cpp} stubs** (.cpp).
-Similar to the Content placeholders, they are automatically generated skeleton versions of the files in the correct locations.
+이들은 **헤더 파일** (.h) 및 **자동 생성된 {cpp} 스텁** (.cpp)입니다.
+콘텐츠 자리 표시자와 유사하게, 이들은 올바른 위치에 있는 파일의 자동 생성된 뼈대 버전입니다.
 
-These files are required for the editor to offer the correct game assets and classes for you to reference in your mods.
-Code in these files is executed by the editor in some circumstances,
-so the SML team will sometimes write custom patched versions to avoid editor crashes.
+이 파일들은 에디터가 모드에서 참조할 수 있는 올바른 게임 애셋 및 클래스를 제공하는 데 필요합니다.
+이 파일의 코드는 특정 상황에서 에디터에 의해 실행되므로,
+SML 팀은 때때로 에디터 충돌을 피하기 위해 사용자 정의 패치 버전을 작성합니다.
 
-You should not need to edit any of these files under normal circumstances.
+정상적인 상황에서는 이러한 파일을 편집할 필요가 없습니다.
 
-== Mods Folder
+== 모드 폴더
 
-A few mods are already provided with the Starter Project,
-either as code examples for you to look at, or because they are required to get the editor project working correctly.
+몇 가지 모드가 시작 프로젝트와 함께 제공되며,
+이는 코드 예제로 보거나 에디터 프로젝트가 올바르게 작동하는 데 필요합니다.
 
-They appear in the `All` > `Plugins` section of the Content Browser (for those that contain assets) and are located in the `Mods/` folder on disk.
-Later on, your own mods' folders will appear in this section as well.
+이들은 콘텐츠 브라우저의 `All` > `Plugins` 섹션에 나타나며(애셋이 포함된 경우),
+디스크의 `Mods/` 폴더에 위치합니다.
+나중에 자신의 모드 폴더도 이 섹션에 나타날 것입니다.
 
-You might need to click on `View Options` -> `Show Plugin Content`
-in a Content Browser to see the `Plugins` section in the Unreal Editor.
-image:BeginnersGuide/simpleMod/ShowPluginContentInViewer.png[Show Plugin Content in Viewer]
+언리얼 에디터에서 콘텐츠 브라우저의 `세팅` -> `플러그인 콘텐츠 표시`를 클릭해야
+`Plugins` 섹션을 볼 수 있습니다.
+image:BeginnersGuide/simpleMod/ShowPluginContentInViewer.png[뷰어에서 플러그인 콘텐츠 표시]
 
 * xref:Development/ModLoader/AccessTransformers.adoc[Access Transformers]
-** Editor-only mod to enable other mods to access extra information without modifying the auto-generated C++ stubs.
+** 다른 모드가 자동 생성된 C++ 스텁을 수정하지 않고도 추가 정보를 접근할 수 있도록 하는 에디터 전용 모드입니다.
 * Alpakit
-** Editor-only mod that assists with packaging mods for testing and distribution.
+** 모드를 테스트 및 배포하기 위해 패키징하는 데 도움을 주는 에디터 전용 모드입니다.
 * ExampleMod
-** Mod containing example implementations of various modding features.
-   You can build it and try them out yourself!
-   Keep an eye out for comments that explain what things do or why certain choices were made.
-   Some of the examples present in this mod are not explained on this site yet.
+** 다양한 모딩 기능의 예제 구현을 포함하는 모드입니다.
+   이를 빌드하고 직접 시도해 볼 수 있습니다!
+   무엇이 어떻게 작동하는지 또는 특정 선택이 왜 이루어졌는지 설명하는 주석을 주의 깊게 살펴보십시오.
+   이 모드에 있는 몇 가지 예제는 아직 이 사이트에서 설명되지 않았습니다.
 * SML
-** The full implementation of the Satisfactory Mod Loader mod.
+** 새티스팩토리 모드 로더 모드의 전체 구현입니다.
 * xref:Development/EditorTools/SMLEditor/SMLEditor.adoc[SMLEditor]
-** Editor-only mod that provides helpful utilities to mod creators, such as a mod configuration screen preview and a Research Tree Editor.
+** 모드 제작자를 위한 유용한 유틸리티를 제공하는 에디터 전용 모드로, 모드 구성 화면 미리보기 및 연구 트리 편집기를 포함합니다.
 
-You should not need to edit any of the provided mod files under normal circumstances.
+정상적인 상황에서는 제공된 모드 파일을 편집할 필요가 없습니다.
 
-== Plugins Folder
+== 플러그인 폴더
 
-This folder contains base-game project plugins.
-Depending on the plugin, they may be stubs or a full implementation that has been shared with us by CSS.
-Although mods are technically also Unreal plugins, we keep all mods out of this folder for clarity and organization purposes.
+이 폴더에는 기본 게임 프로젝트 플러그인이 포함되어 있습니다.
+플러그인에 따라, 이들은 스텁이거나 CSS에서 공유된 전체 구현일 수 있습니다.
+모드는 기술적으로 언리얼 플러그인이지만, 명확성과 조직을 위해 모든 모드를 이 폴더에서 제외합니다.
 
-You should not need to edit these files under normal circumstances.
+정상적인 상황에서는 이러한 파일을 편집할 필요가 없습니다.
 
-== Config Folder
+== 구성 폴더
 
-This folder contains engine configuration files.
-Its contents are automatically generated from the base game's configuration and project files.
-On rare occasions the SML team will manually edit these files to silence irrelevant warnings or prevent editor-time crashes.
+이 폴더에는 엔진 구성 파일이 포함되어 있습니다.
+그 내용은 기본 게임의 구성 및 프로젝트 파일에서 자동으로 생성됩니다.
+드물게 SML 팀이 에디터 시간 충돌을 방지하거나 관련 없는 경고를 무시하기 위해 수동으로 이 파일을 편집합니다.
 
-You should not need to edit these files under normal circumstances.
+정상적인 상황에서는 이러한 파일을 편집할 필요가 없습니다.
 
-== Ready to Rumble
+== 준비 완료
 
 [IMPORTANT]
 ====
-Remember, editing the project's placeholder files makes no changes to the game's actual content or behaviors!
+프로젝트의 자리 표시자 파일을 편집해도 게임의 실제 콘텐츠나 동작에 변경이 없습니다!
 ====
 
-You should now have a better understanding of what files are included in the Starter Project
-and how they assist with developing your mod.
+이제 시작 프로젝트에 포함된 파일이 무엇인지,
+그리고 그것들이 모드 개발에 어떻게 도움이 되는지에 대한 더 나은 이해를 갖게 되었습니다.
 
-In the xref:Development/BeginnersGuide/SimpleMod/index.adoc[next section],
-we'll walk through creating the base Plugin for your mod,
-then run through a couple common modding examples
-to demonstrate how to get started making your own mods.
+xref:Development/BeginnersGuide/SimpleMod/index.adoc[다음 섹션]에서는 모드를 위한 기본 플러그인을 생성하는 과정을 안내한 후,
+자신의 모드를 만드는 방법을 보여주기 위해 몇 가지 일반적인 모딩 예제를 살펴보겠습니다.

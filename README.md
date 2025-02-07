@@ -1,157 +1,155 @@
-# Satisfactory Modding Documentation
+! 공식이 아닙니다 !
+# 새티스팩토리 모딩 문서
 
-Documentation for Satisfactory Mod Loader (SML) and Satisfactory modding.
-Master branch is live on <https://docs.ficsit.app/>.
-Please contact us on the
-[Satisfactory Modding Discord Server](https://discord.ficsit.app)
-with questions and suggestions, or contribute via PRs (see below).
+새티스팩토리 모드 로더 (SML) 및 새티스팩토리 모딩에 대한 문서입니다.
+마스터 브랜치는 <https://docs.ficsit.app/>에서 라이브입니다.
+질문이나 제안이 있으시면
+[새티스팩토리 모딩 디스코드 서버](https://discord.ficsit.app)에서 저희에게 연락해 주시거나, 아래를 참조하여 PR을 통해 기여해 주십시오.
 
-We attempt to use [Semantic Line Break format](https://sembr.org/) in the source files,
-but this is only loosely followed.
+우리는 소스 파일에서 [Semantic Line Break 형식](https://sembr.org/)을 사용하려고 시도하지만,
+이는 느슨하게 준수됩니다.
 
-An overview of Asciidoc syntax can be found [here](https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/).
+Asciidoc 구문에 대한 개요는 [여기](https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/)에서 확인할 수 있습니다.
 
-Pull requests should target the `Dev` branch.
+풀 리퀘스트는 `Dev` 브랜치를 대상으로 해야 합니다.
 
-Before you submit changes,
-you should probably follow the Development Setup directions below
-to verify that the pages are displaying as expected.
+변경 사항을 제출하기 전에,
+아래의 개발 설정 지침을 따르는 것이 좋습니다
+페이지가 예상대로 표시되는지 확인하기 위해서입니다.
 
-Documentation for other mods is also served through the same site.
-If you have written documentation for your mod and would like it to be added, contact us.
+다른 모드에 대한 문서도 동일한 사이트를 통해 제공됩니다.
+모드에 대한 문서를 작성하셨다면 추가되기를 원하시면 저희에게 연락해 주십시오.
 
-## Contributing
+## 기여하기
 
-We greatly appreciate any contributions you may have to the docs.
-Even if you only have the rough outline of a page done,
-feel free to contact us on the Discord and we'll help you turn it into a full page.
+문서에 대한 기여는 매우 감사하게 생각합니다.
+페이지의 대략적인 개요만 있더라도,
+디스코드에서 저희에게 연락해 주시면 전체 페이지로 발전시킬 수 있도록 도와드리겠습니다.
 
-The easiest way to contribute is to make a fork of the repo,
-then use a Pull Request targeting the `Dev` branch for us to review the changes.
+기여하는 가장 쉬운 방법은 레포지토리를 포크한 다음,
+변경 사항을 검토할 수 있도록 `Dev` 브랜치를 대상으로 하는 풀 리퀘스트를 사용하는 것입니다.
 
-Send us a message on the Discord if we don't review it within a day or two.
+하루 이틀 내에 검토하지 않으면 디스코드에서 저희에게 메시지를 보내 주십시오.
 
-## Development Setup
+## 개발 설정
 
-If you already have Visual Studio Code and Docker installed,
-we offer a [devcontainer](https://code.visualstudio.com/docs/devcontainers/containers)
-for the repository that will be auto-detected when you open the folder in VSCode.
-Check out the [Devcontainer](#devcontainer) heading for setup directions.
+Visual Studio Code와 Docker가 이미 설치되어 있다면,
+저희는 저장소에 대한 [devcontainer](https://code.visualstudio.com/docs/devcontainers/containers)를 제공하며,
+VSCode에서 폴더를 열 때 자동으로 감지됩니다.
+설정 지침은 [Devcontainer](#devcontainer) 제목을 확인하십시오.
 
-This also means that Github Codespaces is a pretty convenient way to test out other people's PRs.
+이것은 Github Codespaces가 다른 사람의 PR을 테스트하는 매우 편리한 방법이라는 것을 의미합니다.
 
-If you don't, that's totally fine, check out the [Manual](#manual) heading to install the dependencies on your computer.
+설치하지 않았다면, 괜찮습니다. [Manual](#manual) 제목을 확인하여 컴퓨터에 의존성을 설치하십시오.
 
 ### Devcontainer
 
-Make sure you have [the Remote Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
-and [Docker Desktop](https://www.docker.com/products/docker-desktop) installed.
+[Remote Containers 확장](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)과
+[Docker Desktop](https://www.docker.com/products/docker-desktop)을 설치했는지 확인하십시오.
 
-Remember to [turn off Docker starting with system startup](https://superuser.com/a/1386584)
-and to [close Docker after you're done using it](https://www.reddit.com/r/docker/comments/ol11ve/how_to_completely_stop_docker_desktop/).
-It reserves a lot of system memory even when not actively in use.
+시스템 시작 시 Docker가 시작되지 않도록 [끄는 것을 잊지 마십시오](https://superuser.com/a/1386584).
+그리고 사용이 끝난 후 Docker를 [닫는 것을 잊지 마십시오](https://www.reddit.com/r/docker/comments/ol11ve/how_to_completely_stop_docker_desktop/).
+활동적으로 사용하지 않을 때도 많은 시스템 메모리를 예약합니다.
 
-If it doesn't automatically prompt you, press Ctrl+Shift+P to open the Command Palette,
-then type "Reopen in Container" and select the option that appears.
+자동으로 프롬프트가 나타나지 않으면 Ctrl+Shift+P를 눌러 명령 팔레트를 열고,
+"컨테이너에서 다시 열기"를 입력한 후 나타나는 옵션을 선택하십시오.
 
-The container will automatically serve the built content upon opening for preview in your browser or within VSCode,
-as well as a file watcher to automatically rebuild the preview upon detecting changes.
-You will still have to manually refresh your browser, though...
+컨테이너는 브라우저 또는 VSCode 내에서 미리보기를 위해 열 때 자동으로 빌드된 콘텐츠를 제공하며,
+변경 사항을 감지할 때 미리보기를 자동으로 다시 빌드하는 파일 감시기도 포함되어 있습니다.
+하지만 여전히 브라우저를 수동으로 새로 고쳐야 합니다...
 
-If you are switching between container and local dev you may have to delete the `node_modules` and/or `.pnpm_store` folder.
+컨테이너와 로컬 개발 간에 전환하는 경우 `node_modules` 및/또는 `.pnpm_store` 폴더를 삭제해야 할 수도 있습니다.
 
-### Manual
+### 수동
 
-If you don't want to use the preconfigured devcontainer (or Codespaces), follow the directions below.
+미리 구성된 devcontainer(또는 Codespaces)를 사용하고 싶지 않다면, 아래 지침을 따르십시오.
 
-Although you can edit the `.adoc` files with just about any editor out there,
-we suggest either Visual Studio Code (with the
-[Asciidoc](https://marketplace.visualstudio.com/items?itemName=asciidoctor.asciidoctor-vscode)
-and [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker) plugins)
-or IntelliJ.
+`.adoc` 파일은 거의 모든 편집기로 편집할 수 있지만,
+Visual Studio Code(와 [Asciidoc](https://marketplace.visualstudio.com/items?itemName=asciidoctor.asciidoctor-vscode) 및 [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker) 플러그인) 또는 IntelliJ를 사용하는 것을 권장합니다.
 
-In order to see what the pages will look like on the live site before being deployed,
-follow the below directions.
+페이지가 배포되기 전에 라이브 사이트에서 어떻게 보일지 확인하려면,
+아래 지침을 따르십시오.
 
-#### Installing
+#### 설치
 
-1. Install [Node.js](https://nodejs.org/en/download/) (the CI uses 16 but newer should be fine)
-   and [pnpm Package Manager](https://pnpm.io/) through your preferred method.
+1. [Node.js](https://nodejs.org/en/download/) (CI는 16을 사용하지만 최신 버전도 괜찮음) 및
+   [pnpm 패키지 관리자](https://pnpm.io/)를 선호하는 방법으로 설치하십시오.
 
-2. Clone the repository
+2. 레포지토리를 클론하십시오.
 
-3. Use pnpm to install dependencies:
+3. pnpm을 사용하여 종속성을 설치하십시오:
 
     ```bash
     pnpm install
     ```
 
-4. If you have VSCode, open the folder as a workspace
-   and use the Command Palette to run the Task: `Launch hot reloading development server`.
-   Otherwise, follow the building and previewing directions below.
+4. VSCode가 있다면, 폴더를 작업 공간으로 열고
+   명령 팔레트를 사용하여 작업: `Launch hot reloading development server` 를 실행하십시오.
+   그렇지 않다면, 아래의 빌드 및 미리보기 지침을 따르십시오.
 
-#### Building
+#### 빌드
 
-To set up a development watch server that will automatically rebuild the SML docs when you make changes:
+변경 사항을 만들 때 SML 문서를 자동으로 다시 빌드하는 개발 감시 서버를 설정하려면:
 
 ```bash
 pnpm run watch:dev
 ```
 
-Alternatively, to build the docs for **SML and all other hosted mods** (slow):
+대안으로, **SML 및 모든 다른 호스팅된 모드**에 대한 문서를 빌드하려면 (느림):
 
 ```bash
 pnpm run build
 ```
 
-Alternatively, to build the docs for **just SML** (much faster than all mods):
+대안으로, **오직 SML**에 대한 문서를 빌드하려면 (모든 모드보다 훨씬 빠름):
 
 ```bash
 pnpm run build:dev
 ```
 
-The output HTML files for both commands can be found in `\build\site`.
+두 명령의 출력 HTML 파일은 `\build\site` 에서 찾을 수 있습니다.
 
-#### Previewing
+#### 미리보기
 
-To preview the content, you can open the output HTML files in your browser, ex. `build/site/satisfactory-modding/latest/index.html`
+내용을 미리 보려면, 브라우저에서 출력 HTML 파일을 열 수 있습니다. 예: `build/site/satisfactory-modding/latest/index.html`
 
-You can also run `pnpm run serve` which will start a local webserver.
-Your terminal will print usable addresses for the webserver.
+또한 `pnpm run serve` 를 실행하여 로컬 웹 서버를 시작할 수 있습니다.
+터미널에서 웹 서버에 사용할 수 있는 주소를 출력합니다.
 
-#### Link Checker
+#### 링크 검사기
 
-The CI will also run the [lychee link checker](https://github.com/lycheeverse/lychee/tree/master) to check for broken links.
-Its reports can be found in the the [Actions tab](https://github.com/satisfactorymodding/Documentation/actions) of the repo.
-You can optionally install the tool yourself if you want to run it locally by following the lychee documentation.
+CI는 또한 [lychee 링크 검사기](https://github.com/lycheeverse/lychee/tree/master)를 실행하여 끊어진 링크를 확인합니다.
+보고서는 레포지토리의 [Actions 탭](https://github.com/satisfactorymodding/Documentation/actions)에서 확인할 수 있습니다.
+로컬에서 실행하고 싶다면 lychee 문서를 따라 도구를 설치할 수 있습니다.
 
-## Adding Docs for Another Mod
+## 다른 모드에 대한 문서 추가
 
-If you'd like, you can write docs for other mods and have them be included on the live site.
+다른 모드에 대한 문서를 작성하고 라이브 사이트에 포함되기를 원하시면, 그렇게 하실 수 있습니다.
 
-Mods that have done this include FicsIt-Networks, Refined Power, Ficsit Remote Monitoring, TweakIt, and more.
+이렇게 한 모드에는 FicsIt-Networks, Refined Power, Ficsit Remote Monitoring, TweakIt 등이 포함됩니다.
 
-Contact us for more details if you'd like to set this up. The general steps are below:
+이 설정을 원하시면 저희에게 연락해 주십시오. 일반적인 단계는 아래와 같습니다:
 
-- Create a repository with your documentation files
-- [Enable github actions](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository) on your repository
-- Edit the `antora-playbook-ci.yml` and `antora-playbook.yml` files to add your repo as a Source. Follow the format of the other mods already listed there
-- Make sure you can build this docs repo locally with your site added as a source. Run the `build` task defined in `package.json` to do this. Consider temporarily commenting out other mods' repos to speed this up.
-- If you want the deployed copy to automatically update when you push changes to your repo, you should set up an Actions file similar to [this one](.github/workflows/SubModPush.yml.example) and contact us on the Discord to get a token to [add to your secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository) so the Actions file can function.
-- PR the `Dev` branch with your changes to the playbook files.
+- 문서 파일이 포함된 저장소를 생성하십시오.
+- 저장소에서 [github actions](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository)를 활성화하십시오.
+- 이미 나열된 다른 모드의 형식을 따라 `antora-playbook-ci.yml` 및 `antora-playbook.yml` 파일을 편집하여 저장소를 소스로 추가하십시오.
+- 사이트를 소스로 추가하여 이 문서 저장소를 로컬에서 빌드할 수 있는지 확인하십시오. 이를 위해 `package.json` 에 정의된 `build` 작업을 실행하십시오. 속도를 높이기 위해 다른 모드의 저장소를 일시적으로 주석 처리하는 것을 고려하십시오.
+- 배포된 복사본이 레포에 변경 사항을 푸시할 때 자동으로 업데이트되기를 원하시면, [이 파일](.github/workflows/SubModPush.yml.example)과 유사한 Actions 파일을 설정하고, 디스코드로 저희에게 연락하여 [비밀에 추가할 토큰](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository)을 요청하십시오.
+- 플레이북 파일에 대한 변경 사항으로 `Dev` 브랜치에 PR을 제출하십시오.
 
-Sub-mod documentation sites are currently still subject to the Lychee link checker run by our CI,
-so if you have broken links in your docs, the build will fail and your site will not be updated.
-You can check the [Actions](https://github.com/satisfactorymodding/Documentation/actions) for this repo to see if/why they failed. Mod docs updates are started by the SatisfactoryModdingBot github user under the action name `mod-docs-update`.
+서브 모드 문서 사이트는 현재 CI에 의해 실행되는 Lychee 링크 검사기의 적용을 받으므로,
+문서에 끊어진 링크가 있는 경우 빌드가 실패하고 사이트가 업데이트되지 않습니다.
+이 레포의 [Actions](https://github.com/satisfactorymodding/Documentation/actions)를 확인하여 실패 이유를 확인할 수 있습니다. 모드 문서 업데이트는 SatisfactoryModdingBot github 사용자에 의해 `mod-docs-update` 라는 작업 이름으로 시작됩니다.
 
-## Adding new version branches
+## 새로운 버전 브랜치 추가
 
-We typically create new version branches once a new major or minor version of SML has released.
-The goal is to provide a point of reference in the docs for working with older versions.
+새로운 주요 또는 부 버전의 SML이 출시되면 일반적으로 새로운 버전 브랜치를 생성합니다.
+목표는 이전 버전으로 작업할 수 있는 문서의 참조 지점을 제공하는 것입니다.
 
-In order to add a new frozen version branch of the docs:
+문서의 새로운 고정 버전 브랜치를 추가하려면:
 
-1. Create a branch on a commit following the name format `vX.X.X`, for example, `v3.1.1`
-2. Add the branch name to the branches list in `antora-playbook.yml` and `antora-playbook-ci.yml`
-3. Edit `antora.yml` on the branch to have a `version` that matches the branch name (instead of `latest`). [Here's](https://gitlab.com/antora/antora/-/issues/496) an explanation of why that needs to happen.
-4. You're good to go - CI will take care of deploying it for you.
+1. `vX.X.X` 형식의 이름을 따르는 커밋에서 브랜치를 생성하십시오. 예: `v3.1.1`
+2. `antora-playbook.yml` 및 `antora-playbook-ci.yml` 의 브랜치 목록에 브랜치 이름을 추가하십시오.
+3. 브랜치에서 `antora.yml` 을 편집하여 브랜치 이름과 일치하는 `version` 을 설정하십시오 (대신 `latest`).
+   왜 그래야 하는지는 [여기](https://gitlab.com/antora/antora/-/issues/496)에 설명되어 있습니다.
+4. 준비 완료 - CI가 배포를 처리합니다.

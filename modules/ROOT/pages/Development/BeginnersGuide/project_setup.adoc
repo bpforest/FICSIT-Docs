@@ -1,114 +1,113 @@
-= Project Setup
+= 프로젝트 설정
 
-Now that you've installed all of the prerequisite software
-and got a copy of the starter project,
-it's time to start setting the project up.
-
-[IMPORTANT]
-====
-Are you a returning Satisfactory modder who already has a past modding environment set up?
-Make sure to follow the
-xref:Development/UpdatingToNewVersions.adoc[_Updating your Mod_]
-guide before following these directions.
-====
-
-== Setting up Wwise
-
-Wwise is an audio and sound system used by Satisfactory,
-and setting it up is required to get your modding environment working.
-Setting up Wwise can be confusing, but we'll walk through the steps here.
-Be sure to follow _only_ the steps listed here
-- Wwise will often present you with lots of additional messages
-that looks like errors or warnings but can be safely ignored.
+이제 모든 필수 소프트웨어를 설치하고
+시작 프로젝트의 사본을 받았으니
+프로젝트 설정을 시작할 차례입니다.
 
 [IMPORTANT]
 ====
-If part of the setup process fails for you, it is most likely this step.
-If you have errors completing the setup process,
-come back to here and make sure you followed these steps correctly.
+기존에 모딩 환경을 설정한 새티스팩토리 모더입니까?
+이러한 안내를 따르기 전
+xref:Development/UpdatingToNewVersions.adoc[_모드 업데이트_]
+안내서를 먼저 따르십시오.
 ====
 
-Start the Wwise launcher that you installed earlier and update the launcher if prompted.
-Make sure you have signed in to the launcher. 
-It can give ambiguous error messages when trying to integrate Wwise if you aren't signed in.
+== Wwise 설정
 
-Next, open the `Unreal Engine` tab in the sidebar.
-Do _not_ click any of the update buttons on the Unreal Engine Wwise tab.
-Satisfactory requires a specific version of Wwise to work,
-and updating can prevent your mod from working correctly.
+Wise는 새티스팩토리에서 사용하는 오디오 및 사운드 시스템으로,
+모딩 환경을 작동시키기 위해 설정이 필요합니다.
+Wwise를 설정하는 것은 혼란스러울 수 있지만, 여기서 차근차근 살펴보겠습니다.
+_여기에 나열된_ 단계들만 따르십시오.
+Wwise는 종종 헷갈릴 수 있는 오류나 경고 메시지를 제공하지만 안전하게 무시할 수 있습니다.
 
-Click on the `Open Other` button next to the "RECENT UNREAL ENGINE PROJECTS" header
-and select the `FactoryGame.uproject` file contained in your Starter Project folder.
-Your project should now appear in the Wwise launcher.
-In case you have multiple projects listed,
-click the triangle button to expand the details
-and ensure the "Unreal Engine project path" matches the path to your project.
+[IMPORTANT]
+====
+이 단계에서 설정 과정 중 실수할 확률이 높습니다.
+설정 과정을 완료하는 데 오류가 발생하면
+여기로 돌아가서 이 단계를 올바르게 따랐는지 확인하십시오.
+====
 
-Click on the `Integrate Wwise into Project...` button.
+이전에 설치한 Wwise 런처를 시작하고 메시지가 나타나면 런처를 업데이트합니다.
+런처에 로그인했는지 확인합니다.
+로그인하지 않은 경우 Wwise를 통합하려고 할 때 모호한 오류 메시지가 표시될 수 있습니다.
 
-Change the "Integration Version" drop-down from `Latest` to `All` otherwise Wwise will not show the version you care about.
-Then use the "Major" and "Version" dropdowns to select the same version you installed earlier (likely `2022.1.10.8393`). 
-The version number may have additional numbers on the end of it e.g.
-`2022.1.10.8393.2898` but as long as it starts with `2022.1.10.8393` it should work.
+다음으로 사이드바에서 `Unreal Engine` 탭을 엽니다.
+언리얼 엔진 Wwise 탭의 어느 업데이트 버튼도 _클릭하지 마십시오_.
+새티스팩토리의 경우 특정 버전의 Wwise를 통해 작동하며,
+업데이트로 인해 모드가 제대로 작동하지 않을 수 있습니다.
 
-If version `2022.1.10.8393` does not appear even after you have selected `All`,
-edit the `.uproject` file in a text editor to be sure that `EngineAssociation`
-is set to `5.3.2-CSS`.
+"RECENT UNREAL ENGINE PROJECTS" 헤더 옆에 있는 `Open other` 버튼을 클릭하고
+시작 프로젝트 폴더에 포함된 `FactoryGame.upproject` 파일을 선택합니다.
+이제 프로젝트가 Wwise 런처에 표시될 것입니다.
+여러 프로젝트가 나열된 경우
+삼각형 버튼을 클릭하여 세부 정보를 확장하고
+"Unreal Engine project path"가 프로젝트 경로와 일치하는지 확인하십시오.
 
-If this version _still_ doesn't show up, contact us for help on the Discord.
+`Integrate Wwise into Project...` 버튼을 클릭합니다.
 
-If you missed a required component as part of the Wwise installation,
-it may show a yellow warning box indicating what's missing
-as well as a button to "Modify" the installation.
-Go ahead and follow what it says for this step only.
-If Wwise warns you that it could not find an installation in a red warning box,
-that means you have not selected the correct version as stated above.
-If you see a blue box offering both "Modify" and "Add Plug-in",
-that means it's configured correctly,
-so continue to the next step.
+"Integration Version" 드롭다운을 `Latest` 에서 `All` 로 변경하지 않으면 Wwise에서 원하는 버전이 표시되지 않을 것입니다.
+그런 다음 "Major" 및 "Version" 드롭다운을 사용하여 이전에 설치한 버전과 동일한 버전(아마도 `2022.1.10.8393`)을 선택합니다.
+버전 번호는 `2022.1.10.8393.2898` 과 같이 끝에 추가 숫자가 있을 수 있지만,
+`2022.1.10.8393` 으로 시작하는 한 작동할 수 있습니다.
 
-Under "Wwise Project Path", click the little triangle dropdown on the right
-and choose `New project` to clear the path.
+`All` 을 선택한 후에도 버전 `2022.1.10.8393` 이 나타나지 않으면
+텍스트 편집기에서 `.upproject` 파일을 열어
+`EngineAssociation` 이 `5.3.2-CSS` 로 설정되어 있는지 확인하십시오.
 
-If everything worked according to plan,
-you should now be able to click on the blue `Integrate` button.
-Do so, and agree to the terms to start the process.
+이 버전이 _아직_ 나타나지 않으면 디스코드에서 도움을 위해 저희에게 연락해 주십시오.
 
-That's it! If Wwise shows "Operation completed successfully,"
-you have integrated Wwise into your project.
-You can close the Wwise launcher.
+Wwise 설치의 일부로 필요한 구성 요소를 놓쳤을 경우,
+누락된 내용을 나타내는 노란색 경고 상자와
+설치를 "수정"하는 버튼이 표시될 수 있습니다.
+이 단계에서만 해당 내용을 따르십시오.
+Wwise가 빨간색 경고 상자에서 설치를 찾을 수 없다고 경고하면
+위에서 언급한 대로 올바른 버전을 선택하지 않았다는 뜻입니다.
+"Modify"과 "Add Plug-in"이 포함된 파란색 상자가 표시되면
+올바르게 구성되었음을 의미하므로
+다음 단계를 진행하십시오.
 
-_Note: the below video demo may select a version that does not match what is written above._
-_Please use the version mentioned in the text above._
+"Wwise Project Path" 아래에서 오른쪽의 작은 삼각형 드롭다운을 클릭하고
+`New project` 를 선택하여 경로를 지웁니다.
 
-.Wwise integration process
+모든 것이 계획대로 작동했다면
+이제 파란색 통합 버튼을 클릭할 수 있습니다.
+그렇게 하고 약관에 동의하여 과정을 시작할 수 있습니다.
+
+좋습니다! Wwise에 "Operation completed successfully"라고 표시되면,
+Wwise를 프로젝트에 통합한 것입니다.
+이제 Wwise 런처를 닫아도 됩니다.
+
+_참고: 아래 시범 영상은 위에 작성된 내용과 일치하지 않는 버전을 선택할 수 있습니다._
+_위 문장에 언급된 버전을 사용해 주십시오._
+
+.Wwise 통합 과정
 image::BeginnersGuide/simpleMod/Wwise_integrate.gif[image]
 
 [TIP]
 ====
-If you encounter a checksum error during Wwise integration,
-installing another Wwise version similar in version number should fix the problem.
+Wwise 통합 도중 checksum 오류가 발생했다면
+버전 번호가 비슷한 다른 Wwise 버전을 설치하면 문제가 해결될 것입니다.
 ====
 
-== Generate Visual Studio Files
+== Visual Studio 파일 생성
 
-Next, you'll need to generate the remaining files for the project
-with Unreal Engine's "Generate Visual Studio Project Files" tool. 
+다음으로, 언리얼 엔진의 "Visual Studio 프로젝트 파일 생성" 도구를 통해
+프로젝트의 나머지 파일을 생성해야 합니다.
 
-In windows explorer, right-click on the `.uproject` file in your Starter Project folder and select `Generate Visual Studio project files`.
-Windows 11 might have buried it within the "more options" submenu.
-If this option appears for you and runs without error, skip down to the link:#_project_compilation[next section].
-If this option errors, check out the link:#GenerateVSFiles_Troubleshooting[Troubleshooting section below].
+Windows 탐색기에서 시작 프로젝트 폴더의 `.upproject` 파일을 우클릭 후 Generate Visual Studio project files를 선택합니다.
+Windows 11에서는 "더 많은 옵션"을 통해 세부 메뉴를 펼쳐야 할 수 있습니다.
+이 옵션이 표시되고 오류 없이 실행되는 경우 link:#_프로젝트_컴파일[다음 섹션]으로 건너뛸 수 있습니다.
+이 옵션에 오류가 발생하면 link:#GenerateVSFiles_Troubleshooting[아래 문제 해결 섹션]을 확인하십시오.
 
-Otherwise, you'll need to run a tool from the command line to generate the project files.
+또는 프로젝트 파일을 생성하기 위해 명령줄에서 도구를 실행해야 합니다.
 
-The command will follow the form below:
+명령은 아래 양식을 따릅니다:
 
 ```ps1
-& "<path to your Unreal build batch file here (it was installed with the custom Editor)>" -projectfiles -project="<path to your .uproject file here>" -game -rocket -progress
+& "<언리얼 빌드 배치 파일 경로 (맞춤형 에디터와 함께 설치됨)>" -projectfiles -project="<.uproject 파일 경로>" -game -rocket -progress
 ```
 
-Here is an example of a completed command:
+완성된 명령의 예:
 
 ```ps1
 & "C:\Program Files\Unreal Engine - CSS\Engine\Build\BatchFiles\Build.bat" -projectfiles -project="D:\Git\SatisfactoryModLoader\FactoryGame.uproject" -game -rocket -progress
@@ -116,98 +115,98 @@ Here is an example of a completed command:
 
 [WARNING]
 ====
-The above command will not work if you copy paste it
-- you'll need to modify it yourself to point towards your project file and Unreal Engine install.
+위 명령어를 그대로 복사하면 작동하지 않습니다.
+프로젝트 파일과 언리얼 엔진 설치 위치를 가리키도록 직접 수정해야 합니다.
 ====
 
 [WARNING]
 ====
-The above command is formatted for Powershell.
-To run it from Command Prompt instead, remove the `&` at the start.
+위 명령어는 Powershell용으로 형식화되어 있습니다.
+대신 명령 프롬프트에서 실행하려면 처음에 `&` 를 제거하십시오.
 ====
 
 [id="GenerateVSFiles_Troubleshooting"]
-=== Troubleshooting
+=== 문제 해결
 
-If you are prompted to choose an engine version when generating project files,
-or the generation command fails, it's possible that you have a corrupted engine install
-left behind from previous modding or Unreal Engine endeavors.
+프로젝트 파일을 생성할 때
+엔진 버전을 선택하라는 메시지가 표시되거나 생성 명령이 실패하면
+이전 모딩이나 언리얼 엔진 작업에서 엔진 설치가 손상되었을 수 있습니다.
 
-The correct engine version should appear in the picker as `5.3.2-CSS` and should not be considered a binary build.
-To remove a listing for a corrupted engine install,
-use the https://www.techtarget.com/searchenterprisedesktop/definition/Windows-Registry-Editor[Windows registry editor]
-to edit the registry key `HKEY_CURRENT_USER\SOFTWARE\Epic Games\Unreal Engine\Builds`
-and remove the key pointing to your "Unreal Engine - CSS" install location.
+올바른 엔진 버전은 피커에 `5.3.2-CSS` 로 표시되어야 하며 이진 빌드로 간주되어서는 안 됩니다.
+손상된 엔진 설치 목록을 제거하려면
+https://www.techtarget.com/searchenterprisedesktop/definition/Windows-Registry-Editor[Windows 레지스트리 에디터]를 사용하여
+레지스트리 키 `HKEY_CURRENT_USER\SOFTWARE\Epic Games\Unreal Engine\Builds` 를 편집하여
+"Unreal Engine - CSS" 설치 위치를 가리키는 키를 제거하십시오.
 
-You can add the correct items to this registry key by either reinstalling the engine
-or running the `SetupScripts\Register.bat` script in the engine's install folder.
+엔진을 재설치하거나 엔진 설치 폴더에서 `SetupScripts\Register.bat` 스크립트를 실행하여
+이 레지스트리 키에 올바른 항목을 추가할 수 있습니다.
 
-== Project Compilation
+== 프로젝트 컴파일
 
-Next up is compiling the project from Visual Studio.
-It is possible for Unreal to compile the project as well on launch,
-but if there are any errors,
-Unreal will give a very vague report as to what went wrong
-and you'll have to rebuild from Visual Studio anyways to get more details.
-As such, it's best just to always compile the editor from Visual Studio
-so you don't have to build a second time to see the error report.
-
-[TIP]
-====
-If you have multiple computers available on your network,
-you can optionally use Incredibuild to speed up the compilation process.
-More info
-xref:CommunityResources/incredibuild.adoc[here].
-====
-
-Open up the `FactoryGame.sln` file in your project folder.
+다음은 Visual Studio에서 프로젝트를 컴파일하는 것입니다.
+언리얼에서도 프로젝트를 시작할 때 컴파일할 수 있지만,
+오류가 발생하면
+언리얼은 무엇이 잘못되었는지에 대한 보고서를 모호하게 제공하므로
+자세한 내용을 보려면 Visual Studio에서 다시 빌드해야 합니다.
+따라서 오류 보고서를 보기 위해 빌드를 두 번 할 필요 없이
+항상 Visual Studio에서 에디터를 컴파일하는 것이 가장 좋습니다.
 
 [TIP]
 ====
-Visual Studio may tell you "Based on your solution, you might need to install extra components for a full development experience" at the top of the Solution Explorer window.
-It is safe to ignore this message.
-Alternatively, you can install the requested components to keep Visual Studio from complaining about this
-at the cost of additional disk space.
+네트워크에 여러 대의 컴퓨터를 사용할 수 있는 경우,
+선택적으로 인크레디빌드를 사용하여 컴파일 프로세스 속도를 높일 수 있습니다.
+자세한 내용은 xref:CommunityResources/incredibuild.adoc[여기]를
+확인하십시오.
 ====
 
-Once Visual Studio loads,
-you should see a folder tree in the Solution Explorer containing entries for
-`UE5`, `AccessTransformers`, `FactoryGame`, and more.
+프로젝트 폴더에서 `FactoryGame.sln` 파일을 여십시오.
 
-Some of these projects are "real" and some of them exist only for structure purposes.
-When it's time to compile your mods, you only need to compile the `FactoryGame` project.
-As such, **we do NOT want to use the generic 'Build Solution' operation** that Visual Stuido provides.
-Doing so will try to run the build one time for each project item in the solution,
-wasting some time trying to build targets that won't succeed,
-and, if there are any error messages, duplicating them many times over!
+[TIP]
+====
+Visual Studio는 솔루션 탐색기 창 상단에 "솔루션에 따라서는 전체 개발 환경에 추가 구성 요소를 설치해야 할 수도 있습니다."라고 표시할 수 있습니다.
+이 메시지는 무시해도 안전합니다.
+또는 제안한 구성 요소를 설치하여 Visual Studio가 이에 대해
+언급하지 않도록 할 수도 있습니다.
+====
 
-image:BeginnersGuide/DoNotBuildSolution.png[Select Development Editor build target]
+Visual Studio가 로드되면
+솔루션 탐색기에 `UE5`, `AccessTransformers`, `FactoryGame` 등의 항목이 포함된
+폴더 트리가 표시됩니다.
 
-In preparation for compiling our project, first select
-the `Development Editor` Solution Configuration,
-and `Win64` Solution Platform
-in the top bar.
-It's near the undo/redo buttons and the play button menu items.
+이러한 프로젝트 중 일부는 "실제" 프로젝트이고 일부는 구조 목적으로만 존재합니다.
+모드를 컴파일할 때는 `FactoryGame` 프로젝트만 컴파일하면 됩니다.
+따라서 Visual Studio에서 제공하는 **일반적인 '솔루션 빌드' 작업을 사용하지 않을 겁니다**.
+이렇게 하면 솔루션의 각 프로젝트 항목에 대해 빌드를 한 번씩 실행하여
+성공하지 못하는 타겟을 만들기 위해 시간을 낭비하고 오류 메시지가 있는 경우
+여러 번 반복하여 빌드를 실행할 수 있습니다!
 
-Selecting "Development Editor" means compiling the Unreal Editor program that you'll be using to make mods.
+image:BeginnersGuide/DoNotBuildSolution.png[개발 에디터 빌드 타깃 선택]
 
-image:BeginnersGuide/BuildTargetSelection.png[Selecting build target]
+프로젝트 컴파일을 준비하려면 먼저
+상단 바에서 `Development Editor` 솔루션 구성과
+`Win64` 솔루션 플랫폼을
+선택하십시오.
+실행 취소/재실행 버튼 및 재생 버튼 메뉴 항목 근처에 있습니다.
 
-To start the actual compile process
-find the FactoryGame project item in the `Games/FactoryGame` solution explorer tree,
-right click on it, and select `Build`.
+"Development Editor"를 선택한다는 것은 모드를 만드는 데 사용할 언리얼 에디터 프로그램을 컴파일하는 것을 의미합니다.
 
-image:BeginnersGuide/BuildFromMenu.png[Build FactoryGame from Solution Tree menu]
+image:BeginnersGuide/BuildTargetSelection.png[빌드 타깃 선택]
 
-While you're there, also click on "Set as Startup Project"
-which will make the {cpp} debugger easier to use later, if you need it.
-You only have to do this once, unless you change the Startup Project.
+실제 컴파일 과정을 시작하려면
+`Games/FactoryGame` 솔루션 탐색기 트리에서 FactoryGame 프로젝트 항목을 찾아
+우클릭 후 `빌드` 를 선택합니다.
 
-Compilation will take some time; go pet some lizard doggos as you wait.
-See link:#Compiling_Troubleshooting[below] if you run into any issues.
-You'll know it's done when the little box-with-cubes-piling-into-it
-icon in the colored bar at the bottom of Visual Studio goes away.
-You can monitor its progress from the Output pane (View > Output) if desired.
+image:BeginnersGuide/BuildFromMenu.png[솔루션 트리 메뉴에서 FactoryGame 빌드]
+
+그곳에 있는 동안 "시작 프로젝트로 설정"을 클릭하면
+나중에 필요한 경우 {cpp} 디버거를 더 쉽게 사용할 수 있습니다.
+시작 프로젝트를 변경하지 않는 한 이 작업은 한 번만 수행하면 됩니다.
+
+컴파일에는 시간이 좀 걸리니 기다리는 동안 도마멍멍이랑 놀고 있으십시오.
+문제가 발생하면 link:#Compiling_Troubleshooting[아래]를 확인하십시오.
+Visual Studio 하단의 진행 바 옆에 있는 상자를 사각형으로 채우고 있는 아이콘이 사라지면
+완료된다는 것을 알 수 있습니다.
+원하는 경우 출력 창 (보기 > 출력) 에서 진행 상황을 모니터링할 수 있습니다.
 
 // TODO 1.0 Release - which Shipping configuration should be built? Or delay it until later and let Alpakit handle it?
 
@@ -219,275 +218,278 @@ You can monitor its progress from the Output pane (View > Output) if desired.
 // Building both of these is required for the editor to function correctly
 // and for you to be able to distribute your mod.
 
-Now that you've built the binaries, your Unreal Editor should open without any issues.
+이제 바이너리를 구축했으니 언리얼 에디터가 문제 없이 열릴 것입니다.
 
 [IMPORTANT]
 ====
-Some important notes for the future:
+나중을 위한 몇 가지 중요한 참고:
 
-After updates to SML that change the Editor,
-or your own {cpp} code that changes Editor functionality,
-you must close the Editor and rebuild `Development Editor`
-from Visual Studio for the changes to take effect.
+에디터를 변경하는 SML
+또는 에디터 기능을 변경하는 {cpp} 코드를 업데이트한 후
+변경 사항을 적용하려면 에디터를 닫고
+Visual Studio에서 `Development Editor` 를 다시 빌드해야 합니다.
 
-Alpakit (a tool discussed later) will take care of building Shipping for you when required later,
-but you can still build it from Visual Studio if you want to.
-To build shipping from Visual Studio,
-use the `Shipping` configuration and build the `FactoryGameSteam` or `FactoryGameEGS` project instead of `FactoryGame`.
+나중에 논의할 도구인 Alpakit은 나중에 필요할 때 Shipping을 도와주지만,
+원한다면 Visual Studio에서 Shipping을 제작할 수도 있습니다.
+Visual Studio에서 Shipping을 제작하려면 `Shipping` 구성을 사용하고
+`FactoryGame` 대신 `FactoryGameSteam` 또는 `FactoryGameEGS` 프로젝트를 빌드하십시오.
 ====
 
 [id='Compiling_Troubleshooting']
-=== Troubleshooting
+=== 문제 해결
 
-Almost all warnings, and occasionally some errors, reported by the editor can be safely ignored during the build process.
-This section will help you decide how to proceed if you encounter errors while building.
+에디터가 보고한 거의 모든 경고와 때때로 일부 오류는 빌드 과정 중에 안전하게 무시할 수 있습니다.
+이 섹션은 빌드 중에 오류가 발생할 경우 진행 방법을 결정하는 데 도움이 됩니다.
 
-==== The command ... exited with code 6
+==== ... 명령이 종료되었습니다(코드: 6)
 
-This is not actually an error message, just a message that is informing you that the build task has failed.
-Keep reading the Error List to see what actually went wrong.
-Sometimes the real error message does not show up until the build has finished,
-and sometimes the Error List does not contain the real error message.
-You may also have to check the Output window's 'Output' sub-tab, (select 'Show output from:' `Build`)
-instead of the Error List to see the actual error message(s).
+이것은 실제로 오류 메시지가 아니라 빌드 작업이 실패했음을 알리는 메시지일 뿐입니다.
+오류 목록을 계속 읽어보면 실제로 무엇이 잘못되었는지 알 수 있습니다.
+빌드가 완료될 때까지 실제 오류 메시지가 나타나지 않을 때도 있고,
+오류 목록에 실제 오류 메시지가 포함되지 않을 때도 있습니다.
+또한 실제 오류 메시지를 보려면 오류 목록 대신
+출력 창의 '출력' 하위 탭을 확인해야 할 수도 있습니다 ('출력 보기 선택:' `빌드` 선택).
 
-If you're sharing an error message with others for help troubleshooting it,
-it's best to share the entire build output.
+문제 해결을 위해 다른 사람들과 오류 메시지를 공유하는 경우,
+전체 빌드 출력을 공유하는 것이 가장 좋습니다.
 
-.The Visual Studio tab that shows the actual build output
-image::BeginnersGuide/ShowFullBuildOutput.png[Visual Studio screenshot]
+.실제 빌드 출력을 보여주는 Visual Studio 탭
+image::BeginnersGuide/ShowFullBuildOutput.png[Visual Studio 스크린샷]
 
-==== Compiler is out of heap space
+==== 컴파일러의 힙 공간이 부족합니다
 
-Your computer ran out of RAM while trying to compile the project.
-This is a common issue even on computers with 32GB of RAM.
-Thankfully the completed build progress persists between attempts at building,
-so just keep re-running the build task and it will slowly make progress.
-Close other stuff on your computer that is using RAM if possible, such as web browsers and games.
-Restarting your computer and then trying the build again may also help.
+프로젝트를 컴파일하는 동안 컴퓨터의 램이 부족했습니다.
+이는 램이 32GB인 컴퓨터에서도 흔히 발생하는 문제입니다.
+다행히 빌드 시도 사이에 완료된 빌드 진행 상황이 계속되므로
+빌드 작업을 계속 다시 실행하면 천천히 진행됩니다.
+가능하면 웹 브라우저나 게임과 같이 램을 사용하는 컴퓨터의 다른 프로그램을 닫으십시오.
+컴퓨터를 재시작한 다음 빌드를 다시 시도하는 것도 도움이 될 수 있습니다.
 
-If the project still continues to fail to build with this reason after many attempts,
-contact us on the Discord for further troubleshooting.
-Your computer may unfortunately not have enough ram to compile the project.
+여러 번 시도했지만 이와 같은 이유로 프로젝트가 계속 실패하면
+디스코드에서 추가 문제 해결을 위해 문의해 주십시오.
+안타깝게도 컴퓨터에 프로젝트를 컴파일할 수 있는 램이 충분하지 않을 수 있습니다.
 
 ==== AkAudio
 
-If you see errors related to `AkAudio` or similar,
-you need to go back and re-do the link:#_setting_up_wwise[Wwise integration step].
+`AkAudio` 또는 이와 유사한 오류가 발생하면
+돌아가서 link:#_wwise_설정[Wwise 통합 단계]를 다시 수행해야 합니다.
 
-==== Something.pch : No such file or directory
+==== 뭐시기.pch : 파일 또는 디렉터리를 찾을 수 없습니다
 
-Make sure that your project folder is not stored in a folder path that contains unicode characters.
-Review the directions in the xref:Development/BeginnersGuide/StarterProject/ObtainStarterProject.adoc[Starter Project] section.
+프로젝트 폴더가 유니코드 문자가 포함된 폴더 경로에 저장되어 있지 않은지 확인하십시오.
+xref:Development/BeginnersGuide/StarterProject/ObtainStarterProject.adoc[시작 프로젝트] 섹션의 지침을 검토하십시오.
 
-==== Entire computer locks up while compiling
+==== 컴파일 도중 전체 컴퓨터 전체가 잠깁니다
 
-The fix for this rare but troublesome issue seems to vary for each person that encounters it.
-Try the following:
+이 드물지만 문제가 되는 문제에 대한 해결책은 발생하는 사람마다 다른 것 같습니다.
+다음을 시도해 보십시오:
 
-- Disable hardware graphics acceleration in your Visual Studio settings
-- Downgrade to Visual Studio 2019
-- Check your system for RAM and GPU issues
+- Visual Studio 설정에서 하드웨어 그래픽 가속 비활성화
+- Visual Studio 2019로 다운그레이드
+- 램 및 GPU 문제가 있는지 시스템 점검
 
-==== Something Else
+==== 다른 무언가
 
-If you run into a problem that isn't described above,
-please ask for help on the Discord, even if you fix it yourself.
-We can update the docs with your findings to help other people that might have a similar issue!
+위에서 설명하지 않은 문제가 발생하면,
+직접 해결하더라도 디스코드에서 도움을 요청해 주십시오.
+비슷한 문제를 겪고 있는 다른 사람들을 돕기 위해 귀하의 결과가 담긴 문서를 업데이트해 드릴 수 있습니다!
 
-== Open Unreal Editor
+== 언리얼 에디터 열기
 
-The Unreal Editor allows you to create new content for the game and helps build your mod.
-It also heavily relies on the C++ project,
-so make sure you don't change stuff in there unless you know what you're doing.
+에디터는 게임의 새로운 콘텐츠를 제작하고 모드를 빌드하는 역할을 수행하며,
+{cpp} 프로젝트에 크게 의존하므로
+이를 변경하기 전에 충분한 이해가 필요합니다.
 
-Depending on how your copy of Unreal Engine installed,
-you may be able to double-click the `FactoryGame.uproject` file in the Starter Project folder to open the editor,
-which will directly open your project.
+언리얼 엔진이 설치된 방식에 따라
+시작 프로젝트 폴더에서 `FactoryGame.uproject` 파일을 더블 클릭하여
+에디터를 실행할 수 있습니다.
 
-If that doesn't work, you'll have to open the Unreal Editor separately, then browse to your project.
-You can find it by searching for it in the Windows search bar
-(it should appear as `Unreal Engine - CSS`)
-or by navigating to where you installed it,
-which is probably something similar to
-`C:\Program Files\Unreal Engine - CSS\Engine\Binaries\Win64\UnrealEditor.exe`
-Once the welcome panel has opened, click "Recent Projects",
-then "Browse" and select the file `FactoryGame.uproject` in your starter project folder.
+그래도 안 되면 먼저 언리얼 에디터를 별도로 열고 프로젝트를 찾아야 합니다.
+Windows 검색창에서
+`Unreal Engine - CSS` 를 검색하거나
+직접 설치된 경로로 이동하여 실행할 수 있습니다.
+일반적으로 설치 경로는
+`C:\Program Files\Unreal Engine - CSS\Engine\Binaries\Win64\UnrealEditor.exe` 와 유사합니다.
+환영 패널이 열리면 "최근 프로젝트"에서 "탐색"을 클릭하고
+시작 프로젝트 폴더 내의 `FactoryGame.uproject` 파일을 선택합니다.
 
-Opening the project for the first time can take a considerable amount of time
-as it compiles shaders.
+처음으로 프로젝트를 열 경우 셰이더를 컴파일하는 데
+상당한 시간이 소요될 수 있습니다.
 
-You might be told that some modules were
-"missing or built with a missing engine version"; press `Yes` and allow it to build.
-This will take some time, and will drastically increase the size of your project folder
-- go find some more lizard doggos to pet.
+이 과정에서 "일부 모듈이 누락되었거나 누락된 엔진 버전으로 빌드되었습니다."라는 메시지가 표시될 수 있습니다.
+이 경우 `예` 를 눌러 빌드를 진행해야 합니다.
+해당 과정은 시간이 오래 걸릴 수 있으며, 프로젝트 폴더의 크기가 크게 증가할 수 있습니다.
+가서 도마멍멍이와 좀 더 놀다 오십시오.
 
-If this step fails, you should go back to
-link:#_project_compilation[compile the editor from Visual Studio]
-to find out why it's erroring and return here when finished with that step.
-Consider seeking help on the Discord if you are stuck here.
+만약 이 단계에서 빌드가 실패한다면,
+link:#_프로젝트_컴파일[Visual Studio에서 에디터 컴파일]로 돌아가
+오류 원인을 확인한 후 다시 진행해야 합니다.
+해결이 어려울 경우, 디스코드에서 도움을 받는 것도 고려할 수 있습니다.
 
-Once you load into the Editor,
-you might see a popup that says 'New plugins are available.'
-You can safely dismiss this popup.
+에디터가 정상적으로 실행된 후,
+"새로운 플러그인이 사용 가능합니다." 라는 팝업이 표시될 수 있으며,
+이는 안전하게 닫아도 무방합니다.
 
-== Familiarize Yourself with the Editor
+== (선택) 한국어 설정
 
-Now is a good time to familiarize yourself with
-the Unreal Engine editor through various other tutorials.
-We suggest you take the 'Welcome to the Unreal Editor'
-guided tutorial that the editor should be telling you about
-if you haven't taken or dismissed it yet.
+https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-editor-interface?application_version=5.3#menubar[메뉴 바]의
+Edit > Editor Preferences에 들어간 후 검색 창에 `language` 를 검색합니다.
+그 후 Editor Language를 한국어로 변경합니다.
 
-We also suggest the following resources:
+이후 문서에서 에디터의 요소에 대해 설명할 때에는 한국어를 기준으로 설명할 것입니다.
 
-- https://docs.unrealengine.com/5.3/en-US/unreal-editor-interface/[Unreal Editor Interface] -
-Provides a high-level overview of what each of the editor panels do.
-- https://docs.unrealengine.com/5.3/en-US/content-browser-in-unreal-engine/[Content Browser] -
-How to access the Content Browser, including adding multiple Content Browser panels to your viewport.
-- https://docs.unrealengine.com/5.3/en-US/content-browser-interface-in-unreal-engine/[Content Browser Interface] -
-How to use the various features offered by the Content Browser.
+== 에디터에 익숙해지기
+
+지금은 다양한 다른 튜토리얼을 통해
+언리얼 엔진 에디터에 익숙해지기에 좋은 시기입니다.
+아직 수강하지 않았거나 삭제하지 않았다면
+에디터가 알려주는 '웰컴 투 더 언리얼 에디터'
+안내 튜토리얼을 수강하는 것이 좋습니다.
+
+또한 다음을 추천합니다:
+
+- https://docs.unrealengine.com/5.3/en-US/unreal-editor-interface/[언리얼 에디터 인터페이스] -
+각 에디터 패널이 수행하는 작업에 대한 고급 개요를 제공합니다.
+- https://docs.unrealengine.com/5.3/en-US/content-browser-in-unreal-engine/[콘텐츠 브라우저] -
+뷰포트에 여러 개의 콘텐츠 브라우저 패널을 추가하는 등 콘텐츠 브라우저에 접근하는 방법을 포함합니다.
+- https://docs.unrealengine.com/5.3/en-US/content-browser-interface-in-unreal-engine/[콘텐츠 브라우저 인터페이스] -
+콘텐츠 브라우저에서 제공하는 다양한 기능을 사용하는 방법입니다.
 
 [NOTE]
 ====
-You may see error messages in the editor's Level `Viewport 1` tab such as
-"LANDSCAPE: 64 ACTORS WITH PHYSICAL MATERIALS NEED TO BE REBUILT".
+에디터의 Level `Viewport 1` 탭에서 "랜드스케이프: 64개의 액터와 피직스 머티리얼을 리빌드해야 합니다."와 같은
+오류 메시지를 볼 수 있습니다.
 
-It is usually safe to ignore errors in the Level Viewport tab
-because errors displayed there are unrelated to typical mod content.
+일반적으로 레벨 뷰포트 탭에 표시되는 오류는 일반적인 모드 콘텐츠와
+관련이 없으므로 이를 무시하는 것이 안전합니다.
 ====
 
-== (Optional) Modify Editor Color Scheme
+== (선택) 에디터 색 구성표 편집
 
-The Unreal Engine 5 editor is very dark by default.
-It may be difficult to read depending on your computer settings and eye health.
-https://youtu.be/xb4kmfIy2kw[This video] shows how to change the editor's color scheme
-and provides an alterative grey theme you can use out of the box.
+언리얼 엔진 5 에디터는 기본적으로 매우 어둡습니다.
+컴퓨터 설정과 눈 건강에 따라 읽기 어려울 수 있습니다.
+https://youtu.be/xb4kmfIy2kw[이 동영상]은 에디터의 색상 구성을 변경하는 방법을 보여주며,
+기본적으로 사용할 수 있는 대체 회색 테마를 제공합니다.
 
-== Setting up Alpakit
+== 알파킷 설정
 
-Alpakit is a tool made by the modding community
-to make building and testing your mod more convenient.
-It's one of the editor plugins that comes pre-installed with the starter project.
+알파킷은 모딩 커뮤니티에서 모드 빌드 및 테스트를
+더 편리하게 하기 위해 만든 도구입니다.
+시작 프로젝트에 사전 설치된 에디터 플러그인 중 하나입니다.
 
-=== Opening Alpakit
+=== 알파킷 열기
 
-Click on the Alpakit Dev button in the
-https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-editor-interface?application_version=5.3#maintoolbar[Main Toolbar]
-of the Unreal editor to open its panel.
-It looks like an alpaca peeking out of a cardboard box.
+언리얼 에디터의
+https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-editor-interface?application_version=5.3#maintoolbar[메인 도구 모음]에서
+알파킷 개발 버튼을 클릭하여 패널을 엽니다.
+마치 박스에서 알파카가 얼굴을 내미는 것처럼 보일 겁니다.
 
-image:BeginnersGuide/OpenAlpakitDev.png[Alpakit Dev icon]
+image:BeginnersGuide/OpenAlpakitDev.png[알파킷 개발 아이콘]
 
-You can also bring it up via `File > Alpakit Dev` from the
-https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-editor-interface?application_version=5.3#menubar[Menu Bar].
+https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-editor-interface?application_version=5.3#menubar[메뉴 바]에서
+`파일 > 알파킷 개발` 을 통해 가져올 수도 있습니다.
 
-Next, open the alpakit-specific log window by clicking the three-dots button next the icon and selecting "Alpakit Log",
-or using `File > Alpakit Log`.
-This information is also present in the UE Output Log (`Window > Output Log`), albeit mixed with other editor messages.
+다음으로 아이콘 옆의 세 점 버튼을 클릭하고
+"알파킷 로그"를 선택하거나 `파일 > 알파킷 로그` 를 사용하여 알파킷 전용 로그 창을 엽니다.
+이 정보는 다른 에디터 메시지와 혼합되어 있지만
+UE 출력 로그 (`창 > 출력 로그`)에도 표시됩니다.
 
-Both the Alpakit Dev window and Log window can be dragged by their top tabs
-and docked as new tabs or panes in the editor for easy access later.
-We suggest docking the Alpakit Log in the same panel as the Viewport
-and Alpakit Dev in the same panel as Details.
+알파킷 개발 창과 로그 창 모두 상단 탭으로 드래그하여 나중에 쉽게 접근할 수 있도록
+에디터에서 새 탭이나 창으로 도킹할 수 있습니다.
+저희는 뷰포트가 있는 패널에 알파킷 로그를 도킹하고,
+디테일이 있는 패널에 알파킷 개발을 도킹하는 것을 제안합니다.
 
-If you're wondering what something in an Alpakit window does,
-hover over it - most elements have expanatory tooltips.
+알파킷 창의 기능이 궁금하다면,
+대부분의 요소에는 확장 도구 팁이 있습니다.
 
-=== Configuring Dev Packaging Settings
+=== 개발 패키징 설정 구성하기
 
-Once you've opened the Alpakit Dev window,
-head over to the "Dev Packaging Settings" heading.
-For now, the only target we need to modify is Windows (the game client),
-but later you can use the other options to build for dedicated servers.
+알파킷 개발 창을 열면
+"개발 패키징 설정 (Dev Packaging Settings)"이 보일 것입니다.
+현재로서 수정해야 할 대상은 Windows (게임 클라이언트) 뿐이지만
+나중에 다른 옵션을 사용하여 전용 서버를 빌드할 수 있습니다.
 
-In order to get started building mods,
-you'll have to tell Alpakit where your game install directory is located
-so it can copy mod files there for you.
+모드 빌드를 시작하기에 앞서
+알파킷에 게임 설치 디렉터리가 어디에 있는지 알려줘야
+모드 파일을 복사할 수 있습니다.
 
-In the Windows subheading,
-check the Enabled box to enable packaging for that target,
-check the box next to `Copy to Game Path` to enable copying built mods,
-then click on the 3 dots to the right to open a directory picker.
-Select your root Satisfactory game installation folder.
-It will be something like
-`C:\Program Files\EpicGames\SatisfactoryEarlyAccess\`.
-Follow the directions
-xref:faq.adoc#Files_GameInstall[on the FAQ]
-to easily determine this location.
+Windows 부제목에서 해당 대상에 대한
+패키징을 활성화하기 위해 "활성화됨 (Enabled)"을 체크하고,
+빌드된 모드를 복사하기 위해 "게임 경로에 복사 (Copy to Game Path)"를 체크한 후
+오른쪽에 있는 3개의 점을 클릭하여 디렉터리 선택기를 엽니다.
+그 후 새티스팩토리 게임 루트 설치 폴더를 선택합니다.
+`C:\Program Files\EpicGames\SatisfactoryEarlyAccess\` 와 같은 것입니다.
+xref:faq.adoc#Files_GameInstall[FAQ의 지침]에 따라 이 위치를 쉽게 확인할 수 있습니다.
 
-Finally, check the box next to `Launch Game Type` and choose the entry that corresponds to the game install path you provided.
-This will automatically start the game for you after all packaging and copying tasks are complete.
+마지막으로 "게임 실행 유형 (Launch Game Type)" 옆의 상자를 선택하고 제공한 게임 설치 경로에 해당하는 항목을 선택합니다.
+모든 패키징 및 복사 작업이 완료되면 자동으로 게임이 시작됩니다.
 
 [TIP]
 ====
-Find out more about how to launch the game quickly for testing on the
-xref:Development/TestingResources.adoc[Testing/Multiplayer Testing] page.
+xref:Development/TestingResources.adoc[테스트/멀티플레이 테스트] 페이지에서 테스트를 위해
+게임을 빠르게 실행하는 방법에 대해 자세히 알 수 있습니다.
 ====
 
-=== Packaging Mods with Alpakit
+=== 알파킷으로 모드 패키징
 
 // TODO 1.0 Release - split into Dev and Release Alpakit and retake screenshots
 
-Below the "Dev Packaging Settings" heading are the mod list and packaging controls.
+"개발 패키징 설정" 제목 아래에는 모드 목록과 패키징 제어가 있습니다.
 
-Right now you should see two items in a searchable list -
-`Example Mod (ExampleMod)` and `Satisfactory Mod Loader (SML)`.
-This is the list of all mods present in your project.
-They are listed first by friendly name and then by
-xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#ModReference[Mod Reference]
-in parentheses.
-Once you have created a mod, it will appear in the list automatically.
+지금 검색 가능한 목록에는 `Example Mod (ExampleMod)` 와
+`Satisfactory Mod Loader (SML)` 라는 두 가지 항목이 보일 것입니다.
+이 목록은 프로젝트에 포함된 모든 모드의 목록입니다.
+먼저 친근한 이름으로 나열된 다음 괄호 안에
+xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#ModReference[모드 참조]로 나열됩니다.
+모드를 생성하면 자동으로 목록에 표시됩니다.
 
-To package a single mod for testing,
-simply press the "Alpakit!" button next to its name in the list.
-Alpakit will compile and package your mod for you,
-then take actions based off of the options you selected in the Dev Packaging Settings.
+테스트용 모드를 하나씩 패키징하려면 목록에서
+모드 이름 옆에 있는 "알파킷!" 버튼을 누르기만 하면 됩니다.
+알파킷이 모드를 컴파일하고 패키징한 다음
+개발 패키징 설정에서 선택한 옵션에 따라 작업을 수행할 겁니다.
 
-If you want to package multiple mods at a time,
-check the boxes to the left of their "Alpakit!" buttons
-and use the "Alpakit Selected (Development)" button.
-This will first package all mods, wait for all packaging tasks for complete,
-then execute any Launch Game tasks you have enabled.
+여러 모드를 한 번에 패키징하려면
+"알파킷!" 버튼 왼쪽에 있는 상자를 체크하고
+"선택된 항목 알파킷 (개발)" 버튼을 사용하십시오.
+이렇게 하면 먼저 모든 모드를 패키징하고 모든 패키징 작업이 완료될 때까지 기다린 다음
+활성화한 모든 실행 게임 작업을 실행할 수 있습니다.
 
-Upon starting an Alpakit task, a popup will appear informing you that the mod is being packaged
-and the Alpakit Log window will reflect the packaging results.
+알파킷 작업을 시작하면 모드가 패키징 중임을 알리는 팝업이 나타나고
+알파킷 로그 창에 패키징 결과가 반영됩니다.
 
-The Alpakit Release and Release Targets fields can be safely ignored for now
-as they will be explained later in the guide.
+알파킷 릴리스 및 릴리스 대상 필드는 가이드 후반부에 설명될 예정이므로
+현재로서는 안전하게 넘어갈 수 있습니다.
 
 image:BeginnersGuide/Alpakit.png[Alpakit, align="center"]
 
-=== Uninstalling your Packaged Mods
+=== 패키징된 모드 삭제하기
 
-Alpakit will automatically install the mods it packages for you
-when you have the 'Copy to Game Path' option enabled.
-The xref:ForUsers/SatisfactoryModManager.adoc[Satisfactory Mod Manager]
-will try to avoid interferring with mods that you have packaged with Alpakit
-and will not "see" that you have them installed in its own mods list.
+'게임 경로에 복사' 옵션을 활성화하면
+알파킷에서 패키징한 모드가 자동으로 설치됩니다.
+xref:ForUsers/SatisfactoryModManager.adoc[새티스팩토리 모드 관리자]는
+사용자가 알파킷으로 패키징한 모드에 간섭하지 않도록 노력하며,
+모드 목록에 해당 모드가 설치된 것을 "보이지" 않습니다.
 
-If you ever need to uninstall one of the mods you've packaged,
-simply go to your
-xref:faq.adoc#Files_Mods[installation's Mods folder]
-and delete the folder named with the
-xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#ModReference[Mod Reference]
-of the mod you wish to uninstall.
+패키지에 포함된 모드 중 하나를 제거해야 하는 경우,
+xref:faq.adoc#Files_Mods[설치된 모드 폴더]로 이동하여
+제거하려는 모드의
+xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#ModReference[모드 참조]로
+명명된 폴더를 삭제하기만 하면 됩니다.
 
-== (Optional) Packaging SML
+== (선택) SML 패키징
 
-Note that if you have not yet installed the Satisfactory Mod Loader (SML) in your game client,
-you can use Alpakit to build SML for you and put it in the right folder.
-Simply press the `Alpakit!` button next to `Satisfactory Mod Loader (SML)` in the list.
+게임 클라이언트에 새티스팩토리 모드 로더(SML)를 아직 설치하지 않았다면
+알파킷을 사용하여 SML을 빌드하여 올바른 폴더에 넣을 수 있습니다.
+목록에서 새티스팩토리 모드 로더(SML) 옆에 있는 알파킷! 버튼을 누르기만 하면 됩니다.
 
-In the future, using a locally build copy of SML could cause problems
-if your copy of the Starter Project is older than the latest SML release,
-in which case you should
-xref:Development/UpdatingToNewVersions.adoc[update your Starter Project]
-or use the Mod Manager to install SML instead.
+나중에는 로컬 빌드된 SML 사본을 사용할 때
+시작 프로젝트의 최신 SML 릴리스보다 오래된 경우 문제가 발생할 수 있습니다.
+이 경우 xref:Development/UpdatingToNewVersions.adoc[시작 프로젝트를 업데이트]하거나
+모드 관리자를 사용하여 SML을 설치해야 합니다.
 
-== Next Steps
+== 다음 단계
 
-That should be it - your starter project should now be set up and ready to go!
-The xref:Development/BeginnersGuide/StarterProjectStructure.adoc[next section]
-provides an overview of the files included in the Starter Project
-to help you get situated before working on your first mod.
+이제 스타터 프로젝트가 설정되고 준비가 완료되었습니다!
+xref:Development/BeginnersGuide/StarterProjectStructure.adoc[다음 섹션]에서는
+첫 번째 모드 작업 전에 위치를 파악하는 데 도움이 되는
+시작 프로젝트에 포함된 파일에 대한 개요를 제공합니다.

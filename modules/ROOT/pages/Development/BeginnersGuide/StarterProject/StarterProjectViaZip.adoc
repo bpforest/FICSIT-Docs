@@ -1,22 +1,22 @@
-= Downloading a Zip
+= Zip 파일 다운로드
 
-You've chosen to download a zip of the Starter Project repository.
+시작 프로젝트 저장소의 zip 파일을 다운로드하는 방법을 선택하셨습니다.
 
-The below box will help you decide which repository branch to download a zip of.
-It's imperative that you download the correct Starter Project version
-or you will have to repeat some of the setup process again.
+아래 상자는 어떤 저장소 분기를 다운로드할지 결정하는 데 도움이 됩니다.
+올바른 시작 프로젝트 버전을 다운로드하지 않으면
+설정 과정을 다시 반복해야 합니다.
 
-== What Version to Download
+== 다운로드해야 하는 버전
 
-// When updating the below, remember to update StaterProjectViaClone.adoc, StarterProjectViaZip.adoc, and dependencies.adoc (engine)
+// 업데이트 할 때 StaterProjectViaClone.adoc, StarterProjectViaZip.adoc, dependencies.adoc 도 같이 업데이트하기 (엔진)
 ====
-This is the *latest stable* version of the docs.
-// This is the *development* version of the docs.
+이는 문서의 *최신 안정적* 버전입니다.
+// 이는 문서의 *개발* 버전입니다.
 
-Stable (Release) and Experimental are currently both the same version - 1.0 Release.
+안정적 (릴리스) 및 실험은 현재 둘 다 1.0 릴리스로 동일한 버전입니다.
 
-Download a zip of the **`master` branch** to develop a mod for SML 3.9.0
-by clicking https://github.com/satisfactorymodding/SatisfactoryModLoader/archive/refs/heads/master.zip[here].
+SML 3.9.0의 모드를 개발하기 위해 https://github.com/satisfactorymodding/SatisfactoryModLoader/archive/refs/heads/master.zip[여기]를
+클릭하여 **`master` 분기**의 zip 파일을 다운로드하십시오.
 
 // Download a zip of the **`dev` branch** (because SML 3.8.? is not released yet)
 // by clicking https://github.com/satisfactorymodding/SatisfactoryModLoader/archive/refs/heads/dev.zip[here].
@@ -25,32 +25,31 @@ by clicking https://github.com/satisfactorymodding/SatisfactoryModLoader/archive
 // Of those two, you probably want whichever branch was pushed to most recently, which you can see
 // https://github.com/satisfactorymodding/SatisfactoryModLoader/branches[on the GitHub repository].
 
-If you're uncertain about which branch to download, **ask us on the Discord**.
+어떤 분기를 선택할 지 모르겠다면 **디스코드에 도움을 요청하십시오**.
 ====
 
-== Unzipping the Files
+== 파일 압축 해제
 
 [WARNING]
 ====
-By default, Windows marks files downloaded from the internet as "blocked".
-You will run into problems later on because of this.
-To get around this issue, right-click the zip file and "unblock" it from the Properties menu before unzipping it.
+기본적으로 Windows는 인터넷에서 다운로드한 파일을 "차단됨"으로 표시합니다.
+이로 인해 나중에 문제가 발생할 수 있습니다.
+이 문제를 해결하려면 압축 파일을 우클릭 후 속성 메뉴에서 "차단 해제"한 다음 압축을 해제하십시오.
 ====
+`SatisfactoryModLoader-master.zip` (또는 `-dev.zip`) 을 압축 해제하여 시작 프로젝트 파일을 가져옵니다.
+압축 해제에 문제가 있는 경우
+https://www.7-zip.org/[7zip] 또는
+https://www.win-rar.com/start.html[WinRAR]과 같은
+다른 압축 해제 소프트웨어를 사용해 보십시오.
 
-Unzip `SatisfactoryModLoader-master.zip` (or the `-dev.zip`) to get the Starter Project files.
-If you're encountering issues extracting the zip,
-try using another zip extracting software
-such as https://www.7-zip.org/[7zip]
-or https://www.win-rar.com/start.html[WinRAR].
+나중에 폴더를 이동할 수 있으며, 가장 상단의 폴더 이름을 원하는 대로 지정할 수 있습니다.
 
-You can move the directory later, and you can name the outermost folder whatever you'd like.
+시작 프로젝트 파일을 놓을 좋은 위치를 정하기 위해
+xref:Development/BeginnersGuide/StarterProject/ObtainStarterProject.adoc[시작 프로젝트 페이지]에서
+참고를 꼭 읽어보십시오.
 
-Make sure to read the notes on the
-xref:Development/BeginnersGuide/StarterProject/ObtainStarterProject.adoc[Starter Project page]
-about good long-term homes for your starter project files.
+== 다음 단계
 
-== Next Steps
-
-Now that all the dependencies are installed, you can move onto
-xref:Development/BeginnersGuide/project_setup.adoc[setting up the project].
+이제 모든 의존성을 설치했으므로
+xref:Development/BeginnersGuide/project_setup.adoc[프로젝트 설정]으로 이동할 수 있습니다.
 

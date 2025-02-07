@@ -1,79 +1,78 @@
-= Welcome to the Satisfactory Modding Community
+= 새티스팩토리 모딩 커뮤니티에 오신 것을 환영합니다
 
-Hello, and welcome to the Satisfactory Modding Community and the ficsit.app mod repository!
+새티스팩토리 모딩 커뮤니티와 ficsit.app 모드 저장소에 오신 것을 환영합니다!
 
-Below we'll explain how to find and install mods, as well as how to get help with them.
+아래에는 모드를 찾고 설치하는 방법과 모드에 대한 도움을 받는 방법이 설명되어 있습니다.
 
-== Frequently Asked Questions
+== 자주 묻는 질문
 
-If you have a question, there's a pretty good chance it has been answered on our
-xref:faq.adoc[FAQ - Frequently Asked Questions] page.
+질문이 있다면, 그 질문은 꽤 좋은 확률로
+xref:faq.adoc[자주 묻는 질문] 페이지에 답변이 있을 것입니다.
 
-If it's not answered there, or something is unclear, feel free to ask in our
-https://discord.ficsit.app[Discord server].
+거기에서 답변이 없거나 불명확한 점이 있다면,
+https://discord.ficsit.app[디스코드 서버]에서 질문해 주십시오.
 
-== Installing the Mod Manager
+== 모드 관리자 설치
 
-To use mods you will need to install the Satisfactory Mod Manager (SMM)
-which takes care of all the configurations at install,
-and is also the best way to get mods working and into the game.
-Learn how to install and use the Mod Manager on the
-xref:ForUsers/SatisfactoryModManager.adoc[Using the Mod Manager] page.
+모드를 사용하려면 새티스팩토리 모드 관리자(SMM)를 설치해야 합니다.
+이 프로그램은 설치 시 모든 구성을 처리하며,
+모드를 작동시키고 게임에 넣는 가장 좋은 방법입니다.
+모드 관리자를 설치하고 사용하는 방법은
+xref:ForUsers/SatisfactoryModManager.adoc[모드 관리자 사용] 페이지에서 확인할 수 있습니다.
 
-== Discovering New Mods
+== 새로운 모드 찾아보기
 
-All Satisfactory mods are uploaded to the Satisfactory Mod Repository (https://ficsit.app/),
-but there's more than one way to peruse the list.
+모든 새티스팩토리 모드는 https://ficsit.app/[새티스팩토리 모드 저장소]에 업로드됩니다.
+하지만 목록을 살펴보는 방법은 여러 가지가 있습니다.
 
-=== Via the Mod Manager
+=== 모드 관리자에서
 
-You can browse the list of all available mods directly within your mod manager!
-Make sure that your "Show" dropdown is set to "Compatible".
-Explore the options by scrolling, or search for a specific mod with the search bar.
-Click on a mod to open its mod page in an details panel to the side.
+모드 관리자를 통해 모드 목록을 직접 탐색할 수 있습니다!
+우측 상단 필터가 "호환됨"으로 설정되어 있는지 확인하십시오.
+스크롤하여 옵션을 탐색하거나 검색창을 사용하여 특정 모드를 검색할 수 있습니다.
+모드를 클릭하면 세부 패널에서 모드 페이지가 열립니다.
 
 // TODO tags tag search in SMM
 
-=== Via ficsit.app
+=== ficsit.app에서
 
-If you prefer to browse mods on the ficsit.app website,
-it's easy to install mods from there too.
+ficsit.app 웹사이트에서 모드를 탐색하는 것을 선호한다면,
+거기에서도 모드를 쉽게 설치할 수 있습니다.
 
-Once you're on the page for a mod, click the 'Versions' button in the top right,
-then click the Download arrow icon in the "Latest Versions" section to install the mod via the Mod Manager.
-This will prompt you to allow the website to communicate with your installed copy of the Mod Manager
-and handle installing the mod for you.
+모드 페이지에 들어가면 오른쪽 상단의 '버전' 버튼을 클릭한 후,
+"최신 버전" 섹션에서 다운로드 화살표 아이콘을 클릭하여 모드를 모드 관리자를 통해 설치하십시오.
+이렇게 하면 웹사이트가 설치된 모드 관리자와 통신할 수 있도록 허용하라는 메시지가 표시되며,
+모드를 설치하는 작업을 처리합니다.
 
-== Suggested Mods
+== 추천 모드
 
-In order to experience Satisfactory as the developers intended it,
-we suggest you play the game for a while without mods, unlocking at least
-https://satisfactory.wiki.gg/wiki/Milestones#Tier_6[Tier 6 of the HUB].
-However, since you're here, you're probably not looking to just play the base game!
-If you'd still like to keep the base-game feel and balance,
-check out xref:ForUsers/Tags.adoc[mods tagged with #qol] to find Quality of Life mods.
+개발자가 의도한 대로 새티스팩토리를 경험하기 위해,
+모드 없이 게임을 잠시 플레이하며 최소한
+https://satisfactory.wiki.gg/wiki/Milestones#Tier_6[허브의 6단계]를 잠금 해제할 것을 권장합니다.
+하지만 여기 계신다면, 기본 게임만 플레이할 생각은 아닐 것입니다!
+기본 게임의 느낌과 균형을 유지하고 싶다면,
+xref:ForUsers/Tags.adoc[품질 향상 모드]와 태그가 붙은 모드를 확인해 보십시오.
 
-If you're looking for new experiences, check out the mod repository!
-There's a lot of options to choose from
-and you can xref:ForUsers/Tags.adoc[filter with tags] to find mods that suit your playstyle.
+새로운 경험을 원하신다면, 모드 저장소를 확인해 보십시오!
+선택할 수 있는 옵션이 많으며,
+xref:ForUsers/Tags.adoc[태그로 필터링]하여 플레이 스타일에 맞는 모드를 찾을 수 있습니다.
 
 [id="GettingInfoAboutMods"]
-== Getting Info About Mods
+== 모드에 대한 정보 얻기
 
-It is up to the mod developer to inform you how to use their mod.
-Check the mod's page on ficsit.app for documentation.
+모드 개발자가 자신의 모드를 사용하는 방법을 알려주는 것은 그들의 책임입니다.
+ficsit.app의 모드 페이지에서 문서를 확인하십시오.
 
-Generally, most mods will require you to unlock something in the HUB or MAM before you can use them.
-Mods can be configured from the 'Mods' tab on the main menu,
-or from in-game via the 'Mod Configs' tab on the pause menu.
+일반적으로 대부분의 모드는 사용하기 전에 허브나 M.A.M.에서 무언가를 잠금 해제해야 합니다.
+모드는 메인 메뉴의 '모드' 탭에서 구성할 수 있으며,
+게임 중에는 일시 정지 메뉴의 '모드 구성' 탭에서 구성할 수 있습니다.
 
-Some mods will provide a support link, such a documentation site or a Discord join link.
-You can access this from the in-game mods menu via the "Get Support" button.
-Note that the button will not appear if no link is provided by that mod.
-It is likely that the same link is present on the mod's page on ficsit.app.
+일부 모드는 문서 사이트나 디스코드 가입 링크와 같은 지원 링크를 제공할 수 있습니다.
+게임 내 모드 메뉴에서 "지원 받기" 버튼을 통해 이 링크에 접근할 수 있습니다.
+해당 모드에서 제공하는 링크가 없으면 버튼이 나타나지 않습니다.
+같은 링크가 ficsit.app의 모드 페이지에도 있을 가능성이 높습니다.
 
-== Making Your Own Mods
+== 나만의 모드 만들기
 
-Check out
-xref:index.adoc#_for_developers[this section of the home page]
-for more information.
+자세한 정보는
+xref:index.adoc#_for_developers[홈페이지의 이 섹션]을 확인하십시오.

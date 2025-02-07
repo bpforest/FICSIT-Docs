@@ -1,28 +1,28 @@
-= Tags and Tag Search
+= 태그 및 태그 검색
 
-The Satisfactory Mod Repository (ficsit.app) features a tag system to help users find mods relevant to them.
-Example tags include "buildings", "equipment", "qol", and "cheats".
+Satisfactory Mod Repository (ficsit.app)는 사용자가 관련 모드를 찾는 데 도움이 되는 태그 시스템을 제공합니다.
+예시 태그로는 "buildings"(건물), "equipment"(장비), "qol"(편의 개선), "cheats"(치트)가 있습니다.
 
-Remember that tags are intended to be general categories,
-so your personal thoughts on a mod's features and balance may vary from what tags have been assigned to it.
+태그는 일반적인 범주를 나타내기 위한 것이므로,
+모드의 기능 및 균형에 대한 개인적인 생각은 태그에 할당된 것과 다를 수 있습니다.
 
-The Satisfactory Mod Manager does not support filtering or displaying mod tags at the time of writing -
-you will have to browse the website to use this feature.
+새티스팩토리 모드 관리자는 작성 시점에서 모드 태그를 필터링하거나 표시하는 기능을 지원하지 않으므로
+이 기능을 사용하려면 웹사이트를 탐색해야 합니다. (현재는 지원함)
 
-== Using Tags to Search
+== 태그를 사용하여 검색하기
 
-Use tags to filter down your search results for mods.
-For example, if you want to find all mods that add new equipment,
-go to the https://ficsit.app/mods[Mods page] and click the `Filter...` button,
-then click the `#equipment` tag.
-Hover over tags to see a description explaining the purpose of the tag.
+태그를 사용하여 모드 검색 결과를 필터링하십시오.
+예를 들어, 새로운 장비를 추가하는 모드를 찾고 싶다면,
+https://ficsit.app/mods[모드 페이지]로 가서 `필터...` 버튼을 클릭한 다음,
+`#equipment` 태그를 클릭하십시오.
+태그 위에 마우스를 올리면 태그의 목적을 설명하는 설명이 표시됩니다.
 
-== Creating New Tags
+== 새로운 태그 만들기
 
-The list of tags is managed by the site moderators to avoid an abundance of low-mod-count tags.
-If you have an idea for a new tag,
-suggest it on our Discord server.
+태그 목록은 저조한 모드 수의 태그가 남발되는 것을 방지하기 위해 사이트 관리자에 의해 관리됩니다.
+새로운 태그에 대한 아이디어가 있다면
+저희의 디스코드 서버에서 제안해 주십시오.
 
-Mod developers and site moderators can attach tags to mods via the Edit Mod page.
-If a mod has been tagged with an irrelevant tag, site moderators may choose to remove the tag from that mod.
-If you believe a mod has been mistagged, please discuss it on our Discord server.
+모드 개발자와 사이트 관리자는 수정 모드 페이지를 통해 모드에 태그를 첨부할 수 있습니다.
+모드에 관련 없는 태그가 붙어 있다면, 사이트 관리자는 해당 모드에서 태그를 제거할 수 있습니다.
+모드가 잘못 태그가 붙었다고 생각되면 저희의 디스코드 서버에서 논의하십시오.

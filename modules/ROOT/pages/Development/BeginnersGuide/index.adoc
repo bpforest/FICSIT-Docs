@@ -1,95 +1,94 @@
-= Getting Started
+= 시작하기
 
-In this section, we will guide you through the process of
-setting up a development environment,
-making your first mod for Satisfactory,
-and provide important information regarding modding.
+이 섹션에서는 개발 환경 설정하기,
+첫 새티스팩토리 모드 만들기,
+모딩에 관한 중요한 정보를
+전달해 드릴 것입니다.
 
-The Getting Started Guide is written assuming that you follow each page in sequence,
-getting progressively less step-by-step as you get used to how things work.
+시작하기 가이드는 각 페이지를 순차적으로 따라가면서 작업 방식에 익숙해질수록
+단계별로 점점 줄어드는 것을 가정 하에 작성되었습니다.
 
 ====
-It is imperative that you follow the documentation closely,
-*skipping nothing*, while you are still learning.
-Every step in the docs is here for a good reason.
-If you think you found a mistake, contact us (covered below) so we can fix it!
+학습 중에는 문서를 꼼꼼히 따르고
+*아무것도 건너뛰지 않는* 것이 필수적입니다.
+문서의 모든 단계가 있는 데에는 그만한 이유가 있습니다.
+만약 실수가 있다고 생각된다면 저희에게 연락하여 (아래에서 설명) 바로잡을 수 있도록 도와주세요!
 
-Spending thirty seconds reading now can save you **hours** of frustration later.
-This is not an exaggeration.
+30초만 이를 읽는 데 투자하면 **시간 낭비**의 좌절감을 줄일 수 있습니다.
+이것은 과장이 아닙니다.
 ====
 
-== Navigating the Docs
+== 문서 탐색하기
 
-Before we get into the modding setup,
-here's a quick overview of how this documentation website works,
-so you can find the pages you're looking for.
+모딩 설정에 들어가기 전에,
+원하는 페이지를 찾기 위해 이 문서 웹사이트가 어떻게 작동하는 지에 대해
+빠르게 설명드리겠습니다.
 
 [TIP]
 ====
-As you read, keep your eyes out for boxes like these,
-which draw attention to particularly important things to watch out for,
-or helpful tips to help further your modding knowledge.
+문서를 읽는 동안 이렇게 생긴 상자를 유심히 보는 걸 추천합니다.
+읽으면서 주의해야 할 중요한 사항이나
+모딩 지식을 발전시키는 데 도움이 되는 유용한 팁을 줍니다.
 ====
 
-=== Using the Sidebar
+=== 사이드바 사용하기
+사이드바에는 모든 문서 페이지의 링크가 걸려 있습니다.
+데스크톱에서는 화면의 좌측에 위치할 것이며,
+모바일에서는 (그리고 좁은 창) 좌측 상단의 '목차' 버튼을 눌러 펼칠 수 있습니다.
+사이드바는 폴더의 구조와 비슷하다고 보면 됩니다.
 
-Every documentation page has a corresponding link in the sidebar.
-On desktop, this sidebar is on the left side of the screen.
-On mobile (and narrow windows), you must press the 'table of contents' button in the top left to expand it.
-This sidebar can be thought of as a folder system.
+사이드바의 하위 섹션 옆 삼각형 아이콘을 눌러 펼치거나 접을 수 있습니다.
+이 하위 섹션들 중 일부는 '제목 페이지'를 가지고 있으며,
+이는 사이드바의 삼각형에 맞춰 나열된 항목들입니다.
+예를 들어, 저희는 현재 '시작하기' 섹션의 제목 페이지에 있습니다.
+페이지에 제목 섹션이 없는 경우,
+섹션 이름을 클릭하면 삼각형을 클릭한 것처럼 섹션을 펼치거나 접을 수 있습니다.
 
-Use the triangle icons to expand or collapse subsections of the sidebar.
-Some, but not all, of these subsections have 'title pages',
-which are the entries listed in-line with the triangle in the sidebar.
-For example, you are currently on the title page of the 'Getting Started' section.
-If a page doesn't have a title section,
-clicking its section name will simply expand/collapse the section as if you clicked the triangle.
+이 시작하기 섹션은 일반적으로 위에서부터 순차대로 읽어야 합니다.
+예를 들어, 이 섹션 뒤에 읽어야 할 다음 섹션의 제목은 '의존성 설치'입니다.
+일반적으로 각 페이지에는 다음 페이지로 안내하기 위해 하단에 '다음 단계' 섹션이 있습니다.
 
-This getting started section should generally be followed in top to bottom order.
-For example, the next section you should read after this one is titled 'Installing Dependencies.'
-Each page typically has a 'Next Steps' section at the bottom to guide you to the next page.
+=== 참고
 
-=== Sub-Sites
+이 사이트(docs.ficsit.app)는 새티스팩토리 모딩 커뮤니티를 위한 문서와
+몇 가지 특정 모드를 호스팅합니다.
+사이드바 하단에 있는 전환기를 사용하여 다른 모드의 문서로 이동할 수 있습니다.
+전환기를 사용하여 기록을 목적으로 보관된
+이전 버전의 문서를 방문할 수도 있습니다.
+화면 상단에 있는 '오래된 버전' 배너를 확인하여 오래된 버전의 페이지에 있지는 않은지 확인하십시오.
 
-This site (docs.ficsit.app) hosts the documentation for the Satisfactory modding community,
-as well as a few specific mods.
-You can navigate to other mods' documentation with the switcher at the bottom of the sidebar.
-You can also use the switcher to visit older versions of the docs,
-which are preserved for historical purposes.
-Watch out for the 'Outdated Version' banner at the top of the screen to tell when you're on an old page.
+=== 검색하기
 
-=== Using Search
+검색창을 사용하거나 키보드에서 'Ctrl+K'를 눌러
+문서를 쉽게 검색할 수 있습니다. 
+검색은 최신 버전의 문서만 색인화하고 현재 사용 중인 하위 사이트를 검색합니다.
 
-Easily search the documentation via the search bar in the top right,
-or by pressing `Ctrl+K` on your keyboard. 
-The search only indexes the latest version of the docs, and searches the sub-site you're currently on.
+=== 목차 사용하기
 
-=== Using the Table of Contents
+좌측의 사이드바 외에도
+각 페이지의 우측에는 목차가 있습니다.
+이를 사용하여 페이지 내에서 얼마나 멀리 떨어져 있는지 추적하거나 섹션 간 이동을 확인할 수 있습니다.
 
-In addition to the sidebar on the left,
-each page features table of contents on the right.
-Use this to keep track of how far though a page you are or jump between sections.
+== 디스코드 참여하기
 
-== Join the Discord
+만족을 위한 모드를 만드는 것은 때때로 복잡하고 혼란스러울 수 있지만, 저희가 도와드리겠습니다.
+커뮤니티 https://discord.ficsit.app[디스코드 서버]에 가입하는 것을 고려해 주시고,
+"채널 및 역할" 섹션에서 `Aspiring Modder` 역할을 선택하여 모드 제작자를 위한 전용 도움말 채널에 접근해 주시기 바랍니다.
 
-Making mods for Satisfaction can get complex and confusing at times, but we're here to help.
-Please consider joining our community https://discord.ficsit.app[Discord Server]
-and pick up the `Aspiring Modder` role in the "Channels & Roles" section to get access to dedicated help channels for mod makers.
+== 문서에 기여하기
 
-== Contributing to the Docs
+이 문서 페이지들은 모두 커뮤니티 멤버들에 의해 작성되었으며, 깃허브의 PR 시스템을 통해 공개적으로 편집할 수 있습니다.
+모든 페이지의 우측 상단 모서리에서 '이 페이지 편집'을 클릭하여 소스 코드를 확인할 수 있습니다.
 
-These documentation pages are all written by community members, and are publicly editable via GitHub's PR system.
-You can see the source code by clicking 'Edit this Page' in the top right corner of any page.
+수정 사항, 제안 또는 질문이 있으시면 주저하지 말고 저희에게 연락해 주셔도 좋습니다.
+팀에 접근하는 가장 좋은 방법은 https://discord.ficsit.app[디스코드 서버]입니다.
 
-Please do not hesitate to contact us with corrections, suggestions, or questions.
-The best way to reach the team is our https://discord.ficsit.app[Discord Server].
+문서 기여에 대한 자세한 정보는
+https://github.com/satisfactorymodding/Documentation#readme[여기]에서 확인할 수 있습니다.
 
-You can find more info on contributing to the docs
-https://github.com/satisfactorymodding/Documentation#readme[here].
+== 다음 단계
 
-== Next Steps
-
-Next up is setting up your modding development environment.
-// Future editors - this spot is purposefully missing a link to the Dependencies so people get practice using the sidebar.
-Use the site's sidebar to navigate to the 'Installing Dependencies' section's 'Required Software' page.
-You can read more about using the sidebar in the link:#_navigating_the_docs[Navigating the Docs] section.
+이제 모딩 개발 환경을 설정하러 가봅시다.
+// 미래의 편집자에게 - 사람들이 사이드바를 사용해보도록 유도하기 위해 의도적으로 의존성 링크를 포함하지 않고 있습니다.
+사이트의 사이드바를 사용하여 '의존성 설치' 섹션의 '필수 소프트웨어' 페이지로 이동하십시오.
+사이드바 사용에 대한 자세한 내용은 link:#_문서_탐색하기[문서 탐색하기] 섹션에서 확인할 수 있습니다.

@@ -1,3 +1,51 @@
+@font-face {
+    font-family: 'Freesentation5';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-5Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NanumBarunGothic';
+    font-style: normal;
+    font-weight: 400;
+    src: url('//fastly.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
+}
+
+@font-face {
+    font-family: 'NanumBarunGothic';
+    font-style: normal;
+    font-weight: 700;
+    src: url('//fastly.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
+}
+
+@font-face {
+    font-family: 'NanumBarunGothic';
+    font-style: normal;
+    font-weight: 300;
+    src: url('//fastly.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
+}
+
+body {
+    font-family: /*"Freesentation5"*/ "NanumBarunGothic";
+}
+
+.nav {
+    background-color: rgb(20, 21, 24);
+}
+
+.toolbar {
+    background-color: rgb(20, 21, 24);
+}
+
+.content, .article {
+    background-color: rgb(32, 33, 37);
+}
+
+.doc h1, .doc h2, .doc h3, .doc h4, .doc h5, .doc h6 {
+    color: rgb(242, 200, 0);
+}
+
 .navbar-brand .navbar-item + .navbar-item {
     -ms-flex-positive: 1;
     -webkit-box-flex: 1;

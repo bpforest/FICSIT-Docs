@@ -1,65 +1,64 @@
-= You're Cloning the Starter Project
+= 시작 프로젝트를 복제 중입니다
 
-You've chosen to clone the Starter Project repository.
-Good choice! This will make it easy to update the project with changes to SML later.
+시작 프로젝트 저장소를 복제하기로 선택하셨습니다.
+좋은 선택입니다! 이렇게 하면 나중에 SML을 변경하여 프로젝트를 쉽게 업데이트할 수 있습니다.
 
-The below box will help you decide which repository branch to clone.
-It's imperative that you download the correct Starter Project version of the game you're modding
-or you will have to repeat some of the setup process again.
+아래 상자는 복제할 저장소 분기를 결정하는 데 도움이 됩니다.
+모딩 중인 게임의 올바른 시작 프로젝트 버전을 다운로드하지 않으면
+일부 설정 과정을 다시 반복해야 합니다.
 
-== What is Cloning?
+== 복제가 무엇입니까?
 
-If you aren't familiar with version control software (VCS) like Git,
-check out our xref:Development/BeginnersGuide/LearnGit.adoc[mini tutorial] that will cover the basics.
+Git과 같은 버전 제어 소프트웨어(VCS)에 익숙하지 않다면,
+기본 사항을 다루는 xref:Development/BeginnersGuide/LearnGit.adoc[간단한 지침]을 확인해 보십시오.
 
-== What Branch to Clone
+== 복제해야 하는 분기
 
-// When updating the below, remember to update StaterProjectViaClone.adoc, StarterProjectViaZip.adoc, and dependencies.adoc (engine)
+// 업데이트 할 때 StaterProjectViaClone.adoc, StarterProjectViaZip.adoc, dependencies.adoc 도 같이 업데이트하기 (엔진)
 ====
-This is the *latest stable* version of the docs.
-// This is the *development* version of the docs.
+이는 문서의 *최신 안정적* 버전입니다.
+// 이는 문서의 *개발* 버전입니다.
 
-Stable (Release) and Experimental are currently both the same version - 1.0 Release.
+안정적 (릴리스) 및 실험은 현재 둘 다 1.0 릴리스로 동일한 버전입니다.
 
-Clone the **`master` branch** to develop a mod for SML 3.9.0.
+SML 3.9.0의 모드를 개발하기 위해 **`master` 분기**를 복제하십시오.
 // You should clone the **`dev` branch** because SML 3.8.? is not released yet.
 
 // You should clone either the **`dev` branch** or the **`master` branch**.
 // Of those two, you probably want whichever branch was pushed to most recently, which you can see
 // https://github.com/satisfactorymodding/SatisfactoryModLoader/branches[on the GitHub repository].
 
-If you're uncertain about which branch to clone, **ask us on the Discord**.
+어떤 분기를 선택할 지 모르겠다면 **디스코드에 도움을 요청하십시오**.
 ====
 
-https://github.com/satisfactorymodding/SatisfactoryModLoader/[Here]
-is a link to the GitHub page of repository to clone.
-Get the clone URL via the **`<> Code`** dropdown button on the GitHub page.
+https://github.com/satisfactorymodding/SatisfactoryModLoader/[여기]
+복제하기 위한 저장소의 깃허브 페이지 링크입니다.
+깃허브 페이지에서 **`<> Code`** 드롭다운 버튼을 눌러 복제 URL을 얻으십시오.
 
-If you just followed the xref:Development/BeginnersGuide/LearnGit.adoc[mini git tutorial],
-we suggest following the steps
-https://docs.github.com/en/desktop/adding-and-cloning-repositories/cloning-a-repository-from-github-to-github-desktop[here]
-to use GitHub Desktop to clone the repository.
-Otherwise, use the git clone method of your choice.
+만약 xref:Development/BeginnersGuide/LearnGit.adoc[간단한 git 지침]을 읽었다면,
+https://docs.github.com/en/desktop/adding-and-cloning-repositories/cloning-a-repository-from-github-to-github-desktop[이 단계]를
+따라 GitHub Desktop을 사용하여
+저장소를 복제할 것을 제안합니다.
 
-Your Git client will probably start you on the `master` branch by default,
-so you may have to switch branches to the branch you actually intended to clone.
+기본적으로 Git 클라이언트가 마스터 분기에서 시작하기 때문에
+실제로 복제하려는 분기로 전환해야 할 수도 있습니다.
 
-You can move the cloned repository folder later, and you can name it whatever you'd like.
-Make sure to read the notes on the
-xref:Development/BeginnersGuide/StarterProject/ObtainStarterProject.adoc[Starter Project page]
-about good long-term homes for your starter project files.
+나중에 복제된 저장소 폴더를 이동하고 원하는 이름을 지정할 수 있습니다.
+시작 프로젝트 파일을 놓을 좋은 위치를 정하기 위해
+xref:Development/BeginnersGuide/StarterProject/ObtainStarterProject.adoc[시작 프로젝트 페이지]에서
+참고를 꼭 읽어보십시오.
 
-The directory is ready for use as soon as the clone is complete
-and you have switched to the branch you intend to use.
+복제가 완료되면 디렉토리를 사용할 준비가 완료되고
+사용하려는 분기로 전환합니다.
 
 [IMPORTANT]
 ====
-Many Git clients will automatically clone the repository's default branch.
-Make sure it has actually cloned the branch you intended to before proceeding.
+대부분의 Git 클라이언트는 저장소의 기본 분기를 자동으로 복제합니다.
+계속 진행하기 전에 원하는 분기를 복제했는지 확인하십시오.
 ====
 
-== Next Steps
+== 다음 단계
 
-Now that all the dependencies are installed, you can move onto
-xref:Development/BeginnersGuide/project_setup.adoc[setting up the project].
+이제 모든 의존성을 설치했으므로
+xref:Development/BeginnersGuide/project_setup.adoc[프로젝트 설정]으로 이동할 수 있습니다.
 
