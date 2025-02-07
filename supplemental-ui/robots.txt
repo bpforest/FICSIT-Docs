@@ -1,0 +1,3 @@
+User-agent: *
+Allow:/
+Sitemap: https://ficsitdocs.bpforest.com/sitemap.xml

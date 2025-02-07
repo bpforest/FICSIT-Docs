@@ -61,7 +61,7 @@ xref:Development/BeginnersGuide/index.adoc[시작 가이드]를 확인하고
 저희의 https://discord.ficsit.app[디스코드]의 "채널 및 역할" 섹션에서 `Aspiring Modder` 역할을 선택하는 것을 고려해 보십시오.
 
 모델을 만들고 싶다면 먼저 모드에 포함시키는 방법을 배우는 것이 가장 좋습니다.
-`초보자 가이드`의 `건설 가능 항목` 단계를 완료한 후,
+`초보자 가이드` 의 `건설 가능 항목` 단계를 완료한 후,
 저희의 xref:Development/Modeling/index.adoc[모델링 가이드]를 확인하십시오.
 
 === 모드를 SMR에 업로드하기
@@ -79,7 +79,7 @@ https://ficsit.app/[SMR]에 업로드하고 싶을 수 있습니다.
 == 기여
 
 문서에 기여하는 방법에 대한 정보는
-https://github.com/bpforest/FICSIT-Docs#contributing[깃허브 저장소의 README]에서 찾을 수 있습니다.
+https://github.com/bpforest/FICSIT-Docs#기여하기[깃허브 저장소의 README]에서 찾을 수 있습니다.
 
 == 모딩 기술
 

@@ -1,112 +1,114 @@
-= Learning Git for Modding
+= 깃 배우기
 
-This page provides a brief introduction to Git in the context of modding Satisfactory
-and how it can be used to increase your efficiency on modding projects.
+이 페이지는 새티스팩토리 모딩의 맥락에서 깃에 대한 간략한 소개와
+모딩 프로젝트에서 효율성을 높이는 방법을 제공합니다.
 
-== What Is Git
+== 깃(Git)이란?
 
-**Git** is open-source software created to manage files
-by keeping track of what changes between distinct 'revisions' of the files.
-You can learn more about it https://git-scm.com/about[on Git's website].
+**깃**은 파일의 변경 사항을 추적하여 파일의 서로 다른
+'수정본' 간의 변화를 관리하기 위해 만들어진 오픈 소스 소프트웨어입니다.
+자세한 내용은 https://git-scm.com/about[깃 웹사이트]를 참고하십시오.
 
-== Why Use a Git Repo
+== 깃 저장소를 사용하는 이유
 
-Advantages:
+장점:
 
-- Easily return to a past version of the code to test functionality
-- Keep track of changes to write patch notes for a release
-- Easily share your source code with others
-- Backs up your files in case they get corrupted or you lose access to your computer
-- Makes it harder to misplace your files if returning to modding after an extended break
-- Version control usage is an important skill that can benefit any coder
+- 코드의 과거 버전으로 쉽게 돌아가 기능을 테스트할 수 있습니다.
+- 변경 사항을 추적하여 릴리스에 대한 패치 노트를 작성할 수 있습니다.
+- 다른 사람과 소스 코드를 쉽게 공유할 수 있습니다.
+- 파일을 백업하여 파일이 손상되거나 컴퓨터에 접근할 수 없게 되어도 사용할 수 있습니다.
+- 오랜 휴식 후 모딩으로 돌아갈 때 파일을 잃어버릴 가능성을 줄입니다.
+- 버전 관리 사용은 모든 코더에게 유용한 기술입니다.
 
-Disadvantages:
+단점:
 
-- One more tool to learn
+- 배워야 할 도구가 하나 더 생깁니다.
 
-== Git vs GitHub
+== 깃과 깃허브의 차이
 
-It is important to understand the distinction between "Git" and platforms like "GitHub" and "GitLab".
+"깃"과 "깃허브", "깃랩(GitLab)"과 같은 플랫폼 간의 차이를 이해하는 것이 중요합니다.
 
-**Git** is the software that enables managing files
-and is what you interact with when working on your local files.
-Git is traditionally accessed via the command line,
-but there are many different tools that offer a more approachable and convenient interface to the same functionality.
+**깃**은 파일 관리를 가능하게 하는 소프트웨어로, 로컬 파일 작업 시 상호작용하는 것입니다.
+깃은 전통적으로 명령줄을 통해 접근하지만,
+더 접근하기 쉽고 편리한 인터페이스를 제공하는 다양한 도구가 있습니다.
 
-**GitHub** are **GitLab** are web platforms that allow you to store a Git "repository" online, called a "remote",
-making it easy to collaborate with others, and providing a backup.
+**깃허브**와 **깃랩**은 깃 "저장소"를 온라인에 저장할 수 있게 해주는 웹 플랫폼으로,
+다른 사람과 협업하기 쉽게 하고 백업을 제공합니다.
 
-Git tools are used on your local computer to manage files.
-The files are then "pushed" (uploaded) to a Git remote hosted by a platform like GitHub.
+깃 도구는 로컬 컴퓨터에서 파일을 관리하는 데 사용됩니다.
+그 파일은 깃허브와 같은 플랫폼에서 호스팅되는 깃 원격으로 "푸시"(업로드)됩니다.
 
-== Git Tutorial on Gitkraken
+== Gitkraken에서의 깃 튜토리얼
 
-Check out the first 4 tutorials at
-https://www.gitkraken.com/learn/git/tutorials[this link], namely:
+https://www.gitkraken.com/learn/git/tutorials[이 링크]에서
+첫 4개의 튜토리얼을 확인하십시오:
 
-- https://www.gitkraken.com/learn/git/tutorials/what-is-a-git-repository[What is a Git repository?]
-- https://www.gitkraken.com/learn/git/tutorials/what-is-git-commit[What is a Git commit?]
-- https://www.gitkraken.com/learn/git/tutorials/how-to-git-commit[How to Git Commit]
-- https://www.gitkraken.com/learn/git/tutorials/what-is-git-remote[What is a Git remote?]
+- https://www.gitkraken.com/learn/git/tutorials/what-is-a-git-repository[깃 저장소란?]
+- https://www.gitkraken.com/learn/git/tutorials/what-is-git-commit[깃 커밋이란?]
+- https://www.gitkraken.com/learn/git/tutorials/how-to-git-commit[깃 커밋 방법]
+- https://www.gitkraken.com/learn/git/tutorials/what-is-git-remote[깃 원격이란?]
 
-This guide will walk through what you have to do for Satisfactory mods in specific,
-building off of this knowledge.
-We suggest you do not try to start putting your mod into a repo as part of watching these tutorials,
-but feel free to experiment with other folders on your computer.
+이 가이드는 새티스팩토리 모드에 대해 구체적으로 수행해야 할 작업을 안내하며,
+이 지식을 바탕으로 진행됩니다.
+이 튜토리얼을 보면서 모드를 저장소에 넣으려고 하지 마십시오.
+하지만 컴퓨터의 다른 폴더에서 실험하는 것은 자유롭게 하십시오.
 
-You are, of course, free to check out other tutorials, but they cover topics less relevant to Satisfactory modding.
+물론 다른 튜토리얼을 확인할 수 있지만, 그들은 새티스팩토리 모딩과 덜 관련된 주제를 다룹니다.
 
-== Installing Git
+== 깃 설치
 
-The core Git software is a command line tool.
-You are welcome to use Git from the command line,
-but it is recommended to use a GUI tool, as they are generally more approachable.
+핵심 깃 소프트웨어는 명령줄 도구입니다.
+명령줄에서 깃을 사용할 수 있지만,
+일반적으로 GUI 도구를 사용하는 것이 더 접근하기 쉽습니다.
 
-=== Install the Git CLI First
+=== 먼저 깃 CLI 설치
 
-The Unreal Editor's Git integration relies on having the Git Command Line Interface (CLI) installed to function properly.
-Download its installer https://git-scm.com/downloads[here].
-The default settings offered by the installer should be fine for most users.
-When prompted to chose a default text editor for commits, consider selecting an option other than the default Vim.
-This choice will affect you if you decide to commit from the command line.
-Nano, Notepad, and Notepad++ are convenient alternatives.
+언리얼 에디터의 깃 통합은 깃 명령줄 인터페이스(CLI)가 설치되어야 제대로 작동합니다.
+설치 프로그램을 https://git-scm.com/downloads[여기]에서 다운로드하십시오.
+설치 프로그램에서 제공하는 기본 설정은 대부분의 사용자에게 적합합니다.
+커밋을 위한 기본 텍스트 편집기를 선택하라는 메시지가 표시되면,
+기본 Vim 외의 옵션을 선택하는 것을 고려하십시오.
+이 선택은 명령줄에서 커밋하기로 결정할 경우 영향을 미칩니다.
+Nano, 메모장 및 Notepad++는 편리한 대안입니다.
 
-=== Install a Git GUI Client
+=== 깃 GUI 클라이언트 설치
 
-Consider the following software:
+다음 소프트웨어를 고려해 보십시오:
 
-- https://desktop.github.com/[Github Desktop], free and great for beginners
-- https://www.sourcetreeapp.com/[Sourcetree], free but a bit more complicated than GitHub Desktop
-- https://www.gitkraken.com/[GitKraken], free for non-commercial use as long as your code is public to the internet
-- https://git-fork.com/[Fork], free evaluation copy
-- Additional Git GUI clients can be found on https://git-scm.com/downloads/guis[Git's website]
+- https://desktop.github.com/[Github Desktop], 무료이며 초보자에게 적합합니다.
+- https://www.sourcetreeapp.com/[Sourcetree], 무료지만 GitHub Desktop보다 약간 더 복잡합니다.
+- https://www.gitkraken.com/[GitKraken], 비상업적 사용에 무료이며 코드가 인터넷에 공개되어야 합니다.
+- https://git-fork.com/[Fork], 무료 평가판
+- 추가 깃 GUI 클라이언트는 https://git-scm.com/downloads/guis[깃 웹사이트]에서 찾을 수 있습니다.
 
-Tutorials on the docs will use GitHub Desktop, but all are valid choices.
-There are additional directions below for GitHub Desktop setup.
-If you're using another client, feel free to skip to the link:#_next_steps[Next Steps heading] after completing its setup.
+문서의 튜토리얼은 GitHub Desktop을 사용할 것이지만,
+모두 유효한 선택입니다.
+GitHub Desktop 설정에 대한 추가 지침이 아래에 있습니다.
+다른 클라이언트를 사용하는 경우,
+설정이 완료된 후 link:#_다음_단계[다음 단계 제목]으로 건너뛰어도 됩니다.
 
-=== GitHub Desktop Setup
+=== GitHub Desktop 설정
 
-You probably already created an account on GitHub in order to obtain a copy of the custom engine version.
-If not, create one now.
+아마도 맞춤형 엔진 버전을 얻기 위해 깃허브에서 계정을 이미 만들었을 것입니다.
+아직 만들지 않았다면 지금 만드십시오.
 
-Get the GitHub Desktop installer 
-Once the file has downloaded, run it and sign in with your GitHub account.
+GitHub Desktop 설치 프로그램을 다운로드하십시오.
+파일이 다운로드되면 실행하고 깃허브 계정으로 로그인하십시오.
 
-Once sign in is complete, you will be presented with a "Let's get started!" screen.
-If you'd like, you can create a tutorial repository,
-but for now, you should leave this program alone and continue with the steps below.
+로그인이 완료되면 "Let's get started!" 화면이 표시됩니다.
+원하는 경우 튜토리얼 저장소를 만들 수 있지만,
+지금은 이 프로그램을 그대로 두고 아래 단계로 진행하십시오.
 
-== Next Steps
+== 다음 단계
 
+==== 
+시작 프로젝트를 복제하는 방법을 배우는 중에 여기에 왔다면,
+문서의 해당 부분으로 돌아가려면
+xref:Development/BeginnersGuide/StarterProject/ObtainStarterProject.adoc#_시작_프로젝트_얻기[여기]를 클릭하십시오.
 ====
-If you came here while learning how to clone the starter project,
-return to that portion of the docs by clicking
-xref:Development/BeginnersGuide/StarterProject/ObtainStarterProject.adoc#_obtaining_the_starter_project[here ➡]
-====
 
-====
-If you came here looking to create a repository for your mod,
-continue to the tutorial for that by clicking
-xref:Development/BeginnersGuide/CreateGitRepo.adoc[here ➡]
+==== 
+모드를 위한 저장소를 만들기 위해 여기에 왔다면,
+그에 대한 튜토리얼로 계속 진행하려면
+xref:Development/BeginnersGuide/CreateGitRepo.adoc[여기]를 클릭하십시오.
 ====

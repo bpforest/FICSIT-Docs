@@ -1,290 +1,280 @@
-= Commands
+= 명령어
 
-There are two types of "commands" in Satisfactory:
-link:#ChatCommands[*Chat Commands*]
-and link:#ConsoleCommands[*Unreal Console Commands*].
-They differ in how they work and from where you invoke the command.
+새티스팩토리에는 두 가지 유형의 "명령어"가 있습니다:
+link:#ChatCommands[*채팅 명령어*]
+및 link:#ConsoleCommands[*언리얼 콘솔 명령어*].
+이들은 작동 방식과 명령어를 호출하는 위치에서 다릅니다.
 
 [id="ChatCommands"]
-== Chat Commands
+== 채팅 명령어
 
-Chat commands are run *from the in-game chat window* prefixed with a `/`.
-For example, to run the 'help' command, you'd enter `/help` into chat.
+채팅 명령어는 *게임 내 채팅 창*에서 `/` 로 시작하여 실행됩니다.
+예를 들어, 'help' 명령어를 실행하려면 채팅에 `/help` 를 입력하면 됩니다.
 
-If you see a user or mod page talking about a "command",
-~90% of the time they are referring to chat commands.
+사용자나 모드 페이지에서 "명령어"에 대해 언급하는 경우,
+~90%의 경우 채팅 명령어를 지칭합니다.
 
-Command response messages are usually only seen by the player executing the command
-but this differs depending on the command's implementation.
+명령어 응답 메시지는 일반적으로 명령어를 실행하는 플레이어만 볼 수 있으며,
+이는 명령어의 구현에 따라 다를 수 있습니다.
 
-These 3 commands are provided by Satisfactory Mod Loader.
-All other chat commands are implemented by mods.
+새티스팩토리 모드 로더에서 제공하는 3가지 명령어가 있습니다.
+모드에 의해 구현된 모든 다른 채팅 명령어가 있습니다.
 
 [cols="1,4a"]
 |===
-|Command |Description
+|명령어 |설명
 
 |help
-|Lists each available chat command and a short mod-developer-provided description of their functionality.
+|사용 가능한 각 채팅 명령어와 그 기능에 대한 짧은 모드 개발자 제공 설명을 나열합니다.
 
 |info
-|Prints information about the SML version.
-Also lists all currently loaded mods.
+|SML 버전에 대한 정보를 출력합니다.
+또한 현재 불러온 모드를 나열합니다.
 
 |list
-|Provides a list of currently connected players.
+|현재 연결된 플레이어 목록을 제공합니다.
 |===
 
 [TIP]
-====
-Developers, if you're looking to create your own chat commands, check out
-xref:Development/ModLoader/ChatCommands.adoc[this page].
+==== 
+만약 자신만의 채팅 명령어를 만들고 싶은 개발자라면
+xref:Development/ModLoader/ChatCommands.adoc[이 페이지]를 확인하십시오.
 ====
 
 [id="ConsoleCommands"]
-== Unreal Console Commands
+== 언리얼 콘솔 명령어
 
-Unreal console commands are run *from the in-game developer console*
-which opens when you press the grave/tilde key (``` or `~`).
-They can also be executed from the interactive console of a dedicated server.
-If the console does not open upon keypress, check out the
-https://satisfactory.wiki.gg/wiki/Console#Accessing[Satisfactory Wiki's page on the Console]
-to try alternate approaches.
+언리얼 콘솔 명령어는 *게임 내 개발자 콘솔*에서 실행됩니다.
+이는 억음/물결표 키 (``` 또는 `~`)를 눌러 열 수 있습니다.
+전용 서버의 대화형 콘솔에서도 실행할 수 있습니다.
+콘솔이 키 입력 시 열리지 않으면,
+https://satisfactory.wiki.gg/wiki/Console#Accessing[새티스팩토리 위키의 콘솔 접근 페이지]를 확인하여 대체 방법을 시도하십시오.
 
-Some console commands are built into Unreal Engine,
-some are implemented by Coffee Stain,
-and in rare cases mods may implement their own.
-Some of they may not function due to code removed from the distributed version of the game.
+일부 콘솔 명령어는 언리얼 엔진에 내장되어 있으며,
+일부는 Coffee Stain에 의해 구현되었고,
+드물게 모드가 자체적으로 구현할 수 있습니다.
+일부는 배포된 게임 버전에서 제거된 코드로 인해 작동하지 않을 수 있습니다.
 
 [id="EnableCheats"]
-=== Enabling Cheats
+=== 치트 활성화
 
-Cheats must be enabled in the game save for a majority of console commands to function.
-To enable cheats:
+대부분의 콘솔 명령어가 작동하려면 게임 저장에서 치트를 활성화해야 합니다.
+치트를 활성화하려면:
 
-1. Install the link:https://ficsit.app/mod/SML[SML] mod if you haven't already.
-2. Use SML's "Enable Cheats" Mod Savegame Setting.
-.. Option 1: Enable the setting from the xref:ForUsers/ConfiguringMods.adoc#_mod_savegame_settings[in-game menu].
-.. Option 2: Run the `SML.ForceAllowCheats 1` to directly adjust the session setting value directly from the console.
-3. Run the `EnableCheats` console command to activate SML's hook on the cheats system.
-Because of how the command is implemented, the game will claim that the command is not recognized when you run it.
-This is expected behavior.
-4. Cheats should now be enabled for this game session.
-You will have to enable them again later if you load a save.
+1. 아직 설치하지 않았다면 link:https://ficsit.app/mod/SML[SML] 모드를 설치하십시오.
+2. SML의 "Enable Cheats(치트 활성화)" 모드 저장 설정을 사용하십시오.
+.. 옵션 1: xref:ForUsers/ConfiguringMods.adoc#_mod_savegame_settings[게임 내 메뉴]에서 설정을 활성화하십시오.
+.. 옵션 2: 콘솔에서 `SML.ForceAllowCheats 1` 을 실행하여 세션 설정 값을 직접 조정하십시오.
+3. `EnableCheats` 콘솔 명령어를 실행하여 SML의 치트 시스템에 대한 후크를 활성화하십시오.
+명령어가 구현된 방식 때문에, 이를 실행하면 게임이 명령어를 인식하지 못한다고 주장할 것입니다.
+이는 예상되는 동작입니다.
+4. 이제 이 게임 세션에 대해 치트가 활성화되어야 합니다.
+저장 파일을 로드하면 다시 활성화해야 합니다.
 
 [TIP]
+==== 
+콘솔 명령어를 자주 사용할 계획이라면,
+https://ficsit.app/mod/NogsCheats[Nog's Cheats]와 같은 모드를 설치하여
+자동으로 치트를 활성화하는 것을 고려해 보십시오.
 ====
-If you plan to use console commands frequently,
-consider installing a mod that will automatically enable cheats for you such as
-https://ficsit.app/mod/NogsCheats[Nog's Cheats].
-====
 
-=== List of Useful Unreal Console Commands
+=== 유용한 언리얼 콘솔 명령어 목록
 
-This list consists of some of the most useful ones, but there are more.
+이 목록은 가장 유용한 것들로 구성되어 있지만, 더 많은 것이 있습니다.
 
-A full list Satisfactory-specific cheats can be found
-https://github.com/satisfactorymodding/SatisfactoryModLoader/blob/master/Source/FactoryGame/Public/FGCheatManager.h[here].
+새티스팩토리 전용 치트의 전체 목록은
+https://github.com/satisfactorymodding/SatisfactoryModLoader/blob/master/Source/FactoryGame/Public/FGCheatManager.h[여기]에서 확인할 수 있습니다.
 
-The native Unreal cheats
-https://github.com/satisfactorymodding/UnrealEngine/blob/5.2.3-CSS/Engine/Source/Runtime/Engine/Classes/GameFramework/CheatManager.h[listed here]
-can also be used.
-Note that to view this link,
-you must be signed into a GitHub account registered with Epic Games,
-otherwise it will display as a 404 page.
-The process to register your account can be found
-xref:Development/BeginnersGuide/dependencies.adoc#CustomEngine[here].
+네이티브 언리얼 치트는
+https://github.com/satisfactorymodding/UnrealEngine/blob/5.2.3-CSS/Engine/Source/Runtime/Engine/Classes/GameFramework/CheatManager.h[여기]에 나열되어 있습니다.
+이 링크를 보려면,
+에픽게임즈에 등록된 깃허브 계정으로 로그인해야 하며,
+그렇지 않으면 404 페이지가 표시됩니다.
+계정을 등록하는 과정은
+xref:Development/BeginnersGuide/dependencies.adoc#CustomEngine[여기]에서 확인할 수 있습니다.
 
 [cols="2,4a,1"]
 |===
-|Command |Description |Category
+|명령어 |설명 |카테고리
 
 |Cheats
-| Open the Coffee Stain Studios cheats user interface.
-| Mod developers can add cheats here by following xref:Development/Satisfactory/CheatBoard.adoc[these directions].
-| (Unspecified)
-
-// From UE CheatManager
+| Coffee Stain Studios 치트 사용자 인터페이스를 엽니다.
+모드 개발자는 xref:Development/Satisfactory/CheatBoard.adoc[이 지침]을 따라 여기에 치트를 추가할 수 있습니다.
+| (미지정)
 
 |Teleport
-| Teleports you to where your cursor is looking.
-No range limit.
-Be careful of teleporting outside of the map by accident.
-| Cheat Manager
+| 커서가 바라보는 위치로 텔레포트합니다.
+범위 제한이 없습니다.
+맵을 벗어나 텔레포트하지 않도록 주의하십시오.
+| 치트 관리자
 
 |God
-| Toggles god mode, making you immune to damage.
-| Cheat Manager
+| 신 모드를 전환하여 피해를 받지 않게 합니다.
+| 치트 관리자
 
-|CheatScript <ScriptName, string>
-| Executes commands listed in `CheatScript.ScriptName` ini section of DefaultGame.ini
-| (Unspecified)
-
-// From FGCheatManager
+|CheatScript <스크립트이름, 문자열>
+| DefaultGame.ini의 `CheatScript.ScriptName` ini 섹션에 나열된 명령어를 실행합니다.
+| (미지정)
 
 |NoMessages <true/false>
-| Disables ADA messages on unlocks.
-| (Unspecified)
+| 해금 시 ADA 메시지를 비활성화합니다.
+| (미지정)
 
 |GiveAvailableSchematics 
-| Gives access to all currently purchaseable schematics in the game (including modded ones).
-It's recommended that you run `NoMessages true` first.
-| Research
+| 게임에서 현재 구매 가능한 모든 도면에 대한 접근을 제공합니다 (모드된 것 포함).
+먼저 `NoMessages true` 를 실행하는 것이 좋습니다.
+| 연구
 
 |ResetGamePhases
-| Resets your space elevator progress.
-Does not affect unlocked milestones.
-| Research
+| 우주 엘리베이터 진행 상황을 초기화합니다.
+해금된 마일스톤에는 영향을 미치지 않습니다.
+| 연구
 
 |SetNextGamePhase
-| Completes the next available space elevator tier.
-Does not grant any milestones.
-| Research
+| 다음 사용 가능한 우주 엘리베이터 티어를 완료합니다.
+마일스톤을 부여하지 않습니다.
+| 연구
 
-|GiveSchematicsOfTier <int, tier number in HUB>
-| Unlocks all milestones in the specified tier number.
-It's recommended that you run `NoMessages true` first.
-| Research
+|GiveSchematicsOfTier <정수, 허브의 티어 번호>
+| 지정된 티어 번호의 모든 마일스톤을 잠금 해제합니다.
+먼저 `NoMessages true` 를 실행하는 것이 좋습니다.
+| 연구
 
 |GiveActiveMilestoneSchematic
-| Immediately completes the selected milestone in the HUB.
-| Research
+| 허브에서 선택한 마일스톤을 즉시 완료합니다.
+| 연구
 
 |CompleteResearch 
-| Immediately completes ongoing MAM research.
-| (Unspecified)
+| 진행 중인 M.A.M. 연구를 즉시 완료합니다.
+| (미지정)
 
 |NoCost <true/false>
-| Enables or disables the NoCost cheat,
-which is saved in the save file,
-and persists even when mods are uninstalled.
-When enabled, no items are required to build things with the build gun.
-Crafting stations still require ingredients.
-| Resources
+| NoCost 치트를 활성화하거나 비활성화합니다.
+이 설정은 저장 파일에 저장되며,
+모드가 제거되더라도 지속됩니다.
+활성화되면, 빌드 건으로 건물을 지을 때 필요한 아이템이 없습니다.
+작업대에는 해당되지 않습니다.
+| 자원
 
 |NoPower <true/false>
-| Enables or disables the NoPower cheat,
-which is saved in the save file,
-and persists even when mods are uninstalled.
-When enabled, buildings still require a power connection,
-but they require no electricity to run.
-Vehicles also do not require fuel.
-| Resources
+| NoPower 치트를 활성화하거나 비활성화합니다.
+이 설정은 저장 파일에 저장되며,
+모드가 제거되더라도 지속됩니다.
+활성화되면, 건물은 여전히 전원 연결이 필요하지만,
+작동하는 데 전기가 필요하지 않습니다.
+차량도 연료가 필요하지 않습니다.
+| 자원
 
 |TurboProductionMode <true/false>
-| When enabled, all items craft instantly in the workbench and workshop.
-Buildings are unaffected.
-| World/Time
+| 활성화되면, 모든 아이템이 작업대와 장비 작업장에서 즉시 제작됩니다.
+건물에는 영향을 미치지 않습니다.
+| 월드/시간
 
-|GiveItemStacks <Blueprint Path> <Number of Stacks>
-| Adds a number of full stacks of an item to the player's inventory.
-If the inventory isn't big enough to hold it all,
-extra slots will be granted as well.
-You can find an item's Blueprint Path on the
-https://satisfactory.wiki.gg/[Satisfactory Wiki],
-finding the content on a
-https://github.com/Goz3rr/SatisfactorySaveEditor/tree/master/Reference%20Materials[reference list], or via searching around for it in
-xref:Development/ExtractGameFiles.adoc#FModel[FModel].
-You can also use it to give yourself additional inventory slots
-via `GiveItemStacks "" numberOfSlots`
-| Resources
+|GiveItemStacks <블루프린트 경로> <묶음 수>
+| 플레이어의 인벤토리에 아이템의 전체 묶음 수를 추가합니다.
+인벤토리가 모든 아이템을 담기에 충분하지 않으면,
+추가 슬롯도 제공됩니다.
+아이템의 블루프린트 경로는
+https://satisfactory.wiki.gg/[새티스팩토리 위키]에서 찾거나,
+https://github.com/Goz3rr/SatisfactorySaveEditor/tree/master/Reference%20Materials[참조 목록]에서 찾거나,
+xref:Development/ExtractGameFiles.adoc#FModel[FModel]에서 검색하여 찾을 수 있습니다.
+또한 `GiveItemStacks "" 슬롯개수` 를 통해 추가 인벤토리 슬롯을 제공할 수 있습니다.
+| 자원
 
-|GiveItemsSingle <Blueprint Path> <Number of Items>
-| Adds a number of individual items to the player's inventory.
-Unlike `GiveItemStacks`, if the inventory can't hold the items,
-the inventory will NOT be expanded.
-You can find an item's Blueprint Path on the
-https://satisfactory.wiki.gg/[Satisfactory Wiki],
-finding the content on a
-https://github.com/Goz3rr/SatisfactorySaveEditor/tree/master/Reference%20Materials[reference list], or via searching around for it in
-xref:Development/ExtractGameFiles.adoc#FModel[FModel].
-| Resources
+|GiveItemsSingle <블루프린트 경로> <아이템 수>
+| 플레이어의 인벤토리에 개별 아이템 수를 추가합니다.
+`GiveItemStacks`와 달리, 인벤토리가 아이템을 담을 수 없다면,
+인벤토리는 확장되지 않습니다.
+아이템의 블루프린트 경로는
+https://satisfactory.wiki.gg/[새티스팩토리 위키]에서 찾거나,
+https://github.com/Goz3rr/SatisfactorySaveEditor/tree/master/Reference%20Materials[참조 목록]에서 찾거나,
+xref:Development/ExtractGameFiles.adoc#FModel[FModel]에서 검색하여 찾을 수 있습니다.
+| 자원
 
-|GiveResourceSinkCoupons <Amount>
-| Adds AWESOME Sink coupons to the pool that can be printed at an AWESOME Sink.
-Does not affect how many points it takes to earn the next coupon.
-| Resources
+|GiveResourceSinkCoupons <수량>
+| A.W.E.S.O.M.E. 싱크에서 인쇄할 수 있는 A.W.E.S.O.M.E. 싱크 쿠폰을 추가합니다.
+다음 쿠폰을 얻는 데 필요한 포인트 수에는 영향을 미치지 않습니다.
+| 자원
 
-|Slomo <Multiplier>
-| Speeds up or slows down the entire game by the given multiplier.
-This includes player movement, particles, animations, etc.
-It has an effect on building operation rate,
-but not as pronounced as one may expect.
-For example, `10.0` makes Copper Sheets craft in
-around 3.5 seconds instead of the 6 seconds they take at `1.0`.
-| World/Time
+|Slomo <배수>
+| 주어진 배수로 전체 게임 속도를 높이거나 낮춥니다.
+여기에는 플레이어 이동, 입자, 애니메이션 등이 포함됩니다.
+건물 작동 속도에도 영향을 미치지만,
+기대만큼 두드러지지 않습니다.
+예를 들어, 구리 판의 제작 시간이 `1.0` 에서 6초라고 할 때, `10.0` 은 약 3.5초가 걸립니다.
+| 월드/시간
 
-|SetTimeOfDay <Hour> <Minute>
-| Sets the world time of day in 24 hour time format.
-| World/Time
+|SetTimeOfDay <시간> <분>
+| 24시간 형식으로 세계의 시간을 설정합니다.
+| 월드/시간
 
-|SetTimeSpeedMultiplier <Multiplier>
-| Sets a world time of day speed multiplier.
-Set it to 0 to freeze the day/night cycle altogether.
-| (Unspecified)
+|SetTimeSpeedMultiplier <배수>
+| 세계의 시간 속도 배수를 설정합니다.
+0으로 설정하면 낮/밤 주기를 완전히 멈춥니다.
+| (미지정)
 
 |EnableBuildableTick <true/false>
-| Enables/disables AFGBuildable ticking,
-which controls if buildings are animated.
-They will still produce items at their regular rate
-even when this is set to `false`.
-| Factory:Uncommon
+| AFGBuildable 틱을 활성화/비활성화합니다.
+이 설정은 건물이 애니메이션되는지 여부를 제어합니다.
+이 설정이 `false` 로 설정되어도,
+건물은 여전히 정규 속도로 아이템을 생산합니다.
+| 공장:희귀 경우
 
 |PlayerFly <true/false>
-| Enables/disables the vanilla flying cheat.
-| Player/Camera
+| 기본 비행 치트를 활성화/비활성화합니다.
+| 플레이어/카메라
 
 |PlayerNoClipModeOnFly <true/false>
-| Enables/disables noclip when in cheat fly mode.
-| Player/Camera
+| 치트 비행 모드에서 노클립을 활성화/비활성화합니다.
+| 플레이어/카메라
 
 |FlipVehicle
-| Flips the vehicle you are currently in by 180 degrees.
-If you're upright already, it will flip you upside down.
-| (Unspecified)
+| 현재 탑승 중인 차량을 180도 뒤집습니다.
+이미 똑바로 서 있다면, 거꾸로 뒤집힙니다.
+| (미지정)
 
 |ResetAllFactoryLegsToZero <true/false>
-| Makes the support legs on all buildings reset to their default height.
-The boolean argument controls if it should "repopulateEmptyLegs,"
-presumably if they were deleted somehow.
-| (Unspecified)
+| 모든 건물의 지지 다리를 기본 높이로 재설정합니다.
+부울 인자는 "repopulateEmptyLegs"를 제어하며,
+아마도 삭제된 경우를 의미합니다.
+| (미지정)
 
 |RebuildFactoryLegsOneTileAroundPlayer
-| Recalculates the support legs on buildings near the player.
-If the gap is too large, they will just reset to zero.
-| (Unspecified)
+| 플레이어 주변의 건물에서 지지 다리를 재계산합니다.
+간격이 너무 크면, 그냥 0으로 재설정됩니다.
+| (미지정)
 
-|FillAllFreightCars <percent full, float>
-| Fills all freight cars in the map with a nameless,
-descriptionless placeholder item.
-The argument controls how close to full they are, with 1.0 being 100%
-Freight cars that already had items in them when this command was run
-will have the items emptied instead of set to the fill percentage.
-| (Unspecified)
+|FillAllFreightCars <백분율 가득, 실수>
+| 맵의 모든 화물차를 이름과
+설명이 없는 자리 표시자 아이템으로 채웁니다.
+인자는 얼마나 가득 차 있는지를 제어하며, 1.0은 100%를 의미합니다.
+이 명령어가 실행될 때 이미 아이템이 있는 화물차는
+아이템이 비워지지 않고 채워진 비율로 설정됩니다.
+| (미지정)
 
 |EmptyAllFreightCars
-| Empties all freight cars in the map of their contents.
-| (Unspecified)
+| 맵의 모든 화물차에서 내용물을 비웁니다.
+| (미지정)
 
 |HideAllBuildings <true/false>
-| Hides or shows all factory buildings.
-They still have collision.
-| Display
+| 모든 공장 건물을 숨기거나 표시합니다.
+여전히 충돌이 있습니다.
+| 표시
 
 |ShowFactoryOnly <true/false>
-| Hides or shows all terrain, including the skybox and its light.
-Disables your flashlight when enabled.
-It still has collision.
-| Display
+| 모든 지형, 하늘 상자 및 그 빛을 숨기거나 표시합니다.
+활성화되면 손전등이 비활성화됩니다.
+여전히 충돌이 있습니다.
+| 표시
 
 |ForceSpawnCreatures
-| Forces active spawners to spawn creatures
-even if the creature isn't set to spawn yet
-(because of day/night restrictions etc.)
-| World/Time
+| 활성화된 스포너가 생명체를 강제로 생성하게 합니다.
+생물이 아직 생성되지 않도록 설정된 경우에도
+(주야 제한 등으로 인해) 생성됩니다.
+| 월드/시간
 
-// Crashes/bad
+// 충돌/문제
 
-// `OpenModMap` takes you to the menu from a save and does nothing once there?
+// `OpenModMap` 은 저장에서 메뉴로 이동하고 그곳에서 아무것도 하지 않습니까?
 
 |===

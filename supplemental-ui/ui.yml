@@ -1,3 +1,4 @@
 static_files:
   - favicon.ico
   - logo.png
+  - robots.txt
