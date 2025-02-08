@@ -307,7 +307,7 @@ https://www.audiokinetic.com/en/download/[Wwise]를 방문하여
 
 == 새티스팩토리 모드 관리자
 
-xref:index.adoc#_satisfactory_mod_manager_aka_smm[새티스팩토리 모드 관리자]는
+xref:index.adoc#_새티스팩토리_모드_관리자_smm[새티스팩토리 모드 관리자]는
 사용자에게 적합한 모드 의존성 버전을 자동으로 설치하는 강력한 도구입니다.
 기본적으로 모든 최종 사용자는 이 도구를 사용하여 모드를 설치하게 됩니다.
 

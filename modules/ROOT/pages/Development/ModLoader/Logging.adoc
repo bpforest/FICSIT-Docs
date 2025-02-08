@@ -5,7 +5,7 @@ especially for Blueprint mods, which can't be debugged with a debugger like {cpp
 
 The messages you log will be recorded to a text file
 that is automatically submitted when users use
-xref:index.adoc#_satisfactory_mod_manager_aka_smm[Satisfactory Mod Manager] to generate a debug log.
+xref:index.adoc#_새티스팩토리_모드_관리자_smm[Satisfactory Mod Manager] to generate a debug log.
 
 The log file will be replaced at every game launch,
 and if you xref:Development/TestingResources.adoc#_multiplayer_testing[have multiple copies of the game open],
