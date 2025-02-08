@@ -75,4 +75,4 @@ ficsit.app의 모드 페이지에서 문서를 확인하십시오.
 == 나만의 모드 만들기
 
 자세한 정보는
-xref:index.adoc#_for_developers[홈페이지의 이 섹션]을 확인하십시오.
+xref:index.adoc#_개발자용[홈페이지의 이 섹션]을 확인하십시오.

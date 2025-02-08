@@ -195,7 +195,7 @@ M Menu Priority::
 == Item Visuals In World
 
 Before continuing, remember to
-xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#_compile_and_save[compile and save]!
+xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#_컴파일_및_저장[compile and save]!
 
 In order to avoid having your item display as the default flat white cube
 when on a conveyor or when dropped in the world, you must specify a Conveyor Mesh.
@@ -338,7 +338,7 @@ Afterwards, save the asset.
 == Make the Item Available
 
 Before continuing, remember to
-xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#_compile_and_save[compile and save]!
+xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#_컴파일_및_저장[compile and save]!
 
 From here on out, we'll stop reminding you to compile and save, but it isn't any less important - remember to do it often!
 
@@ -353,7 +353,7 @@ or create a new recipe for it if you'd like to practice that.
 
 And you're done! Go ahead and Alpakit your plugin, then check out your fancy new item in game.
 You can find info on how to use Alpakit back on the
-xref:Development/BeginnersGuide/project_setup.adoc#_setting_up_alpakit[Project Setup] page.
+xref:Development/BeginnersGuide/project_setup.adoc#_알파킷_설정[Project Setup] page.
 
 If something went wrong, feel free to contact us on the https://discord.ficsit.app[Discord] for help.
 

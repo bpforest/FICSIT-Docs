@@ -203,7 +203,7 @@ To turn off mods entirely, click "Mods off" in the top left corner of the mod ma
 image:FAQ/TurnOffMods.png[Satisfactory Mod Manager Off Switch]
 
 If this fails for some reason, delete the "Mods" folder from your
-xref:faq.adoc#_where_are_my_game_files_located[game's install directory] manually.
+xref:faq.adoc#_게임_파일은_어디에_있습니까[game's install directory] manually.
 
 [id="InstallSpecificModVersion"]
 == Installing a Specific Version of a Mod

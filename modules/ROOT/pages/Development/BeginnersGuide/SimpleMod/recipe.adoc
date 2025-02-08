@@ -1,347 +1,345 @@
-= Recipe vs Schematic
+= 제작법과 도면
 
-Now that we've got the basic structure of our mod set up,
-let's create a custom recipe that we can use to craft an existing in-game item.
+이제 모드의 기본 구조를 설정했으니,
+게임 내 기존 아이템을 제작할 수 있는 맞춤형 제작법을 만들어 보겠습니다.
 
-Before we create our first recipe, however,
-it's important to understand the difference between
-a 'recipe' and a 'schematic.'
+첫 번째 제작법을 만들기 전에,
+'제작법'과 '도면'의 차이를 이해하는 것이 중요합니다.
 
-In Satisfactory, 'Recipes' are used to define the item input/cost
-and output of crafting items, buildables, etc.
-They are backed by the FGRecipe class.
-Recipes are not only used for the craft bench or the workshop,
-but also for the build gun, smelters, manufacturers and more.
-You can read more about recipes on the xref:Development/Satisfactory/Crafting.adoc[Crafting page].
+새티스팩토리에서 '제작법'은 아이템 입력/비용과
+제작 아이템, 건물 등의 출력을 정의하는 데 사용됩니다.
+이들은 FGRecipe 클래스에 의해 지원됩니다.
+제작법은 작업대나 장비 작업장뿐만 아니라,
+빌드 건, 제련기, 제조기 등에서도 사용됩니다.
+제작법에 대한 자세한 내용은 xref:Development/Satisfactory/Crafting.adoc[제작 페이지]를 참고하십시오.
 
 [TIP]
 ====
-Note that recipes are used to define both crafting recipes in the craft bench and machines _and_ construction prices when using the build gun.
-All buildables actually have an item equivalent in game as well.
+제작법은 작업대와 기계에서의 제작법 _및_
+빌드 건을 사용할 때의 건설 비용을 정의하는 데 사용됩니다.
+모든 건물은 실제 게임 내에서 아이템에 해당합니다.
 ====
 
-'Schematics', on the other hand, define things like  https://satisfactory.wiki.gg/Milestones[Milestones],
-the shipments submitted to FICSIT via the HUB in order to unlock new recipes and features.
-This is far from their only purpose.
-They are backed by the FGSchematic class.
-You can read more about schematics on the xref:Development/Satisfactory/Schematic.adoc[FGSchematic page].
+반면 '도면'은 https://satisfactory.wiki.gg/Milestones[마일스톤]과 같은 것들을 정의하며,
+허브를 통해 FICSIT에 제출된 선적물로 새로운 제작법과 기능을 잠금 해제하는 데 사용됩니다.
+이것이 그들의 유일한 목적은 아닙니다.
+이들은 FGSchematic 클래스에 의해 지원됩니다.
+도면에 대한 자세한 내용은 xref:Development/Satisfactory/Schematic.adoc[FGSchematic 페이지]를 참고하십시오.
 
-In this segment of the tutorial, we will create both a recipe and a schematic.
-Our schematic will be used to give the player access to our recipe.
+이번 파트의 튜토리얼에서는 제작법과 도면을 모두 생성할 것입니다.
+우리의 도면은 플레이어가 제작법에 접근할 수 있도록 할 것입니다.
 
-== Create a Recipe
+== 제작법 만들기
 
-Let's make some new leaf-based recipes to start, since leaves are pretty common, so it will be easy to test our recipes out in-game.
+시작하기 위해 이파리 기반의 새로운 제작법을 만들어 보겠습니다. 이파리는 꽤 흔하므로, 게임 내에서 제작법을 테스트하기 쉽습니다.
 
-Go to the Content Browser in the Unreal editor.
-Navigate to the root folder of your mod (appears as `DocMod Content`), right click, and select 'New Folder'.
-Call the new folder "Recipes".
+언리얼 에디터의 콘텐츠 브라우저로 이동합니다.
+모드의 루트 폴더(`DocMod 콘텐츠` 로 표시됨)로 이동하여 우클릭 후 '새 폴더'를 선택합니다.
+새 폴더의 이름을 "Recipes"로 지정합니다.
 
-Inside of your Recipes folder in the Content Browser, right click,
-select to create a Blueprint Class, and use FGRecipe as the parent class.
-We'll call it `Recipe_DocRecipe` to follow Coffee Stain's naming convention for prefixing recipe files.
+콘텐츠 브라우저의 Recipes 폴더 안에서 우클릭 후
+블루프린트 클래스를 생성하고 FGRecipe를 부모 클래스로 사용합니다.
+Coffee Stain의 제작법 파일 접두사 명명 규칙을 따르기 위해 `Recipe_DocRecipe` 라고 하겠습니다.
 
-image:BeginnersGuide/simpleMod/CreateDocRecipeDescriptor.gif[image]
+image:BeginnersGuide/simpleMod/CreateDocRecipeDescriptor.gif[이미지]
 
-== Assign Recipe Properties
+== 제작법 속성 할당
 
-Next, we'll configure our new recipe to control what it requires, what it produces, and what machines can use it.
+다음으로, 새로운 제작법을 구성하여 필요한 것, 생산하는 것, 사용할 수 있는 기계를 제어합니다.
 
-Double click your new recipe to open it, and you should see the default settings of the classes' attributes.
-If not, click on the "Class Defaults" button in the toolbar and they should appear in the Details browser.
+새로운 제작법을 두 번 클릭하여 열면, 클래스 속성의 기본 설정이 표시됩니다.
+표시되지 않으면 툴바에서 "Class Defaults" 버튼을 클릭하면 세부 정보 브라우저에 나타납니다.
 
-Let's go through each attribute and set up our recipe's properties.
-You can hover over the left side of a field to get a tooltip describing its purpose (pulled from the game headers).
+각 속성을 살펴보고 제작법의 속성을 설정해 보겠습니다.
+입력란의 왼쪽에 마우스를 올리면 그 목적을 설명하는 툴팁이 표시됩니다(게임 헤더에서 가져옴).
 
 * {blank}
 +
 M Display Name::
-  The name of a recipe will show up inside the manual crafting bench, or any machines you set it to be used in.
-  By default, recipes take the name of their product item.
-  If you want to define a custom override name for your recipe, you can specify it here.
-  The base game uses this to give special names to alternate recipes.
+  제작법의 이름은 수동 작업대나 설정한 기계 내에서 표시됩니다.
+  기본적으로 제작법은 생산 아이템의 이름을 사용합니다.
+  제작법에 대한 원하는 이름을 정의하려면 여기에서 지정할 수 있습니다.
+  기본 게임은 대체 제작법에 특별한 이름을 부여하는 데 이를 사용합니다.
   {blank} +
-  For our tutorial recipe, we'll check the field and call it "Doc Recipe".
+  우리 튜토리얼 제작법의 경우, 입력란에 체크하고 "Doc Recipe"라고 부르겠습니다.
 * {blank}
 +
 M Ingredients::
-  An array of structs, each of which contains the information for one crafting ingredient.
-  Together, the array forms the input items for the recipe.
+  한 번 생산하는 데 필요한 재료에 대한 정보를 포함하는 구조체의 배열입니다.
+  배열은 제작법의 입력 아이템을 형성합니다.
   {blank} +
-  We'll add one entry and set the Item Class to `Desc_Leaves` and the Amount to `42`.
+  하나의 항목을 추가하고 아이템 클래스를 `Desc_Leaves` 로 설정하고 수량을 `42` 로 설정합니다.
 * {blank}
 +
 M Product::
-  Another an array of structs that defines output of the recipe.
+  제작법의 출력을 정의하는 또 다른 구조체의 배열입니다.
   {blank} +
-  Add a one entry and set the Item Class to `Desc_Wood` and the Amount to `1`.
+  하나의 항목을 추가하고 아이템 클래스를 `Desc_Wood` 로 설정하고 수량을 `1` 로 설정합니다.
 
 [WARNING]
 ====
-When making a recipe, be sure avoid the following common pitfalls:
+제작법을 만들 때 다음과 같은 일반적인 함정을 피해야 합니다:
 
-- Specifying more input/output types than the machine has ports
-- Requiring a fluid in a machine that doesn't have (enough) pipe ports.
-- Ingredient or product quantity that **exceeds** the item's stack size.
-If you do this, the machine will never run, because it can't hold all of the items required to start operating.
-- Ingredient or product quantity that **exceeds half** of the item's stack size.
-If you do this, the machine will still run, but it will never reach 100% uptime (efficiency).
-Satisfactory machines consume ingredients upon the completion of a production cycle,
-meaning the machine must wait for more items to be delivered by belts before it can begin crafting again.
+- 기계가 가진 포트 수보다 더 많은 입력/출력 유형을 지정하는 경우
+- 기계에 (충분한) 파이프 포트가 없는데 유체를 요구하는 경우
+- 재료 또는 생산 수량이 **아이템의 묶음 크기**를 초과하는 경우
+이렇게 하면 기계가 작동할 수 없게 됩니다. 시작하기 위해 필요한 모든 아이템을 보관할 수 없기 때문입니다.
+- 재료 또는 생산 수량이 **아이템의 묶음 크기 절반**을 초과하는 경우
+이렇게 하면 기계는 여전히 작동하지만 100% 가동 시간(효율성)에 도달할 수 없습니다.
+새티스팩토리의 기계는 생산 주기가 완료될 때 재료를 소비하므로,
+기계는 다시 제작을 시작하기 전에 벨트로 더 많은 아이템이 배달되기를 기다려야 합니다.
 
-If you use a fluid, multiply the quantity by 1000, since they are treated as liters internally, but displayed as cubic meters (1 cubic meter per 1000 liters).
+유체를 사용할 경우, 수량에 1000을 곱해야 합니다. 내부적으로 리터로 처리되지만 입방 미터로 표시됩니다(1 입방 미터는 1000리터).
 ====
 
 * {blank}
 +
 M Overridden Category::
-  Categories control what subsection a recipe appears under in the recipe list.
-  By default, recipes take on the category of their first product item.
+  범주는 제작법이 제작법 목록의 어떤 하위 섹션에 나타나는지를 제어합니다.
+  기본적으로 제작법은 첫 번째 생산 아이템의 범주를 따릅니다.
   {blank} +
-  We'll leave this at `None` so that it sticks with the default category of the Wood item.
+  기본 범주를 유지하기 위해 `None` 으로 두겠습니다.
 * {blank}
 +
 M Manufacturing Menu Priority::
-  Controls the order that recipes appear within their category.
-  Lower values means earlier in the menu.
-  Negatives and decimals allowed.
+  제작법이 범주 내에서 나타나는 순서를 제어합니다.
+  낮은 값은 메뉴에서 더 일찍 나타납니다.
+  음수와 소수점이 허용됩니다.
   {blank} +
-  Stick with the default value of `0.0`.
+  기본값인 `0.0` 을 유지하겠습니다.
 * {blank}
 +
 M Manufacturing Duration::
-  This determines the time it takes for a machine to process this recipe in seconds.
+  기계가 이 제작법을 처리하는 데 걸리는 시간을 초 단위로 결정합니다.
   {blank} +
-  Let's set this to `4.0` for reasons that will be explained below.
+  아래에서 설명할 이유로 `4.0` 으로 설정하겠습니다.
 * {blank}
 +
 M Manual Manufacturing Multiplier::
-  If you want the same recipe to be usable in both machines and the craft bench,
-  this value allows you to define how much longer the crafting of this recipe should take in the craft bench.
-  By default, this value is `1.0`.
-  This means that number of clicks to craft the product will be the number of seconds it takes to craft divided by two.
-  For example, Iron Rods have a Manufacturing Duration of `4.0` and a Multiplier of `0.5`.
-  This means that each batch takes 4 seconds in a machine, but only one click to craft (4 / 2 * 0.5 = 1)
-  This is capped at a minimum of one click - if it goes to 0, it still takes 1 click to process.
+  동일한 제작법을 기계와 작업대 모두에서 사용할 수 있도록 하려면,
+  이 값은 작업대에서 이 제작법을 제작하는 데 걸리는 시간을 정의할 수 있습니다.
+  기본적으로 이 값은 `1.0` 입니다.
+  이는 생산품을 제작하는 데 걸리는 초 수를 두 번 나눈 클릭 수를 의미합니다.
+  예를 들어, 철봉은 `4.0` 의 제조 시간을 가지고 있고 배수가 `0.5` 입니다.
+  이는 각 배치가 기계에서 4초가 걸리지만, 제작하는 데는 단 한 번의 클릭만 필요하다는 것을 의미합니다(4 / 2 * 0.5 = 1)
+  최소 한 번의 클릭으로 제한됩니다. 0이 되어도 여전히 한 번의 클릭이 필요합니다.
   {blank} +
-  Let's leave this at the default value of `1.0`.
-  Our recipe should now take 4 seconds to process in a machine, but only 2 clicks to craft.
+  기본값인 `1.0` 으로 두겠습니다.
+  우리의 제작법은 이제 기계에서 4초가 걸리지만, 제작하는 데는 2번의 클릭이 필요합니다.
 * {blank}
 +
 M Produced In::
-  An array of IFGRecipeProducerInterface implementers (machines) that are allowed to use the recipe.
+  제작법을 사용할 수 있는 IFGRecipeProducerInterface 구현자(기계)의 배열입니다.
   {blank} +
-  Let's add both `FGWorkBench` and `Build_ConstructorMk1`
-  to verify the behavior we discussed about the manufacturing times.
+  `FGWorkBench` 와 `Build_ConstructorMk1` 을 추가하여 우리가 논의한 제조 시간의 동작을 확인하겠습니다.
 * {blank}
 +
 M Material Customization Recipe::
-  Used with the Customizer for switching between building materials.
+  건축 자재 전환을 위한 커스터마이저와 함께 사용됩니다.
   {blank} +
-  Leave this at the default of `None` since we're not working with building recipes here.
+  건축 제작법을 건드리고 있지 않으므로 기본값인 `None` 으로 두겠습니다.
 * {blank}
 +
 Variable Power::
-  Controls the levels of power consumption that machines that support variable consumption will cycle between while producing this recipe.
-  As of Update 6, the Particle Accelerator is the only base-game building that supports this feature.
+  가변 소비를 지원하는 기계가 이 제작법을 생산하는 동안 순환할 전력 소비 수준을 제어합니다.
+  업데이트 6 기준으로, 입자 가속기가 이 기능을 지원하는 유일한 기본 게임 건물입니다.
   {blank} +
-  Let's leave these at the default values.
+  기본값으로 두겠습니다.
 * {blank}
 +
 M Relevant Events::
-  Restricts the recipe to only be valid during certain events, ex. FICSMAS or April First.
+  특정 이벤트(예: FICSMAS 또는 4월 1일) 동안만 제작법이 유효하도록 제한합니다.
   {blank} +
-  Leave this empty.
+  비워 두겠습니다.
 
-image:BeginnersGuide/simpleMod/SetDocRecipeProperties.gif[image]
+image:BeginnersGuide/simpleMod/SetDocRecipeProperties.gif[이미지]
 
-Ok, now you've created your first recipe!
+이제 첫 번째 제작법을 만들었습니다!
 
-Before continuing, remember to
-xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#_compile_and_save[compile and save]!
+계속하기 전에,
+xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#_컴파일_및_저장[컴파일하고 저장]하는 것을 잊지 마십시오!
 
-== Create a Schematic
+== 도면 만들기
 
-Next, let's add our recipe to a schematic to make it available in game.
+다음으로, 게임에서 사용할 수 있도록 제작법을 도면에 추가해 보겠습니다.
 
-Schematics are what Satisfactory uses to grant recipes and capabilities to the player.
-Schematics are the milestones you'll see in the HUB,
-the Tier 0 tutorial phases, M.A.M researches, alternate recipe researches, and more.
-If the player is unlocking an item, building, or any recipe, it's probably be granted by a schematic.
+도면은 새티스팩토리가 플레이어에게 제작법과 기능을 부여하는 데 사용하는 것입니다.
+도면은 허브에서 볼 수 있는 마일스톤이며,
+티어 0 튜토리얼 단계, M.A.M. 연구, 대체 제작법 연구 등입니다.
+플레이어가 아이템, 건물 또는 제작법을 잠금 해제하는 경우, 아마도 도면에 의해 부여될 것입니다.
 
-Go to the Content Browser in the Unreal editor.
-Navigate to the root folder of your mod (appears as `DocMod Content`), right click, and select 'New Folder'.
-Call the new folder "Schematics" to keep with our organization pattern so far.
+언리얼 에디터의 콘텐츠 브라우저로 이동합니다.
+모드의 루트 폴더(`DocMod Content` 로 표시됨)로 이동하여 우클릭 후 '새 폴더'를 선택합니다.
+새 폴더의 이름을 "Schematics"로 지정하여 지금까지의 조직 패턴을 유지합니다.
 
-Inside of your Schematics folder in the Content Browser, right click,
-select to create a Blueprint Class, and use
-xref:/Development/Satisfactory/Schematic.adoc[FGSchematic]
-as the parent class.
-We'll call it `Schematic_DocSchem` to follow Coffee Stain's naming convention for prefixing schematic files.
+콘텐츠 브라우저의 Schematics 폴더 안에서 우클릭 후
+블루프린트 클래스를 생성하고
+xref:/Development/Satisfactory/Schematic.adoc[FGSchematic]을 부모 클래스로 사용합니다.
+Coffee Stain의 도면 파일 접두사 명명 규칙을 따르기 위해 `Schematic_DocSchem` 이라고 부르겠습니다.
 
-== Assign Schematic Properties
+== 도면 속성 할당
 
-Next, we'll configure our new schematic to control what tier it's in and what it costs to unlock.
+다음으로, 새로운 도면을 구성하여 어떤 티어에 속하는지와 해금하는 데 필요한 비용을 제어합니다.
 
-Double click your new schematic to open it, and you should see the default settings of the classes' attributes.
-If not, click on the "Class Defaults" button in the toolbar and they should appear in the Details browser.
+새로운 도면을 두 번 클릭하여 열면, 클래스 속성의 기본 설정이 표시됩니다.
+표시되지 않으면 툴바에서 "Class Defaults" 버튼을 클릭하면 세부 정보 브라우저에 나타납니다.
 
-Let's go through each attribute and set up our schematic's properties.
-You can hover over the left side of a field to get a tooltip describing its purpose (pulled from the game headers).
+각 속성을 살펴보고 도면의 속성을 설정해 보겠습니다.
+입력란의 왼쪽에 마우스를 올리면 그 목적을 설명하는 툴팁이 표시됩니다(게임 헤더에서 가져옴).
 
 * {blank}
 +
 M Type::
-  Determines if the schematic is part of the tutorial system or if it's a Milestone/etc.
+  도면이 튜토리얼 시스템의 일부인지, 마일스톤 등인지 결정합니다.
   {blank} +
-  We'll use `Milestone` so it can be unlocked in the HUB.
+  허브에서 잠금 해제할 수 있도록 `Milestone` 을 사용하겠습니다.
 * {blank}
 +
 M Display Name::
-  The in-game name of our schematic, exactly as it is displayed to the user.
+  사용자에게 표시되는 도면의 게임 내 이름입니다.
   {blank} +
-  We'll use "Doc Plants Upgrade".
+  "Doc Plants Upgrade"를 사용하겠습니다.
 * {blank}
 +
 M Description::
-  A text description to display along with the schematic.
-  As of Update 6, only AWESOME Shop schematics actually display this field anywhere in-game.
+  도면과 함께 표시할 텍스트 설명입니다.
+  업데이트 6 기준으로, 실제로 게임 내에서 이 값을 표시하는 것은 A.W.E.S.O.M.E. 상점 도면뿐입니다.
   {blank} +
-  We'll leave it blank, since we're making a HUB schematic.
+  허브 도면이므로 비워 두겠습니다.
 * {blank}
 +
 M Schematic Category::
-  Defines the category in which this schematic gets grouped into.
-  Only AWESOME Shop schematics actually use this field.
+  이 도면이 그룹화되는 범주를 정의합니다.
+  실제로 이 값을 사용하는 것은 A.W.E.S.O.M.E. 상점 도면뿐입니다.
   {blank} +
-  Go ahead and pick one, it doesn't matter for our example.
+  하나를 선택해도 괜찮습니다. 예시이므로 상관없습니다.
 * {blank}
 +
 M Sub Category::
-  Defines in which sub groups the schematic should get categorized.
-  Again, only AWESOME Shop schematics actually use this field.
+  도면이 분류되는 하위 그룹을 정의합니다.
+  다시 말하지만, 실제로 이 필드를 사용하는 것은 A.W.E.S.O.M.E. 상점 도면뿐입니다.
   {blank} +
-  We leave this array empty.
+  이 배열은 비워 두겠습니다.
 * {blank}
 +
 M Menu Priority::
-  Controls the order that schematics appear within their category.
-  Relevant for HUB milestones and AWESOME Shop schematics.
+  도면이 범주 내에서 나타나는 순서를 제어합니다.
+  허브 마일스톤 및 A.W.E.S.O.M.E. 상점 도면에 관련이 있습니다.
   {blank} +
-  Stick with values above `10.0` to ensure your modded milestone appears after the vanilla ones in the list.
+  모드 마일스톤이 기본 항목 뒤에 나타나도록 기본값인 `10.0` 보다 높은 값을 사용하겠습니다.
 * {blank}
 +
 M Tech Tier::
-  Determines which Tier milestones appear as in the HUB.
+  허브에서 마일스톤이 나타나는 티어를 결정합니다.
   {blank} +
-  We'll set it to `1` so that our content is available as soon as you finish the tutorial.
+  튜토리얼을 마친 후 즉시 사용할 수 있도록 `1` 로 설정하겠습니다.
 * {blank}
 +
 M Time to Complete::
-  The amount of time the schematic takes to "process" in seconds,
-  if relevant to that schematic type.
-  For HUB milestones, it's the time it takes the ship to return.
-  For MAM nodes, it's the time it takes for the research to complete.
+  도면 유형과 관련된 경우, 도면이 "처리"되는 데 걸리는 시간(초)입니다.
+  허브 마일스톤의 경우, 화물선이 돌아오는 데 걸리는 시간입니다.
+  M.A.M. 노드의 경우, 연구가 완료되는 데 걸리는 시간입니다.
   {blank} +
-  We will set it to `60` seconds. 
+  `60` 초로 설정하겠습니다.
 * {blank}
 +
 M Schematic Icon::
-  The icon displayed on a HUB milestone, MAM Research, or AWESOME Shop page and preview.
+  허브 마일스톤, M.A.M. 연구 또는 A.W.E.S.O.M.E. 상점 페이지 및 미리 보기에서 표시되는 아이콘입니다.
   {blank} +
-// Links to GH hosted image because cloudflare serves it as a webp -> can't be imported to Unreal
-  Set both this field and `M Small Schematic Icon` to
-  https://raw.githubusercontent.com/satisfactorymodding/Documentation/master/modules/ROOT/attachments/BeginnersGuide/simpleMod/Icon_SchemDoc.png[this example image].
+// 클라우드플레어가 webp로 제공하므로(언리얼에서 사용 못함) 깃헙 호스팅 이미지 링크 사용
+  이 입력란과 `M Small Schematic Icon` 을
+  https://raw.githubusercontent.com/satisfactorymodding/Documentation/master/modules/ROOT/attachments/BeginnersGuide/simpleMod/Icon_SchemDoc.png[이 예시 이미지]로 설정하겠습니다.
 * {blank}
 +
 M Cost::
-  An array of structs, each of which contains the information for one required item to submit.
+  제출하는 데 필요한 각 아이템에 대한 정보를 포함하는 구조체의 배열입니다.
   {blank} +
-  We'll add two entries, one with 100 `Desc_Leaves` and another one with 50 `Desc_Wood`.
+  `Desc_Leaves` 100개와 `Desc_Wood` 50개로 두 항목을 추가하겠습니다.
 * {blank}
 +
 M Unlocks::
-  This array contains the rewards the player will get when purchasing this schematic.
-  It's an array of xref::/Development/Satisfactory/Schematic.adoc#_fgunlock_ufgunlock[FGUnlock] inner class instances.
-  The different kinds of unlocks are discussed in the schematics page.
+  이 도면을 구매할 때 플레이어가 받을 보상을 포함하는 배열입니다.
+  xref::/Development/Satisfactory/Schematic.adoc#_fgunlock_ufgunlock[FGUnlock] 내부 클래스 인스턴스의 배열입니다.
+  다양한 종류의 잠금 해제는 도면 페이지에서 논의됩니다.
   {blank} +
-  We'll add one `BP Unlock Recipe`. Add the recipe we created earlier (`Recipe_DocRecipe`) to its list.
+  하나의 `BP_UnlockRecipe` 를 추가하고 이전에 만든 제작법(`Recipe_DocRecipe`)을 목록에 추가합니다.
 * {blank}
 +
 M Schematic Dependencies::
-  This array allows for a schematic's purchase to be locked depending upon other schematics or items in the world.
-  This is completely ignored by the MAM in favor of node data, which is outside the scope of this tutorial.
+  다른 도면이나 세계의 아이템에 따라 도면 구매를 잠금 해제할 수 있는 배열입니다.
+  이는 M.A.M.에 의해 무시되며, 노드 데이터가 이 튜토리얼의 범위를 벗어납니다.
   {blank} +
-  We'll leave this empty because we don't want our content to require any other particular schematic to be unlocked first.
+  다른 특정 도면이 먼저 잠금 해제되도록 요구하지 않으므로 비워 두겠습니다.
 * {blank}
 +
 M Dependencies Block Schematic Access::
-  Controls if the dependencies should block access to the schematic, requiring custom code to unblock it later.
+  의존성이 도면 접근을 차단해야 하는지 제어하며, 나중에 이를 해제하기 위한 사용자 정의 코드가 필요합니다.
   {blank} +
-  Leave this unchecked since we don't have any dependencies.
+  의존성이 없으므로 체크하지 않겠습니다.
 * {blank}
 +
 M Relevant Events::
-  Restricts the schematic to only be valid during certain events, ex. FICSMAS or April First.
+  특정 이벤트(예: FICSMAS 또는 4월 1일) 동안만 유효하도록 도면을 제한합니다.
   {blank} +
-  Leave this empty.
+  비워 두겠습니다.
 * {blank}
 +
 M Include In Builds::
-  Set this to `PublicBuilds` so that your content is included in the build.
-  Presumably, this is what Coffee Stain uses to keep their developer testing milestones from being shipped with the main game.
+  이를 `PublicBuilds` 로 설정하여 콘텐츠가 빌드에 포함되도록 합니다.
+  아마도 Coffee Stain이 개발자 테스트 마일스톤을 메인 게임과 함께 배포하지 않도록 하는 데 사용하는 것 같습니다.
 
-Finally! What a class. Now we just need to register this schematic so it shows up at runtime.
+휴! 정말 멋진 클래스입니다. 이제 이 도면이 런타임에 표시되도록 등록하기만 하면 됩니다.
 
-Before continuing, remember to
-xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#_compile_and_save[compile and save]!
+계속하기 전에,
+xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#_컴파일_및_저장[컴파일하고 저장]하는 것을 잊지 마십시오!
 
-== Register the Schematic
+== 도면 등록
 
-To register the schematic, open up the
-xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#_create_the_class[RootGameWorld_YourModReferenceHere]
-asset we created earlier and add the schematics to the `M Schematics` array.
+도면을 등록하려면,
+이전에 생성한
+xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#_create_the_class[RootGameWorld_모드참조]
+애셋을 열고 `M Schematics` 배열에 도면을 추가합니다.
 
-And we're set! Our recipe and schematic are registered and should show up in the game now.
+이제 설정되었습니다! 우리의 제작법과 도면이 등록되었으며, 게임에 표시되어야 합니다.
 
-Before continuing, remember to
-xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#_compile_and_save[compile and save]!
+계속하기 전에,
+xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#_컴파일_및_저장[컴파일하고 저장]하는 것을 잊지 마십시오!
 
-== Testing Our Mod
+== 모드 테스트
 
-To test it out, go ahead and run Alpakit and launch the game.
-You can find info on how to use it back on the
-xref:Development/BeginnersGuide/project_setup.adoc#_setting_up_alpakit[Project Setup] page.
+테스트하려면 알파킷을 실행하고 게임을 시작하십시오.
+사용 방법에 대한 정보는
+xref:Development/BeginnersGuide/project_setup.adoc#_알파킷_설정[프로젝트 설정] 페이지에서 확인할 수 있습니다.
 
-Load up any save file you'd like,
-preferably an existing one so you don't have to go through the tutorial again,
-and check out the HUB.
-You should be able to purchase your schematic and go to a workbench or constructor to use your recipe.
+원하는 저장 파일을 불러오고,
+가능하면 기존 파일을 사용하여 다시 튜토리얼을 진행하지 않도록 하십시오.
+이제 허브를 확인해 보십시오.
+당신은 도면을 구매하고 작업대나 제작기로 가서 제작법을 사용할 수 있어야 합니다.
 
-== Troubleshooting
+== 문제 해결
 
-=== My schematic doesn't show up in the HUB
+=== 도면이 허브에 나타나지 않음
 
-- Did you xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#_compile_and_save[save and compile] all relevant files before Alpaking? Check for any unsaved files via `File > Choose Files to Save...`
-- Is the Game World Module you created on the last step of the docs marked as the Root Module?
-- Did you select a tier for the schematic that you can't access yet in the save file?
-- Is the schematic type set to something other than `Milestone`?
+- 모든 관련 파일을 xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#_컴파일_및_저장[저장하고 컴파일]했습니까? `파일 > 저장할 파일 선택...` 을 통해 저장되지 않은 파일을 확인하십시오.
+- 마지막 단계에서 생성한 게임 월드 모듈이 루트 모듈로 표시되었습니까?
+- 저장 파일에서 아직 접근할 수 없는 티어를 선택했습니까?
+- 도면 유형이 `Milestone` 이 아닌 다른 것으로 설정되어 있습니까?
 
-=== My recipe doesn't show up 
+=== 내 제작법이 나타나지 않음
 
-- Did you xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#_compile_and_save[save and compile] all relevant files before Alpaking? Check for any unsaved files via `File > Choose Files to Save...`
-- Make sure that the product items you selected are exactly the ones we suggested here. As described in the upcoming xref:Development/BeginnersGuide/SimpleMod/item.adoc[Create an Item] page, items without assigned categories are hidden in crafters unless you search for them directly.
+- 모든 관련 파일을 xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#_컴파일_및_저장[저장하고 컴파일]했습니까? `파일 > 저장할 파일 선택...` 을 통해 저장되지 않은 파일을 확인하십시오.
+- 선택한 생산 아이템이 여기에서 제안한 것과 정확히 일치하는지 확인하십시오. xref:Development/BeginnersGuide/SimpleMod/item.adoc[아이템 생성] 페이지에서 설명한 대로, 범주가 할당되지 않은 아이템은 직접 검색하지 않으면 제작기에서 숨겨집니다.
 
-=== My recipe doesn't work as expected
+=== 내 제작법이 예상대로 작동하지 않음
 
-Go back and check the recipe's properties to see if they match what was described above.
+제작법의 속성이 위에서 설명한 것과 일치하는지 확인하십시오.
 
-=== Something Else
+=== 다른 문제
 
-If something went wrong, feel free to contact us on the https://discord.ficsit.app[Discord] for help.
-Even if you fix it yourself, please bring it up on the Discord
-so we can update the docs with your findings to help other people that might have a similar issue!
+문제가 발생하면, 도움을 받기 위해 https://discord.ficsit.app[디스코드]에서 저희에게 연락해 주십시오.
+자신이 문제를 해결하더라도,
+문서를 업데이트하여 다른 사람들이 비슷한 문제를 겪을 때 해결할 수 있도록 디스코드에 알려주십시오!
 
-== Next Steps
+== 다음 단계
 
-Next up, let's create our own custom item, and change our recipe to produce it instead of boring, old, generic Wood.
+다음으로, 우리만의 맞춤형 아이템을 만들고, 제작법을 변경하여 지루하고 일반적인 나무 대신 생산해 보겠습니다.

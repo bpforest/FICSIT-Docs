@@ -1,43 +1,43 @@
-= SML Configuration
+= SML 구성
 
-SML's configuration file system makes it easy for mod developers to create config files for their mods
-and easy for users to change mod settings.
+SML의 구성 파일 시스템은 개발자가 모드의 구성 파일을 쉽게 만들 수 있게 해 주고
+사용자가 모드 설정을 쉽게 바꿀 수 있게 해 줍니다.
 
-== Config Folder
+== 구성 폴더
 
-The config files for all mods (and SML itself) reside in the same configuration file folder.
+모든 모드(및 SML 자체)의 구성 파일은 동일한 구성 파일 폴더에 위치합니다.
 
-The folder is located under `<game install directory>/FactoryGame/Configs`.
+폴더는 `<게임 설치 디렉터리>/FactoryGame/Configs` 아래에 있습니다.
 
-You can find your game install directory via the steps
-xref:faq.adoc#_where_are_my_game_files_located[described in the FAQ].
+게임 설치 디렉터리는
+xref:faq.adoc#_게임_파일은_어디에_있습니까[FAQ에서 설명된 단계]를 통해 찾을 수 있습니다.
 
-== Config File
+== 구성 파일
 
-SML's configuration system uses json format.
+SML의 구성 시스템은 json 형식을 사용합니다.
 
-All config files are located in the aforementioned <<Config Folder>> and share the same naming scheme, `<ModID>.cfg`. The config file for SML is called `SML.cfg`.
+모든 구성 파일은 앞서 언급한 <<구성 폴더>>에 위치하며, 동일한 명명 규칙인 `<모드ID>.cfg` 를 공유합니다. SML의 구성 파일은 `SML.cfg` 라고 불립니다.
 
-If you don't see a mod's config file listed here, it's most likely because the mod doesn't have a config file.
+모드의 구성 파일이 여기에 나열되지 않은 경우, 해당 모드에 구성 파일이 없기 때문일 가능성이 높습니다.
 
-== SML configuration options
+== SML 구성 옵션
 
-SML itself also provides a couple of configuration settings allowing you to control its behavior.
+SML 자체는 또한 동작을 제어할 수 있는 몇 가지 구성 설정을 제공합니다.
 
 [cols="1,1,1,4a"]
 |===
-|Name |Type |Default |Description
+|이름 |유형 |기본값 |설명
 
 |enableFunchookLogging
-|bool
+|부울
 |false
-|Enables additional logging functionality to assist with troubleshooting a
-https://github.com/satisfactorymodding/SatisfactoryModLoader/issues/131[rare crash].
+|https://github.com/satisfactorymodding/SatisfactoryModLoader/issues/131[드문 충돌] 문제의
+해결을 돕기 위한 추가 로깅 기능을 활성화합니다.
 
 |disabledChatCommands
-|string array
+|문자열 배열
 |[ ]
-|Allows you to disable certain chat commands by simply putting the command into the string array.
-In Multiplayer, if the host lists commands here, they will also be disabled for clients.
+|특정 채팅 명령을 비활성화하려면 명령을 문자열 배열에 넣기만 하면 됩니다.
+멀티플레이에서 호스트가 여기에 명령을 나열하면 클라이언트에서도 비활성화됩니다.
 
 |===

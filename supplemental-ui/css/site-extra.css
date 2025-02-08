@@ -1,15 +1,8 @@
 @font-face {
-    font-family: 'Freesentation5';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-5Medium.woff2') format('woff2');
-    font-weight: 500;
-    font-style: normal;
-}
-
-@font-face {
     font-family: 'NanumBarunGothic';
     font-style: normal;
-    font-weight: 400;
-    src: url('//fastly.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
+    font-weight: 300;
+    src: url('//fastly.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
 }
 
 @font-face {
@@ -20,14 +13,27 @@
 }
 
 @font-face {
-    font-family: 'NanumBarunGothic';
-    font-style: normal;
-    font-weight: 300;
-    src: url('//fastly.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
+    font-family: 'NanumGothicCoding';
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumGothicCoding/D2Coding.eot);
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumGothicCoding/D2Coding.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumGothicCoding/D2Coding.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumGothicCoding/D2Coding.ttf) format("truetype");
 }
 
 body {
     font-family: /*"Freesentation5"*/ "NanumBarunGothic";
+}
+
+code {
+    font-family: "NanumGothicCoding";
+    background: #303030 !important;
+    color: #d7ba7d !important;
+}
+
+em {
+    color: #83d6c5;
+}
+
+strong {
+    color: #c77979;
 }
 
 .nav {
