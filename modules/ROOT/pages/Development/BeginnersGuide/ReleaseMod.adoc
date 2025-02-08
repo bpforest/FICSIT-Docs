@@ -1,275 +1,273 @@
-= Releasing A Mod
+= 모드 배포하기
 
-Once you consider that one of your mods is ready to be released,
-there's a few extra steps to follow to ensure that it's working correctly,
-and to set up the required information for the Mod Repository to work with the mod.
+모드를 배포할 준비가 되었다고 생각되면,
+제대로 작동하는지 확인하고 모드 저장소가 모드와 함께 작동할 수 있도록
+필요한 정보를 설정하기 위해 몇 가지 추가 단계를 따라야 합니다.
 
-== Local Testing
+== 로컬 테스트
 
-Before you release your mod,
-you should make sure that the features you implemented are working as you expect.
+모드를 배포하기 전에,
+구현한 기능이 예상대로 작동하는지 확인해야 합니다.
 
-For example, if your mod adds new items, recipes, or milestones,
-try to unlock them the same way a normal player would to ensure they are accessible.
+예를 들어, 모드가 새로운 아이템, 제작법 또는 마일스톤을 추가하는 경우,
+일반 플레이어의 입장에서 이를 해금하여 접근할 수 있는지 확인하십시오.
 
-For recipes, try setting up a building to craft the recipe and ensure it actually works.
-For example, if a recipe requires more of an item than its stack size,
-the machine can't operate even though the recipe appears otherwise valid.
+제작법의 경우, 제작법을 제작할 건물을 설정하고 실제로 작동하는지 확인하십시오.
+예를 들어, 제작법이 아이템의 묶음 크기보다 더 많은 양을 요구하는 경우,
+제작법이 유효해 보이더라도 기계는 작동할 수 없습니다.
 
-If your mod has configuration options,
-make sure that the default configuration options you specified are what you want,
-since all users who install your mod will have them,
-and might not even realize they can be changed.
-The default config settings should represent the intended user experience for your mod.
+모드에 구성 옵션이 있는 경우,
+모드를 설치하는 모든 사용자가 기본 구성 옵션을
+변경할 수 있다는 것을 인식하지 못할 수 있으므로,
+지정한 기본 구성 옵션이 원하는 것인지 확인하십시오.
+기본 구성 설정은 모드의 의도된 사용자 경험을 나타내야 합니다.
 
-Make sure that your mod works for both client and host players in multiplayer.
-For mods that add items, schematics, and recipes, this is not much of an issue,
-but if you have added additional buildings or other functionality, 
+멀티플레이에서 클라이언트와 호스트 플레이어 모두에게 모드가 작동하는지 확인하십시오.
+아이템, 도면, 제작법을 추가하는 모드의 경우 큰 문제가 되지 않지만,
+추가 건물이나 다른 기능을 추가한 경우에는 문제가 될 수 있습니다.
 
-You can find more info on how to test your mod,
-including directions for running two copies locally to test multiplayer,
-on the xref:Development/TestingResources.adoc[Testing/Multiplayer Testing] page.
+모드를 테스트하는 방법에 대한 추가 정보는
+xref:Development/TestingResources.adoc[테스트/멀티플레이 테스트]
+페이지에서 확인할 수 있습니다.
 
-== Your Mod's UPlugin File
+== 모드의 UPlugin 파일
 
-Every Unreal Engine plugin is require to have a
-`<mod reference>.uplugin` file,
-and Satisfactory mods are no exception.
-This file is json formatted and holds information about the mod,
-such as its version number, dependencies, credits, links, and more.
-Only one uplugin file should exist in a plugin's directory,
-else the editor will get very confused.
+모든 언리얼 엔진 플러그인은
+`<모드 참조>.uplugin` 파일을 가져야 하며,
+새티스팩토리 모드도 예외는 아닙니다.
+이 파일은 JSON 형식으로 되어 있으며,
+모드에 대한 정보(버전 번호, 의존성, 크레딧, 링크 등)를 포함합니다.
+플러그인 디렉터리에는 하나의 uplugin 파일만 존재해야 하며,
+그렇지 않으면 에디터가 혼란스러워할 수 있습니다.
 
-The file should have been automatically generated for you when you
-xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc[created your mod with Alpakit].
+이 파일은 모드를 xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc[알파킷으로 생성할 때]
+자동으로 생성되었어야 합니다.
 
-At that point in the tutorial, we said we'd come back to some fields later, and now is that time.
+튜토리얼의 그 시점에서, 나중에 다시 돌아오겠다고 했던 몇 가지 필드가 있으며, 이제 그때입니다.
 
-Although you can find this file in your mod's plugin directory,
-which is your modding project directory's `/Mods/<mod reference>` folder,
-you should generally edit it within the unreal editor via Alpakit.
-Alpakit will automatically handle the file's formatting for you
-and help to prevent mistakes that would create an invalid uplugin file and be annoying to track down.
+이 파일은 모드의 플러그인 디렉터리에서 찾을 수 있지만,
+일반적으로 언리얼 에디터 내에서 알파킷을 통해 편집하는 것이 좋습니다.
+알파킷은 파일의 형식을 자동으로 처리해 주며,
+잘못된 uplugin 파일을 생성하여 추적하기 번거로운
+실수를 방지하는 데 도움을 줍니다.
 
-Open the Alpakit editor by clicking the `Edit` button next to your mod in the Alpakit mods list.
+알파킷 모드 목록에서 모드 옆의 `편집` 버튼을 클릭하여 알파킷 편집기를 엽니다.
 
-You can hover over the labels on the left to get a tooltip that explains their purpose.
+왼쪽의 레이블 위에 마우스를 올리면 그 목적을 설명하는 툴팁이 표시됩니다.
 
-image:BeginnersGuide/simpleMod/EditPlugin.png[Edit your Plugin screenshot]
+image:BeginnersGuide/simpleMod/EditPlugin.png[플러그인 편집 스크린샷]
 
-Below we will go into more detail about their purpose.
-It is suggested that you read all of the field definitions below to make well-informed decisions about the values you specify.
+아래에서 그들의 목적에 대해 더 자세히 설명하겠습니다.
+지정하는 값에 대해 올바른 결정을 내리기 위해 아래의 모든 입력란의 정의를 읽는 것이 좋습니다.
 
-If you'd like, you can read about all the different Unreal settings available at the Plugins documentation
-https://docs.unrealengine.com/en-US/ProductionPipelines/Plugins/index.html#plugindescriptorfiles[here]
-or at the {cpp} reference
-https://docs.unrealengine.com/en-US/API/Runtime/Projects/FPluginDescriptor/index.html[here],
-but this page will cover the ones most important to Satisfactory mods.
+원하시면
+https://docs.unrealengine.com/en-US/ProductionPipelines/Plugins/index.html#plugindescriptorfiles[플러그인 문서]
+또는 https://docs.unrealengine.com/en-US/API/Runtime/Projects/FPluginDescriptor/index.html[{cpp} 참조]에서
+사용할 수 있는 다양한 언리얼 설정에 대해 읽어보실 수 있지만,
+이 페이지에서는 새티스팩토리 모드에서 가장 중요한 설정들을 다룰 것입니다.
 
-After editing these fields,
-be sure to re-Alpak your mod so the files you upload will have your changes.
+입력란을 편집한 후,
+변경 사항이 포함된 파일을 업로드할 수 있도록 모드를 다시 패키징하십시오.
 
-=== Default Fields
+=== 기본 입력란
 
-The following fields are part of Unreal's normal uplugin format,
-but are given additional functionality by the modding toolkit.
+다음 입력란은 언리얼의 일반 uplugin 형식의 일부이며,
+모딩 툴킷에 의해 추가 기능이 제공됩니다.
 
 [cols="3,8a"]
 |===
-|Parameter |Description of Function
+|매개변수 |기능 설명
 
 |Version
-| This integer should match the first digit of your `SemVersion` (described in the link:#_special_fields[Special Fields section]).
-For example, a mod with a SemVersion of `1.0.0` should have a Version of `1`
+| 이 정수는 `SemVersion` 의 첫 번째 숫자와 일치해야 합니다(link:#_특수_입력_란[특수 입력란 섹션]에서 설명됨).
+예를 들어, SemVersion이 `1.0.0` 인 모드는 버전을 `1` 로 입력해야 합니다.
 
 |VersionName
-| This string should exactly match your `SemVersion` (described in the link:#_special_fields[Special Fields section]).
+| 이 문자열은 `SemVersion` 과 정확히 일치해야 합니다(link:#_특수_입력_란[특수 입력란 섹션]에서 설명됨).
 
 |FriendlyName
-| This string is the name of your mod as it will appear in the in-game loaded mods list and configs screen.
+| 이 문자열은 게임 내 로드된 모드 목록 및 구성 화면에 표시될 모드의 이름입니다.
 
 |Description
-| This string will appear when someone looks at your mod in the in-game loaded mods list and configs screen.
+| 이 문자열은 게임 내 로드된 모드 목록 및 구성 화면에서 누군가가 모드를 볼 때 표시됩니다.
 
 |CreatedBy
-| This string will appear as the author's name section when someone looks at your mod in the in-game loaded mods list and configs screen.
+| 이 문자열은 게임 내 로드된 모드 목록 및 구성 화면에서 누군가가 모드를 볼 때 작성자 이름 섹션에 표시됩니다.
 
 |DocsURL
-| If a link is provided here, a button will appear in the in-game loaded mods list that will open the URL when clicked.
-The `http://` / `https://` prefix is optional.
+| 여기 링크가 제공되면, 게임 내 로드된 모드 목록에서 클릭 시 URL을 열 수 있는 버튼이 표시됩니다.
+`http://` / `https://` 접두사는 선택 사항입니다.
 
 |SupportURL
-| If a link is provided here, a button will appear in the in-game loaded mods list that will open the URL when clicked.
-The `http://` / `https://` prefix is optional.
+| 여기 링크가 제공되면, 게임 내 로드된 모드 목록에서 클릭 시 URL을 열 수 있는 버튼이 표시됩니다.
+`http://` / `https://` 접두사는 선택 사항입니다.
 
 |===
 
-=== Special Fields
+=== 특수 입력란
 
-Note that SML and SMR require you to include additional fields in your plugin descriptor file.
-The most important of these are the SemVersion, GameVersion, and mod dependency list.
+SML 및 SMR은 플러그인 설명 파일에 추가 입력란을 포함해야 합니다.
+이 중 가장 중요한 것은 SemVersion, GameVersion 및 모드 의존성 목록입니다.
 
 [WARNING]
 ====
-Make sure that you have SML listed
-in the Plugins field as explained below,
-unless your mod is xref:Development/Satisfactory/ModsWithoutSML.adoc[specifically designed to work without SML].
+모드가 xref:Development/Satisfactory/ModsWithoutSML.adoc[특별히 SML 없이 작동하도록 설계된 경우]가 아니라면
+SML이 아래 설명된 대로 플러그인 입력란에 나열되어 있는지 확인하십시오.
 ====
 
-Below is a description of all extra fields SML and SMR require:
+아래는 SML 및 SMR이 요구하는 모든 추가 입력란에 대한 설명입니다.
 
 [cols="3,8a"]
 |===
-|Parameter |Description of Function
+|매개변수 |기능 설명
 
 |SemVersion
-| Version number for the mod. Should always increase with new releases,
-and should follow the https://semver.org/[semver] format.
-To summarize, the format is `Major.Minor.Patch`
+| 모드의 버전 번호입니다. 새로운 배포와 함께 항상 증가해야 하며,
+https://semver.org/[semver] 형식을 따라야 합니다.
+요약하자면, 형식은 `메이저.마이너.패치` 입니다.
 {blank} +
 {blank} +
-As a rule of thumb, version `1.0.0` should be used for the first public release of your mod.
-If you were to use a version number with a major version of 0, such as `0.1.0`,
-then then the typical `^` range specifier explained below in the Plugins section would
-https://nodesource.com/blog/semver-tilde-and-caret/#caretmajorzero[behave counter-intuitively],
-so you should try to avoid this.
+일반적으로, `1.0.0` 은 모드의 첫 번째 공개 배포에 사용해야 합니다.
+메이저 버전이 0인 버전 번호(예: `0.1.0`)를 사용하면,
+일반적으로 설명된 `^` 범위 지정자가
+https://nodesource.com/blog/semver-tilde-and-caret/#caretmajorzero[반직관적으로 작동하므로],
+이를 피하는 것이 좋습니다.
 
-* When you release bugfixes, you should increment the Patch version, for example `1.0.1`.
-* When you release changes that don't break how other mods interact with your mod,
-  you should increment the Minor version, for example `1.1.0`.
-* When you release changes that are not backwards compatible,
-  or break how other mods interact with your mod,
-  you should increase the Major version, for example `2.0.0`.
+* 버그 수정을 배포할 때는 패치 버전을 증가시켜야 합니다(예: `1.0.1`).
+* 다른 모드와의 상호작용 방식을 깨지 않는 변경 사항을 배포할 때는
+마이너 버전을 증가시켜야 합니다(예: `1.1.0`).
+* 다른 모드와의 상호작용 방식을 깨거나,
+이전 버전과 호환되지 않는 변경 사항을 배포할 때는 메이저 버전을 증가시켜야 합니다(예: `2.0.0`).
 
 {blank} +
-Note that `1.10.0` is a valid semver version,
-`2.0.0` does not necessarily have to come after `1.9.0`.
+`1.10.0` 은 유효한 semver 버전이며,
+`1.9.0` 이후 반드시 `2.0.0` 이 와야 하는 것은 아닙니다.
 {blank} +
 {blank} +
-This field is required, and should exactly match the `VersionName` field.
-The editor will prevent you from packaging your mod if an invalid value is specified.
+이 입력란은 필수이며, `VersionName` 란과 정확히 일치해야 합니다.
+잘못된 값이 지정되면 에디터는 모드를 패키징하는 것을 막을 것입니다.
 
 |GameVersion
-| Version range specifier for the game build version number this mod was developed for/tested on.
-Since we don't know what future game build numbers will be, only minimum ranges (ex. `>=something`) are useful for now.
-For example, `>=273254` allows https://satisfactory.wiki.gg/wiki/Patch_0.8.3.3[Patch 0.8.3.3] and any build more recent than.
+| 이 모드가 개발/테스트된 게임 빌드 버전 번호에 대한 버전 범위 지정자입니다.
+미래의 게임 빌드 번호가 무엇인지 모르기 때문에, 현재로서는 최소 범위(예: `>=뭐시기`)만 유용합니다.
+예를 들어, `>=273254`는 https://satisfactory.wiki.gg/wiki/Patch_0.8.3.3[패치 0.8.3.3] 및 그 이후의 모든 빌드를 허용합니다.
 {blank} +
 {blank} +
-Alpakit will produce a warning if this field is out of date; clicking the warning will update it for you.
+알파킷은 이 입력란이 오래된 경우 경고를 생성하며, 경고를 클릭하면 업데이트됩니다.
 {blank} +
 {blank} +
-SML checks this field at runtime and will prevent the game from launching if the game version does not match this range.
+SML은 런타임에서 이 란을 확인하며, 게임 버전이 이 범위와 일치하지 않으면 게임이 시작되지 않습니다.
 
 |Plugins
-| Additional functionality has been added to the regular uplugin Plugins array. 
-You can list other mod references (or Unreal Plugins) here,
-and SMM will know to download when installing your mod.
-If you add a plugin with a Mod Reference,
-this basically makes the listed mod a dependency for your mod.
+| 일반 uplugin 플러그인 배열에 추가 기능이 추가되었습니다.
+여기에서 다른 모드 참조(또는 언리얼 플러그인)를 나열할 수 있으며,
+SMM은 모드를 설치할 때 다운로드해야 함을 알고 있습니다.
+모드 참조로 플러그인을 추가하면,
+나열된 모드가 모드의 의존성이 됩니다.
 {blank} +
 {blank} +
 
-Unless you are creating a xref:Development/Satisfactory/ModsWithoutSML.adoc[mod separate from SML],
-**the SML plugin should basically always be listed here,**
-allowing you specify what SML versions your mod supports.
-Each plugin should be listed as an object with the following properties:
+SML과 분리된 xref:Development/Satisfactory/ModsWithoutSML.adoc[모드를 생성하지 않는 한]
+**SML 플러그인은 기본적으로 항상 여기에 나열되어야 하며,**
+모드가 지원하는 SML 버전을 지정할 수 있습니다.
+각 플러그인은 다음 속성을 가진 객체로 나열되어야 합니다.
 
 [cols="1,4a"]
 !===
-!Parameter !Description of Function
+!매개변수 !기능 설명
 
 !Name
-! The xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#ModReference[mod reference of the plugin]
-you are listing as a dependency.
+! 의존성으로 나열하려는
+xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#ModReference[플러그인의 모드 참조]입니다.
 {blank} +
 {blank} +
-This field is required.
+이 입력란은 필수입니다.
 
 !SemVersion
-! Version range specifier for this dependency mod.
-Should follow https://semver.org/[semver] format.
-You can prefix the version number with a comparison operator to allow a range of versions.
-// According to Mircea, this site does not work correctly
+! 이 의존 모드에 대한 버전 범위 지정자입니다.
+https://semver.org/[semver] 형식을 따라야 합니다.
+버전 번호 앞에 비교 연산자를 붙여 범위의 버전을 허용할 수 있습니다.
+// Mircea에 따르면, 이 사이트는 제대로 작동하지 않습니다
 // https://discord.com/channels/555424930502541343/562722670974599227/1037056112651931658
-// You can use https://jubianchi.github.io/semver-check/[this site] to test if a version would match a range.
+// 이 버전이 범위와 일치하는지 테스트하려면 https://jubianchi.github.io/semver-check/[이 사이트]를 사용할 수 있습니다.
 {blank} +
 {blank} +
-We suggest using the prefix `^`, which generally allows any number in the patch field (the `3` in `1.2.3`),
-and any number in the minor version field (the `2` in `1.2.3`).
-However, it https://nodesource.com/blog/semver-tilde-and-caret/#caretmajorzero[functions differently]
-when the major version (the `1` in `1.2.3`) is `0`,
-so be sure that your major version is at least `1` to avoid this.
+저희는 일반적으로 패치 자리(1.2.3의 `3`)과
+마이너 버전 자리(1.2.3의 `2`)에서 어떤 숫자도 허용하는
+`^` 접두사를 사용하는 것을 권장드립니다.
+그러나, 주 버전(1.2.3의 `1`)이 `0` 일 때는 https://nodesource.com/blog/semver-tilde-and-caret/#caretmajorzero[다르게 작동하므로],
+이것을 피하기 위해 주 버전이 최소한 `1` 이 되도록 해야 합니다.
 {blank} +
 {blank} +
-The prefix `>=` will allow all semversions higher than (and including) the one listed.
-Unless you have a very specific reason for doing so,
-you should probably use the `^` prefix instead.
+`>=` 접두사는 나열된 버전 이상(및 포함)의 모든 semversion을 허용합니다.
+매우 구체적인 이유가 없다면,
+대신 `^` 접두사를 사용하는 것이 좋습니다.
 {blank} +
 {blank} +
-This field is required.
+이 입력란은 필수입니다.
 
 !Optional
-! This boolean property can be set to `true` if the dependency is not required.
-But if it exists, our mod might be able to unlock more functionality that depends on it.
+! 이 의존성이 필요하지 않은 경우 `true` 로 설정할 수 있는 부울 속성입니다.
+그러나 존재하는 경우, 우리의 모드는 이를 기반으로 더 많은 기능을 해금할 수 있습니다.
 {blank} +
 {blank} +
-This field is optional, and defaults to `false` if unspecified.
+이 입력란은 선택 사항이며, 지정하지 않으면 기본값은 `false` 입니다.
 
 !BasePlugin
-! This boolean property should be set to `true` for all plugin dependencies that are not *mod* dependencies.
-For example, regular Unreal Engine plugins your mod requires.
-SMM will not attempt to download these because they aren't mods.
+! 이 부울 속성은 *모드* 의존성이 아닌 모든 플러그인 의존성에 대해 `true` 로 설정해야 합니다.
+예를 들어, 모드가 필요로 하는 일반 언리얼 엔진 플러그인입니다.
+SMM은 이러한 플러그인을 다운로드하려고 시도하지 않습니다.
 {blank} +
 {blank} +
-This field is optional, and defaults to `false` if unspecified.
+이 입력란은 선택 사항이며, 지정하지 않으면 기본값은 `false` 입니다.
 
 !Enabled
-! This field is not given any extra functionality by SML,
-but we have listed it here as well in order to draw extra attention to it.
-This should be set to `true` in every plugin item.
+! 이 입력란은 SML에 의해 추가 기능이 제공되진 않지만,
+여기에서 추가적인 주의를 끌기 위해 나열되었습니다.
+이 입력란은 모든 플러그인 항목에서 `true` 로 설정해야 합니다.
 {blank} +
 {blank} +
-This field is required, and Satisfactory will fail to launch if it is omitted,
-citing the offending uplugin file in the error message.
+이 입력란은 필수이며, 생략할 경우 새티스팩토리가 시작되지 않으며,
+오류 메시지에서 문제의 uplugin 파일을 인용합니다.
 
 !===
 
 |RemoteVersionRange
-| A Semver range of versions accepted from the remote side in multiplayer.
-This requires remotes to have a certain version of the mod installed to be able to join.
-See the Plugins `SemVersion` item above for the format for this field.
+| 멀티플레이에서 원격 측에서 수락되는 버전의 Semver 범위입니다.
+이 입력란은 원격 측에서 특정 버전의 모드가 설치되어 있어야 참여할 수 있도록 합니다.
+이 입력란의 형식은 위의 플러그인 `SemVersion` 항목을 참고하십시오.
 {blank} +
 {blank} +
-This field is optional, and defaults to your `SemVersion` if unspecified,
-meaning both sides must have the exact same mod version installed.
-If you aren't using this behavior, you should exclude the field.
+이 입력란은 선택 사항이며, 지정하지 않으면 기본값은 `SemVersion` 이므로,
+양측 모두 동일한 모드 버전이 설치되어 있어야 합니다.
+이 동작을 사용하지 않는 경우, 이 입력란을 제외해야 합니다.
 
 |RequiredOnRemote
-| Controls if the mod is required to be on both sides in multiplayer.
-When a client connects, the host checks its own mod list against what the client is connecting with.
-If the host's mod has `RequiredOnRemote` set to true,
-`RemoteVersionRange` is used to check the client's reported version to ensure it's compatible.
-The reverse (client checking host) is implemented as of SML 3.9.0.
+| 멀티플레이에서 모드가 양측에 있어야 하는지 제어합니다.
+클라이언트가 연결할 때, 호스트는 자신의 모드 목록을 클라이언트의 목록과 비교합니다.
+호스트의 모드에 `RequiredOnRemote` 가 true로 설정되어 있으면,
+`RemoteVersionRange` 가 클라이언트의 보고된 버전을 확인하는 데 사용됩니다.
+SML 3.9.0부터 클라이언트가 호스트를 확인하는 방식도 구현되었습니다.
 {blank} +
 {blank} +
-This field is optional, and defaults to `true`.
-If you aren't using this behavior, you should exclude the field.
+이 입력란은 선택 사항이며, 기본값은 `true` 입니다.
+이 동작을 사용하지 않는 경우, 이 입력란을 제외해야 합니다.
 
 |===
 
 
-=== Important {cpp} Fields
+=== 중요한 {cpp} 입력란
 
-If your mod has {cpp} code, make sure that you list a
-UBT Module in the Modules plugin descriptor section.
-The examples below will demonstrate this.
+모드에 {cpp} 코드가 있는 경우,
+모듈 플러그인 설명 섹션에 UBT 모듈을 나열해야 합니다.
+아래의 예시가 이를 보여줍니다.
 
-=== Examples
+=== 예시
 
-Some example `.uplugin` s are presented here in their JSON format.
+여기 JSON 형식의 몇 가지 예시 `.uplugin` 이 제시됩니다.
 
 +++ <details><summary> +++
-Example Blueprint only mod .uplugin:
+블루프린트 전용 모드의 .uplugin 예:
 +++ </summary><div> +++
 
 ```json
@@ -278,10 +276,10 @@ Example Blueprint only mod .uplugin:
 	"Version": 6,
 	"SemVersion": "6.2.1",
 	"VersionName": "6.2.1",
-	"FriendlyName": "Example Blueprint Only Mod",
-	"Description": "An example of a .uplugin for a mod that contains only Blueprint content",
-	"Category": "Modding",
-	"CreatedBy": "Satisfactory Modding Team",
+	"FriendlyName": "예시 블루프린트 전용 모드",
+	"Description": "블루프린트 콘텐츠만 포함된 모드의 .uplugin 예시",
+	"Category": "모딩",
+	"CreatedBy": "새티스팩토리 모딩 팀",
 	"CreatedByURL": "https://github.com/satisfactorymodding/SatisfactoryModLoader",
 	"DocsURL": "https://docs.ficsit.app",
 	"MarketplaceURL": "",
@@ -310,7 +308,7 @@ Example Blueprint only mod .uplugin:
 +++ </div></details> +++
 
 +++ <details><summary> +++
-Example {cpp} and Blueprint mod .uplugin:
+{cpp} 및 블루프린트 모드의 .uplugin 예:
 +++ </summary><div> +++
 
 ```json
@@ -319,10 +317,10 @@ Example {cpp} and Blueprint mod .uplugin:
 	"Version": 6,
 	"VersionName": "6.2.1",
 	"SemVersion": "6.2.1",
-	"FriendlyName": "Example Hybrid Mod",
-	"Description": "An example of a .uplugin for a mod that contains both Blueprint content and a C++ module",
-	"Category": "Modding",
-	"CreatedBy": "Satisfactory Modding Team",
+	"FriendlyName": "예시 하이브리드 모드",
+	"Description": "블루프린트 콘텐츠와 C++ 모듈을 모두 포함하는 모드의 .uplugin 예시",
+	"Category": "모딩",
+	"CreatedBy": "새티스팩토리 모딩 팀",
 	"CreatedByURL": "https://ficsit.app/",
 	"DocsURL": "https://docs.ficsit.app/",
 	"MarketplaceURL": "",
@@ -356,107 +354,108 @@ Example {cpp} and Blueprint mod .uplugin:
 
 +++ </div></details> +++
 
-=== SMR UPlugin Validator
+=== SMR UPlugin 검증기
 
-If you'd like to check the format for your uplugin file,
-SMR offers a validator on its https://ficsit.app/help[help page].
-You can paste in your uplugin file into the box on the right
-and it will display any error messages below the box.
+uplugin 파일의 형식을 확인하고 싶다면,
+SMR은 https://ficsit.app/help[도움 페이지]에서 검증기를 제공합니다.
+uplugin 파일을 오른쪽 상자에 붙여넣으면,
+아래 상자에 오류 메시지가 표시됩니다.
 
-The validator isn't perfect, but it can help troubleshoot many errors that could occur during upload.
-If it fails validation, keep your eyes out for things like missing commas
-and mismatched braces and brackets.
+검증기가 완벽하지는 않지만,
+업로드 중 발생할 수 있는 많은 오류를 해결하는 데 도움이 될 수 있습니다.
+검증에 실패하면, 누락된 쉼표나 일치하지 않는 중괄호 및 대괄호와 같은 문제를 주의 깊게 살펴보십시오.
 
-Remember, you can totally avoid formatting concerns by using the Alpakit widget in the editor!
+형식 문제를 피하려면 에디터에서 알파킷 위젯을 사용하는 것이 좋습니다!
 
-Consider asking on the Discord if you get stuck on this step.
+이 단계에서 막히면 디스코드에서 문의해 보십시오.
 
 [id="ArchivedPluginsDirectory"]
-== How Mod File Exporting Works
+== 모드 파일 내보내기 작동 방식
 
-Up until this point, you have likely been using the Alpakit Dev 'copy to mods directory' feature
-to stage your mods files in game's folders for testing.
+지금까지는 알파킷 개발의 '모드 디렉터리로 복사' 기능을 사용하여
+테스트를 위해 게임의 폴더에 모드 파일을 배치했을 것입니다.
 
-Behind the scenes, using the 'Alpakit Selected (Development)' or the 'Alpakit!' (just this mod) buttons
-generates a zip archive for you located at
-`<starter project folder>/Saved/ArchivedPlugins/YourModReference/YourModReference-TargetPlatformName.zip`.
+별개로, '선택 알파킷(개발)' 또는 '알파킷!' (이 모드만) 버튼을 사용하면
+`<시작 프로젝트 폴더>/Saved/ArchivedPlugins/모드참조/모드참조-대상플랫폼이름.zip` 에 위치한 보관 zip 파일이 생성됩니다.
 
-Note that this folder is in the **starter project's Saved folder**,
-not the Saved folder of any of your mods.
+이 폴더는 **시작 프로젝트의 Saved 폴더**에 있으며,
+모드의 Saved 폴더가 아닙니다.
 
-Consider checking the zip's contents to see if they're what you expect.
-If for some reason you need extra files to be packaged into the mod, follow the directions
-xref:Development/BeginnersGuide/Adding_Ingame_Mod_Icon.adoc#_setup[here]
-to tell Alpakit to include them when building.
+zip 파일의 내용을 확인하여 예상한 대로인지 확인하십시오.
+어떤 이유로든 모드에 추가 파일이 패키징되어야 하는 경우,
+알파킷이이 빌드할 때 이를 포함하도록 지시하는 방법은
+xref:Development/BeginnersGuide/Adding_Ingame_Mod_Icon.adoc#_설정[여기]에서 확인하십시오.
 
 [id="PackageForUpload"]
-== Package for Release
+== 배포 패키지 만들기
 
-Once you're ready to release your mod, you will need to package your mod for uploading.
-It's time to make use of the "Alpakit Release" tab that we've been ignoring until now.
-Open it by clicking the alpaca rocket button, or `File` > `Alpakit Release`.
+모드를 배포할 준비가 되면, 업로드를 위해 모드를 패키징해야 합니다.
+지금까지 무시했던 "알파킷 배포" 탭을 사용할 시간입니다.
+알파카 로켓 버튼을 클릭하거나 `파일` > `알파킷 배포` 를 클릭하여 엽니다.
 
-=== Release Targets Explained
+=== 배포 대상 설명
 
-As you may be aware, there are multiple different versions of Satisfactory you can download.
+여러 가지 다른 버전의 새티스팩토리를 다운로드할 수 있다는 것을 알고 계실 것입니다.
 
-The distinction between the Stable (the main branch)
-and Experimental (EXP, early feature testing) branch
-is relatively well known.
-However, there are also are also different builds of the game for different platforms (targets).
-There are Stable and EXP variants of each of these:
+안정적(주요 분기) 버전과
+실험적(EXP, 초기 기능 테스트) 분기 간의 구분은 상대적으로 잘 알려져 있습니다.
+그러나 각 플랫폼(대상)에 대한 게임의 약간 다른 빌드도 있습니다.
+각각의 안정적 및 실험적 변형이 있습니다:
 
-- `Windows` - Client version of Satisfactory, the one you launch to play the game. People playing the game on Linux still use this version, they run it through a compatibility/emulation layer.
-- `Windows Server` - Windows Dedicated Server version of Satisfactory. It doesn't have a visual interface and is used to run servers from Windows, which is somewhat uncommon.
-- `Linux Server` - Linux Dedicated Server version of Satisfactory. This is what most dedicated servers will be running, especially those hosted by third party services.
+- `Windows` - 새티스팩토리의 클라이언트 버전이며, 게임을 플레이하기 위해 실행하는 버전입니다.
+리눅스에서 게임을 하는 사람들은 여전히 이 버전을 사용하며, 호환성/에뮬레이션 레이어를 통해 실행합니다.
+- `Windows Server` - 새티스팩토리의 Windows 전용 서버 버전입니다.
+시각적 인터페이스가 없으며, Windows에서 서버를 실행하는 데 사용되며, 다소 드뭅니다.
+- `Linux Server` - 새티스팩토리의 Linux 전용 서버 버전입니다.
+이는 대부분의 전용 서버가 실행하는 버전이며, 특히 제3자 서비스에서 호스팅됩니다.
 
-There are also slightly different versions of the Windows client for Steam and Epic.
-Your mod must be compiled in a slightly different way to be usable on each of these platforms,
-especially to be compatible with Linux Server.
+스팀과 에픽을 위한 Windows 클라이언트의 약간 다른 버전도 있습니다.
+각 플랫폼에서 사용 가능하도록 모드를 컴파일하려면 약간 다른 방식으로 컴파일해야 하며,
+특히 Linux 서버와 호환되도록 해야 합니다.
 
-Thankfully, Alpakit handles compiling your mod for all 3 of these target platforms and 2 launcher variants for you!
+다행히도, 알파킷은 모든 3개의 대상 플랫폼과 2개의 런처 변형에 대해 모드를 컴파일하는 작업을 처리합니다!
 
 [NOTE]
 ====
-While you are testing your mod locally in singleplayer,
-it's a waste of time to compile and package the code for the other platforms you aren't using.
-That's why the 'Alpakit Selected (Development)' and development 'Alpakit!' (just this mod) buttons follow your Dev Packaging Settings,
-compiling just the target(s) you care about while testing.
-It also only compiles the Epic/Steam variant of the client when it can be detected from your "Copy to Game Path" value.
+로컬에서 싱글 플레이로 모드를 테스트하는 동안,
+사용하지 않는 다른 플랫폼을 위해 코드를 컴파일하고 패키징하는 것은 시간 낭비입니다.
+그래서 '선택 알파킷(개발)' 및 개발 '알파킷!' (이 모드만) 버튼은
+테스트 중에 관심 있는 대상만 컴파일하며,
+"게임 경로 복사" 값에서 감지할 수 있을 때만 에픽/스팀 클라이언트의 변형을 컴파일합니다.
 ====
 
-=== Configuring Release Targets
+=== 배포 대상 구성
 
-Before the mod can be released, use the Release Targets checkboxes to define which targets the mod is compatible with.
-If you leave out one of these targets, the mod will not work on that platform!
+모드를 배포하기 전에, 배포 대상 체크박스를 사용하여 모드가 호환되는 대상을 정의해야 합니다.
+이 대상 중 하나를 생략하면, 모드는 해당 플랫폼에서 작동하지 않습니다!
 
 [IMPORTANT]
 ====
-In most cases, especially for mods with no custom {cpp} code, *_you should check all 3 Release Target checkboxes_*.
-This means your mod will run on game clients and dedicated servers.
+대부분의 경우, 특히 사용자 정의 {cpp} 코드가 없는 모드의 경우, *_모든 3개의 배포 대상 체크박스를 선택해야 합니다_*.
+이렇게 하면 모드가 게임 클라이언트와 전용 서버에서 실행됩니다.
 ====
 
-=== Alpakit Release
+=== 알파킷 배포
 
-The 'Alpakit Selected (Release)' and release 'Alpakit!' (just this mod) buttons
-will compile and package mods for all targets into one multi-target zip file.
-In the example image below, clicking `Alpakit!` for ExampleMod builds it for all 3 targets.
+'선택 알파킷(배포)' 및 배포 '알파킷!' (이 모드만) 버튼은
+모드를 모든 대상에 대해 하나의 다중 대상 zip 파일로 컴파일하고 패키징합니다.
+아래의 예시 이미지에서, ExampleMod에 대해 `알파킷!` 을 클릭하면 모든 3개의 대상에 대해 빌드됩니다.
 
-image:BeginnersGuide/AlpakitReleaseDemo.png[Alpakit Release with Example Mod and SML selected]
+image:BeginnersGuide/AlpakitReleaseDemo.png[Example Mod 및 SML이 선택된 Alpakit 배포]
 
-Once complete, find the completed package in the same link:#ArchivedPluginsDirectory[ArchivedPlugins folder mentioned earlier]
-called `YourModReference.zip`.
-This is the file you'll upload to the Mod Repository later.
+완료되면, 이전에 언급한 link:#ArchivedPluginsDirectory[보관된 플러그인 폴더]에서
+`모드참조.zip` 라는 이름의 완료된 패키지를 찾을 수 있습니다.
+이 파일은 나중에 모드 저장소에 업로드할 파일입니다.
 
-== Last Chance to Change Your Mod Reference
+== 모드 참조를 변경할 마지막 기회
 
-As mentioned on the
-xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#ModReference[Mod Reference section of the Getting Started guide],
-once you release your mod, you can no longer change its Mod Reference.
+앞서 언급한
+xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#ModReference[모드 참조 섹션]에 따르면,
+모드를 배포하면 더 이상 모드 참조를 변경할 수 없습니다.
 
-If you decide to change it, you'll have to edit a number of files, most of which are described on that page.
+변경하기로 결정하면, 여러 파일을 수정해야 하며, 그 중 대부분은 해당 페이지에 설명되어 있습니다.
 
-== Upload to Satisfactory Mod Repository
+== 새티스팩토리 모드 저장소에 업로드
 
-Follow the directions on the xref:UploadToSMR.adoc[Uploading to SMR]
-page to create a modpage and a release.
+모드 페이지 및 배포를 생성하려면
+xref:UploadToSMR.adoc[SMR에 업로드] 페이지의 지침을 따르십시오.
