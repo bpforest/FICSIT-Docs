@@ -1,155 +1,153 @@
-= Buildable
+= 건물
 
-Next up, we'll make a decorative buildable - the Plantpot of Knowledge,
-a monument to your progress in the tutorials thus far.
-A buildable is simply anything you will be able to place with the buildgun.
-Even if it is just a simple foundation or fence, it is still an `FGBuildable`.
+다음으로, 장식용 건물인 지식의 화분을 만들어 보겠습니다,
+지금까지 튜토리얼에서의 진행 상황을 기념하는 기념물입니다.
+건물은 빌드건으로 배치할 수 있는 모든 것입니다.
+간단한 토대나 난간이라도 여전히 `FGBuildable` 입니다.
 
-Like items, buildables have descriptors to define their names and descriptions,
-but they also have an actor representation to act as the structure in the game world.
-There's also a hologram which controls its placement.
-We don't need a conveyor mesh for our building,
-since our buildings probably shouldn't be moving around as items on conveyor belts.
-However, we'll definitely still want a mesh for our building's appearance in-game.
+아이템과 마찬가지로 건물은 이름과 설명을 정의하는 디스크립터를 가지고 있지만,
+게임 세계에서 구조물로 작용하는 액터 표현도 가지고 있습니다.
+배치 제어를 위한 홀로그램도 있습니다.
+우리의 건물은 컨베이어 메쉬가 필요하지 않지만,
+게임 내에서 건물의 외관을 위한 메쉬는 여전히 필요합니다.
 
-To stay organized, we'll create a separate folder for each of our buildables
-to hold their textures, meshes, and so on in one place.
-Create new folder called "Buildables" in your mod's root folder,
-then create another folder for our first Buildable.
-Let's call it "DocBuild".
+조직을 유지하기 위해 각 건물에 대한 별도의 폴더를 생성하여
+텍스처, 메쉬 등을 한 곳에 보관하겠습니다.
+모드의 루트 폴더에 "Buildables"라는 새 폴더를 만들고,
+첫 번째 건물을 위한 또 다른 폴더를 생성합니다.
+이름은 "DocBuild"로 하겠습니다.
 
-== Adding the Actor
+== 액터 추가
 
-Next, create a blueprint of type `FGBuildable` with f.e. the name "Build_DocBuild" inside your folder. This is the actual building object in which the model and factory logic are defined, among other things.
+다음으로, `FGBuildable` 유형의 블루프린트를 생성하고,
+이름은 "Build_DocBuild"로 지정합니다. 이는 모델과 공장 논리가 정의된 실제 건물 객체입니다.
 
-Now we need to populate the buildable description by simply filling the default values.
-Set `M Hologram Class` to `FGBuildableHologram`, which will cause the `FGBuildable` to automatically find the hologram by itself.
+이제 기본 값을 채워서 건물의 설명을 채워야 합니다.
+`M Hologram Class` 를 `FGBuildableHologram` 으로 설정하여 `FGBuildable` 이 홀로그램을 자동으로 찾도록 하겠습니다.
 
-Fill `M Display Name` with something like "Doc Buildable" and `M Description` with "An example building that showcases the MI_Factory_Base_01 material.".
+`M Display Name` 을 "Doc 건물"로, `M Description` 을 "MI_Factory_Base_01 머티리얼을 보여주는 예제 건물입니다."로 설정하겠습니다.
 
 [TIP]
 ====
-Holograms control how buildings get placed.
-Later on, you can write your own to allow upgrading buildings or to have snapping functionality.
-You can learn more about how holograms work on the xref:Development/Satisfactory/BuildableHolograms.adoc[Buildable Holograms] page.
+홀로그램은 건물이 배치되는 방식을 제어합니다.
+나중에 건물 업그레이드나 부착 기능을 허용하는 자신만의 홀로그램을 작성할 수 있습니다.
+홀로그램 작동 방식에 대한 자세한 내용은 xref:Development/Satisfactory/BuildableHolograms.adoc[건물 홀로그램] 페이지를 참고하십시오.
 ====
 
-As you can see in the `Components` pane in the top left, the actor already contains a few components.
-But not any visuals, so, now add a new FGColoredInstancedMeshProxy component in the center of the viewport.
-The build gun uses the origin when targeting the mesh to be built or snapped.
-You can use link:{attachmentsdir}/BeginnersGuide/simpleMod/Mesh_DocBuild.fbx[this example Mesh], the Plantpot of Knowledge, for your buildable.
+왼쪽 상단의 `컴포넌트` 창에서 액터가 이미 몇 가지 구성 요소를 포함하고 있음을 알 수 있습니다.
+하지만 시각적 요소는 없으므로, 뷰포트 중앙에 `FGColored Instanced Mesh Proxy` 구성 요소를 추가합니다.
+빌드건은 메쉬를 타겟팅할 때 원점을 사용합니다.
+건물을 위해 지식의 화분의 link:{attachmentsdir}/BeginnersGuide/simpleMod/Mesh_DocBuild.fbx[이 예제 메쉬] 사용하십시오.
 
-This Actor is also where you can define the snapping area and the clearance area, but we won't do that for now. Look to other machines and examples for inspiration as there are several relevant settings to make those behaviors work correctly.
+이 액터는 부착 영역과 간격 영역을 정의할 수 있는 곳이지만, 지금은 그렇게 하지 않겠습니다. 다른 기계와 예제를 참고하여 이러한 동작을 올바르게 작동시키기 위한 여러 관련 설정이 있습니다.
 
-== Make it Paintable
+== 색칠할 수 있게 만들기
 
-We want to make our buildable xref:Development/Satisfactory/Paintable.adoc[paintable], meaning, able to be painted it with the paint gun. Because the `FGBuildable`-class already provides a basic implementation for that, we just need our buildable's mesh to use the `MI_Factory_Base_01` material. The provided example mesh already provides a proper UV map for said material, so you will not need to edit the UVs of the provided mesh. You will need to do so for your own models. More info on the materials already in the game can be found at xref:Development/Modeling/MainMaterials.adoc[Main Materials] documentation page. 
+우리는 건물을 xref:Development/Satisfactory/Paintable.adoc[색칠할 수 있게] 만들고 싶습니다. 즉, 커스터마이저(구 도색 총)로 칠할 수 있어야 합니다. `FGBuildable` 클래스는 이미 이를 위한 기본 구현을 제공하므로, 건물의 메쉬가 `MI_Factory_Base_01` 머티리얼을 사용하도록 설정하면 됩니다. 제공된 예제 메쉬는 해당 머티리얼에 대한 적절한 UV 맵을 제공하므로, 제공된 메쉬의 UV를 수정할 필요는 없습니다. 자신의 모델에 대해서는 설정이 필요할 것입니다. 게임 내에서 이미 있는 머티리얼에 대한 더 많은 정보는 xref:Development/Modeling/MainMaterials.adoc[메인 머티리얼] 문서 페이지에서 확인할 수 있습니다.
 
-You must ensure that the materials of the Mesh and Buildable are set to point to a material called `MI_Factory_Base_01` within `+Content/FactoryGame/-Shared/Material+`. If this does not exist, create a placeholder material in its place, and it will point to the correct texture within the game.
+메쉬와 건물의 머티리얼이 `+Content/FactoryGame/-Shared/Material+` 내의 `MI_Factory_Base_01` 이라는 머티리얼을 가리키도록 설정해야 합니다. 이 머티리얼이 존재하지 않으면, 그 자리에 자리 표시자 머티리얼을 생성하고, 이는 게임 내에서 올바른 텍스처를 가리키게 됩니다.
 
 [WARNING]
 ====
-More than one `MI_Factory_Base_01` material may appear in your search. Make sure you select the one located at `/Game/FactoryGame/-Shared/Material`. Hover over it in the picker to check the path.
+검색 결과에 `MI_Factory_Base_01` 이 하나 이상 표시될 수 있습니다. `/Game/FactoryGame/-Shared/Material` 에 위치한 것을 선택하도록 하십시오. 선택기에서 마우스를 올려두면 경로를 확인할 수 있습니다.
 ====
 
-== Adding the Descriptor
+== 디스크립터 추가
 
-Similar to how we created a descriptor for our item, we now need to create one for our buildable of type `FGBuildingDescriptor`.
+아이템에 대한 디스크립터를 생성했던 것처럼, 이제 건물에 대한 `FGBuildingDescriptor` 유형의 디스크립터를 생성해야 합니다.
 
-Simply add a new Blueprint of type `FGBuildingDescriptor` to the same folder as the buildable itself and call it f.e. "Desc_DocBuild".
+건물과 동일한 폴더에 `FGBuildingDescriptor` 유형의 새로운 블루프린트를 추가하고, 이름을 "Desc_DocBuild"로 지정합니다.
 
 [IMPORTANT]
 ====
-Make sure you use `FGBuildingDescriptor` (for buildings) as the parent class
-and _not_ `FGBuildDescriptor` (generic parent class for anything the build gun can place).
+건물을 위한 부모 클래스로 `FGBuildingDescriptor` 를 사용해야 하며,
+`FGBuildDescriptor`(빌드건이 배치할 수 있는 모든 것의 일반 부모 클래스)가 _아닙니다_.
 ====
 
-Building descriptors are very similar to item descriptors.
-This is because `FGBuildingDescriptor` extends the item descriptor class,
-meaning it inherits all of its fields and adds a few more.
+건물 디스크립터는 아이템 디스크립터와 매우 유사합니다.
+이는 `FGBuildingDescriptor` 가 아이템 디스크립터 클래스의 확장이라
+모든 입력란을 상속받고 몇 가지가 추가되기 때문입니다.
 
-Note that not every item descriptor field is useful to a building descriptor.
-For example, the stack size and conveyor mesh of a building are irrelevant to its functionality despite being editable.
+모든 아이템 디스크립터 입력란이 건물 디스크립터에 유용한 것은 아닙니다.
+예를 들어, 묶음 크기와 컨베이어 메쉬를 편집할 순 있지만 건물의 기능과 관련이 없습니다.
 
-Make sure to set the `M Buildable Class` field to your `Build_DocBuild` actor.
-This field determines what building actor will be placed when the player uses the build gun.
-The building's final display name and description are also pulled from this asset;
-the descriptor's fields for this purpose are not used, which is part of why they are greyed out in the editor.
+다음으로 `M Buildable Class` 란을 `Build_DocBuild` 액터로 설정합니다.
+이 입력란은 플레이어가 빌드건을 사용할 때 어떤 건물 액터가 배치될지를 결정합니다.
+건물의 최종 표시 이름과 설명은 이 애셋에서 가져오며,
+이로 인해 디스크립터의 몇 입력란은 사용되지 않고, 편집기에서 회색으로 표시됩니다.
 
-The descriptor category, subcategory, and icon also determine how the building will appear in the Build Gun.
-You can use
-// Links to GH hosted image because cloudflare serves it as a webp -> can't be imported to Unreal
-link:https://raw.githubusercontent.com/satisfactorymodding/Documentation/master/modules/ROOT/attachments/BeginnersGuide/simpleMod/Icon_DocBuild.png[this example image] as the icon.
+디스크립터 범주, 하위 범주, 아이콘은 건물이 빌드건에서 어떻게 나타나는지를 결정합니다.
+// 클라우드플레어가 webp(언리얼에서 사용할 수 없음)로 전달하므로 깃헙 호스팅 이미지 링크 사용
+link:https://raw.githubusercontent.com/satisfactorymodding/Documentation/master/modules/ROOT/attachments/BeginnersGuide/simpleMod/Icon_DocBuild.png[이 예제 이미지]를 아이콘으로 사용하십시오.
 
-Building Descriptors use categories to determine where they appear in the build gun.
-It's possible to create your own categories,
-but for now, use `BC_TradingPost` in the `M Category` field and `SC_Progression` as the only array entry in the `M Sub Categories` field.
-This will sort your building near the HUB in the build menu.
+건물 디스크립터는 범주를 사용하여 빌드건에서 어디에 나타나는지를 결정합니다.
+자신의 범주를 생성할 수 있지만,
+지금은 `BC_TradingPost` 를 `M Category` 란에 사용하고, `SC_Progression` 을 `M Sub Categories` 란의 유일한 배열 항목으로 사용하십시오.
+이렇게 하면 건물이 건설 메뉴에서 허브 근처에 정렬될 겁니다.
 
 [IMPORTANT]
 ====
-Make sure to select valid Categories and Sub Categories for your buildings!
-Without this data selected, your building will either not appear in the build gun unless searched for by name,
-or crash the game when the build gun is opened.
+건물을 위한 유효한 범주와 하위 범주를 선택해야 합니다!
+이 데이터가 선택되지 않으면, 건물은 이름으로 검색하지 않는 한 빌드건에 나타나지 않거나,
+빌드건이 열릴 때 게임이 충돌할 수 있습니다.
 
-Since the category field is multi-purpose,
-the editor's picker unfortunately includes category options that aren't relevant to buildings.
-Building categories (for the `M Category` field) are usually prefixed with `BC_`
-and sub-categories (for the `M Sub Categories` field) are usually prefixed with `SC_`.
-Note that `SC_RSS_` categories are for AWESOME Sink Shop schematics and should not be used for buildings.
+범주 입력란은 다목적이므로,
+에디터의 선택기는 불행히도 건물과 관련이 없는 범주 옵션을 포함합니다.
+건물 범주(`M Category` 란의 경우)는 일반적으로 `BC_` 로 접두사가 붙고,
+하위 범주(`M Sub Categories` 란의 경우)는 일반적으로 `SC_` 로 접두사가 붙습니다.
+`SC_RSS_` 범주는 A.W.E.S.O.M.E. 싱크 상점 도면을 위한 것이므로 건물에 사용해서는 안 됩니다.
 
-You can find out what categories and sub categories the base game's buildings use by opening their placeholders in the editor.
+기본 게임의 건물이 사용하는 범주와 하위 범주를 확인하려면, 에디터에서 그 자리 표시자를 열어보십시오.
 ====
 
-== Define the Recipe
+== 제작법 정의
 
-To define how our building is constructed we will use an `FGRecipe`,
-just like we did for our xref:Development/BeginnersGuide/SimpleMod/recipe.adoc#_create_a_recipe[custom item].
-Create a new FGRecipe asset and set ProducedIn to `FGBuildGun`,
-then add Ingredients entries to define the cost of constructing the building.
-The Product field should contain exactly one entry -
-the FGBuildingDescriptor asset you just created for your buildable.
+우리의 건물이 어떻게 건설되는지를 정의하기 위해 `FGRecipe` 를 사용할 것입니다.
+이것은 우리가 xref:Development/BeginnersGuide/SimpleMod/recipe.adoc#_제작법_만들기[맞춤 아이템]을 위해 했던 것과 같습니다.
+새로운 FGRecipe 애셋을 생성하고, Produced In을 `FGBuildGun` 으로 설정한 후,
+건물 건설 비용을 정의하기 위해 Ingredients 항목을 추가합니다.
+Product 란에는 정확히 하나의 항목, 방금 생성한 건물에 대한 FGBuildingDescriptor 애셋이 있어야 합니다.
 
-Don't forget to list your newly created recipe in the unlocks of a Schematic otherwise it won't be registered.
+도면의 잠금 해제 목록에 새로 생성한 제작법을 나열하는 것을 잊지 마십시오. 그렇지 않으면 등록되지 않습니다.
 
-That's it! You don't need to register anything else. When the recipe gets loaded, everything else also gets loaded and the buildable in the save file has soft references to the classes, and if they get loaded also the classes like our newly created buildable get loaded.
+그게 전부입니다! 다른 것을 등록할 필요는 없습니다. 제작법이 로드되면, 나머지 모든 것도 로드되고, 저장 파일의 건물은 클래스에 대한 소프트 참조를 가지며, 이들이 로드되면 새로 생성된 건물과 같은 클래스도 로드됩니다.
 
-== Trying it Out
+== 사용해 보기
 
-If you load up the game now, you should be able to build the Doc Build in game, but it is purely an object that sits there and exists. You should be able to paint it with the paint tool, and it should look roughly like it does in the icon image.
+이제 게임을 불러오면 Doc 건물을 게임 내에서 건설할 수 있어야 하지만, 이는 단순히 존재하는 객체일 뿐입니다. 페인트 도구로 페인트할 수 있어야 하며, 아이콘 이미지와 대략 비슷하게 보여야 합니다.
 
-== Troubleshooting
+== 문제 해결
 
-=== Placing the building creates nothing in the world
+=== 건물 배치 시 세계에 아무것도 생성되지 않음
 
-Make sure that your building has an FGColoredInstancedMeshProxy component
-and that a mesh is assigned to it.
+건물에 FGColoredInstancedMeshProxy 구성 요소가 있고,
+그에 메쉬가 할당되어 있는지 확인하십시오.
 
-=== Building has a gray checkerboard texture
+=== 건물이 회색 체크무늬 텍스처를 가짐
 
-Check both the Buildable's mesh component and the mesh's own settings ensure the correct material, 
-`MI_Factory_Base_01`, is selected. 
+건물의 메쉬 구성 요소와 메쉬의 설정을 확인하여 올바른 머티리얼,
+`MI_Factory_Base_01` 이 선택되어 있는지 확인하십시오.
 
-=== Building doesn't appear in the build gun
+=== 빌드건에 건물이 나타나지 않음
 
-- Make sure all of your mod files are saved before packaging the mod.
-- Make sure the FGBuildingDescriptor has a category and sub-category set.
-  Without one, the build gun doesn't know where to display it and it will only appear when directly searched for.
-- Check that `BP_BuildGun` is in the producers list of the FGRecipe.
-- Ensure the recipe is in the Unlock array of a schematic you have created.
-- Ensure the schematic unlocking the recipe is listed in your root Game World Module.
-- Check that you have purchased the schematic in-game.
+- 모드 파일이 패키징되기 전에 모두 저장되었는지 확인하십시오.
+- FGBuildingDescriptor에 범주와 하위 범주가 설정되어 있는지 확인하십시오.
+  하나가 없으면 빌드건이 어디에 표시할지 알 수 없으며, 이름으로 직접 검색하지 않는 한 나타나지 않습니다.
+- `BP_BuildGun` 이 FGRecipe의 생산자 목록에 있는지 확인하십시오.
+- 제작법이 생성한 도면의 잠금 해제 배열에 있는지 확인하십시오.
+- 잠금 해제하는 도면이 루트 게임 월드 모듈에 나열되어 있는지 확인하십시오.
+- 게임 내에서 도면을 구매했는지 확인하십시오.
 
-=== Crash when selecting the building in the build gun
+=== 빌드건에서 건물을 선택할 때 충돌 발생
 
-The crash message will likely contain `UStruct::IsChildOf()` and `AFGBuildGun::GotoBuildState()`
+충돌 메시지에는 `UStruct::IsChildOf()` 및 `AFGBuildGun::GotoBuildState()` 가 포함될 것입니다.
 
-You forgot to assign a hologram class in the FGBuildable - the default is `None`, which leads to this crash.
+FGBuildable에서 홀로그램 클래스를 할당하는 것을 잊으셨습니다. 기본값은 `None` 이며, 이는 이 충돌로 이어집니다.
 
-=== Something Else
+=== 다른 문제
 
-If something went wrong, feel free to contact us on the https://discord.ficsit.app[Discord] for help.
+문제가 발생하면, 도움을 받기 위해 https://discord.ficsit.app[디스코드에]에 문의하십시오.
 
-== Next Steps
+== 다음 단계
 
-In the next section, we'll make another buildable that has some custom logic, allowing it to act as an item counter.
+다음 섹션에서는 맞춤 논리를 가진 또 다른 건물을 만들어 아이템 카운터로 작동하게 할 것입니다.

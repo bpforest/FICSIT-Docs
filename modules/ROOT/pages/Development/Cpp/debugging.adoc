@@ -25,7 +25,7 @@ In Visual Studio, this can be handled in
 
 Certain Unreal Engine launch arguments can be particularly useful when debugging.
 
-You can learn how to launch your game with launch arguments on the xref:faq.adoc#_how_do_i_start_the_game_with_launch_arguments[FAQ page].
+You can learn how to launch your game with launch arguments on the xref:faq.adoc#_게임을_시작할_때_실행_인수를_어떻게_설정합니까[FAQ page].
 
 === NoExceptionHandler
 

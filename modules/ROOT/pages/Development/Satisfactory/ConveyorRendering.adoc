@@ -53,7 +53,7 @@ but will look fine when dropped on the ground.
 You will require three textures for your material - Albedo, Normal, and Reflection.
 
 Next, you will need to create the following materials, all of which are instances of
-xref::/Development/Modeling/MainMaterials.adoc#_factory_baked_mm_factorybaked[Factory Baked]
+xref::/Development/Modeling/MainMaterials.adoc#_공장_베이크_mm_factorybaked[Factory Baked]
 with different settings.
 Reference that article for details on what should be in each texture.
 

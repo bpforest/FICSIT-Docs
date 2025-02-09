@@ -3,7 +3,7 @@
 This page doesn't just describe the inventory itself,
 but also everything else that is used by it.
 
-== Item Descriptor [.title-ref]#(`UFGItemDescriptor`)#
+== 아이템 디스크립터 [.title-ref]#(`UFGItemDescriptor`)#
 
 The native `AFGItemDescriptor` class, who would have thought, 
 contains properties of Item-like game concepts.

@@ -96,7 +96,7 @@ For example, Class Redirects usually have a `_C` suffix in the OldName and newNa
 
 You may find the `-DebugCoreRedirects` launch argument useful in your testing.
 It adds additional information to UE logs to help identify core redirect issues, including typos.
-Learn how to launch your game with launch arguments on the xref:faq.adoc#_how_do_i_start_the_game_with_launch_arguments[FAQ page].
+Learn how to launch your game with launch arguments on the xref:faq.adoc#_게임을_시작할_때_실행_인수를_어떻게_설정합니까[FAQ page].
 
 == Using Core Redirects in the Editor
 

@@ -1,15 +1,19 @@
 @font-face {
-    font-family: 'NanumBarunGothic';
-    font-style: normal;
-    font-weight: 300;
-    src: url('//fastly.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
+    font-family: 'NanumSquareNeo';
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.eot);
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.ttf) format("truetype");
 }
 
 @font-face {
-    font-family: 'NanumBarunGothic';
-    font-style: normal;
-    font-weight: 700;
-    src: url('//fastly.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
+    font-family: 'NanumSquareNeoExtraBold';
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-dEb.eot);
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-dEb.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-dEb.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-dEb.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: 'NanumSquareNeoHeavy';
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.eot);
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-eHv.ttf) format("truetype");
 }
 
 @font-face {
@@ -19,12 +23,15 @@
 }
 
 body {
-    font-family: /*"Freesentation5"*/ "NanumBarunGothic";
+    font-family: "NanumSquareNeo";
 }
 
 code {
     font-family: "NanumGothicCoding";
     background: #303030 !important;
+}
+
+code:not([class]) {
     color: #d7ba7d !important;
 }
 
@@ -33,7 +40,11 @@ em {
 }
 
 strong {
-    color: #c77979;
+    font-family: "NanumSquareNeoExtraBold";
+}
+
+.is-current-page>.nav-link, .is-current-page>.nav-text {
+    font-family: "NanumSquareNeoExtraBold";
 }
 
 .nav {
@@ -44,12 +55,38 @@ strong {
     background-color: rgb(20, 21, 24);
 }
 
-.content, .article {
+main>.content, .article {
     background-color: rgb(32, 33, 37);
 }
 
+main>.content {
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+}
+
+@media (min-width: 932px) {
+    .doc {
+        width: 60%;
+        max-width: 60%;
+    }
+}
+
 .doc h1, .doc h2, .doc h3, .doc h4, .doc h5, .doc h6 {
+    font-family: "NanumSquareNeoHeavy";
     color: rgb(242, 200, 0);
+}
+
+.doc .admonitionblock td.content {
+    padding: 1.5rem;
+    border-radius: 16px;
+    background-color: rgb(52, 53, 59);
+}
+
+@media (max-width: 932px) {
+    .doc .admonitionblock td.content {
+        padding: .5rem;
+    }
 }
 
 .navbar-brand .navbar-item + .navbar-item {

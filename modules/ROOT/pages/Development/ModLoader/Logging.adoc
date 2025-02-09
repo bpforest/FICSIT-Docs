@@ -19,7 +19,7 @@ By default, the game's logs will be stored in
 You can also view the logs live in a terminal as the game is running.
 To view the terminal, add `-log` to the game's launch arguments.
 Learn how to configure launch arguments on the
-xref:faq.adoc#_how_do_i_start_the_game_with_launch_arguments[FAQ page].
+xref:faq.adoc#_게임을_시작할_때_실행_인수를_어떻게_설정합니까[FAQ page].
 
 == Logging from Blueprints
 

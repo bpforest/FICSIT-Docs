@@ -1,199 +1,197 @@
-= Machine Interaction GUI
+= 기계 상호작용 GUI
 
-Let's create a simple interaction GUI for our xref:Development/BeginnersGuide/SimpleMod/machines/SimpleMachine.adoc[Item Counter Machine].
-We'll use it to read the current data and to reset the counters.
+간단한 상호작용 GUI를 만들어 보겠습니다. 이는 xref:Development/BeginnersGuide/SimpleMod/machines/SimpleMachine.adoc[아이템 카운터 기계]를 위한 것입니다.
+현재 데이터를 읽고 카운터를 재설정하는 데 사용할 것입니다.
 
 [TIP]
 =====
-A completed version of this interaction GUI is included in the ExampleMod in the starter project.
-Check there if something is unclear or you get stuck.
+이 상호작용 GUI의 완성된 버전은 시작 프로젝트의 ExampleMod에 포함되어 있습니다.
+무언가가 불분명하거나 막히면 그곳을 확인하십시오.
 =====
 
-== The Widget
+== 위젯
 
-First, create the asset that defines the GUI itself.
-Create a new Blueprint Class asset of type `Widget_UseableBase`.
+먼저 GUI를 정의하는 애셋을 생성합니다.
+`Widget_UseableBase` 유형의 새로운 블루프린트 클래스 애셋을 만듭니다.
 
-Once you open the widget asset you'll be greeted with the Designer tab,
-a visual interface for designing the visual appearance of widgets.
-You can switch between the "Designer" and "Graph" tabs via the buttons in the top right.
-The Graph tab enables editing the blueprint scripting code for your widget.
+위젯 애셋을 열면 디자이너 탭이 열리며,
+위젯의 시각적 외관을 디자인하기 위한 시각적 인터페이스가 제공됩니다.
+오른쪽 상단의 버튼을 통해 "디자이너"와 "그래프" 탭 간에 전환할 수 있습니다.
+그래프 탭에서는 위젯의 블루프린트 스크립팅 코드를 편집할 수 있습니다.
 
-Widgets are Unreal Engine's primary system for creating user interfaces.
-Learning how to create them is essential for creating mods with custom interfaces,
-but is too expansive of a topic for this guide to sufficiently explain.
-This guide focuses on the Satisfactory Modding specific portions of creating a widget.
+위젯은 언리얼 엔진의 사용자 인터페이스를 생성하기 위한 주요 시스템입니다.
+위젯을 만드는 방법을 배우는 것은 맞춤 인터페이스로 모드를 만드는 데 필수적이지만,
+이 가이드에서 충분히 설명하기에는 너무 방대한 주제입니다.
+이 가이드는 위젯 생성의 새티스팩토리 모딩 특정 부분에 중점을 둡니다.
 
-Check out the following documentation from Unreal as a starting point for learning how to design widgets.
+언리얼에서 위젯 디자인을 배우기 위한 출발점으로 다음 문서를 확인하십시오.
 
-* https://dev.epicgames.com/documentation/en-us/unreal-engine/umg-ui-designer-quick-start-guide-in-unreal-engine#2-displayinghealth,energy&ammo[UMG UI Designer Quick Start Guide: 2 - Displaying Health, Energy & Ammo]
-* https://dev.epicgames.com/documentation/en-us/unreal-engine/umg-editor-reference-for-unreal-engine?application_version=5.3[UMG Editor Reference]
+* https://dev.epicgames.com/documentation/en-us/unreal-engine/umg-ui-designer-quick-start-guide-in-unreal-engine#2-displayinghealth,energy&ammo[UMG UI 디자이너 빠른 시작 가이드: 2 - 체력, 에너지 및 탄약 표시]
+* https://dev.epicgames.com/documentation/en-us/unreal-engine/umg-editor-reference-for-unreal-engine?application_version=5.3[UMG 에디터 참조]
 
-== Retrieving Information from our Machine
+== 기계에서 정보 가져오기
 
-`FGInteractWidget`, the parent class of `Widget_UseableBase`,
-offers the `M Interact Object` field which represents the object that the player interacted with - in our case, our machine.
+`Widget_UseableBase` 의 부모 클래스인 `FGInteractWidget` 은
+플레이어가 상호작용한 객체를 나타내는 `M Interact Object` 입력란을 제공합니다. 지금은 우리의 기계를 뜻합니다.
 
-This field is a plain `Object`, which is good in this situation -
-by keeping the field type so general, it allows us to use the widget with pretty much any object.
+이 입력란은 일반적인 `Object` 로, 이 상황에서는 좋습니다.
+필드 유형을 일반적으로 유지함으로써 위젯을 거의 모든 객체와 함께 사용할 수 있습니다.
 
-Whenever you need to access data from the machine for display in the UI,
-you'll have to cast the object to the relevant type.
-In this case, the correct type is the Buildable of our machine that we created earlier.
-Once the variable is cast, we'll be able to access the fields on our buildable.
-
-[TIP]
-====
-You could cast the `M Interact Object` already in one of the constructor functions and then cache it in a new variable so you don't need to cast the object every time.
-====
-
-== Display Count Information
-
-Let's add some text to our widget to display the current count of items and types.
-In our case, we'll add two TextBlocks.
-You can use a VerticalBox to arrange them in a column.
-
-Bindings are a convenient way to live update our display with information from the machine.
-In the Designer tab, bind the Text content of each of your TextBlocks to their own functions (Bind > Create Binding).
-
-image:BeginnersGuide/simpleMod/machines/CreateBinding.png[Create text element function binding editor screenshot]
-
-The "Format Text" node is a clean way to prepate text for display to the user.
-Use curly brackets `{}` in its format input to indicate where you want to insert a variable.
-The node will automatically add new ports that match the names you type inside the curly braces.
-Consider reading more about this node in the Unreal documentation.
-
-For one of the text elements, use Format Text with `Total item count: \{itemCount\}` and feed it the machine's ItemAmount integer value.
-
-For the second one, use `# of unique items: \{uniqueItemCount\}` and feed it the Length of the ItemTypes set from the machine.
+UI에 표시할 기계의 데이터에 접근해야 할 때마다,
+객체를 관련 유형으로 캐스팅해야 합니다.
+이 경우, 올바른 유형은 우리가 이전에 생성한 기계의 Buildable입니다.
+변수가 캐스팅되면, 우리는 우리의 건물에서 입력란에 접근할 수 있습니다.
 
 [TIP]
 ====
-Sometimes text element bindings will not function properly when part of the player's HUD,
-as in, the always-visible display with your health bar, hotbar, and so on.
-In this situation, you can instead call the Set Text function with the return value of your binding called on widget's On Tick event.
+생성자 함수 중 하나에서 이미 `M Interact Object` 를 캐스팅하고 새로운 변수에 캐시하여 매번 객체를 캐스팅할 필요가 없도록 할 수 있습니다.
+====
+
+== 카운트 정보 표시
+
+현재 아이템 및 유형의 카운터를 표시하기 위해 위젯에 텍스트를 추가해 보겠습니다.
+이 경우, 두 개의 **텍스트 블록**을 추가할 것입니다.
+**세로 상자**를 사용하여 열에 배치할 수 있습니다.
+
+바인딩은 기계의 정보로 디스플레이를 실시간으로 업데이트하는 편리한 방법입니다.
+디자이너 탭에서 각 **텍스트 블록**의 텍스트 내용을 자신의 함수에 바인딩합니다(바인드 > 바인딩 생성).
+
+image:BeginnersGuide/simpleMod/machines/CreateBinding.png[텍스트 요소 함수 바인딩 편집기 스크린샷]
+
+"Format Text" 노드는 사용자에게 표시할 텍스트를 준비하는 깔끔한 방법입니다.
+형식 입력에서는 중괄호(`{}`)를 사용하여 원하는 곳에 변수를 삽입할 수 있습니다.
+노드는 중괄호 안에 입력한 이름과 일치하는 새로운 포트를 자동으로 추가할 것입니다.
+이 노드에 대해 더 읽어보는 것이 좋습니다.
+
+첫 번째 텍스트 요소에는 Format Text에 `총 아이템 카운트: \{itemCount\}` 를 사용하고 기계의 ItemAmount 정수 값을 전달하십시오.
+
+두 번째 텍스트 요소에는 `아이템 종류 카운트: \{uniqueItemCount\}` 를 사용하고 기계의 ItemTypes 집합의 길이를 전달하십시오.
+
+[TIP]
+====
+때때로 텍스트 요소 바인딩은 플레이어의 HUD의 일부일 때 제대로 작동하지 않습니다.
+이 경우, 위젯의 **On Tick** 이벤트에서 바인딩의 반환 값을 사용하여 텍스트 설정 함수를 호출할 수 있습니다.
 ====
 
 [TIP]
 ====
-Bindings aren't the most efficient, as they run every tick even when the resulting content wouldn't change,
-but because we're using it inside of a building interaction widget (only one of which will ever appear at a time)
-the performance is not a big concern here.
+바인딩이 가장 효율적인 것은 아니며, 결과 내용이 변경되지 않을 때에도 매 틱마다 실행됩니다.
+하지만 우리는 건물 상호작용 위젯 내부에서 사용하고 있기 때문에 (한 번에 하나만 나타날 수 있음)
+성능엔 큰 문제가 되지 않습니다.
 ====
 
-== Reset Button
+== 재설정 버튼
 
-Now we have the display of our text, but we still need to add the reset functionality.
-For that, go back to the Designer and create a new button.
-You should probably put a text element inside the button to label what it does as well.
-Next, bind an event to the `On Clicked` event of a the button.
-In the event's code, modify the building's data to set both counters of the machine to 0.
+이제 텍스트 표시가 완료되었지만, 재설정 기능이 남았습니다.
+이를 위해 디자이너로 돌아가서 새로운 버튼을 만드십시오.
+버튼 안에 텍스트 요소를 넣어 무엇을 하는지 레이블을 붙이는 것이 좋습니다.
+다음으로 이벤트를 버튼의 `On Clicked` 이벤트에 바인딩합니다.
+이벤트의 코드는 기계의 두 카운터를 0으로 설정하여 건물의 데이터를 수정하는 것입니다.
 
 [TIP]
 ====
-Note that the reset button we created here does not work correctly in multiplayer.
-Check out the MultiplayerDemoBuilding in the Example Mod to see how to handle this.
+여기서 만든 재설정 버튼은 멀티플레이에서 제대로 작동하지 않습니다.
+이 문제를 처리하는 방법은 Example Mod의 MultiplayerDemoBuilding을 확인하십시오.
 ====
 
-== Make the widget receive user input
+== 위젯이 사용자 입력을 받도록 만들기
 
-There's still a problem if you use the machine: the user can't actually interact with the widget.
-The reason is that we don't capture any input from the user.
-To fix that you'll need to change some of the class default values on the widget.
+기계를 사용할 때 여전히 문제가 있습니다. 사용자가 실제로 위젯과 상호작용할 수 없는 것입니다.
+그 이유는 사용자로부터 입력을 받지 않기 때문입니다.
+이를 해결하기 위해 위젯의 클래스 기본값을 변경해야 합니다.
 
 * {blank}
 +
 Block Movement::
-  Activate this so the widget consumes keystrokes, meaning it can use them to trigger events.
-  An example keystroke would be pressing `Esc` to exit the widget.
+  이 옵션을 활성화하여 위젯이 키 입력을 사용하도록 하여 이벤트를 작동시킬 수 있습니다.
+  예를 들어, `Esc` 를 눌러 위젯을 종료하는 것입니다.
 * {blank}
 +
 Block Mouse Look::
-  Activate this so the widget shows the mouse cursor and receives mouse input,
-  allowing it to react to events like `On Clicked`.
+  이 옵션을 활성화하여 위젯이 마우스 커서를 표시하고 마우스 입력을 수신하도록 하여,
+  `On Clicked` 와 같은 이벤트에 반응할 수 있도록 합니다.
 
-== Make the Machine Interactable
+== 기계를 상호작용 가능하게 만들기
 
-Now we need to attach our UI to the item counter machine.
-There's very little to do, we just need to enable `M Is Useable` and set `M Interact Widget Class` to your newly created widget.
+이제 UI를 아이템 카운터 기계에 연결해야 합니다.
+간단합니다. `M Is Useable` 을 활성화하고 `M Interact Widget Class` 를 새로 생성한 위젯으로 설정하면 됩니다.
 
-Done! Now you can interact with your machine by looking at it and hitting `E`.
+완료! 이제 기계를 바라보고 `E` 를 눌러 상호작용할 수 있습니다.
 
-== Use the Satisfactory Window
+== 새티스팩토리 창 사용하기
 
-You can make your widget look more like the other Satisfactory interface by using `Widget_Window_DarkMode`.
-This base-game widget is provided with the modding starter content.
+위젯을 다른 새티스팩토리 인터페이스처럼 보이게 하려면 `Widget_Window_DarkMode` 를 사용할 수 있습니다.
+이 기본 게임 위젯은 모딩 시작 콘텐츠와 함께 제공됩니다.
 
-It can be used like most other container widgets - put the content you want into its "Window Body" widget slot.
-You can set the window's title by assigning `mTitleText` in the widget's details.
+대부분의 다른 컨테이너 위젯처럼 사용할 수 있으며 원하는 콘텐츠를 "Window Body" 위젯 슬롯에 넣으면 됩니다.
+위젯의 세부정보에서 `mTitleText` 를 할당하여 창의 제목을 설정할 수 있습니다.
 
-image:BeginnersGuide/simpleMod/WindowDarkModeSlot.png[Window Dark Mode content slot,300]
+image:BeginnersGuide/simpleMod/WindowDarkModeSlot.png[Window Dark Mode 콘텐츠 슬롯,300]
 
 [TIP]
 ====
-Most of the time you will add a Canvas Panel and in it other widgets, so you can use it like a "normal" widget.
+대부분의 경우, 캔버스 패널을 추가하고 그 안에 다른 위젯을 추가하여 "정상" 위젯처럼 사용할 수 있습니다.
 ====
 
-If you want to add the functionality to close the whole interact widget by clicking the "X" Button,
-not just the window,
-you need to bind the `OnEscapePressed` Event of the interact widget (or custom stuff) to the `OnClose` Event on the `WindowDark`.
+상호작용 위젯 전체를 "X" 버튼을 클릭하여 닫는 기능을 추가하고 싶다면,
+단지 창이 아니라,
+상호작용 위젯의 `OnEscapePressed` 이벤트(또는 사용자 정의 항목)를 `WindowDark` 의 `OnClose` 이벤트에 바인딩해야 합니다.
 
-=== UI is hidden in the editor using the Window Dark widget
+=== 에디터에서 UI가 Window Dark 위젯을 사용하여 숨겨짐
 
-If you start using the `Widget_Window_DarkMode` inside your custom Blueprint Widget,
-you could see everything covered by a gray overlay,
-which effectively blocks you from previewing the UI in the editor.
-This is expected and doesn't change even with a xref:CommunityResources/AssetToolkit.adoc[full asset dump].
+사용자가 맞춤 블루프린트 위젯 내에서 `Widget_Window_DarkMode` 를 사용하기 시작하면,
+모든 것이 회색 오버레이로 덮여져 편집기에서 UI를 미리 볼 수 없게 됩니다.
+이는 의도된 것이며, 전체 애셋 덤프(xref:CommunityResources/AssetToolkit.adoc)와 함께 사용하더라도 변경되지 않습니다.
 
-There are two primary ways to deal with this problem.
+이 문제를 해결하는 두 가지 주요 방법이 있습니다.
 
-==== Edit the Widget Asset
+==== 위젯 애셋 편집
 
-If you'd like, you can open the `Widget_Window_DarkMode` widget in Unreal Editor and hide the gray layer.
-This change will not affect the game, just your development environment, since the asset you're modifying will not be packed.
-After opening the widget:
+원하는 경우, 언리얼 에디터에서 `Widget_Window_DarkMode` 위젯을 열고 회색 레이어를 숨길 수 있습니다.
+이 변경은 게임에 영향을 미치지 않으며, 단지 개발 환경에만 영향을 미칩니다. 수정하는 애셋은 패킹되지 않기 때문입니다.
+위젯을 열면:
 
-- Locate the `mLoadingBg` image widget in the _Hierarchy_ panel, then click on it.
-- In the right "Details" window scroll to "Behavior" -> "Render Opacity" property
-- Set it to 0.0
-- Click Save & Compile in the upper left editor window
+- _계층구조_ 패널에서 `mLoadingBg` 이미지 위젯을 찾아 클릭합니다.
+- 오른쪽 "디테일" 창에서 "렌더링" > "렌더 오파시티" 속성으로 스크롤합니다.
+- 0.0으로 설정합니다.
+- 에디터 창의 왼쪽 상단에서 저장 및 컴파일을 클릭합니다.
 
-Now you should see the content inside your widget. See the following image as a reference for the steps.
+이제 위젯 내부의 콘텐츠를 볼 수 있어야 합니다. 다음 이미지를 참고하여 단계를 확인하십시오.
 
 [NOTE]
 ====
-If the original uasset gets updated in the SML repo, you'll have to redo this edit in your project.
-The same thing happens if you're using a clone/fork of the SML project.
-This will effectively revert your changes.
+SML 저장소에서 원래 uasset이 업데이트되면 이 편집을 프로젝트에서 다시 수행해야 합니다.
+SML 프로젝트의 복제/포크를 사용하는 경우에도 마찬가지입니다.
+이렇게 하면 변경 사항이 효과적으로 되돌려질 것입니다.
 ====
 
-image:BeginnersGuide/simpleMod/WindowDarkModeFixOpacity.png[Fix Window Dark Mode opacity in development]
+image:BeginnersGuide/simpleMod/WindowDarkModeFixOpacity.png[개발에서 Window Dark Mode 불투명도 수정]
 
-==== Use Pre Construct
+==== Pre Construct 사용하기
 
-Alternatively, if you don't want to modify the widget,
-you can take advantage of the Pre Construct widget function to modify it before it's displayed in the editor.
+대안으로, 위젯을 수정하고 싶지 않다면,
+에디터에서 표시되기 전에 수정하기 위해 Pre Construct 위젯 기능을 활용할 수 있습니다.
 
-The Pre Construct function has a lot of utility outside of this,
-but that is outside the scope of this docs page.
+Pre Construct 함수는 이 외에도 많은 유용성을 가지고 있지만,
+이는 이 문서 페이지의 범위를 벗어납니다.
 
-We'll be using it to set the Render Opacity (transparency) of the gray box and its loading icon
-so they don't show up in the editor for us.
+우리는 이를 사용하여 회색 상자와 로딩 아이콘의 투명도(렌더 오파시티)를 설정하여
+에디터에서 표시되지 않도록 할 것입니다.
 
-To do this, set up the following blueprint code in your widget.
-Notice that the Set Render Opacity call has multiple items connected to its Target pin -
-many widget functions support this feature.
-The blueprint node will apply the change to all connected targets.
+이를 위해 위젯에서 다음 블루프린트 코드를 설정합니다.
+Set Render Opacity 호출에 여러 항목의 Target 핀이 연결되어 있는 것을 주목하십시오.
+많은 위젯 함수가 이 기능을 지원합니다.
+블루프린트 노드는 모든 연결된 대상에 변경 사항을 적용합니다.
 
-image:BeginnersGuide/simpleMod/PreConstructPatchWindowDark.png[Using Pre Construct to Patch the Widget]
+image:BeginnersGuide/simpleMod/PreConstructPatchWindowDark.png[위젯을 패치하기 위해 Pre Construct 사용]
 
-This 'fix' only takes effect for this particular widget -
-you will have to use this snippet again in each widget you create that contains a WindowDark.
+이 '수정'은 이 특정 위젯에만 적용됩니다.
+WindowDark가 포함된 각 위젯을 생성할 때마다 이 스니펫을 다시 사용해야 한다는 뜻입니다.
 
-== Next Steps
+== 다음 단계
 
-If you'd like to keep working on this widget,
-check out the version of this GUI included in the ExampleMod in the starter project.
-It includes some extra features, such as a scrollable list of every item type the machine has processed by name.
+이 위젯 작업을 계속하고 싶다면,
+시작 프로젝트에 포함된 ExampleMod의 GUI를 확인해 보십시오.
+이 버전에는 기계가 처리한 모든 아이템의 유형을 스크롤 가능한 목록에 표시하는 등 추가 기능이 포함되어 있습니다.
 
-In the next section we'll create a custom power generator - a solar panel.
+다음 섹션에서는 맞춤형 전력 발전기, 태양광 패널을 만들 것입니다.

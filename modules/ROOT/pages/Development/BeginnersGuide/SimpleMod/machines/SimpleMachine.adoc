@@ -1,107 +1,107 @@
-= Item Counter Machine
+= 아이템 카운터 기계
 
-In this chapter we'll create a machine which simply counts the items and types of items that pass through it, outputting them again on the other side. 
+이번 장에서는 단순히 아이템과 아이템 유형을 세고
+이를 반대 편에서 다시 출력하는 기계를 만들 것입니다.
 
 [TIP]
 =====
-A completed version of this machine is included in the ExampleMod in the starter project.
-Check there if something is unclear or you get stuck.
+이 기계의 완성된 버전은 시작 프로젝트의 ExampleMod에 포함되어 있습니다.
+무언가가 불분명하거나 막히면 그곳을 확인해 보십시오.
 =====
 
-== Create the Machine
+== 기계 만들기
 
-First thing to make our counting machine,
-you'll need to create another xref:Development/BeginnersGuide/SimpleMod/buildable.adoc[buildable]
-with a descriptor and recipe.
-This time use link:{attachmentsdir}/BeginnersGuide/simpleMod/SM_SampleMachine.fbx[this] as the mesh
-and link:{attachmentsdir}/BeginnersGuide/simpleMod/Icon_SimpleMachine.png[this] as icon
-so that it looks a bit more like a machine and less like a planter box.
+아이템 카운터 기계를 만들기 위해,
+다른 xref:Development/BeginnersGuide/SimpleMod/buildable.adoc[건물]과
+디스크립터와 제작법을 생성해야 합니다.
+이번에는 link:{attachmentsdir}/BeginnersGuide/simpleMod/SM_SampleMachine.fbx[이것]을 메쉬로 사용하고,
+link:{attachmentsdir}/BeginnersGuide/simpleMod/Icon_SimpleMachine.png[이것]을 아이콘으로 사용하여 기계처럼 보이게 하겠습니다.
 
-Upon opening up the imported mesh you'll notice that
-it has 3 material slots unlike the Plantpot of Knowledge's singular slot.
-Most buildings have 3 or more material slots for reasons explained in the
-xref:Development/Modeling/MainMaterials.adoc[Modeling Guide].
+가져온 메쉬를 열면
+지식의 화분과는 달리 3개의 머티리얼 슬롯이 있음을 알 수 있습니다.
+대부분의 건물은 3개 이상의 머티리얼 슬롯을 가지고 있습니다.
 
-Assign the `MI_Factory_Base_01` material to the first slot,
-the `DecalColor_Masked` material to the second slot,
-and the `Decal_Normal` material to the third slot.
+첫 번째 슬롯에는 `MI_Factory_Base_01` 머티리얼을,
+두 번째 슬롯에는 `DecalColor_Masked` 머티리얼을,
+세 번째 슬롯에는 `Decal_Normal` 머티리얼을 할당합니다.
 
-As this is a simple counting machine we're using FGBuildable as our base class; however, if we were making a machine that produces or mines things we should look for a better starting point in the available classes.
-For now, to make sure we're looking at the same thing during the tutorial, stick to FGBuildable.
+이 기계는 단순한 카운팅 기계이므로 FGBuildable을 기본 클래스로 사용합니다. 그러나 생산하거나 채굴하는 기계를 만들 경우, 사용 가능한 클래스에서 더 나은 시작점을 찾아야 합니다.
+지금은 튜토리얼 동안 같은 것을 보고 있으므로 FGBuildable에 고정하십시오.
 
-Now we simply want to add the xref:Development/Satisfactory/FactoryConnectors.adoc[factory-connectors] (conveyor input and outputs).
-For that, we'll be adding two components of type `FGFactoryConnectionComponent` to the actor and placing them where they looks appropriate.
-Use `+ Add Component` to add a component of type `FGFactory Connection` to the actor and name it "Input0".
-Duplicate it and rename the copy to "Output0". This naming pattern follows that of base-game machines and may be required by some game functions.
-In the Viewport, rotate and position them on opposite faces of our mesh so that their positive x (red arrow) faces out from the sides of the machine.
+이제 xref:Development/Satisfactory/FactoryConnectors.adoc[공장 연결부](컨베이어 입력 및 출력)를 추가해야 합니다.
+이를 위해, 액터에 `FGFactoryConnectionComponent` 유형의 두 구성 요소를 추가하고 적절한 위치에 배치할 것입니다.
+컴포넌트 탭의 `+ 추가` 를 사용하여 액터에 `FGFactory Connection` 유형의 구성 요소를 추가하고 이름을 "Input0"으로 지정합니다.
+이를 복제하고 이름을 "Output0"으로 변경합니다. 이 명명 패턴은 기본 게임 기계의 패턴을 따르며 일부 게임 기능에 필요할 수 있습니다.
+뷰포트에서 메쉬의 양쪽 면에 위치시키고, 빨간 화살표가 기계의 측면에서 바깥쪽을 향하도록 회전 및 위치를 조정합니다.
 
-Set the output component's Direction property to `Output` and the Connector to `Conveyor`. Do the same for the input component, but change its direction property to `Input`.
-Be sure that both components have `M Forward Peek and Grab to Buildable` checked.
-This step is essential for the item counting code to function correctly.
+출력 구성 요소의 Direction 속성을 `Output` 으로 설정하고 Connector를 `Conveyor` 로 설정합니다. 입력 구성 요소에 대해서도 동일하게 설정하되 Direction 속성을 `Input` 으로 변경합니다.
+두 구성 요소 모두 `M Forward Peek and Grab to Buildable` 이 체크되어 있는지 확인하십시오.
+이 단계는 아이템 카운팅 코드가 올바르게 작동하는 데 필수적입니다.
 
-We also want to make our machine depend on electricity. For that we'll need to add two more components via `+ Add Component`.
-First is a xref:Development/Satisfactory/PowerNetwork.adoc[FGPowerConnection]; place it at the position of the power connecter visual of the mesh.
-Set `M Max Num Connections` to 1 so it behaves like the machines in the base game. However, you could raise this if you so desire.
-Second, add a xref:Development/Satisfactory/PowerNetwork.adoc[FGPowerInfo] component.
-If we had used one of the other types of base machine classes, these may have existed automatically, but since we chose FGBuildable, we need to add them ourselves.
+또한 기계가 전기에 의존하도록 만들고 싶습니다. 이를 위해 `+ 추가` 를 통해 두 개의 구성 요소를 추가해야 합니다.
+첫 번째는 xref:Development/Satisfactory/PowerNetwork.adoc[FGPowerConnection]이며, 메쉬의 전원 연결부의 시각적 위치에 배치합니다.
+`M Max Num Connections` 를 1로 설정하여 기본 게임의 기계처럼 작동하게 합니다. 그러나 원한다면 이 값을 높여도 됩니다.
+두 번째로 xref:Development/Satisfactory/PowerNetwork.adoc[FGPowerInfo] 구성 요소를 추가합니다.
+다른 기본 기계 클래스 중 하나를 사용했다면 자동으로 존재했을 수 있지만, FGBuildable을 선택했기 때문에 직접 추가해야 합니다.
 
 
-== Init logic
+== 논리 초기화
 
-The init logic happens in the `BeginPlay` event and initializes the base state of the machine (also based on the save information).
-There is not that much we need to do here.
-The only thing we need to do is to set the PowerInfo on the PowerConnection and configure the target consumption of the `FGPowerInfo` to something like 1.0.
-This controls how much power in MW the building will use to operate.
+논리 초기화는 `BeginPlay` 이벤트에서 발생하며 기계의 기본 상태를 초기화합니다(저장 정보에 기반).
+여기서 해야 할 일은 많지 않습니다.
+PowerInfo를 PowerConnection에 설정하고
+`FGPowerInfo` 의 목표 소비량을 1.0과 같은 값으로 설정합니다.
+이 값은 건물이 작동하는 데 필요한 전력량을 제어합니다.
 
-image:BeginnersGuide/simpleMod/machines/SimpleMachine_Init.jpg[image]
+image:BeginnersGuide/simpleMod/machines/SimpleMachine_Init.png[이미지]
 
-(Logic in the Event Graph)
+(이벤트 그래프의 논리)
 
-== Grab Logic
+== 잡기 논리
 
 [WARNING]
 ====
-It is generally unwise to implement conveyor grab logic in Unreal Blueprint code as the tutorial does here.
-If you plan for your buildings to be used in any substantive quantity,
-you should implement this logic in C++ to avoid the performance overhead of Blueprint.
-This tutorial will eventually™ be replaced with another one following better practices.
+언리얼 블루프린트 코드에서 컨베이어 잡기 로직을 구현하는 것은 일반적으로 바람직하지 않습니다.
+건물이 상당한 양으로 사용될 계획이라면,
+이 로직을 C++로 구현하여 블루프린트의 성능 오버헤드를 피해야 합니다.
+이 튜토리얼은 결국™ 더 나은 관행을 따르는 다른 튜토리얼로 대체될 것입니다.
 ====
 
-The `FGBuildable` class provides a `FactoryGrabOutput` function that will get executed by our output connector when a new item gets requested.
-Connecting a belt will cause a new item to be requested at the speed of the belt.
-It wont know how to respond to a request by default - to control how our machine behaves we'll need to setup and override of the `FactoryGrabOutput` function.
+`FGBuildable` 클래스는 출력 연결부가 새 아이템을 요청할 때 실행되는 `FactoryGrabOutput` 함수를 제공합니다.
+벨트를 연결하면 벨트 속도로 새 아이템이 요청됩니다.
+기본적으로 요청에 어떻게 응답할지 알지 못하므로, 기계의 동작을 제어하기 위해 `FactoryGrabOutput` 함수를 설정하고 재정의해야 합니다.
 
-image:BeginnersGuide/simpleMod/machines/SimpleMachine_Override.jpg[image]
+image:BeginnersGuide/simpleMod/machines/SimpleMachine_Override.png[이미지]
 
-Because we want to store the count of items transferred,
-we will need to add a new integer variable to the actor.
-Let's call it `ItemAmount`.
+운송된 아이템의 수를 저장하려면,
+액터에 새로운 정수(인티저) 변수를 추가해야 합니다.
+이를 `ItemAmount` 라고 부르겠습니다.
 
-We'll also need something to keep track of what unique `FGItemDescriptor` classes have entered the machine.
-Let's create a Set called `ItemTypes`.
-First, create the variable, then change it to be a set from the Details panel.
+기계에 들어온 고유한 `FGItemDescriptor` 클래스를 추적할 무언가도 필요합니다.
+`ItemTypes` 라는 집합(세트)을 생성하겠습니다.
+먼저 변수를 생성한 후, 디테일 패널에서 집합으로 변경하십시오.
 
-image:BeginnersGuide/simpleMod/machines/SimpleMachine_CreateVariable.png[Creating the variable]
+image:BeginnersGuide/simpleMod/machines/SimpleMachine_CreateVariable.png[변수 생성]
 
-image:BeginnersGuide/simpleMod/machines/SimpleMachine_CreateItemTypesSet_Part1.png[Setting the type]
+image:BeginnersGuide/simpleMod/machines/SimpleMachine_CreateItemTypesSet_Part1.png[유형 설정]
 
-image:BeginnersGuide/simpleMod/machines/SimpleMachine_CreateItemTypesSet_Part2.png[Change type to Set]
+image:BeginnersGuide/simpleMod/machines/SimpleMachine_CreateItemTypesSet_Part2.png[유형을 집합으로 변경]
 
-Now, in the grab logic, first we check if the machine has power. We do this by using the "HasPower"-node of the `FGPowerInfoComponent`. If it responds false, we return nothing and set the output to false. But if it's true, we use the grab function of the input connector to request a new item.
+이제 잡기 논리에서 먼저 기계에 전원이 있는지 확인합니다. `FGPowerInfoComponent` 의 "HasPower" 노드를 사용하여 확인합니다. 응답이 false이면 아무것도 반환하지 않고 출력을 false로 설정합니다. 그러나 true인 경우, 입력 커넥터의 잡기 기능을 사용하여 새 아이템을 요청합니다.
 
-If the input grab boolean is true, we increase the `ItemAmount` integer by one and add the item unique to the `ItemTypes`. After that we return the item we got from the grab and set the output boolean to true.
+입력 잡기 불리언이 true이면, `ItemAmount` 정수를 1 증가시키고 아이템을 `ItemTypes` 에 추가합니다. 그 후, 잡은 아이템을 반환하고 출력 불리언을 true로 설정합니다.
 
-If the input grab boolean is false, we just return nothing and the output boolean is set to false.
+입력 잡기 불리언이 false이면, 아무것도 반환하지 않고 출력 불리언을 false로 설정합니다.
 
-Overall the logic becomes: checks if we have power. If we do, try and get a item from the input. If there's no item, we do nothing. But if we get a item, we count it and then return it to the output.
+전반적인 로직은 다음과 같습니다: 전원이 있는지 확인합니다. 전원이 있다면 입력에서 아이템을 가져오려고 시도합니다. 아이템이 없으면 아무것도 하지 않습니다. 그러나 아이템을 가져오면 이를 세고 출력을 반환합니다.
 
-We also add a `Log Display` node near the end for debugging purposes. Details on getting a Live view of the game log can be found xref:Development/TestingResources.adoc#logging[here].
+디버깅 목적으로 마지막에 `Log Display` 노드를 추가합니다. 게임 로그의 실시간 보기를 얻는 방법에 대한 세부 정보는 xref:Development/TestingResources.adoc#logging[여기]에서 확인할 수 있습니다.
 
-.Open this image full size to get a better look
-image::BeginnersGuide/simpleMod/machines/SimpleMachine_Grab.png[image]
+.이 이미지를 잘 보기 위해 확대하는 것을 추천합니다.
+image::BeginnersGuide/simpleMod/machines/SimpleMachine_Grab.png[이미지]
 
-That should be it, try out your newly created machine!
+이제 새로 생성한 기계를 시도해 보십시오!
 
-== Next Steps
+== 다음 단계
 
-In the next section, we'll add a GUI to our counter that we can use to view and reset the internal tally.
+다음 섹션에서는 카운터에 GUI를 추가하여 내부 집계를 보고 재설정할 수 있도록 할 것입니다.

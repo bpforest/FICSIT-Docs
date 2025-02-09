@@ -79,7 +79,7 @@ When making your mesh, make floating geometry above your regular surface to hold
 It is possible, and expected, to mirror flip and stretch the normal decals. Several details are half details that are mirrored against themselves and others use https://en.wikipedia.org/wiki/9-slice_scaling["9-slice"] like approaches to stretch the parts of the mesh needed to reshape the detail. However, take care with your vertex normals. The vertex normals of your decal geometry should be as similar as possible to the underlying normals else visible seams appear at decal edges. If using Blender you may want to use the "Transfer Data" modifier.
 
 
-== Factory Baked (MM_FactoryBaked)
+== 공장 베이크 (MM_FactoryBaked)
 
 This material handles several separate use cases; player equipment, items in world, items on belts, small detailed machines, and more. Works with the painting and conveyor systems. Requires unique textures per mesh to take advantage of. Never used directly and always used via material instances. Common examples are xeno-basher, workbench, power poles, and any conveyor belt items.
 

@@ -1,137 +1,131 @@
-= Testing Your Mods
+= 모드 테스트
 
-Testing your mods to ensure that content is accessible
-and there are no bugs present is an important step in development.
-Careful testing before release can save you from having to release
-multiple versions in quick succession in order to fix a bug.
+모드의 내용을 접근 가능하게 하고
+버그가 없는지 확인하는 것은 개발에서 중요한 단계입니다.
+출시 전에 신중한 테스트를 통해 버그를 수정하기 위해
+여러 버전을 빠르게 출시해야 하는 상황을 피할 수 있습니다.
 
-This page lists some helpful resources and information regarding testing your mods.
+이 페이지는 모드 테스트와 관련된 유용한 자원과 정보를 나열합니다.
 
-== SML Logging
+== SML 로깅
 
-SML Logging is a valuable troubleshooting and testing tool, especially for blueprint mods.
+SML 로깅은 특히 블루프린트 모드에 유용한 문제 해결 및 테스트 도구입니다.
 
-You can find more information on how to use and configure it,
-as well as how to launch a live log viewer when you launch the game,
-on the xref:Development/ModLoader/Logging.adoc[Logging page].
+사용 방법 및 구성 방법에 대한 자세한 정보는 xref:Development/ModLoader/Logging.adoc[로깅 페이지]를 참고하십시오.
 
-If you select text in the log terminal window,
-it will freeze the game until you press 'enter' to deselect it.
-This can help with reading things before they would normally scroll by.
+로그 터미널 창에서 텍스트를 선택하면
+'enter'를 눌러 선택을 해제할 때까지 게임이 멈춥니다.
+이 기능은 일반적으로 스크롤되기 전에 내용을 읽는 데 도움이 됩니다.
 
-Since the log terminal is a regular Windows Command Prompt window,
-you can right click on its top bar and set some default customization values,
-such as where the window spawns and how wide it is,
-which will be applied every time the terminal opens.
-You can use this to have it always open on a second monitor, for example.
-Be aware that the values you set here
-will affect every instance of Command Prompt on your system. 
-See the link:#_launch_script_enhancements[Launch Script Enhancements] section below
-for another method of controlling where the window will appear.
+로그 터미널은 일반 Windows 명령 프롬프트 창이므로,
+상단 바를 우클릭하여 창이 열릴 위치와 너비와 같은
+기본 사용자 지정 값을 설정할 수 있습니다.
+이 설정은 터미널이 열릴 때마다 적용됩니다.
+예를 들어, 항상 두 번째 모니터에서 열리도록 설정할 수 있습니다.
+여기서 설정한 값은 시스템의 모든 명령 프롬프트 인스턴스에 영향을 미칩니다.
+아래의 <<스크립트 실행 향상>> 섹션을 참조하여
+창이 나타날 위치를 제어하는 또 다른 방법을 확인하십시오.
 
-== Unreal Console
+== 언리얼 콘솔
 
-The Unreal Console is a useful tool for debugging your mods.
-It extends the original log terminal mentioned in the previous section with some new features:
+언리얼 콘솔은 모드를 디버깅하는 데 유용한 도구입니다.
+이전 섹션에서 언급한 원래 로그 터미널에 몇 가지 새로운 기능이 추가되었습니다:
 
-- Options to filter (include/exclude) displayed log messages
-- Clearing the displayed log
-- Creating numbered "checkpoint" log markers
-- Running console commands from outside the game window (especially useful for dedicated servers)
-- See the game's current status regardless of log position
-- Selecting displayed log messages no longer freezes the game, which you may consider a benefit or a drawback.
+- 표시된 로그 메시지를 필터링(포함/제외)하는 옵션
+- 표시된 로그 지우기
+- 번호가 매겨진 "체크포인트" 로그 마커 생성
+- 게임 창 외부에서 콘솔 명령 실행(특히 전용 서버에 유용)
+- 로그 위치에 관계없이 게임의 현재 상태 보기
+- 표시된 로그 메시지를 선택해도 게임이 멈추지 않으며, 이는 장점 또는 단점으로 간주될 수 있습니다.
 
-In order to use the new console, add the following to your game's command-line launch arguments:
+새 콘솔을 사용하려면 게임의 명령줄 실행 인수에 다음을 추가하십시오:
 
 `-Log -NewConsole`
 
-If you don't know how to configure launch arguments,
-refer to xref:faq.adoc#_how_do_i_start_the_game_with_launch_arguments[this guide].
+실행 인수를 구성하는 방법을 모른다면,
+xref:faq.adoc#_게임을_시작할_때_실행_인수를_어떻게_설정합니까[이 가이드를 참고하십시오].
 
-Now, when you launch the game, you should now see the Unreal Console appear as a separate window.
+이제 게임을 실행하면 언리얼 콘솔이 별도의 창으로 나타납니다.
 
-image:TestingResources/Unreal-Console.png[image]
+image:TestingResources/Unreal-Console.png[이미지]
 
-== Cheats
+== 치트
 
-Functionality build into the game's
-xref:Development/Satisfactory/CheatBoard.adoc[Cheat Board]
-and xref:SMLChatCommands.adoc#ConsoleCommands[Unreal Console Commands]
-can expedite mod testing.
+게임에 내장된 기능인
+xref:Development/Satisfactory/CheatBoard.adoc[치트 보드]
+및 xref:SMLChatCommands.adoc#ConsoleCommands[언리얼 콘솔 명령]을 통해 모드 테스트를 가속화할 수 있습니다.
 
-== Developer Utility Mods
+== 개발자 유틸리티 모드
 
-A number of mods have been created that assist with mod development, debugging, and testing.
-Find them on ficsit.app by using the xref:ForUsers/Tags.adoc[Tag Filter] feature
-to view mods tagged `#developer-utility`.
+모드 개발, 디버깅 및 테스트를 지원하는 여러 모드가 제작되었습니다.
+ficsit.app에서 xref:ForUsers/Tags.adoc[태그 필터] 기능을 사용하여
+`#developer-utility` 로 태그된 모드를 찾아보십시오.
 
 [id="LaunchScript"]
-== Quick Launch Script
+== 빠른 실행 스크립트
 
-Testing mods often involves frequent restarts of the game.
-You can shave some time off of this process by launching via a script that loads you directly into the game world.
-In order to use this script, create a file with the `.ps1` extension somewhere convenient to you.
+모드 테스트는 종종 게임을 자주 재시작해야 합니다.
+이 프로세스에서 시간을 절약하려면 게임 세계로 직접 로드하는 스크립트를 통해 실행할 수 있습니다.
+이 스크립트를 사용하려면 편리한 위치에 `.ps1` 확장자를 가진 파일을 생성하십시오.
 
-Next, copy the contents of the below codeblock into the file.
-Note that you will have to modify the section near the top
-to match the location of files on your system.
+다음으로, 아래 코드 블록의 내용을 파일에 복사하십시오.
+파일의 위치에 맞게 상단 근처의 섹션을 수정해야 합니다.
 
-If you have never ran a powershell script before on your Windows install,
-you may need to
-https://pureinfotech.com/change-execution-policy-run-scripts-powershell/[modify the system execution policy to allow them to run].
+Windows 설치에서 파워셸 스크립트를 한 번도 실행한 적이 없다면,
+https://pureinfotech.com/change-execution-policy-run-scripts-powershell/[시스템 실행 정책을 수정하여 실행할 수 있도록 해야 할 수 있습니다].
 
 [source,ps1]
 ----
 param (
-	[Parameter(HelpMessage="Launcher to use (steam, epic). Level 1 of the script's GameDirs config option.")]
+	[Parameter(HelpMessage="사용할 런처(steam, epic). 스크립트의 GameDirs 구성 옵션의 레벨 1.")]
 		[string]$launcher = "steam",
-	[Parameter(HelpMessage="Side to use (client, server). Level 2 of the script's GameDirs config option.")]
+	[Parameter(HelpMessage="사용할 측면(client, server). 스크립트의 GameDirs 구성 옵션의 레벨 2.")]
 		[string]$side = "client",
-	[Parameter(HelpMessage="Branch to use (stable, experimental). Level 3 of the script's GameDirs config option. Not supported by Steam launcher.")]
+	[Parameter(HelpMessage="사용할 분기(stable, experimental). 스크립트의 GameDirs 구성 옵션의 레벨 3. Steam 런처에서는 지원되지 않음.")]
 		[string]$branch = "stable",
-	[Parameter(HelpMessage="When present, launches 2 copies of the game instead of 1. Most other arguments only apply to the first copy, read the script implementation for specifics.")]
+	[Parameter(HelpMessage="존재할 경우, 1개의 게임 대신 2개의 게임을 실행합니다. 대부분의 다른 인수는 첫 번째 복사본에만 적용되며, 세부 사항은 스크립트 구현을 참조하십시오.")]
 		[switch]$multiplayer = $false,
-	[Parameter(HelpMessage="When using the -multiplayer flag, how long to wait before launching the second copy in milliseconds.")]
+	[Parameter(HelpMessage="멀티플레이 플래그를 사용할 때, 두 번째 복제를 실행하기 전에 대기할 시간의 밀리초입니다.")]
 		[int]$multiplayerLaunchDelayMs = 5000,
-	[Parameter(HelpMessage="When present, the game will automatically load into the last save file you played. If used with the -multiplayer flag, the save must be in the `common` subfolder of the SaveGames directory.")]
+	[Parameter(HelpMessage="존재할 경우, 게임이 마지막으로 플레이한 저장 파일로 자동으로 로드됩니다. -multiplayer 플래그와 함께 사용할 경우, 저장 파일은 SaveGames 디렉토리의 `common` 하위 폴더에 있어야 합니다.")]
 		[switch]$loadLatestSave = $false,
-	[Parameter(HelpMessage="When present, the second copy of the game will automatically run the `open 127.0.0.1` console command to connect to the first copy. Must be used with -loadLatestSave flag.")]
+	[Parameter(HelpMessage="존재할 경우, 두 번째 복사가 첫 번째 복사본에 연결하기 위해 `open 127.0.0.1` 콘솔 명령을 자동으로 실행합니다. -loadLatestSave 플래그와 함께 사용해야 합니다.")]
 		[switch]$clientAutoJoin = $false,
-	[Parameter(HelpMessage="Launch the game with the -WaitForDebugger flag, telling SML to hold the game's loading process to allow attaching a C++ debugger.")]
+	[Parameter(HelpMessage="게임을 -WaitForDebugger 플래그와 함께 실행하여 SML이 C++ 디버거를 연결할 수 있도록 게임의 로딩 과정을 보류합니다.")]
 		[switch]$waitForDebugger = $false,
-	[Parameter(HelpMessage="Launch the game with the -NoExceptionHandler flag, enabling JIT debugging and disabling the UE crash reporter.")]
+	[Parameter(HelpMessage="게임을 -NoExceptionHandler 플래그와 함께 실행하여 JIT 디버깅을 활성화하고 UE 충돌 보고를 비활성화합니다.")]
 		[switch]$noExceptionHandler = $false,
-	[Parameter(HelpMessage="When present, print info about what copy of the game is being launched.")]
+	[Parameter(HelpMessage="존재할 경우, 어떤 복사본의 게임이 실행되고 있는지에 대한 정보를 출력합니다.")]
 		[switch]$info = $false,
-	[Parameter(HelpMessage="When present, the game will not actually be launched, allowing testing this script. Required files still may be created based on other parameters.")]
+	[Parameter(HelpMessage="존재할 경우, 게임이 실제로 실행되지 않으며, 이 스크립트를 테스트할 수 있습니다. 여전히 다른 매개변수에 따라 필요한 파일이 생성될 수 있습니다.")]
 		[switch]$test = $false
 )
 
 # ========================================================================================================================
-# Configure this section to match your system and preferences
+# 이 섹션을 시스템 및 기본 설정에 맞게 구성하십시오
 # ========================================================================================================================
 
-# Arguments to launch the game with
+# 게임을 실행할 인수
 $CommonArgs = "-EpicPortal", "-log", "-NewConsole", "-nosplash"
 
-# Edit the below "path"s to contain your game paths for these possible install locations
+# 아래 "path"를 수정하여 이러한 가능한 설치 위치에 대한 게임 경로를 포함하십시오
 $GameDirs = @{
 	steam = @{
-		# Note: Steam only allows installing either client or server at a time
-		# The script doesn't know which branch you have selected in Steam's own UI
+		# 참고: 스팀은 클라이언트 또는 서버를 한 번에 하나만 설치할 수 있습니다
+		# 스크립트는 스팀의 UI에서 선택한 분기를 알지 못합니다
 		client = @{
 			steam = @{
-				# Example: "C:\Steam\steamapps\common\Satisfactory"
+				# 예: "C:\Steam\steamapps\common\Satisfactory"
 				path = "UNSET"
 				exeName = "FactoryGameSteam"
 				appid = "526870"
-				# Example: value 12345678910111213 from path `%LOCALAPPDATA%\FactoryGame\Saved\SaveGames\12345678910111213`
+				# 예: `%LOCALAPPDATA%\FactoryGame\Saved\SaveGames\12345678910111213` 경로에서 12345678910111213
 				savegameSubfolderName = "UNSET"
 			}
 		}
 		server = @{
 			steam = @{
-				# Example: "C:\Steam\steamapps\common\SatisfactoryDedicatedServer"
+				# 예: "C:\Steam\steamapps\common\SatisfactoryDedicatedServer"
 				path = "UNSET"
 				exeName = "FactoryServer"
 				savegameSubfolderName = "UNSET"
@@ -143,7 +137,7 @@ $GameDirs = @{
 			stable = @{
 				path = "UNSET"
 				exeName = "FactoryGameEGS"
-				# Example: value 1234letters0and0numbers0longer12 from path `%LOCALAPPDATA%\FactoryGame\Saved\SaveGames\1234letters0and0numbers0longer12`
+				# 예: `%LOCALAPPDATA%\FactoryGame\Saved\SaveGames\1234letters0and0numbers0longer12` 경로에서 1234letters0and0numbers0longer12
 				savegameSubfolderName = "UNSET"
 			}
 			experimental = @{
@@ -165,38 +159,38 @@ $GameDirs = @{
 			}
 		}
 	}
-	# Optionally define additional -launcher options here. Hierarchy is -launcher > -side > -branch
+	# 선택적으로 추가 -launcher 옵션을 여기에서 정의하십시오. 계층 구조는 -launcher > -side > -branch 입니다.
 }
 
-# Optionally configure the window size and position on the screen (2 sets for 2 copies when using -multiplayer)
+# 화면에서 창 크기 및 위치를 선택적으로 구성하십시오 (2개의 복사를 사용할 때 2세트)
 $Game1 = "$CommonArgs" #, "-windowed", "-WinX=0", "-WinY=32", "ResX=960", "ResY=1040"
 $Game2 = "$CommonArgs" #, "-windowed", "-WinX=960", "-WinY=32", "ResX=960", "ResY=1040"
 
-# Location of your savegame root folder for usage with -loadLatestSave
-# The default should be fine but you can change it if desired
-# It gets combined with the savegameSubfolderName in the GameDirs data to make the full path
+# -loadLatestSave와 함께 사용할 저장 파일 루트 폴더의 위치
+# 기본값은 괜찮지만 원할 경우 변경할 수 있습니다
+# 저장 게임 데이터의 전체 경로를 만들기 위해 GameDirs 데이터의 savegameSubfolderName과 결합됩니다
 $SaveFolder = "$($env:LOCALAPPDATA)\FactoryGame\Saved\SaveGames\"
 
 
-# Put custom overrides here if you want (for example, if you want to specify values for $GameDirs in one place)
-# Example
+# 맞춤 재정의를 여기에 넣으십시오(예: $GameDirs의 값을 한 곳에서 지정하려는 경우)
+# 예시
 # $GameDirs["steam"]["client"]["steam"]["path"] = "C:\Steam\steamapps\common\Satisfactory"
 
 # ========================================================================================================================
-# End configuration section
+# 구성 섹션 종료
 # ========================================================================================================================
 
 $AutolaunchTempFileName = "AutolaunchScript_Temp.ini"
 
 function CreateSteamAppidFile([string]$filepath, [string]$appid) {
-	# Required to launch steam copies
+	# 스팀 복사를 실행하는 데 필요
 	$SteamAppidFilePath = "$filepath\Engine\Binaries\Win64\steam_appid.txt"
 	try {
-		# cast to void suppresses output
+		# void로 캐스팅하여 출력 억제
 		[void](New-Item $SteamAppidFilePath -ItemType File -Force)
 		Add-Content $SteamAppidFilePath $appid
 	} catch {
-		Write-Error "Failed to create/modify steam appid file ($SteamAppidFilePath), try running script as admin"
+		Write-Error "스팀 appid 파일을 생성/수정하는 데 실패했습니다($SteamAppidFilePath), 스크립트를 관리자 권한으로 실행해 보십시오"
 		Write-Error $_
 		exit 1
 	}
@@ -205,32 +199,32 @@ function CreateSteamAppidFile([string]$filepath, [string]$appid) {
 function ResolveGamePathFromParams() {
 	$selectedLauncher = $GameDirs[$launcher]
 	if ($selectedLauncher -eq $null) {
-		Write-Error "Requested launcher '$launcher' was not defined in your script config options"
+		Write-Error "요청한 '$launcher' 런처가 스크립트 구성 옵션에 정의되어 있지 않습니다"
 		exit 1
 	}
 	$selectedSide = $selectedLauncher[$side]
 	if ($selectedSide -eq $null) {
-		Write-Error "Requested side '$side' was not defined in launcher '$launcher' in your script config options"
+		Write-Error "요청한 '$side' 측면이 '$launcher' 런처의 스크립트 구성 옵션에 정의되어 있지 않습니다"
 		exit 1
 	}
 	$actualBranch = $branch
 	if ($launcher -eq "steam") {
-		Write-Debug "Script does not support multiple branches for steam, ignoring the -branch option of '$branch'"
+		Write-Debug "스크립트는 스팀에 대한 여러 분기를 지원하지 않으므로 '$branch'의 -branch 옵션을 무시합니다"
 		$actualBranch = "steam"
 	}
 	$gamePathInfo = $selectedSide[$actualBranch]
 	if (($gamePathInfo -eq $null) -or ($gamePathInfo -eq "UNSET")) {
-		Write-Error "Requested branch '$actualBranch' for side '$side' was not defined in launcher '$launcher' in your script config options"
+		Write-Error "요청한 '$actualBranch' 분기가 '$launcher' 런처의 '$side' 측면에 정의되어 있지 않습니다"
 		exit 1
 	}
 	$gameDir = $gamePathInfo["path"]
 	if ($gameDir -eq $null) {
-		Write-Error "Selected game install '$selectedLauncher > $selectedSide > $actualBranch' is missing 'path' data, it should be the root directory of the install"
+		Write-Error "선택한 게임 설치 '$selectedLauncher > $selectedSide > $actualBranch'에 'path' 데이터가 없습니다. 설치의 루트 디렉토리여야 합니다"
 		exit 1
 	}
 	$gameEXE = $gamePathInfo["exeName"]
 	if ($gameEXE -eq $null) {
-		Write-Error "Selected game install '$selectedLauncher > $selectedSide > $actualBranch' is missing 'exeName' data, it should be the name of the executable file that launches the game"
+		Write-Error "선택한 게임 설치 '$selectedLauncher > $selectedSide > $actualBranch'에 'exeName' 데이터가 없습니다. 게임을 실행하는 실행 파일의 이름이어야 합니다"
 		exit 1
 	}
 	if (-not ($gamePathInfo["appid"] -eq $null)) {
@@ -242,7 +236,7 @@ function ResolveGamePathFromParams() {
 $gamePathInfo = ResolveGamePathFromParams
 
 if ($info) {
-	Write-Output "Using game install:"
+	Write-Output "사용 중인 게임 설치:"
 	Write-Output $gamePathInfo
 }
 
@@ -250,7 +244,7 @@ if ($info) {
 function PrepareArgs([string]$baseArgs, [switch]$applyFirstInstanceOnlyArguments, [System.Collections.Hashtable]$pathInfo) {
 	$buildArgs = "$baseArgs"
 	if ($clientAutoJoin -and (-not $multiplayer -or -not $loadLatestSave)) {
-		Write-Error "clientAutoJoin flag requires multiplayer flag and loadLatestSave flag so there is a running game for the client to join"
+		Write-Error "clientAutoJoin 플래그는 multiplayer 플래그와 loadLatestSave 플래그가 필요하므로 클라이언트가 참여할 수 있는 실행 중인 게임이 있어야 합니다"
 		exit 1
 	}
 
@@ -263,37 +257,37 @@ function PrepareArgs([string]$baseArgs, [switch]$applyFirstInstanceOnlyArguments
 		}
 		if ($loadLatestSave) {
 			if ($multiplayer) {
-				# Multiplayer GUID consistency consequence: can't see platform save files. Must be in the `common` subfolder
+				# 멀티플레이 GUID 일관성 결과: 플랫폼 저장 파일을 볼 수 없습니다. 'common' 하위 폴더에 있어야 합니다
 				$saveFolderUserId = "common"
 			} else {
 				$saveFolderUserId = $gamePathInfo["savegameSubfolderName"]
 			}
 
 			if (($saveFolderUserId -eq $null) -or ($saveFolderUserId -eq "UNSET")) {
-				Write-Error "Selected game install is missing 'savegameSubfolderName' data in your script config options. It should be the name of the subfolder within your save directory containing the save files you want to use with -loadLatestSave. Your same file directory was entered as: $SaveFolder"
+				Write-Error "선택한 게임 설치는 스크립트 구성 옵션에 'savegameSubfolderName' 데이터가 없습니다. -loadLatestSave와 함께 사용할 저장 파일이 포함된 저장 디렉토리 내의 하위 폴더의 이름이어야 합니다. 입력한 동일한 파일 디렉터리: $SaveFolder"
 				exit 1
 			}
 
 			$fullSaveFolder = "$SaveFolder\$saveFolderUserId"
 
 			# https://stackoverflow.com/questions/9675658/powershell-get-childitem-most-recent-file-in-directory
-			# Steam keeps a steam_autocloud.vdf file in here that isn't a savegame
+			# 스팀은 여기에서 steam_autocloud.vdf 파일을 유지하여 저장 게임이 아닙니다
 			$latestSaveFile = (Get-ChildItem $fullSaveFolder -Attributes !Directory -Filter *.sav | sort LastWriteTime | select -last 1)
 			$latestSaveFileName = $latestSaveFile.Basename
 
-			# Use Satisfactory's -ini feature to avoid needing to create an ini file and use -EngineINI (Unreal) to pass this info along
+			# 새티스팩토리의 -ini 기능을 사용하여 ini 파일을 생성할 필요 없이 이 정보를 전달하기 위해 -EngineINI(언리얼) 사용
 			$buildArgs = "$buildArgs", "-ini:Engine:[/Script/EngineSettings.GameMapsSettings]:GameDefaultMap=/Game/FactoryGame/Map/GameLevel01/Persistent_Level.Persistent_Level,[/Script/EngineSettings.GameMapsSettings]:LocalMapOptions=?skipOnboarding?listen?loadgame=$latestSaveFileName"
 		}
 	} else {
-		# Only the second copy should run the connect command for clientAutoJoin
+		# 두 번째 복제만 clientAutoJoin을 위한 연결 명령을 실행
 		if ($clientAutoJoin) {
-			# ExecCmds uses UE syntax: https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-engine-command-line-arguments-reference
+			# ExecCmds는 UE 구문을 사용: https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-engine-command-line-arguments-reference
 			$buildArgs = "$buildArgs", '-ExecCmds="open 127.0.0.1"'
 		}
 	}
 	if ($multiplayer) {
-		# CustomConfig: Satisfactory specific. More consistent multiplayer GUIDs
-		# Multiprocess: Make the game not write user settings and other .ini files (unsafe operation while multiple copies are open)
+		# CustomConfig: 새티스팩토리 특정. 멀티플레이 GUID의 일관성을 높입니다
+		# Multiprocess: 게임이 사용자 설정 및 기타 .ini 파일을 작성하지 않도록 합니다(여러 복사본이 열려 있는 동안 안전하지 않은 작업)
 		$buildArgs = "$buildArgs", "-CustomConfig=", "-Multiprocess"
 	}
 	return $buildArgs
@@ -308,8 +302,8 @@ $Game2 = PrepareArgs $Game2
 
 function BGProcess(){
 	if ($test) {
-		Write-Output "Test switch used, not actually launching the game"
-		Write-Output "Arguments for this game instance: "
+		Write-Output "테스트 스위치가 사용되었습니다. 게임을 실제로 실행하지 않습니다"
+		Write-Output "이 게임 인스턴스의 인수: "
 		Write-Output @args
 		return
 	} else {
@@ -331,218 +325,220 @@ BGProcess $GameString $Game2
 
 ----
 
-=== Usage
+[NOTE]
+====
+한국어로 번역되면서 정상적으로 스크립트를 실행하기 위해서는 파일 저장 시 인코딩 형식을 UTF-8 with BOM(또는 UTF-8-SIG)으로 지정해야 합니다.
+====
 
-After the launch script has been set up, use flags when running it to controls its behavior.
-Note that in order to use the branch feature you must have separate copies of the game installed in the locations you specified in the config section.
+=== 사용법
 
-Assuming your powershell file is named `SFLaunch_Advanced`:
+실행 스크립트가 설정된 후, 실행할 때 플래그를 사용하여 동작을 제어하십시오.
+분기 기능을 사용하려면 구성 섹션에 지정한 위치에 별도의 게임 복사본이 설치되어 있어야 합니다.
 
-- `.\SFLaunch_Advanced.ps1` will launch the Steam Client version of the game - whichever branch you have installed with Steam, since that's what the default arguments are set to.
-- `.\SFLaunch_Advanced.ps1 -loadLatestSave` will automatically load you into the last save file you made.
-- `.\SFLaunch_Advanced.ps1 -launcher epic -side server -branch experimental` will launch the Epic Games Experimental Dedicated Server
-- `.\SFLaunch_Advanced.ps1 -multiplayer` will launch two copies of the Steam game client
-- `.\SFLaunch_Advanced.ps1 -launcher epic -branch experimental -multiplayer` will launch two copies of the Epic Experimental game client
+파워셸 파일 이름이 `SFLaunch_Advanced` 라고 가정하면:
+
+- `.\SFLaunch_Advanced.ps1` 은 스팀 클라이언트 버전의 게임을 실행합니다. 설치된 분기에 따라 다릅니다.
+- `.\SFLaunch_Advanced.ps1 -loadLatestSave` 는 마지막으로 만든 저장 파일로 자동으로 로드됩니다.
+- `.\SFLaunch_Advanced.ps1 -launcher epic -side server -branch experimental` 은 에픽게임즈 실험적 전용 서버를 실행합니다.
+- `.\SFLaunch_Advanced.ps1 -multiplayer` 는 스팀 게임 클라이언트의 두 복사본을 실행합니다.
+- `.\SFLaunch_Advanced.ps1 -launcher epic -branch experimental -multiplayer` 는 에픽 실험적 게임 클라이언트의 두 복사본을 실행합니다.
 
 [NOTE]
 ====
-When using the `-loadLatestSave` flag, if the game can't load the save for some reason
-(for example, trying to load a newer save in an older version of the game)
-the game will create and load into a new save file instead.
+`-loadLatestSave` 플래그를 사용할 때, 게임이 저장 파일을 로드할 수 없는 경우
+(예: 게임의 이전 버전에서 더 새로운 저장 파일을 로드하려고 시도하는 경우)
+게임은 대신 새 저장 파일을 생성하고 로드합니다.
 
-The `-loadLatestSave` flag requires
-link:#LoadCustomLevel[extra configuration] to work with saves made in custom levels.
+`-loadLatestSave` 플래그는
+link:#LoadCustomLevel[추가 구성]이 필요합니다.
 ====
 
-=== Launch Script Enhancements
+=== 스크립트 실행 향상
 
-Unreal supports https://docs.unrealengine.com/4.26/en-US/ProductionPipelines/CommandLineArguments/[many]
-other command-line arguments, some of which may prove to be useful with MP testing.
-For example, `-windowed -WinX=0 -WinY=0` will open the game in the top left corner of the screen.
-Similar arguments also exist for the console window (`ConsoleX` and `ConsoleY`).
-You can also specify what resolution you want the game to run at: `-WinX=1280 -WinY=720`.
+언리얼은 https://docs.unrealengine.com/4.26/en-US/ProductionPipelines/CommandLineArguments/[많은]
+다른 명령줄 인수를 지원하며, 그 중 일부는 멀티 테스트에 유용할 수 있습니다.
+예를 들어, `-windowed -WinX=0 -WinY=0` 는 게임을 화면의 왼쪽 상단 모서리에서 엽니다.
+유사한 인수는 콘솔 창에도 존재합니다(`ConsoleX` 및 `ConsoleY`).
+게임이 실행될 해상도를 지정할 수도 있습니다: `-WinX=1280 -WinY=720`.
 
-If you want windows to open on other monitors,
-you will need to use either negative or larger numbers for the arguments.
-The top left corner of your primary monitor is X=0, Y=0.
+창이 다른 모니터에서 열리도록 하려면,
+인수에 음수 또는 더 큰 숫자를 사용해야 합니다.
+기본 모니터의 왼쪽 상단 모서리는 X=0, Y=0입니다.
 
-Combining these options, you could end up with launch args like those shown below,
-which will give each instance as much screen space as possible
-(while accounting for Title Bar and Start Menu height)
-on a 1920x1080 resolution screen, at the cost of an unusual aspect ratio.
+이러한 옵션을 결합하면, 아래와 같은 실행 인수를 얻을 수 있습니다.
+이 인수는 각 인스턴스에 가능한 한 많은 화면 공간을 제공하며
+(제목 표시줄 및 시작 메뉴 높이를 고려하면서)
+1920x1080 해상도 화면에서 비정상적인 종횡비를 감수해야 합니다.
 [source,ps1]
 ----
 $Args1 = "-EpicPortal", "-NoSteamClient", '-Username="'+$Username1+'"', "-WinX=0", "-WinY=32", "ResX=960", "ResY=1040"
 $Args2 = "-EpicPortal", "-NoSteamClient", '-Username="'+$Username2+'"', "-WinX=960", "-WinY=32", "ResX=960", "ResY=1040"
 ----
 
-== Multiplayer Testing
+== 멀티플레이 테스트
 
-Locally testing multiplayer functionality requires one of the following approaches:
+로컬에서 멀티플레이 기능을 테스트하려면 다음 접근 방식 중 하나를 사용해야 합니다:
 
 [id="MultiplayerTesting_Launch2Copies"]
-=== Approach A: Launch 2 game clients
+=== 접근 방식 A: 두 게임 클라이언트 실행
 
-You can run two copies of the game client at once and join one from the other
-using the game's host and play multiplayer system.
-Normally the Steam and Epic Games launchers don't allow you to do this,
-but the link:#LaunchScript[launch script] in the previous section can detach your game from the launcher so you can run two copies.
-Note that doing so breaks "normal" multiplayer functionality and only allows using IP multiplayer sessions.
+게임 클라이언트의 두 복사본을 동시에 실행하고 한 클라이언트에서 다른 클라이언트에 참여할 수 있습니다.
+일반적으로 스팀 및 에픽게임즈 런처는 이를 허용하지 않지만,
+이전 섹션의 link:#LaunchScript[실행 스크립트]는 게임을 런처에서 분리하여 두 복사본을 실행할 수 있습니다.
+이렇게 하면 "정상적인" 멀티플레이 기능이 중단되고 IP 멀티플레이 세션만 사용할 수 있습니다.
 
 [NOTE]
 ====
-If you own the game on both Epic and Steam you can join one client "normally" from the other.
-Note that this requires you to compile your mod for both the Epic and Steam targets which can slow down development.
+에픽과 스팀에서 게임을 소유하고 있다면 한 클라이언트를 "정상적으로" 다른 클라이언트에서 참여할 수 있습니다.
+이 경우 모드를 두 에픽 및 스팀 대상에 대해 컴파일해야 하므로 개발 속도가 느려질 수 있습니다.
 ====
 
-To do this:
+이렇게 하려면:
 
-1. Run the link:#LaunchScript[launch script] to open 2 copies of the game client.
-2. On the copy you designate as the host, select a save file to load. (or, use the `-loadLatestSave` flag)
-Before loading it, click the "Load Settings" button and change the "Session Type" to `IP`.
-3. On the copy you designate as the client, open the "Join Game" menu and enter the ip `127.0.0.1`.
-Alternatively, use the `open 127.0.0.1` xref:SMLChatCommands.adoc#ConsoleCommands[console command] from anywhere.
+1. link:#LaunchScript[실행 스크립트]를 실행하여 게임 클라이언트의 두 복사본을 엽니다.
+2. 호스트로 지정한 복사본에서 로드할 저장 파일을 선택합니다. (또는 `-loadLatestSave` 플래그를 사용하십시오)
+로드하기 전에 "로드 설정" 버튼을 클릭하고 "세션 유형"을 `IP` 로 변경합니다.
+3. 클라이언트로 지정한 복사본에서 "게임 참여" 메뉴를 열고 IP `127.0.0.1` 을 입력합니다.
+또는 어디에서나 xref:SMLChatCommands.adoc#ConsoleCommands[콘솔 명령]을 사용하여 `open 127.0.0.1` 을 사용할 수 있습니다.
 
 [IMPORTANT]
 ====
-Using this approach does not generate consistent player GUIDs across game launches.
-If you need a player with a consistent GUID, use a normal Epic/Steam copy for one of the sides.
+이 접근 방식을 사용하면 게임 실행 간에 일관된 플레이어 GUID가 생성되지 않습니다.
+일관된 GUID가 필요한 경우, 한 쪽에 대해 일반 에픽/스팀 복사본을 사용하십시오.
 ====
 
 [id="MultiplayerTesting_LocalDedicatedServer"]
-=== Approach B: Launch Client and a Dedicated Server
+=== 접근 방식 B: 클라이언트 및 전용 서버 실행
 
-You can run a dedicated server locally and connect to it with a game client.
-This has the downside of needing to compile your mod for both the client and server targets every time you want to test,
-which will slow down development.
+로컬에서 전용 서버를 실행하고 게임 클라이언트로 연결할 수 있습니다.
+이 방법은 테스트할 때마다 클라이언트 및 서버 타겟에 대해 모드를 컴파일해야 하므로 개발 속도가 느려질 수 있습니다.
 
-Dedicated servers will automatically load a save file on launch,
-which may or may not speed up your testing process depending on what behaviors you are testing.
+전용 서버는 실행 시 자동으로 저장 파일을 로드하므로,
+테스트하는 동작에 따라 테스트 속도를 높일 수도 있고 낮출 수도 있습니다.
 
-To use this approach, check out the link:#TestingDedicatedServers[dedicated server section of this page].
+이 접근 방식을 사용하려면, 이 페이지의 link:#TestingDedicatedServers[전용 서버 섹션]을 확인하십시오.
 
 [id="LoadCustomLevel"]
-== Load a Custom Level on Launch
+== 실행 시 사용자 정의 레벨 로드
 
-The link:#LaunchScript[launch script] demonstrates how to make the game to automatically load to the game world on launch,
-as opposed to the main menu, cutting down on load time and clicks when testing your mod.
-However, you will need to tweak it slightly if the level you want to load is a custom level.
+link:#LaunchScript[실행 스크립트]는 게임이 메인 메뉴가 아닌 게임 세계로 자동으로 로드되도록 하는 방법을 보여줍니다.
+이렇게 하면 모드를 테스트할 때 로드 시간과 클릭 수를 줄일 수 있습니다.
+그러나 로드하려는 레벨이 사용자 정의 레벨인 경우 약간 수정해야 합니다.
 
-Notice that the powershell script's loadLatestSave option creates an ini file on the fly
-containing instructions to load into a specific save file and GameDefaultMap.
-You'll need to modify the powershell script to point to your custom level.
+파워셸 스크립트의 loadLatestSave 옵션은 특정 저장 파일 및
+GameDefaultMap을 로드하는 지침을 포함하는 ini 파일을 즉석에서 생성합니다.
+사용자 정의 레벨을 가리키도록 파워셸 스크립트를 수정해야 합니다.
 
-First, you'll need to find the path to use for your custom level.
-It's based on the level's asset path.
-For example, https://github.com/Nogg-aholic/NogsLevel/blob/master/Content/NogsLevel.umap[Nog's Level's level asset is at the content root],
-so its path is `/NogsLevel/NogsLevel.NogsLevel`.
-https://github.com/satisfactorymodding/SatisfactoryModLoader/blob/master/Mods/ExampleMod/Content/Maps/ExampleLevel/ExampleLevel.umap[Example Level's is a few layers of folder deep],
-it's path is `/ExampleMod/Maps/ExampleLevel/ExampleLevel.ExampleLevel`.
+먼저, 사용자 정의 레벨에 사용할 경로를 찾아야 합니다.
+이는 레벨의 애셋 경로를 기반으로 합니다.
+예를 들어, https://github.com/Nogg-aholic/NogsLevel/blob/master/Content/NogsLevel.umap[Nog의 레벨 애셋은 콘텐츠 루트에 위치하므로],
+그 경로는 `/NogsLevel/NogsLevel.NogsLevel` 입니다.
+https://github.com/satisfactorymodding/SatisfactoryModLoader/blob/master/Mods/ExampleMod/Content/Maps/ExampleLevel/ExampleLevel.umap[예제 레벨은 조금 더 깊이 있고],
+그 경로는 `/ExampleMod/Maps/ExampleLevel/ExampleLevel.ExampleLevel` 입니다.
 
-Alter the line of the script that sets `GameDefaultMap` to point to the asset path of your custom level.
+스크립트에서 `GameDefaultMap` 을 설정하는 줄을 수정하여 사용자 정의 레벨의 자산 경로를 가리키도록 하십시오.
 
-While you're at it, there are a few other flags you can use to customize the loading process:
+그런 김에 로드 프로세스를 사용자 정의하기 위해 사용할 수 있는 몇 가지 다른 플래그가 있습니다:
 
 +++ <details><summary> +++
-FG Map Options Switches from Archengius:
+FG 맵 옵션 스위치 (Archengius):
 +++ </summary><div> +++
 ....
-NOTE: These are from 2021 and may be outdated.
+참고: 이는 2021년의 것이며 구식일 수 있습니다.
 
-Switches found in AFGGameMode::InitGame:
+AFGGameMode::InitGame에서 발견된 스위치:
 
-?skipOnboarding (skip landing animation)
-?allowPossessAny (allow possessing any pawn on the map, even if player IDs don't match)
-?loadgame=<SaveGame Name Here Without Path and extension>
-?startloc<Start Location Tag Name> (see AFGGameMode::ChoosePlayerStart_Implementation)
-?sessionName=<Session Name> (sets mSaveSessionName, so apparently it determines autosave file name and probably name visible to other players?)
-?DayLength=<Day Length In Minutes>
-?NightLength=<Night Length In Minutes>
+?skipOnboarding (착륙 애니메이션 건너뛰기)
+?allowPossessAny (맵에서 어떤 폰도 소유할 수 있도록 허용, 플레이어 ID가 일치하지 않더라도)
+?loadgame=<저장 게임 이름 (경로 및 확장자 없이)>
+?startloc<시작 위치 태그 이름> (AFGGameMode::ChoosePlayerStart_Implementation 참고)
+?sessionName=<세션 이름> (mSaveSessionName을 설정하므로, 자동 저장 파일 이름 및 아마도 다른 플레이어에게 표시되는 이름을 결정합니다)
+?DayLength=<일 길이(분)>
+?NightLength=<밤 길이(분)>
 
-General notes:
-  Regarding Start Location Tag Name:
-      - TRADING_POST is the hub APlayerStart actor tag
-      - Any APlayerStart actor with matching PlayerStartTag is selected
-  Regarding Session Name:
-      - Apparently there is a system of "bundled saves" that I know nothing about. Further investigation is required.
+일반적인 메모:
+  시작 위치 태그 이름에 대한:
+      - TRADING_POST는 APlayerStart 액터 태그입니다
+      - 일치하는 PlayerStartTag가 있는 APlayerStart 액터가 선택됩니다
+  세션 이름에 대한:
+      - 아마도 "번들 저장" 시스템이 존재하는 것 같습니다. 추가 조사가 필요합니다.
 
-Switches found in AFGGameSession:
+AFGGameSession에서 발견된 스위치:
 
-?Visibility=SV_Private/SV_Public (Session visibility)
-?adminpassword=<Admin Password used in console command AdminLogin to gain host privileges>
+?Visibility=SV_Private/SV_Public (세션 가시성)
+?adminpassword=<콘솔 명령 AdminLogin을 통해 호스트 권한을 얻기 위해 사용되는 관리자 비밀번호>
 ....
 +++ </div></details> +++
 
 [id="TestingDedicatedServers"]
-== Dedicated Servers
+== 전용 서버
 
-In order to start testing on dedicated servers, you will first need to set up your own dedicated server.
+전용 서버에서 테스트를 시작하려면 먼저 전용 서버를 설정해야 합니다.
 
-=== Setup
+=== 설정
 
-You have a few options for setting up the server.
-Consider which of these would work best for you before moving on to the next section.
+서버를 설정하는 몇 가지 옵션이 있습니다.
+다음 섹션으로 넘어가기 전에 어떤 옵션이 가장 적합할지 고려하십시오.
 
-Note that in order to perform the first time server claiming process
-you will need to use a client of the game that was launched normally (ex. through Steam or Epic).
-After the server claiming process is complete you can return to using a copy launched with the launch scripts described elsewhere on this page.
+서버 수령 과정을 처음 수행하려면
+정상적으로 실행된 게임 클라이언트를 사용해야 합니다 (예: 스팀 또는 에픽을 통해).
+서버 수령 과정이 완료되면, 이 페이지의 다른 곳에서 설명된 실행 스크립트를 사용하여 실행된 복사본으로 돌아갈 수 있습니다.
 
 [id="TestingDedicatedServers_LocalServer"]
-==== Option 1: Locally Installed Dedicated Server
+==== 옵션 1: 로컬 설치된 전용 서버
 
-You can install the dedicated server on your own computer and run it locally.
-This places extra strain on your computer and may not be feasible if you have a lower-end system.
-However, it is usually the easiest option to set up.
+전용 서버를 자신의 컴퓨터에 설치하고 로컬에서 실행할 수 있습니다.
+이렇게 하면 컴퓨터에 추가적인 부담이 생기며, 저사양 시스템에서는 실행이 불가능할 수 있습니다.
+그러나 일반적으로 설정하기 가장 쉬운 옵션입니다.
 
-In this option, since the dedicated server will be sharing your own personal copy of the game's save folder,
-attempting to upload saves to it will fail, since the save is already present in that folder.
-Selecting a save to use will require editing the server's session name;
-follow the https://satisfactory.wiki.gg/wiki/Dedicated_servers#Loading_a_save_file[directions on the Satisfactory wiki] to do this.
+이 옵션에서는 전용 서버가 게임의 저장 폴더를 공유하므로,
+저장 파일을 업로드하려고 하면 실패합니다. 이미 해당 폴더에 저장이 존재하기 때문입니다.
+사용할 저장 파일을 선택하려면 서버의 세션 이름을 편집해야 합니다.
+https://satisfactory.wiki.gg/wiki/Dedicated_servers#Loading_a_save_file[새티스팩토리 위키의 지침]을 따르십시오.
 
-Since the server you will be testing with does not need to connect to the internet,
-following the wiki's directions for correctly authenticating with Steam or Epic servers are not required.
-The minimum suggested launch arguments for a dedicated server is
-`.\FactoryServer.exe -log -EpicPortal -NoSteamClient`.
+서버에서 테스트할 때 인터넷에 연결할 필요가 없으므로,
+스팀 또는 에픽 서버에 올바르게 인증하는 방법에 대한 위키의 지침은 필요하지 않습니다.
+전용 서버에 대한 최소 권장 실행 인수는
+`.\FactoryServer.exe -log -EpicPortal -NoSteamClient` 입니다.
 
-You can connect to a locally hosted server either
-through the normal server browser
-or with the `open` console command, for example,
-`open 127.0.0.1`.
+로컬에서 호스팅된 서버에 연결하려면
+일반 서버 브라우저를 통해 연결하거나
+`open 127.0.0.1` 콘솔 명령 등을 사용할 수 있습니다.
 
 [id="TestingDedicatedServers_RemoteServer"]
-==== Option 2: Remote Dedicated Server
+==== 옵션 2: 원격 전용 서버
 
-You can also set up the dedicated server on another computer on your network.
-This avoids resource strain on your own computer.
+네트워크의 다른 컴퓨터에 전용 서버를 설정할 수도 있습니다.
+이렇게 하면 자신의 컴퓨터에 대한 리소스 부담을 피할 수 있습니다.
 
-It is possible to provide a network location in the `Copy Game to Path` Dev Packaging setting option,
-for example `//192.168.1.42/appdata/satisfactory`,
-meaning that Alpakit will handle copying and replacing the files on the remote server for you.
+`게임 경로에 복사` 개발 패키징 설정 옵션에서 네트워크 위치를 제공할 수 있습니다.
+예: `//192.168.1.42/appdata/satisfactory`,
+즉, 알파킷이 원격 서버에서 파일을 복사하고 교체하는 작업을 처리합니다.
 
-You'll still need to restart it after every package for the server to reload file changes.
+파일 변경 사항을 다시 로드하기 위해 매번 패키지를 다시 시작해야 합니다.
 
 [id="TestingDedicatedServers_AskNicely"]
-==== Option 3: Ask Nicely on Discord
+==== 옵션 3: 디스코드에서 정중하게 요청하기
 
-A community member may have a dedicated server they can give you access to in order to test mods on.
-Ask in the modding help channels and see if anyone speaks up, but you may not get a response.
+커뮤니티 구성원이 모드를 테스트할 수 있도록 전용 서버에 대한 접근을 제공할 수 있습니다.
+모드 도움 채널에서 요청해 보십시오. 누군가 응답할 수 있지만, 응답이 없을 수도 있습니다.
 
-You will likely have to manually transfer each testing build of the mod to the server. 
+테스트 빌드를 서버에 수동으로 전송해야 할 수도 있습니다.
 
 [id="TestingDedicatedServers_CrossFingers"]
-==== Option 4: Cross your Fingers
+==== 옵션 4: 행운을 빌기
 
-The option of last resort: you can compile your mods for dedicated servers and release them without testing them.
-Do not assume that silence means the mod is bug free - some users will not bother to report errors they encounter.
-If you choose this route, you should mention on your mod page that your mods haven't been tested extensively on dedicated servers.
+마지막 수단: 전용 서버에 대해 모드를 컴파일하고 테스트 없이 배포할 수 있습니다.
+잠잠하므로 버그가 없다는 가정은 하지 마십시오. 일부 사용자는 발생하는 오류를 보고하지 않을 수 있습니다.
+이 방법을 선택하면 모드 페이지에 모드가 전용 서버에서 광범위하게 테스트되지 않았음을 언급해야 합니다.
 
-=== Installing and Claiming the Server
+=== 서버 설치 및 수령
 
-Now that you've decided how you want to set up your server,
-follow the directions on the https://satisfactory.wiki.gg/wiki/Dedicated_servers[Satisfactory Wiki]
-to set up a working dedicated server and verify that you can connect to it with an unmodified client.
+서버를 설정하는 방법을 결정한 후,
+https://satisfactory.wiki.gg/wiki/Dedicated_servers[새티스팩토리 위키]의 지침을 따라
+작동하는 전용 서버를 설정하고 수정되지 않은 클라이언트로 연결할 수 있는지 확인하십시오.
 
-Once you've verified that you can connect to the vanilla server
-you can start adding mods to it.
-Either install them xref:ForUsers/DedicatedServerSetup.adoc[the same way an end user would]
-or follow the process outlined in the Option section you selected above.
+수정되지 않은 서버에 연결할 수 있는지 확인한 후,
+모드를 추가하기 시작할 수 있습니다.
+사용자와 동일한 방식으로 xref:ForUsers/DedicatedServerSetup.adoc[설치하거나]
+위에서 선택한 옵션 섹션에 설명된 과정을 따르십시오.
