@@ -9,4 +9,7 @@ module.exports = (html) => html && html
     .replace(TAG_ALL_RX, '')
     .trim()
     .replace(/\n/g, ' ')
-    .substr(0, 140) + '...'
+    .split('. ')[0]
+    .split('! ')[0]
+    .split('? ')[0]
+    // .substr(0, 140) + '...'
