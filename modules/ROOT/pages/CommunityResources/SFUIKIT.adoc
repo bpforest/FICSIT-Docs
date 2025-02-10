@@ -1,8 +1,8 @@
 = SFUIKIT
 
-Community members Deantendo and Treelo maintain a "build your own" UI kit
-that can be used to help integrate your mod's UI with Satisfactory's.
-The files are vector-based and will require Adobe Photoshop CC 2018 or later to open.
+커뮤니티 멤버 Deantendo와 Treelo는
+모드의 UI를 새티스팩토리와 통합하는 데 사용할 수 있는 "나만의" UI 키트를 유지 관리합니다.
+파일은 벡터 기반이며 Adobe Photoshop CC 2018 이상에서 열어야 합니다.
 
-You can get the files and read more on 
-the UI kit's https://github.com/deantendo/sfuikit[GitHub page].
+파일을 다운로드하고 UI 키트에 대한 자세한 내용을 보려면
+UI 키트의 https://github.com/deantendo/sfuikit[깃허브 페이지]를 참고하십시오.

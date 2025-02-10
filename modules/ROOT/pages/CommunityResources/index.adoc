@@ -1,18 +1,18 @@
-= Community Resources
+= 커뮤니티 자원
 
 ====
-"Modding is not just about the programming / scripting side" - Pleasure 2020
+"모딩은 단순히 프로그래밍/스크립팅만이 아니다" - Pleasure 2020
 ====
 
-This section is a continual work in progress,
-and will contain information about and links to resources helpful for creating
-models, textures, user interfaces, and the other content for your mod.
-Many of these resources have been made or gathered by the community,
-and if you'd like to list another resource here or write a guide,
-feel free to pull request the docs repo (press Edit This Page in the top right corner)
-or contact us on the Discord with suggestions.
+이 섹션은 지속적인 작업 중이며,
+모델, 텍스처, 사용자 인터페이스 및 모드의 다른 콘텐츠를 만드는 데
+유용한 자원에 대한 정보와 링크를 포함할 것입니다.
+이러한 리소스 중 많은 부분은 커뮤니티에 의해 만들어지거나 수집되었습니다.
+이곳에 다른 자원을 나열하거나 가이드를 작성하고 싶다면,
+문서 저장소에 풀 리퀘스트를 보내거나(오른쪽 상단의 "이 페이지 편집"을 클릭)
+제안 사항에 대해 디스코드에서 저희에게 연락해 주십시오.
 
 [NOTE]
 ====
-The `#modding-resources` channel on the Discord has additional resources that you may find helpful.
+디스코드의 `#modding-resources` 채널에는 도움이 될 수 있는 추가 자원이 있습니다.
 ====

@@ -1,145 +1,145 @@
-= Satisfactory Acronym Vault (SAV)
+= 새티스팩토리 약어 보관함 (SAV)
 
-This page exists to help keep track of the arguably excessive amount of acronyms used in our community.
+이 페이지는 우리 커뮤니티에서 사용되는 과도한 약어를 추적하는 데 도움을 주기 위해 존재합니다.
 
-Originally a
-https://github.com/satisfactorymodding/SatisfactoryAcronymVault[GitHub repository of its own],
-it has been merged with the docs.
+원래는
+https://github.com/satisfactorymodding/SatisfactoryAcronymVault[자체 깃허브 저장소]였으나,
+문서와 통합되었습니다.
 
-Feel free to suggest changes on our Discord, or pull request them (Edit This Page in the top right), to help keep this page up to date.
+변경 사항을 제안하고 싶다면 디스코드에서 저희에게 연락하거나 (오른쪽 상단의 "이 페이지 편집"을 클릭하여) 이 페이지를 최신 상태로 유지하는 데 도움을 주십시오.
 
-== In-Use Acronyms
+== 사용 중인 약어
 
-These acronyms are still actively in use.
+이 약어들은 여전히 활발히 사용되고 있습니다.
 
-=== Coffee Stain Studios (CSS)
+=== 커피 스테인 스튜디오 (CSS)
 
-_Not_ https://www.w3.org/Style/CSS/Overview.en.html[cascading style sheets].
+https://ko.wikipedia.org/wiki/CSS[캐스케이딩 스타일 시트]가 _아닙니다_.
 
-https://www.coffeestainstudios.com/[Coffee Stain Studios]
-is the Swedish game studio that created Satisfactory.
+https://www.coffeestainstudios.com/[커피 스테인 스튜디오]는
+새티스팩토리를 만든 스웨덴 게임 스튜디오입니다.
 
-=== Satisfactory Mod Loader (SML)
+=== 새티스팩토리 모드 로더 (SML)
 
-SML is a community-created mod that provides
-an easy way for other mods to register content,
-interface with the game, offer user-facing configuration options, and more.
+SML은 다른 모드가 콘텐츠를 등록하고
+게임과 접촉하며, 사용자 구성 옵션을 제공하는
+쉬운 방법을 제공하는 커뮤니티 제작 모드입니다.
 
-Ironically, SML has changed so much since its creation that it is no longer responsible for loading mods.
-Thanks to the helpful folks at CSS, mods are now Unreal Engine plugins,
-and no longer require any special injection code to load.
+아이러니하게도, SML은 생성 이후로 너무 많이 변경되어 더 이상 모드를 불러오는 기능이 없습니다.
+CSS의 도움 덕분에 모드는 이제 언리얼 엔진 플러그인이며,
+불러오기 위한 특별한 주입 코드가 필요하지 않습니다.
 
-Although it is possible to create a mod that does not depend on SML, they are very uncommon, as there are few reasons to do so.
+SML에 의존하지 않는 모드를 만드는 것이 가능하지만, 그럴 이유가 거의 없기 때문에 매우 드뭅니다.
 
-Its public source code can be found on
-https://github.com/satisfactorymodding/SatisfactoryModLoader[GitHub].
+공개 소스 코드는
+https://github.com/satisfactorymodding/SatisfactoryModLoader[깃허브]에서 찾을 수 있습니다.
 
-=== Satisfactory Mod Repository (SMR) aka ficsit.app
+=== 새티스팩토리 모드 저장소 (SMR) 또는 ficsit.app
 
-https://ficsit.app[ficsit.app], also known as the Satisfactory Mod Repository or FICSIT Augmentation Database, is the website at which mods, this documentation, guides, and more are hosted.
+https://ficsit.app[ficsit.app]은 새티스팩토리 모드 저장소 또는 FICSIT 증강 데이터베이스로도 알려져 있으며, 모드, 이 문서(한국어는 아님), 가이드 등을 호스팅하는 웹사이트입니다.
 
-You can find the source code for the 
-https://github.com/satisfactorymodding/smr-frontend[frontend]
-and https://github.com/satisfactorymodding/smr-api[backend]
-on their respective GitHub repositories.
+소스 코드는
+https://github.com/satisfactorymodding/smr-frontend[프론트엔드]
+및 https://github.com/satisfactorymodding/smr-api[백엔드] 모두
+각각의 깃허브 저장소에서 찾을 수 있습니다.
 
-=== Satisfactory Mod Manager (SMM)
+=== 새티스팩토리 모드 관리자 (SMM)
 
-Satisfactory Mod Manager handles all the steps of installing mods in Satisfactory for you!
-It works closely with SMR to function.
-SMM is only responsible for downloading the mods - it has no presence in a running game. SML is responsible for loading mod files at runtime.
+새티스팩토리 모드 관리자는 새티스팩토리에서 모드를 설치하는 모든 단계를 처리합니다!
+SMM은 SMR과 밀접하게 협력하여 기능합니다.
+SMM은 모드를 다운로드하는 것만 책임지며, 실행 중인 게임에는 존재하지 않습니다. SML은 런타임에 모드 파일을 불러오는 기능이 있습니다.
 
-Its public source code can be found on
-https://github.com/satisfactorymodding/SatisfactoryModManager[GitHub].
+공개 소스 코드는
+https://github.com/satisfactorymodding/SatisfactoryModManager[깃허브]에서 찾을 수 있습니다.
 
-=== Satisfactory Modding Documentation (SMD)
+=== 새티스팩토리 모딩 문서 (SMD)
 
-The documentation you're currently looking at!
+현재 보고 있는 문서입니다!
 
-=== Satisfactory Save Editor (SSE)
+=== 새티스팩토리 저장 편집기 (SSE)
 
-This name, and acronym, has been claimed by a number of save editor tools. It is most often used when referring to Goz3rr's editor
+이 이름과 약어는 여러 저장 편집 도구에 의해 사용되었습니다. Goz3rr의 편집기를 지칭할 때 가장 많이 사용됩니다.
 
-* https://github.com/Goz3rr/SatisfactorySaveEditor[Goz3rr's editor]
-* https://cable.ayra.ch/satisfactory/editor.php[AyrA's editor]
+* https://github.com/Goz3rr/SatisfactorySaveEditor[Goz3rr의 편집기]
+* https://cable.ayra.ch/satisfactory/editor.php[AyrA의 편집기]
 
-=== Satisfactory Calculator and Interactive Map (SCIM)
+=== 새티스팩토리 계산기 및 인터랙티브 맵 (SCIM)
 
-https://satisfactory-calculator.com/[Satisfactory Calculator and Interactive Map]
-is a tool made by Anthor,
-and allows designing production lines, performing some save editing operations, and much more.
+https://satisfactory-calculator.com/[새티스팩토리 계산기 및 인터랙티브 맵]은
+Anthor가 만든 도구로,
+생산 라인을 설계하고, 일부 저장 편집 작업을 수행하며, 그 이상을 가능하게 합니다.
 
-The https://github.com/AnthorNet/SC-ProductionPlanner[Production Planner]
-and https://github.com/AnthorNet/SC-InteractiveMap[Interactive Map]
-portions each have their own GitHub repositories.
+https://github.com/AnthorNet/SC-ProductionPlanner[생산 계획기]
+및 https://github.com/AnthorNet/SC-InteractiveMap[인터랙티브 맵]은
+각각의 깃허브 저장소를 가지고 있습니다.
 
-=== Satisfactory Calculator BluePrints (SCBP)
+=== 새티스팩토리 계산기 청사진 (SCBP)
 
-link:#_satisfactory_calculator_and_interactive_map_scim[SCIM]
-also features a https://satisfactory-calculator.com/en/blueprints[Blueprint Repository]
-which allows sharing Blueprints created by the Blueprint Designer introduced in Update 7. These blueprints can be downloaded and placed in the
-https://satisfactory.wiki.gg/wiki/Blueprint_Designer#Blueprint_Files[respective folder]
-to be used in-game.
+link:#_새티스팩토리_계산기_및_인터랙티브_맵_scim[SCIM]은 또한
+https://satisfactory-calculator.com/en/blueprints[청사진 저장소]가 특징이며,
+업데이트 7에서 도입된 청사진 설계소에 의해 생성된 청사진을 공유할 수 있습니다. 이러한 청사진은 다운로드하여
+https://satisfactory.wiki.gg/wiki/Blueprint_Designer#Blueprint_Files[해당 폴더]에 배치하여
+게임 내에서 사용할 수 있습니다.
 
-A separate https://satisfactory-calculator.com/en/megaprints[Megaprints Repository] is also available which contains larger blueprints that can only be created and used within SCIM.
+별도의 https://satisfactory-calculator.com/en/megaprints[메가프린트 저장소]도 제공되며, 이는 SCIM 내에서만 생성되고 사용할 수 있는 더 큰 청사진을 포함합니다.
 
-=== Satisfactory Server Manager (SSM)
+=== 새티스팩토리 서버 관리자 (SSM)
 
-Satisfactory Server Manager is a webpage
-designed to manage and control multiple satisfactory dedicated server instances.
+새티스팩토리 서버 관리자는
+여러 새티스팩토리 전용 서버 인스턴스를 관리하고 제어하기 위해 설계된 웹페이지입니다.
 
-Its public source code can be found on
-https://github.com/mrhid6/SatisfactoryServerManager[GitHub].
+공개 소스 코드는
+https://github.com/mrhid6/SatisfactoryServerManager[깃허브]에서 찾을 수 있습니다.
 
-=== Satisfactory Modding Environment Installer (SMEI)
+=== 새티스팩토리 모딩 환경 설치기 (SMEI)
 
-A command line tool that assists mod authors with installing dependencies and setting up the Starter Project files.
+모드 작성자들이 의존성을 설치하고 시작 프로젝트 파일을 설정하는 데 도움을 주는 명령줄 도구입니다.
 
-Its source code can be found
-https://github.com/satisfactorymodding/SMEI[here].
+소스 코드는
+https://github.com/satisfactorymodding/SMEI[여기]에서 찾을 수 있습니다.
 
-=== Simple Construction Script (SCS)
+=== 간단한 건설 스크립트 (SCS)
 
-Simple Construction Script is Unreal Engine's solution for building actor component trees.
-You can find it in the top left corner of the blueprint editor, looking like a tree of the components.
+간단한 건설 스크립트는 언리얼 엔진의 액터 구성 요소 트리를 구축하기 위한 솔루션입니다.
+블루프린트 편집기의 왼쪽 상단 모서리에서 구성 요소의 트리처럼 보입니다.
 
-SML provides hooks for adding modded components to the Simple Construction Scripts of the base game blueprints.
-Documentation on the hooking system can be found
-xref:Development/ModLoader/SimpleConstructionScript.adoc[here].
+SML은 기본 게임 블루프린트의 간단한 건설 스크립트에 수정된 구성 요소를 추가하기 위한 후크를 제공합니다.
+후킹 시스템에 대한 문서는
+xref:Development/ModLoader/SimpleConstructionScript.adoc[여기]에서 찾을 수 있습니다.
 
-=== Frequently Asked Questions (FAQ)
+=== 자주 묻는 질문 (FAQ)
 
-A list of questions that are frequently asked,
-and common answers to them.
+자주 묻는 질문 목록과
+그에 대한 일반적인 답변입니다.
 
-You can find the Satisfactory Modding Community's FAQ
-xref:faq.adoc[on its respective docs page].
+새티스팩토리 모딩 커뮤니티의 FAQ는
+xref:faq.adoc[이 문서 페이지]에서 찾을 수 있습니다.
 
-=== FICSIT Augmentation Database (FAD)
+=== FICSIT 증강 데이터베이스 (FAD)
 
-See link:#_satisfactory_mod_repository_smr_aka_ficsit_app[Satisfactory Mod Repository].
-The mod repository is no longer frequently referenced by this name - one could say that doing so was a https://www.merriam-webster.com/dictionary/fad[FAD].
+link:#_새티스팩토리_모드_저장소_smm_또는_ficsit_app[새티스팩토리 모드 저장소]를 참고하십시오.
+모드 저장소는 더 이상 이 이름으로 자주 불리지 않습니다. 이렇게 부르는 것이 https://ko.wikipedia.org/wiki/유행[유행]이었다고 할 수 있습니다.
 
-=== Satisfactory Official Discord (SOD)
+=== 새티스팩토리 공식 디스코드 (SOD)
 
-The public Discord server that Coffee Stain Studios runs for the game.
-We may tell people to visit the official discord for support with issues that do not involve mods.
-You can join it via https://discord.gg/satisfactory[this link].
+커피 스테인 스튜디오가 게임을 위해 운영하는 공개 디스코드 서버입니다.
+모드와 관련되지 않은 문제에 대한 지원은 공식 디스코드를 방문하라고 말씀드리고 싶습니다.
+https://discord.gg/satisfactory[이 링크]를 통해 참여할 수 있습니다.
 
-=== Too Many Acronyms (TMA)
+=== 더럽게 많은 약어 (TMA)
 
-Used to summarize the https://discord.com/channels/555424930502541343/555516979260293132/1034938314018525275[abundance] of Satisfactory Modding acronyms.
+새티스팩토리 모딩 약어의 https://discord.com/channels/555424930502541343/555516979260293132/1034938314018525275[풍부함]을 요약하는 데 사용됩니다.
 
-== Outdated Acronyms
+== 구식 약어
 
-These acronyms, for one reason or another, are no longer in use.
-They are kept here for historical purposes.
+이 약어들은 어떤 이유로 더 이상 사용되지 않습니다.
+역사적 목적을 위해 여기에 보관됩니다.
 
-* SMB = https://github.com/satisfactorymodding/SatisfactoryModBootstrapper[Satisfactory Mod Bootstrapper] (Obsoleted by SML improvements)
-* SPL = Satisfactory Pak Loader (Merged into SML)
-* BPI = Blueprint Interface (Merged into SML)
-* SBL = Satisfactory Blueprint Library (Merged into SML)
-* SPM = Satisfactory Pak Modding (General term for pak modding)
-* SID = https://github.com/satisfactorymodding/SatisfactoryItemDictionary[Satisfactory Item Dictionary] (Outdated)
-* SMI = Satisfactory Mod Injector (Obsoleted by SML improvements)
+* SMB = https://github.com/satisfactorymodding/SatisfactoryModBootstrapper[새티스팩토리 모드 부트스트래퍼] (SML 개선으로 인해 사용 중지됨)
+* SPL = 새티스팩토리 팩 로더 (SML에 통합됨)
+* BPI = 블루프린트 인터페이스 (SML에 통합됨)
+* SBL = 새티스팩토리 블루프린트 라이브러리 (SML에 통합됨)
+* SPM = 새티스팩토리 팩 모딩 (팩 모딩에 대한 일반 용어)
+* SID = https://github.com/satisfactorymodding/SatisfactoryItemDictionary[새티스팩토리 아이템 사전] (구식)
+* SMI = 새티스팩토리 모드 주입기 (SML 개선으로 인해 사용 중지됨)
 

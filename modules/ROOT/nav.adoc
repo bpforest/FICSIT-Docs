@@ -125,7 +125,7 @@
     ** xref:CommunityResources/ModelingTools.adoc[모델링 도구]
     ** xref:CommunityResources/SFUIKIT.adoc[UI 키트]
     ** xref:CommunityResources/IconGenerator.adoc[아이콘 생성기]
-    ** xref:CommunityResources/incredibuild.adoc[Incredibuild]
+    ** xref:CommunityResources/incredibuild.adoc[인크레더빌드]
     ** xref:CommunityResources/TrainSignalGuide.adoc[열차 신호 안내서]
 
 // TODO unhide once translating section is ready

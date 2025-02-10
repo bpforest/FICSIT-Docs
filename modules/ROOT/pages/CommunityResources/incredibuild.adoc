@@ -1,110 +1,110 @@
-= Setting Up Incredibuild
+= 인크레더빌드 설정
 
-Satisfactory is a large game.
-As such, it can take an enormous amount of time to compile the relevant, even on high end hardware.
-In this section, we will guide you through the process of setting up Incredibuild,
-which is a build acceleration tool for Microsoft Visual Studio and Jetbrains Rider.
-It can significantly reduce the amount of time it takes to compile the modding project,
-which is especially helpful if you're doing a lot of C++ development.
+새티스팩토리는 대규모 게임입니다.
+따라서 관련된 내용을 컴파일하는 데 엄청난 시간이 걸릴 수 있습니다.
+이 섹션에서는 인크레더빌드를 설정하는 과정을 안내할 것입니다.
+인크레더빌드는 Microsoft Visual Studio와 Jetbrains Rider를 위한 빌드 가속 도구입니다.
+모딩 프로젝트를 컴파일하는 데 걸리는 시간을 크게 줄일 수 있으며,
+특히 C++ 개발을 많이 하는 경우에 유용합니다.
 
-== How it works
+== 작동 방식
 
-Incredibuild works by allowing you to **distribute build tasks across multiple of your own computers** in order to speed up compilation of code.
-It does this locally on your computer and across your home network,
-so there is no need for you to own a build server or connect to one in the cloud.
-If you want a more in-depth technical explanation of how Incredibuild accomplishes this,
-we recommend you check out link:https://www.incredibuild.com/wp-content/uploads/2020/10/Incredibuild-Technology-Overview-v-2.pdf[this document] from Incredibuild themselves.
+인크레더빌드는 **여러 대의 개인 컴퓨터에 빌드 작업을 분산**하여 코드 컴파일 속도를 높입니다.
+이것은 귀하의 컴퓨터와 가정 네트워크에서 로컬로 수행되므로,
+빌드 서버를 소유하거나 클라우드에 연결할 필요가 없습니다.
+인크레더빌드가 이를 수행하는 방법에 대한 더 깊이 있는 기술적 설명을 원하신다면,
+인크레더빌드에서 제공하는 link:https://www.incredibuild.com/wp-content/uploads/2020/10/Incredibuild-Technology-Overview-v-2.pdf[이 문서]를 확인하시기 바랍니다.
 
-== Requirements
+== 요구 사항
 
-All of this software must be self-hosted on your own hardware.
-In order for Incredibuild to run smoothly, your primary computer and any helper computers must meet these minimum specifications:
+모든 소프트웨어는 귀하의 하드웨어에서 자체 호스팅되어야 합니다.
+인크레더빌드가 원활하게 실행되기 위해서는 귀하의 주 컴퓨터와 보조 컴퓨터가 다음 최소 사양을 충족해야 합니다:
 
-* The latest version of Windows 10 or 11 64-bit
+* 최신 버전의 Windows 10 또는 11 64비트
 
-* 4 CPU Cores
+* 4코어 CPU
 
-* 4 GB Memory
+* 4GB 메모리
 
-* At least 30 GB Available Storage (Preferably solid state but not necessary)
+* 최소 30GB의 여유 공간(가능하면 SSD가 좋지만 필수는 아님)
 
-* 100 Mbps Network Connection
+* 100Mbps 네트워크 연결
 
-All computers must be on the same network in order to be utilized.
-If you have an antivirus, you will need to add an exception to your Incredibuild and Visual Studio installation folders.
-Also, the coordinator makes use of RabbitMQ, so you will not be able to install it on a computer with RabbitMQ already installed.
+모든 컴퓨터는 활용되기 위해 동일한 네트워크에 있어야 합니다.
+백신을 사용 중이라면, 인크레더빌드 및 Visual Studio 설치 폴더에 예외를 추가해야 합니다.
+또한, 코디네이터는 RabbitMQ를 사용하므로, RabbitMQ가 이미 설치된 컴퓨터에 설치할 수 없습니다.
 
-== Applying for a license
+== 라이센스 신청
 
-Before we can install Incredibuild, we need to get a license.
-Now don't worry, it's completely free if you only intend to use it non-commercially.
-All you need to do is visit the https://www.incredibuild.com/pricing[Incredibuild Pricing Page] and click on the "Free Forever" plan.
-Just fill out the form with your details (You can use your name for the "Company Name" field since you only need a personal license) and submit it.
-Within a few minutes you should receive an email in your inbox containing a link to download Incredibuild and a license activation code that looks something like this:
+인크레더빌드를 설치하기 전에 라이센스를 받아야 합니다.
+걱정하지 마십시오, 비상업적으로만 사용할 경우 완전히 무료입니다.
+https://www.incredibuild.com/pricing[인크레더빌드 가격 페이지]를 방문하여 "Free Forever" 플랜을 클릭하십시오.
+양식에 귀하의 세부 정보를 입력하고(회사 이름 란에는 귀하의 이름을 사용할 수 있습니다) 제출하십시오.
+몇 분 내에 인크레더빌드를 다운로드할 수 있는 링크와 라이센스 활성화 코드가 포함된 이메일을 받게 됩니다.
 
 image:CommunityResources/Incredibuild/incredibuild-email.png[image]
 
-== Installing Incredibuild
+== 인크레더빌드 설치
 
-Now that you have your license, we can begin installing Incredibuild.
-If you haven't already, you can download the agent installer from https://dl.incredibuild.com/ib10-latest[here].
-Run the installer and read the license agreement before accepting.
+이제 라이센스를 받았으니 인크레더빌드 설치를 시작할 수 있습니다.
+아직 다운로드하지 않았다면, https://dl.incredibuild.com/ib10-latest[여기]에서 에이전트 설치 프로그램을 다운로드할 수 있습니다.
+설치 프로그램을 실행하고 라이센스 계약을 읽은 후 수락하십시오.
 
-For the install configuration, select "Grid" mode.
-This will allow you to initiate builds from your computer and distribute the load across any other computers you install the agent on.
-Next, you will need to enter the license key you received earlier.
-After that, choose which directory to install the agent to and make sure to select "Install the Incredibuild add-in for MS Visual Studio IDE" if you are using Visual Studio.
+설치 구성에서 "Grid" 모드를 선택하십시오.
+이렇게 하면 귀하의 컴퓨터에서 빌드를 시작하고 에이전트를 설치한 다른 컴퓨터에 부하를 분산할 수 있습니다.
+다음으로, 이전에 받은 라이센스 키를 입력해야 합니다.
+그 후, 에이전트를 설치할 디렉토리를 선택하고, Visual Studio를 사용하는 경우 "Install the Incredibuild add-in for MS Visual Studio IDE"를 선택해야 합니다.
 
-You also have the option to use SSL to encrypt communication between your agents,
-but we will not be configuring this since we do not need to for our specific use case.
-Instead, select "Do not use a trusted certificate".
-Finally, choose a username and password for the coordinator interface and then install the agent.
+SSL을 사용하여 에이전트 간의 통신을 암호화할 수도 있지만,
+특정 사용 사례에 대해 필요하지 않으므로 이를 구성하지 않을 것입니다.
+그러므로 "Do not use a trusted certificate"을 선택하십시오.
+마지막으로, 코디네이터 인터페이스에 대한 사용자 이름과 비밀번호를 선택한 후 에이전트를 설치하십시오.
 
-When the installation is complete, you can either go to the next section and set up Incredibuild on multiple computers, or skip to the link:incredibuild.html#_post_install[Post-Install] 
-section.
+설치가 완료되면 다음 섹션으로 이동하여 여러 컴퓨터에서 인크레더빌드를 설정하거나
+link:incredibuild.html#_사후_설치[사후 설치] 섹션으로 건너뛸 수 있습니다.
 
-== Multiple Agents
+== 여러 에이전트
 
-Now that you have your primary coordinator set up,
-you can install Incredibuild on any other computers you have to combine their processing power and make your builds go even faster.
-To do this, simply repeat the steps from before on your other computer, but instead of selecting "Grid", select "Agent" for the configuration.
-When you get to the section asking for the coordinator's IP address, complete the steps below first before continuing with the installation.
+주 코디네이터를 설정했으니,
+다른 컴퓨터에 인크레더빌드를 설치하여 처리 능력을 결합하고 빌드를 더욱 빠르게 진행할 수 있습니다.
+이를 위해서는 이전의 단계를 다른 컴퓨터에서 반복하되, "Grid" 대신 "Agent"를 선택하십시오.
+코디네이터의 IP 주소를 묻는 섹션에 도달하면, 설치를 계속하기 전에 아래 단계를 완료하십시오.
 
-On your primary computer where you installed the coordinator, you will need to configure a static IP address.
-To do this on Windows 10 or 11, open the settings app and go to Network and Internet -> Wi-fi (or Ethernet if you are using that).
-Ensure that the "Network Profile Type" is set to "Private", then find "IP Assignment" and click the "Edit" button.
+주 컴퓨터에서 코디네이터를 설치한 경우, 정적 IP 주소를 구성해야 합니다.
+Windows 10 또는 11에서 이를 수행하려면 설정 앱을 열고 네트워크 및 인터넷 -> Wi-Fi(또는 이더넷)로 이동하십시오.
+"네트워크 프로필 유형"이 "개인"으로 설정되어 있는지 확인한 후, "IP 할당"을 찾아 "편집" 버튼을 클릭하십시오.
 
 image:CommunityResources/Incredibuild/incredibuild_ip_1.png[image]
 
-Next, open search, type "cmd", and select "Command Prompt" from the list of results.
-In the terminal window, type "ipconfig /all". This will create a list of all network adapters on your computer.
-Find the adapter you are using, and copy the details for your Internal IP Address, Subnet Mask, and Default Gateway.
-You can also configure preferred DNS servers if you would like.
-Save the changes and move on to the next step.
+다음으로, 검색을 열고 "cmd"를 입력한 후 결과 목록에서 "명령 프롬프트"를 선택하십시오.
+터미널 창에 "ipconfig /all"을 입력합니다. 이렇게 하면 컴퓨터의 모든 네트워크 어댑터 목록이 생성됩니다.
+사용 중인 어댑터를 찾아 "IP 주소", "서브넷 마스크", "기본 게이트웨이"에 대한 세부 정보를 복사하십시오.
+원하는 경우 기본 DNS 서버를 구성할 수도 있습니다.
+변경 사항을 저장하고 다음 단계로 진행하십시오.
 
 image:CommunityResources/Incredibuild/incredibuild_cmd.png[image]
 image:CommunityResources/Incredibuild/incredibuild_ip_2.png[image]
 
-Finally, on your other computer, enter the internal IP address of your primary computer into the setup field and install the agent.
+마지막으로, 다른 컴퓨터에서 주 컴퓨터의 내부 IP 주소를 설정 필드에 입력하고 에이전트를 설치하십시오.
 
-Now, Incredibuild will automatically distribute builds across both machines,
-and you can see how they're being utilized by checking the coordinator web panel (defaults to `https://localhost:8000`).
+이제 인크레더빌드는 두 대의 컴퓨터에 걸쳐 빌드를 자동으로 분산하며,
+코디네이터 웹 패널(기본값: `https://localhost:8000`)을 확인하여 어떻게 활용되고 있는지 확인할 수 있습니다.
 
 [WARNING]
 ====
-If you are presented with an "Insecure Site" error when trying to access the coordinator interface, click on the "Advanced" button, then on "Proceed".
-This is caused by the coordinator not having SSL configured, and it is completely normal behavior.
+코디네이터 인터페이스에 접근할 때 "안전하지 않은 사이트" 오류가 표시되면 "고급" 버튼을 클릭한 후 "계속"을 클릭하십시오.
+이는 코디네이터에 SSL이 구성되지 않았기 때문에 발생하며, 완전히 정상적인 동작입니다.
 ====
 
-== Post-Install
+== 사후 설치
 
-Now that you have installed and configured Incredibuild, you are ready to begin accelerating your project compilations!
-Whenever you initiate a build in Visual Studio, Rider, or Unreal Engine, they will automatically delegate the job to your Incredibuild agent(s).
-And, you should see a significant reduction in compile times across all projects, not just the modding project.
+이제 인크레더빌드를 설치하고 구성했으므로, 프로젝트 컴파일을 가속화할 준비가 되었습니다!
+Visual Studio, Rider 또는 언리얼 엔진에서 빌드를 시작할 때마다 자동으로 인크레더빌드 에이전트에 작업을 위임합니다.
+모든 프로젝트에서 컴파일 시간이 크게 단축되는 것을 확인할 수 있으며, 모딩 프로젝트뿐만 아니라 모든 프로젝트에서 효과를 볼 수 있습니다.
 
 [TIP]
 ====
-You can monitor the progress of your build more closely by right-clicking the system tray icon for Incredibuild and selecting "Build Monitor".
+빌드 진행 상황을 더 면밀히 모니터링하려면 인크레더빌드의 시스템 트레이 아이콘을 우클릭 후 "빌드 모니터"를 선택하십시오.
 
 image:CommunityResources/Incredibuild/incredibuild-tray.png[image]
 ====

@@ -1,14 +1,14 @@
-= AngryBeaver's ModelingTools
+= AngryBeaver의 모델링 도구
 
 image:CommunityResources/ModelingTools/ModelingToolsCover.png[image]
 
-Community member AngryBeaver maintains a repository of re-modeled 'pieces'
-of base Satisfactory buildings that are quite useful in creating your own
-factory building models. 
+커뮤니티 멤버 AngryBeaver는 자신의 공장 건물 모델을 만드는 데
+매우 유용한 기본 새티스팩토리 건물의
+재모델링된 '일부'의 저장소를 유지 관리합니다.
 
-These re-models have been optimized to have fewer vertices than the
-pieces of machines that one could take off of Satisfactory machines
-exported via xref:Development/ExtractGameFiles.adoc#FModel[FModel], and they still look great!
+이 재모델링은 새티스팩토리 기계에서 xref:Development/ExtractGameFiles.adoc#FModel[FModel]을 통해 내보낼 수 있는
+기계의 일부보다 더 적은 정점 수를 가지도록 최적화되었으며,
+여전히 훌륭한 외관을 유지합니다.
 
-You can read more about the Modeling Tools on its
-https://github.com/DavidHGillen/Satisfactory_ModelingTools[GitHub page].
+모델링 도구에 대한 자세한 내용은
+https://github.com/DavidHGillen/Satisfactory_ModelingTools[깃허브 페이지]에서 확인할 수 있습니다.
