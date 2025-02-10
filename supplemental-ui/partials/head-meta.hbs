@@ -1,21 +1,29 @@
+<meta name="description" content="{{#if page.description}}{{detag page.description}}{{else}}{{#unless (eq page.layout '404')}}{{{og-description page.contents}}}{{/unless}}{{/if}}">
+
 <link rel="icon" href="{{siteRootPath}}/favicon.ico" type="image/x-icon">
 
-<meta name="description" content="{{#if page.description}}{{detag page.description}}{{else}}{{#unless (eq page.layout '404')}}{{{og-description page.contents}}}{{/unless}}{{/if}}">
-<meta property="og:title" content="{{{detag (or page.title defaultPageTitle)}}}{{#if site.title}} :: {{site.title}}{{/if}}">
+<meta property="og:site_name" content="{{site.title}}">
+<meta property="og:title" content="{{{detag (or page.title defaultPageTitle)}}}">
+<meta property="og:description" content="{{#if page.description}}{{detag page.description}}{{else}}{{#unless (eq page.layout '404')}}{{{og-description page.contents}}}{{/unless}}{{/if}}">
+<meta property="og:type" content="article">
 {{#if page.attributes.og-image}}
 <meta property="og:image" content="{{og-image page}}">
+<meta property="twitter:image" content="{{og-image page}}">
 {{else}}
-{{#if page.contents}}
 {{#with (getFirstImage page.contents)}}
-<meta property="og:image" content="{{this}}">
+<meta property="og:image" content="{{@root.site.url}}/{{@root.page.componentVersion.name}}/{{@root.page.componentVersion.version}}/{{this}}">
+<meta property="twitter:image" content="{{@root.site.url}}/{{@root.page.componentVersion.name}}/{{@root.page.componentVersion.version}}/{{this}}">
 {{else}}
 <meta property="og:image" content="{{site.url}}/logo.png">
+<meta property="twitter:image" content="{{site.url}}/logo.png">
 {{/with}}
-{{else}}
-<meta property="og:image" content="{{site.url}}/logo.png">
 {{/if}}
-{{/if}}
-<meta property="og:description" content="{{#if page.description}}{{detag page.description}}{{else}}{{#unless (eq page.layout '404')}}{{{og-description page.contents}}}{{/unless}}{{/if}}">
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:site" content="{{site.title}}">
+<meta property="twitter:title" content="{{{detag (or page.title defaultPageTitle)}}}">
+<meta property="twitter:description" content="{{#if page.description}}{{detag page.description}}{{else}}{{#unless (eq page.layout '404')}}{{{og-description page.contents}}}{{/unless}}{{/if}}">
+
+<meta name="article:media_name" content="{{site.title}}">
 
 <link rel="stylesheet" href="{{uiRootPath}}/css/site-extra.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
