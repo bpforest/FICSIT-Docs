@@ -28,7 +28,7 @@ all of the supposed base-game assets in the Starter Project are actually placeho
 If the starter project doesn't already have a placeholder for the base-game asset you wish to reference,
 you'll have to create it yourself
 
-== Example Static Mesh and Icon Reuse
+== 정적 메쉬 및 아이콘 재사용 예시
 
 As an example, let's say you wanted to reuse the static mesh and icon from the
 https://satisfactory.wiki.gg/HUB_Parts[HUB Parts]

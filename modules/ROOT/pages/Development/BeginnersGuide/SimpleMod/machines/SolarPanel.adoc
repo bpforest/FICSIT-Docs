@@ -1,134 +1,134 @@
-= Solar Generator
+= 태양광 발전기
 
-In this chapter we will create a simple custom power generator -
-a Solar Panel that only produces energy during the daytime.
+이 장에서는 간단한 맞춤 전력 발전기인 태양광 패널을 생성할 것입니다.
+태양광 패널은 낮 동안에만 에너지를 생성합니다.
 
-== Create the Buildable
+== 건물 생성
 
-As in previous examples, we need to create another xref:Development/BeginnersGuide/SimpleMod/buildable.adoc[buildable] (let's name it `Build_DocSolarPanel`) with a mesh, descriptor, recipe, and to add that recipe to our schematic.
-This time we will use `FGBuildableGenerator` as the parent class of the buildable,
-as it's the base class for buildings that generate power.
+이전 예제와 마찬가지로, 또 다른 xref:Development/BeginnersGuide/SimpleMod/buildable.adoc[건물]을 생성해야 합니다(이름은 `Build_DocSolarPanel` 로 하겠습니다). 여기에는 메쉬, 디스크립터, 제작법이 필요하며, 이 제작법을 도면에 추가해야 합니다.
+이번에는 건물 부모 클래스로 `FGBuildableGenerator` 를 사용할 것입니다.
+이는 전력을 생성하는 건물의 기본 클래스입니다.
 
-Assign names, descriptions, build categories, and other properties of these assets as you see fit.
-However, this time around we'll be using the default `M Hologram Class`, `FGFactoryHologram`, on the Buildable
-instead of the previously used value of `FGBuildableHologram`
-since `FGBuildableGenerator` that we are deriving from is a child of `FGBuildableFactory`.
+애셋의 이름, 설명, 건설 범주 및 기타 속성을 적절히 설정하십시오.
+또한, 이번에는 `M Hologram Class` 에서 이전에 사용했던 `FGBuildableHologram` 대신
+기본 `FGFactoryHologram` 을 건물에 사용할 것입니다.
+이는 우리가 파생한 `FGBuildableGenerator` 가 `FGBuildableFactory` 의 자식이기 때문입니다.
 
-We don't have a building mesh for you to use for the solar panel, but please let us know if you can contribute one!
-For now, just use the Plantpot of Knowledge mesh as a placeholder.
+우리가 사용할 수 있는 태양광 패널의 건물 메쉬는 현재 없습니다만, 기여할 수 있다면 알려주시면 감사하겠습니다!
+지금은 지식의 화분 메쉬를 자리 표시자로 사용하겠습니다.
 
-At this point you should be able to construct your buildable in game the same as the Plantpot of Knowledge,
-and just like the plantpot, it doesn't do anything ... yet!
+이 시점에서 게임 내에서 지식의 화분과 동일하게 건물을 구성할 수 있어야 하며,
+화분처럼 현재는 아무것도 하지 않습니다... 아직은 말이죠!
+
+[TIP]
+===== 
+`FGBuildableGenerator` 의 하위 클래스인
+`FGBuildableGeneratorFuel`, `FGBuildableGeneratorGeoThermal`, `FGBuildableGeneratorNuclear` 도 있습니다.
+이름에서 알 수 있듯이, 이들은 다양한 유형의 전력 발전기에 대한 특정 논리를 포함하고 있습니다.
+우리의 태양광 패널은 이러한 맞춤 동작이 필요하지 않으므로 사용하지 않을 뿐입니다.
+=====
+
+== 전력 생성 논리 추가
+
+`Build_DocSolarPanel` 에 추가할 첫 번째 항목은 태양광 패널을 송전선에 연결하여
+생산된 전력을 사용하게 해줄 `FGPowerConnection` 구성 요소입니다.
+구성 요소를 추가하는 과정은
+xref:Development/BeginnersGuide/SimpleMod/machines/SimpleMachine.adoc[아이템 카운터 머신] 장과 동일합니다.
+하지만 카운터와는 달리, 이번에는 `FGPowerInfo` 를 추가할 필요가 없습니다.
+`FGBuildableGenerator` 클래스가 이미 이를 처리하기 때문입니다.
+부모 클래스는 또한 우리의 전력 연결을 전력 정보와 연결하는 코드를 이미 가지고 있으므로,
+여기서 우리가 직접 처리할 필요는 없습니다.
+
+빌드 건이 발전기의 전력 출력을 올바르게 표시하고,
+얼마나 많은 전력을 생성할지를 정의하기 위해,
+클래스 기본값에서 건물의 "M Power Production" 속성을 설정하십시오.
+여기서는 `20.0` 으로 설정하겠지만, 원하는 값으로 설정해도 됩니다.
+
+지금까지의 설정으로, 우리는 지정한 전력 생산량만큼 동적으로 전력을 생성하는 발전기를 갖게 되지만,
+여전히 밤에도 전력을 생성할 것입니다.
+이것은 우리가 https://en.wikipedia.org/wiki/Radioisotope_thermoelectric_generator[RTG]를 만들고 있다면 괜찮을 수 있지만,
+우리는 태양광 패널을 만들고 있으므로 낮 동안에만 작동하도록 하고 싶습니다.
+
+이를 수정하기 위한 첫 번째 단계는 발전기의 동적 전력 생산 능력을 비활성화하는 것입니다.
+`Get Power Info` 노드를 사용하고 `Set Dynamic Production Capacity` 를 `0.0` 으로 설정하십시오.
+이 값은 우리가 건물에서 설정한 값으로 기본값이지만,
+여기서 0으로 설정하면 원치 않는 기능을 방지하면서
+빌드 건에서 전력 생산량을 올바르게 보고할 수 있습니다.
+실행 핀을 Begin Play에 연결하십시오. 이는 한 번만 발생하면 되기 때문입니다(액터가 생성될 때입니다).
+
+image:BeginnersGuide/simpleMod/machines/SolarPanel/DisableDynamicProduction.png[동적 생산 비활성화 설정]
+
+다음으로, 낮인지 밤인지 판단하고 전력 생산을 조정해야 합니다.
+다행히도 `FGTimeOfDaySubsystem` 이 이를 위한 유용한 메서드를 제공합니다.
+`FGTimeOfDaySubsystem` 의 인스턴스를 가져오는 `GetTimeSubsystem` 노드를 사용합니다.
+
+우리는 여러 번 시간대를 평가해야 합니다. 액터가 생성될 때 한 번, 그리고 낮에서 밤으로, 또는 그 반대로 변경될 때마다 한 번입니다.
+이를 위해 시간 서브시스템의 `OnDayStateChanged` 이벤트 디스패처에 구독하여
+이럴 때 알림을 받고 발전기를 전환할 수 있습니다.
+`Get Time Subsystem` 노드의 반환 값 핀을 드래그하여 `Bind Event to OnDayStateChanged` 노드를 생성합니다.
+다음으로, 이벤트(이벤트 이름을 `On Day State Changed` 로 하겠습니다)는 `Add Custom Event...` 작업을 사용하거나 `Bind Event to OnDayStateChanged` 노드의 `Event` 핀에서 드래그하여 생성합니다.
+
+Bind Event 노드의 실행 핀을 Begin Play 라인에 연결하십시오. 이는 한 번만 바인딩하면 되기 때문입니다.
+
+image:BeginnersGuide/simpleMod/machines/SolarPanel/EventBound.png[이벤트 바인딩]
+
+다음으로, 전달된 시간 값에 따라 전력 생산을 설정해야 합니다.
+우리는 전력 정보를 바탕으로 `Set Base Production` 메서드를 사용할 것입니다.
+동적 생산과는 달리, 이 전력 생산은 항상 "풀 블라스트"이며 배터리를 충전할 것입니다.
+Select Float 노드를 사용하여 밤 시간 동안의 생산 값을 0으로 선택합니다.
+여기서 반복 입력을 피하기 위해 부모 클래스의 `Get Default Power Production Capacity` 메서드를 사용하여
+클래스 기본값에서 설정한 값을 가져올 수 있습니다.
+
+image:BeginnersGuide/simpleMod/machines/SolarPanel/SettingPowerProduction.png[이벤트에 응답]
+
+마지막으로, 저장 파일이 로드되거나 건물이 처음 생성된 후
+전력 생산이 올바르게 설정되도록 해야 합니다.
+이를 위해 바인딩한 후 `On Day State Changed` 이벤트를 호출하십시오.
+`Is Day` 메서드를 사용하여 시간대에 대한 불리언 값을 제공합니다.
+
+image:BeginnersGuide/simpleMod/machines/SolarPanel/CallOnceOnSpawn.png[생성 시 호출]
+
+요약하자면, 태양광 패널에 작성된 모든 코드의 스크린샷은 다음과 같습니다:
+
+image:BeginnersGuide/simpleMod/machines/SolarPanel/FinishedCode.png[완성된 코드]
+
+이제 게임에서 새로 생성한 전력 발전기를 시도해 보십시오!
+
+전력 저장고를 배치하고 태양광 패널을 연결한 후 충전되는지 확인해 보십시오.
 
 [TIP]
 =====
-There are also subclasses of `FGBuildableGenerator` such as
-`FGBuildableGeneratorFuel`, `FGBuildableGeneratorGeoThermal`, and `FGBuildableGeneratorNuclear`
-which, as you can judge from their names, contain some specific logic for different types of power generators.
-Since our Solar Panel does not require the custom behaviors of any of these, we will not use them.
+발전기의 시간 의존적 생성을 테스트하는 빠른 방법은 `SetTimeOfDay` 콘솔 명령을 사용하는 것입니다.
+
+* 낮: `SetTimeOfDay 12 00`
+* 밤: `SetTimeOfDay 23 00`
+
+자세한 정보는 xref:SMLChatCommands.adoc[여기]를 참고하십시오.
 =====
 
-== Adding Power Generation Logic
+발전기가 작동하지 않는 경우, 예제 모드에서 완성된 발전기를 확인하거나
+디스코드에서 도움을 요청하십시오.
 
-The first thing we want to add to our `Build_DocSolarPanel` is an `FGPowerConnection` component,
-as we need to connect our Solar Panel to power lines to use its generated power.
-The process for adding a component is the same as in the
-xref:Development/BeginnersGuide/SimpleMod/machines/SimpleMachine.adoc[Item Counter Machine] chapter.
-However, unlike the counter, we don't need to add an `FGPowerInfo` this time
-because the `FGBuildableGenerator` class already handles that for us.
-The parent class also already has the code to associate our Power Connection with the Power Info,
-so we don't need to do that ourselves here either.
+== 문제 해결
 
-In order for the Build Gun to properly display the power output of our generator,
-and to define how much power it will make,
-set the "M Power Production" property of the buildable in the Class Defaults.
-Let's go with `20.0`, but you can set it to whatever you'd like.
+=== 건물 (재)구성 시 충돌
 
-With the setup so far, we now have a generator that will dynamically produce up to our specified Power Production,
-except it will not charge batteries, and it will still produce power at night.
-That might be okay if we were making an https://en.wikipedia.org/wiki/Radioisotope_thermoelectric_generator[RTG],
-but we're making a solar panel, so we want it to only work during the day.
+건물 애셋과 그 메시 애셋의 재료가 올바르게 구성되었는지 확인하십시오.
 
-The first step to fixing this is to disable the generator's dynamic power production ability.
-Use a `Get Power Info` node and call `Set Dynamic Production Capacity` to `0.0`.
-This value defaults to the value we set in our building,
-but setting it to zero here will prevent the undesired functionality
-while still correctly reporting the power production in the build gun.
-Hook up the execution pin to Begin Play, since we only need this to happen once - on actor spawn.
+== 다음 단계
 
-image:BeginnersGuide/simpleMod/machines/SolarPanel/DisableDynamicProduction.png[Setting the Dynamic Production]
+태양광 패널이 작동하기 위해 하늘을 직접 봐야하는 기능을 추가하고 싶을 수 있습니다.
+하지만 성능 친화적인 방식으로 이를 구현하는 것은
+간단하지 않기 때문에 이 튜토리얼에서 제외되었습니다.
 
-Next, we need to figure out whether it's day or night and adjust power production accordingly.
-Thankfully, the `FGTimeOfDaySubsystem` offers some helpful methods for that.
-Get an instance of the `FGTimeOfDaySubsystem` with the `GetTimeSubsystem` node.
+이 기능을 구현하는 한 가지 가능한 방법은 건물이 초기화될 때 선 추적을 수행하고,
+그 추적의 성공/실패를 액터에 캐시한 다음,
+캐시된 값을 사용하여 전력 출력을 결정하는 것입니다.
+하지만 이 접근 방식은 태양광 패널 뒤에 새 건물이 건설될 때 반응하지 않으며,
+건물이 파괴되고 재구성되지 않고는 하늘 접근을 다시 확인할 수 없습니다.
 
-We need to assess the time of day on multiple occasions - once when the actor spawns, and then each time it changes from day to night, or vice versa.
-For that, we can subscribe to the `OnDayStateChanged` event dispatcher of the time subsystem
-to be notified when this happens and switch our generator accordingly.
-Drag from the Return Value pin of a `Get Time Subsystem` node to create a `Bind Event to OnDayStateChanged` node.
-Next, the event (let's name it `On Day State Changed`) is created by using the `Add Custom Event...` action or by dragging from `Event` pin of `Bind Event to OnDayStateChanged` node.
+이 튜토리얼은 아마도 이 기능을 포함하도록 확장될 수 있지만,
+지금은 이를 원하시면 디스코드에서 질문해 보십시오.
 
-Hook up the execution pin of the Bind Event node to our Begin Play line since we only need to bind once.
-
-image:BeginnersGuide/simpleMod/machines/SolarPanel/EventBound.png[Binding the Event]
-
-Next, we need to set the power production depending on the passed time value.
-We'll be using the `Set Base Production` method of the power info to do this,
-since unlike the dynamic production, this power production is always "full blast" and will charge batteries.
-Use a Select Float node to select between a daytime production value and a night time production value of zero.
-We can avoid repeating ourselves here and use the parent class `Get Default Power Production Capacity` method
-to retrieve the value we set in the class defaults.
-
-image:BeginnersGuide/simpleMod/machines/SolarPanel/SettingPowerProduction.png[Responding to the Event]
-
-One last thing - we need to make sure the power production is set correctly
-after a save file is loaded or the building is first created.
-To do this, call our On Day State Changed event after binding to it.
-Use the `Is Day` method to supply it with the boolean value for the time of day.
-
-image:BeginnersGuide/simpleMod/machines/SolarPanel/CallOnceOnSpawn.png[Calling on Spawn]
-
-To summarize, here's a screenshot of all of the code written in our solar panel:
-
-image:BeginnersGuide/simpleMod/machines/SolarPanel/FinishedCode.png[Finished code]
-
-That should be it, try out your newly created power generator in-game!
-
-Test it out by popping down a Power Storage and see if it is charging or not after connecting your solar panel.
-
-[TIP]
-=====
-A quick way to test the generator's time-dependent generation is to use the `SetTimeOfDay` console command.
-
-* Day time: `SetTimeOfDay 12 00`
-* Night time: `SetTimeOfDay 23 00`
-
-More info xref:SMLChatCommands.adoc[here].
-=====
-
-If you're having trouble getting your generator to work, check out the completed one in Example Mod,
-or ask for help on the Discord.
-
-== Troubleshooting
-
-=== Crashes on building (de)construct
-
-Ensure that the materials on both the building asset and its mesh asset are configured correctly.
-
-== Next Steps
-
-You may wish to add functionality to make the solar panel require direct access to the sky to function,
-however, implementing this in a performance-friendly way is not trivial,
-which is why it was excluded from this tutorial.
-
-One possible way to implement a sky requirement involves performing a line trace when the buildable is intialized
-and caching the success/fail of that trace on the actor,
-then using the cached value to determine the power output.
-However, this approach does not respond to new buildings being constructed after the solar panel,
-nor does it allow the building to re-check for sky access without being destroyed and rebuilt.
-
-This tutorial may eventually be expanded to include this functionality,
-but for now, ask about it on the Discord if you want to do this.
-
-Check out the xref:Development/BeginnersGuide/SimpleMod/NextSteps.adoc[Next Steps] page
-to see where to go from here.
+다음 단계로 이동하려면
+xref:Development/BeginnersGuide/SimpleMod/NextSteps.adoc[다음 단계] 페이지를 확인하십시오.

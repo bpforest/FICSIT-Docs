@@ -66,7 +66,7 @@ UE will still be able to discover them.
 === Compiling
 
 After the plugins have been moved into your modding project,
-re-xref:Development/BeginnersGuide/project_setup.adoc#_generate_visual_studio_files[Generate Visual Studio project files]
+re-xref:Development/BeginnersGuide/project_setup.adoc#_visual_studio_파일_생성[Generate Visual Studio project files]
 and build for Development Editor.
 
 While you wait for it to compile, here's some info about the roles of each plugin.
@@ -80,7 +80,7 @@ It takes files produced by the dumper and generates the uasset files your editor
 
 ==== Troubleshooting Compile Errors
 
-- Make sure you xref:Development/BeginnersGuide/project_setup.adoc#_generate_visual_studio_files[regenerated Visual Studio project files before building].
+- Make sure you xref:Development/BeginnersGuide/project_setup.adoc#_visual_studio_파일_생성[regenerated Visual Studio project files before building].
 - Make sure that you have updated to the latest version of the plugins from repository linked link:#_installation[above].
 - If you encounter errors in `MaterialGenerator.h` about the Material Graph being undefined,
   try adding the following imports to the top of the file:

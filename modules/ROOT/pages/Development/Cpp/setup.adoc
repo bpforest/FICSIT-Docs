@@ -146,7 +146,7 @@ Like this:
 == Finishing Up
 
 Now that you have added your module folder, configuration, source, and added it to the targets,
-you will need to regenerate your Visual Studio project files. Directions on how to do this can be found xref:Development/BeginnersGuide/project_setup.adoc#_generate_visual_studio_files[here].
+you will need to regenerate your Visual Studio project files. Directions on how to do this can be found xref:Development/BeginnersGuide/project_setup.adoc#_visual_studio_파일_생성[here].
 
 After this process completes, you should be able to start working on the {cpp} code for your mod.
 

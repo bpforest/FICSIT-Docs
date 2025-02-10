@@ -65,6 +65,10 @@ main>.content {
     justify-content: center;
 }
 
+.doc {
+    word-break: keep-all;
+}
+
 @media (min-width: 932px) {
     .doc {
         width: 60%;
@@ -77,14 +81,13 @@ main>.content {
     color: rgb(242, 200, 0);
 }
 
-.doc .admonitionblock td.content {
+.doc .admonitionblock td.content, .doc .exampleblock>.content, .doc details.result>.content {
+    display: block;
     padding: 1.5rem;
     border-radius: 16px;
     background-color: rgb(52, 53, 59);
-}
-
-@media (max-width: 932px) {
-    .doc .admonitionblock td.content {
+    border: .125rem solid #ffffff15;
+    @media (max-width: 932px) {
         padding: .5rem;
     }
 }

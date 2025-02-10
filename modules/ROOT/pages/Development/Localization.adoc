@@ -1,276 +1,276 @@
-# Localizing your Mod
+# 모드 현지화
 
 [NOTE]
 ====
-The new plugin localization system is not fully ready for use.
-You may encounter issues with translation data not saving,
-and the system for importing and exporting translations to the community translation portal is not yet complete.
+새로운 플러그인 현지화 시스템은 완전히 준비되지 않았습니다.
+번역 데이터가 저장되지 않는 문제를 겪을 수 있으며,
+커뮤니티 번역 포털로의 번역 가져오기 및 내보내기 시스템이 아직 완성되지 않았습니다.
 
-This page is a work in progress.
+이 페이지는 진행 중입니다.
 ====
 
-Satisfactory has been translated to multiple languages other than English.
-It's possible to set up mods to be translated in a similar manner.
+새티스팩토리는 영어 외에도 여러 언어로 번역되었습니다.
+모드를 유사한 방식으로 번역할 수 있도록 설정할 수 있습니다.
 
-Before you can start writing translations,
-or crowdsourcing them from your users,
-you must make sure that the assets in your mod are set up to interact with Unreal Engine's localization system.
+번역을 작성하거나
+사용자로부터 크라우드소싱하기 전에,
+모드의 애셋이 언리얼 엔진의 현지화 시스템과 상호작용하도록 설정되어 있는지 확인해야 합니다.
 
-## Use The Right Kinds of Strings
+## 올바른 문자열 유형 사용
 
-In order to start localizing your mod, you need to make sure that text content is stored in the right format.
+모드를 현지화하려면 텍스트 콘텐츠가 올바른 형식으로 저장되어야 합니다.
 
-This means using FText and Format Text operations instead of FStrings and Appends.
-In blueprints, you can tell you're working with FText when you see the triangle dropdown arrow 
+이는 FStrings 및 Appends 대신 FText 및 Format Text 작업을 사용하는 것을 의미합니다.
+블루프린트에서 FText로 작업하고 있을 때는 삼각형 드롭다운 화살표를 확인할 수 있습니다.
 
-You can read more about this on the
-https://docs.unrealengine.com/4.27/en-US/ProductionPipelines/Localization/Formatting/[Unreal documentation].
+자세한 내용은
+https://docs.unrealengine.com/4.27/en-US/ProductionPipelines/Localization/Formatting/[언리얼 문서]를 참고하십시오.
 
-This documentation page will not talk about how to use Unreal's text formatting features, since the Unreal documentation already covers that well.
+언리얼의 텍스트 포맷팅 기능 사용 방법에 대해서는 언리얼 문서에서 이미 잘 다루고 있기 때문에 이 문서 페이지는 설명하지 않겠습니다.
 
 [id="IncludeExcludeFields"]
-## Mark Fields as Localizable, or Not
+## 입력란을 현지화 가능 또는 불가능으로 표시
 
-In order to make sure that Unreal gathers text as localizable, it must be assigned a localization key.
-In Blueprint assets, Unreal will do this for you automatically as long as it has been marked as such in the 'advanced settings' dropdown.
+언리얼이 텍스트를 현지화 가능하게 수집하려면, 현지화 키가 할당되어야 합니다.
+블루프린트 애셋에서 언리얼은 '고급 설정' 드롭다운에서 그렇게 표시된 경우 자동으로 이를 처리합니다.
 
-image:L10n/SchematicDisplayNameAdvancedSettings.png[Advanced Settings]
+image:L10n/SchematicDisplayNameAdvancedSettings.png[고급 설정]
 
-If a text field is not marked to be localized, it won't be gathered and exported for translation later on in the process.
-A small warning icon is usually displayed next to these text fields when viewing assets in the editor.
+텍스트 필드가 현지화 가능으로 표시되지 않으면 이후 과정에서 번역을 위해 수집되지 않으며 내보내지 않습니다.
+에디터에서 애셋을 볼 때 이러한 텍스트 입력란 옆에 작은 경고 아이콘이 표시됩니다.
 
-A few Satisfactory asset types have fields that are notably not gathered for localization by default:
+몇 가지 새티스팩토리 애셋 유형에는 기본적으로 현지화를 위해 수집되지 않는 입력란이 있습니다:
 
-- Schematic Display Names
-- Schematic Descriptions
-- Item Display Names
-- Item Descriptions
-- Item Abbreviated Display Names
-- Recipe Display Name (Overrides)
-- Buildable Display Names
-- Buildable Descriptions
+- 도면 표시 이름
+- 도면 설명
+- 아이템 표시 이름
+- 아이템 설명
+- 아이템 약어 표시 이름
+- 제작법 표시 이름(오버라이드)
+- 건물 표시 이름
+- 건물 설명
 
-As such, when adding your own values for these fields, you should be sure to mark the fields to be localized.
+따라서 이러한 입력란에 대한 값을 추가할 때는 입력란을 현지화 가능으로 표시해야 합니다.
 
-You may wish to intentionally exclude some fields from gathering.
-Examples include placeholders in widgets that get replaced by bindings,
-since they'd only be visible in the editor preview for the widgets.
+일부 입력란을 수집에서 의도적으로 제외할 수 있습니다.
+예를 들어, 위젯에서 바인딩으로 대체되는 자리 표시자와 같은 경우,
+이는 위젯의 에디터 미리보기에서만 표시됩니다.
 
 [NOTE]
 ====
-Note that you can't (easily) localize textures or images, such as those used in UI.
-As such, you should avoid embedding text inside of your UI graphics, as they can't be localized.
-In widgets, consider using Canvas Panels, Overlays, and Render Transforms if you want to add stylized text to your widgets while still keeping it localized.
+텍스처나 이미지(예: UI에 사용되는)를 (쉽게) 현지화할 수 없음을 유의하십시오.
+따라서 UI 그래픽에 텍스트를 포함하는 것을 피해야 합니다.
+위젯에서는 캔버스 패널, 오버레이 및 렌더 변환을 사용하여 스타일화된 텍스트를 추가하면서도 현지화 가능하게 유지하는 것을 고려하십시오.
 ====
 
-### {cpp} Localization
+### {cpp} 현지화
 
-Detailed documentation for {cpp} localization can be found in the
-https://docs.unrealengine.com/4.27/en-US/ProductionPipelines/Localization/Formatting/[Unreal documentation].
+{cpp} 현지화에 대한 자세한 문서는
+https://docs.unrealengine.com/4.27/en-US/ProductionPipelines/Localization/Formatting/[언리얼 문서]에서 확인할 수 있습니다.
 
-When working in {cpp}, you can use the `NSLOCTEXT` and `LOCTEXT` macros to mark text as localizable.
+{cpp}에서 작업할 때는 `NSLOCTEXT` 및 `LOCTEXT` 매크로를 사용하여 텍스트를 현지화 가능하게 표시할 수 있습니다.
 
-It's important to note that you must define a localization namespace at the top of files using the `LOCTEXT` macro.
-Before using the macro, define the namespace (for example, `#define LOCTEXT_NAMESPACE "SML"`)
-then use `#undef LOCTEXT_NAMESPACE` at the end of the file.
+파일 상단에서 현지화 네임스페이스를 정의해야 한다는 점에 유의하십시오.
+매크로를 사용하기 전에 네임스페이스를 정의하십시오(예: `#define LOCTEXT_NAMESPACE "SML"`).
+그런 다음 파일 끝에서 `#undef LOCTEXT_NAMESPACE` 를 사용하십시오.
 
-## Open the Localization Dashboard
+## 현지화 대시보드 열기
 
-In order to open the Localization Dashboard,
-navigate to `Tools > (Tools subheading) Localization Dashboard`.
+현지화 대시보드를 열려면,
+`툴 > 현지화 대시보드` 로 이동하십시오.
 
-image:L10n/OpenDashboard.png[Editor screenshot of Open Localization Dashboard]
+image:L10n/OpenDashboard.png[로컬라이징 대시보드의 편집기 스크린샷]
 
-## Setting up a Localization Target
+## 현지화 대상 설정
 
-### Adding a Localization Target
+### 현지화 대상 추가
 
-Next, add a new **Plugin** Localization Target by clicking the `Add New Target` button in the "Plugin Targets" panel on the left.
+다음으로, "Plugin Targets" 패널의 왼쪽에서 `새 타깃 추가` 버튼을 클릭하여 새로운 **플러그인** 현지화 대상을 추가하십시오.
 
-Plugin Localization Targets are a custom feature added to the engine by the Satisfactory Modding team.
+플러그인 현지화 대상은 새티스팩토리 모딩 팀이 엔진에 추가한 맞춤 기능입니다.
 
 [WARNING]
 ====
-Make sure not to click "Add New Target" under the Game Targets heading - this target type can't be packaged with a mod.
+게임 타깃 제목 아래의 "새 타깃 추가"를 클릭하지 않도록 주의하십시오. 이 대상 유형은 모드와 함께 패키징할 수 없습니다.
 ====
 
-image:L10n/AddTarget.png[Add New Target button hovered]
+image:L10n/AddTarget.png[새 타깃 추가 버튼에 마우스를 올린 모습]
 
-You will be prompted to select a plugin to localize.
-Select your mod and press `Done`.
+현지화할 플러그인을 선택하라는 메시지가 표시됩니다.
+모드를 선택하고 `완료` 를 누르십시오.
 
-image:L10n/PickPlugin.png[Pick A Plugin dialog example]
+image:L10n/PickPlugin.png[플러그인 선택 대화 상자 예시]
 
-### Configuring the Localization Target
+### 현지화 대상 구성
 
-To view your target, click on its name in the table row.
+대상을 보려면, 테이블 행에서 이름을 클릭하십시오.
 
-image:L10n/ViewTarget.png[Target row hovered]
+image:L10n/ViewTarget.png[타겟 행에 마우스를 올린 모습]
 
-If the target's name is not already your
-xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#ModReference[mod reference],
-rename it to match.
+대상의 이름이 이미 당신의
+xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#ModReference[모드 참조]가 아니라면
+이름을 일치하도록 변경하십시오.
 
-image:L10n/RenameTarget.png[Rename your target]
+image:L10n/RenameTarget.png[대상 이름 변경]
 
 [TIP]
 ====
-Localization Target names can be arbitrary, and you can have multiple localization targets in a single plugin.
-For organization purposes though, it's better to have them matching your mod reference.
-Additionally, localization target names must be globally unique (unique across all mods installed)
-so it's important to use a target name that will not be used by other mods
-- part of why the mod reference is a good choice.
+현지화 대상 이름은 임의로 설정할 수 있으며, 하나의 플러그인에 여러 개의 현지화 대상을 가질 수 있습니다.
+조직적인 목적을 위해서는 모드 참조와 일치하는 것이 좋습니다.
+또한, 현지화 대상 이름은 전역적으로 고유해야 하므로(설치된 모드에서 고유해야 함)
+다른 모드에서 사용되지 않을 이름을 사용하는 것이 중요합니다.
+이는 모드 참조가 좋은 선택인 이유입니다.
 ====
 
-The default localization settings will be completely fine and should not be changed for the majority of mods.
-However, if you add another C++ module after you've made the localization target,
-rename the plugin,
-or want extra configurability or custom settings,
-you can change the generated localization profile yourself.
+기본 현지화 설정은 대부분의 모드에 대해 완벽하게 괜찮으며 변경할 필요가 없습니다.
+그러나 현지화 대상을 만든 후에 다른 C++ 모듈을 추가하거나,
+플러그인 이름을 변경하거나,
+추가적인 구성 가능성이나 맞춤 설정을 원할 경우,
+생성된 현지화 프로필을 직접 변경할 수 있습니다.
 
-## Gathering Text
+## 텍스트 수집
 
-Next, Unreal's localization system must gather all of the text that needs to be translated.
-To start the process, scroll down in the panel for your target and press `Gather Text`.
+다음으로, 언리얼의 현지화 시스템은 번역이 필요한 모든 텍스트를 수집해 줍니다.
+이를 시작하려면, 대상 패널에서 아래로 스크롤하여 `텍스트 수집` 을 누르십시오.
 
-image:L10n/GatherText.png[Gather Text button]
+image:L10n/GatherText.png[텍스트 수집 버튼]
 
-Wait until the dialog box shows a green check mark next to the Gather Text task to close the dialog box.
-The "Word Count" for your mod should now be greater than 0.
+대화 상자에 수집 텍스트 작업 옆에 녹색 체크 표시가 나타날 때까지 기다린 후 대화 상자를 닫으십시오.
+모드의 "단어 수"는 이제 0보다 커야 합니다.
 
-You should repeat the text gathering process after adding new strings to your mod,
-for example, adding new item desctiptors or widgets with text fields.
-It's a good idea to run this and review the results before each release of your mod
-to make sure that translation data is up to date.
+새로운 문자열을 모드에 추가한 후에는 텍스트 수집 과정을 반복해야 합니다.
+예를 들어, 새로운 아이템 디스크립터나 텍스트 필드가 있는 위젯을 추가하는 경우입니다.
+모드를 출시하기 전마다 이 작업을 실행하고 결과를 검토하는 것이 좋습니다.
+번역 데이터가 최신인지 확인하기 위해서입니다.
 
-## Editing Translations
+## 번역 편집
 
-English, the default native culture, is the only currently listed culture.
-You can view the text that was gathered by clicking the `Edit Translations For Culture` button. 
+기본 네이티브 컬처인 영어는 현재 나열된 유일한 컬처입니다(언리얼 엔진을 한국어로 설정한 경우 한국어).
+`이 컬처에 대한 번역 편집` 버튼을 클릭하여 수집된 텍스트를 볼 수 있습니다.
 
-image:L10n/EditTranslationsForCulture.png[Edit Translations For Culture button]
+image:L10n/EditTranslationsForCulture.png[이 컬처에 대한 번역 편집 버튼]
 
-The button will open an editor that allows viewing and editing the gathered text in real time.
-Changes you make in the native culture here will be reflected on the assets the text is gathered from.
-Changes made in other cultures will be stored in their culture data entry.
+버튼을 클릭하면 수집된 텍스트를 실시간으로 보고 편집할 수 있는 에디터가 열립니다.
+여기서 네이티브 컬처에서 변경한 내용은 텍스트가 수집된 애셋에 반영됩니다.
+다른 컬처에서 변경한 내용은 해당 컬처 데이터 항목에 저장됩니다.
 
-image:L10n/EditTranslationsInEditor.png[Editing translations in the editor]
+image:L10n/EditTranslationsInEditor.png[에디터에서 번역 편집]
 
-Navigating between the "Untranslated", "Needs Review", and "Completed" tabs
-will show the gathered text items in their various translation states.
-Note that for the native culture all text will inherently be "Completed" by default.
+"미번역", "리뷰 필요", "완료됨" 탭에서는
+다양한 번역 상태에서 수집된 텍스트 항목을 볼 수 있습니다.
+네이티브 컬처의 경우 모든 텍스트는 기본적으로 "완료" 상태입니다.
 
-Reviewing the gathered native language data will help you track down text that should not have been gathered for localization.
-Check out the directions link:#IncludeExcludeFields[here] to remove entries that should not be gathered.
+수집된 네이티브 언어 데이터를 검토하면 현지화를 위해 수집되지 않아야 할 텍스트를 추적하는 데 도움이 됩니다.
+제거해야 할 항목에 대한 지침은 link:#IncludeExcludeFields[여기]를 확인하십시오.
 
-## Adding New Languages
+## 새로운 언어 추가
 
-In order to support additional languages, you must first create a culture entry to hold its data.
-Do this by selecting 'Add New Culture' in the Cultures table for your target.
+추가 언어를 지원하려면 먼저 해당 데이터를 보관할 컬처 항목을 생성해야 합니다.
+대상의 컬처 테이블에서 '새 컬처 추가'를 선택하여 수행하십시오.
 
-image:L10n/AddNewCulture.png[Add New Culture button]
+image:L10n/AddNewCulture.png[새 컬처 추가 버튼]
 
-After creating a new culture you'll need to Gather Text again before you can open the editor for the new culture.
+새로운 컬처를 생성한 후에는 새로운 컬처에 대한 에디터를 열기 전에 텍스트를 다시 수집해야 합니다.
 
-## Compiling Translations
+## 번역 컴파일
 
-You can use Compile Translations to compile localization for all of your cultures, too
+모든 문화에 대한 현지화를 컴파일하려면 '텍스트 컴파일'을 사용할 수 있습니다.
 
-TODO what does this actually do, does it need to be done before releases?
+TODO: 이것이 실제로 무엇을 하는지, 배포 전에 수행해야 하는지?
 
-image:L10n/CompileTranslations.png[Compile Translations button]
+image:L10n/CompileTranslations.png[텍스트 컴파일 버튼]
 
-## Packaging Translations
+## 번역 패키징
 
-TODO when correctly configured it should just pack normally with your mod
+TODO: 올바르게 구성되면 모드와 함께 정상적으로 패키징되어야 합니다.
 
-## Testing In-Game
+## 게임 내 테스트
 
-A quick way to test your translations in-game is to set up the base game's
-https://satisfactory.wiki.gg/wiki/Settings#Debug[Quick Switch Language feature].
-This feature, added for use by translators of the base game,
-allows using the `QuickSwitchLanguage` console command to toggle between your normal language and second one you select in the settings.
+게임 내에서 번역을 테스트하는 빠른 방법은 기본 게임의
+https://satisfactory.wiki.gg/wiki/Settings#Debug[빠른 언어 전환 기능]을 설정하는 것입니다.
+이 기능은 기본 게임 번역가를 위해 추가된 기능으로,
+`QuickSwitchLanguage` 콘솔 명령을 사용하여 일반 언어와 설정에서 선택한 두 번째 언어 간에 전환할 수 있습니다.
 
-## Enabling Users to Contribute Translations
+## 사용자가 번역 기여 가능하게 하기
 
-TODO thought that the editor could integrate with Crowdin/external stuff for import/export, was it turned off?
+TODO: 편집기가 Crowdin/외부 도구와 통합되어 가져오기/내보내기가 가능하다고 생각했는데, 꺼졌는지?
 
-It is unlikely that a single developer will be fluent in all of the languages the community wishes for a mod to support.
-As such, most mods set up a system to allow users to contribute translations to the mod.
+한 명의 개발자가 커뮤니티가 원하는 모든 언어에 능통할 가능성은 낮습니다.
+따라서 대부분의 모드는 사용자가 모드에 번역을 기여할 수 있는 시스템을 설정합니다.
 
-The modding community hosts its own free to use instance of Tolgee at https://translate.ficsit.app/
-that all Satisfactory mods and tools can use to crowdsource translations.
-We have also modified it to offer some extra features particularly helpful for modders.
+모딩 커뮤니티는 모든 새티스팩토리 모드와 도구가 번역을 크라우드소싱할 수 있는
+https://translate.ficsit.app/[Tolgee]라는 무료 사용 인스턴스를 호스팅합니다.
+우리는 또한 모더에게 특히 유용한 몇 가지 추가 기능을 제공하도록 수정했습니다.
 
-Satisfactory uses the Crowdin platform to gather translations.
-If you'd like to get involved, you can find information on how in the `#welcome` channel of the
-https://discord.com/invite/satisfactory[official Satisfactory discord].
-However, Crowdin is expensive to for most cases and has heavy restrictions on how many strings can be translated.
-The Tolgee platform is free and open source, and can be self-hosted.
+새티스팩토리는 Crowdin 플랫폼을 사용하여 번역을 수집합니다.
+참여하고 싶다면,
+https://discord.com/invite/satisfactory[새티스팩토리 공식 디스코드]의 `#welcome` 채널에서 정보를 찾을 수 있습니다.
+그러나 Crowdin은 대부분의 경우 비용이 많이 들고 번역할 수 있는 문자열 수에 대한 제한이 큽니다.
+Tolgee 플랫폼은 무료이고 오픈 소스이며, 자체 호스팅이 가능합니다.
 
-If you'd like to get started helping to translate a mod,
-or get a project started for your own mod on the site,
-join the modding discord, pick up the translator role in the `#rules` channel,
-then follow the directions in the pinned thread in `#mod-translations`.
+모드를 번역하는 데 도움을 주고 싶거나,
+사이트에서 자신의 모드 프로젝트를 시작하고 싶다면,
+모딩 디스코드에 가입하고 `#rules` 채널에서 `Translator` 역할을 선택한 다음,
+`#mod-translations` 의 고정 스레드에서 지침을 따르십시오.
 
-## Tolgee Plugin Configuration
+## Tolgee 플러그인 구성
 
-TODO when they finish their docs could link to this https://github.com/tolgee/documentation/pull/420/files
+TODO: 문서가 완료되면 여기에 링크할 수 있습니다: https://github.com/tolgee/documentation/pull/420/files
 
-1. Add the plugin's repo to your mods folder following the directions on the
-xref:Development/BeginnersGuide/ImportingAnotherMod.adoc[Importing Other Mods to your Project] page.
-The Tolgee plugin source can be found https://github.com/tolgee/tolgee-unreal[here].
-2. Enable the plugin in the editor from the `Edit` > `Plugins` menu, which will require restarting the editor
-3. Create an API key for your editor to use on your https://translate.ficsit.app/account/apiKeys[account page].
- The API key should be created for your mod's project on Tolgee.
- You may wish to set the Expiration to `Never expires`.
- Enable all Scopes that you can, except disable the `admin` scope.
- Once the key is created, click to copy it.
- Note that this API key is for a single mod.
- Don't share it publicly because actions taken using the key are considered performed by you.
-4. Back in the Unreal Editor, open the `Edit` > `Project Settings` menu and search "tolgee".
- Enter the following data:
- - Api Key: (The API key you just copied)
- - Api Url: `https://translate.ficsit.app` (Note that there is no slash at the end!)
- - Project Id: (Upon entering the last 2 fields, this should populate with your project's ID, an integer. If it's `INVALID`, make sure you filled in the last 2 fields correctly.)
- - Live Translation Updates: True
- - Update Interval: 60
+1. 플러그인의 저장소를 모드 폴더에 추가하고
+xref:Development/BeginnersGuide/ImportingAnotherMod.adoc[다른 모드를 프로젝트에 가져오는 방법] 페이지의 지침을 따르십시오.
+Tolgee 플러그인 소스는 https://github.com/tolgee/tolgee-unreal[여기]에서 찾을 수 있습니다.
+2. 에디터의 `편집` > `플러그인` 메뉴에서 플러그인을 활성화하십시오. 이 작업은 에디터를 재시작해야 합니다.
+3. 에디터에서 사용할 API 키를 생성하십시오.
+ API 키는 Tolgee의 모드 프로젝트에 대해 생성해야 합니다.
+ 만료를 `Never expires` 로 설정할 수 있습니다.
+ 가능한 모든 범위를 활성화하되, `admin` 범위는 비활성화하십시오.
+ 키를 생성한 후 복사하십시오.
+ 이 API 키는 각 모드에 대한 것입니다.
+ 공개적으로 공유하지 마십시오. 키를 사용하여 수행된 작업은 귀하가 수행한 것으로 간주됩니다.
+4. 언리얼 에디터로 돌아가서 `편집` > `프로젝트 세팅` 메뉴를 열고 "tolgee"를 검색하십시오.
+다음 데이터를 입력하십시오:
+ - API 키: (방금 복사한 API 키)
+ - API URL: `https://translate.ficsit.app` (끝에 슬래시가 없습니다!)
+ - 프로젝트 ID: (방금 두 입력란을 채우면 자동으로 채워질 것입니다. `INVALID` 인 경우, 마지막 두 입력란에 올바르게 입력했는지 확인하십시오.)
+ - 실시간 번역 업데이트: True
+ - 업데이트 간격: 60
 
 
-## Upload Strings to Tolgee
+## Tolgee에 문자열 업로드
 
-TODO only works with Game targets but still throws error code 500 when used https://discord.com/channels/555424930502541343/1126271289640894605/1127757678626754650
+TODO: 게임 대상으로 해당되긴 하지만 https://discord.com/channels/555424930502541343/1126271289640894605/1127757678626754650 를 사용하면 여전히 오류 코드 500을 발생시킵니다.
 
-Once you have your targets set up you can use this
+대상을 설정한 후 이 작업을 사용할 수 있습니다.
 
-image:L10n/TolgeePluginButtonLocation.png[Tolgee button in the editor]
+image:L10n/TolgeePluginButtonLocation.png[에디터에서 Tolgee 버튼 위치]
 
-"Upload missing keys"
+"누락된 키 업로드"
 
-### Exporting Strings to Tolgee
+### Tolgee에 문자열 내보내기
 
-TODO click the export PO button?
+TODO: 내보내기 PO 버튼을 클릭해야 하나?
 
-This section will probably be deleted in favor of the Upload String to Tolgee section
+이 섹션은 아마도 Tolgee에 문자열 업로드 섹션을 위해 삭제될 것입니다.
 
-### Importing Translations from Tolgee to Unreal
+### Tolgee에서 언리얼로 번역 가져오기
 
-TODO import PO button? (but Tolgee doesn't offer export yet)
+TODO: 가져오기 PO 버튼? (근데 Tolgee는 아직 내보내기를 제공하지 않음)
 
-TODO arch note: If you want to manually change localization data or use 3rd party tools, it's stored in %PluginName%/Content/Localization/%LocalizationTargetName%. After you change csv or po files, make sure to sync them with the engine before packaging using the localization dashboard.
+TODO: 보관된 노트: 현지화 데이터를 수동으로 변경하거나 제3자 도구를 사용하면 이는 %PluginName%/Content/Localization/%LocalizationTargetName%에 저장됩니다. csv 또는 po 파일을 변경한 후, 패키징 전에 현지화 대시보드를 사용하여 엔진과 동기화해야 합니다.
 
-## Compiling Localization Files
+## 현지화 파일 컴파일
 
-TODO engine changes being made to keep them in plugin dirs so shouldn't have to move via script
+TODO: 엔진 변경 사항이 플러그인 디렉토리에 유지되도록 하여 스크립트를 통해 이동할 필요가 없도록 합니다.
 
-Compile in Unreal 
-// and run the Kyrium script or manually move to put them in your plugin's folder
+언리얼에서 컴파일하십시오.
+// 그리고 Kyrium 스크립트를 실행하거나 수동으로 이동하여 플러그인 폴더에 넣기.
 
-// ## Plugin Settings
+## 플러그인 설정
 
-// TODO seems to only listen to one Engine.ini, Mircea says there is a base UE field in plugins to specify localization directories, use that instead?
+// TODO: 단일 Engine.ini만 수신하는 것처럼 보임. Mircea가 플러그인에서 현지화 디렉토리를 지정하는 기본 UE 입력란이 있다고 하는데, 대신 그것을 사용해야 하나?
 
-// This should have been replaced by the plugin targets system
+// 이 부분은 플러그인 타겟 시스템으로 대체돼야 함.
 
 // `YourModReference/Config/Engine.ini`
 
@@ -279,9 +279,9 @@ Compile in Unreal
 // LocalizationPaths=../../../FactoryGame/Mods/YourModReference/Localization/YourModReference
 // ```
 
-// In order to tell Unreal to package your localization files with your plugin,
-// you will need to add a line to your plugin's `YourModReference/Config/PluginSettings.ini`
-// to tell it to include both your Localization folder and your `Engine.ini` with the mod's files.
+// 언리얼이 플러그인과 함께 로컬라이징 파일을 패키징하도록 하려면,
+// 플러그인의 `YourModReference/Config/PluginSettings.ini`에
+// 로컬라이징 폴더와 `Engine.ini`를 포함하도록 하는 줄을 추가해야 합니다.
 
 // Config/PluginSettings.ini
 
@@ -291,7 +291,7 @@ Compile in Unreal
 // +AdditionalNonUSFDirectories=Config
 // ```
 
-## Cross-plugin Localization
+## 크로스 플러그인 현지화
 
-localization target is bound to one particular plugin. This does not mean source strings cannot overlap though. dependent translations and localization dependencies are also supported by the UE out of box, you can basically re-use strings from other localization targets (read other plugins) inside of your plugin without duplicating them. To do that you have to manually add your dependency localization targets into the configuration of your dependent localization target. It's this setting in the localization dashboard (TargetDependencies.png)
+현지화 대상은 특정 플러그인에 바인딩됩니다. 이것이 소스 문자열이 겹칠 수 없다는 뜻은 아닙니다. 의존 번역 및 현지화 의존성도 UE에서 기본적으로 지원되며, 다른 현지화 대상(다른 플러그인)에서 문자열을 재사용할 수 있습니다. 이를 위해서는 의존 현지화 대상의 구성에 의존 현지화 대상을 수동으로 추가해야 합니다. 이것은 현지화 대시보드의 설정입니다(TargetDependencies.png).
 

@@ -249,7 +249,7 @@ as well as integrating a new Wwise version.
 Your mod's files are probably all within its plugin folder,
 so you can simply transfer over that entire folder to the Mods folder of the new project.
 Remember to
-xref:Development/BeginnersGuide/project_setup.adoc#_generate_visual_studio_files[regenerate Visual Studio project files]
+xref:Development/BeginnersGuide/project_setup.adoc#_visual_studio_파일_생성[regenerate Visual Studio project files]
 and build after you do this.
 
 ==== Bring Over Editor Configs
@@ -419,7 +419,7 @@ and it's unclear what the cause is.
 Temporarily move out all items from your `Mods/` folder
 except those that came with the Starter Project
 (Alpakit, ExampleMod, SML, SMLEditor),
-xref:Development/BeginnersGuide/project_setup.adoc#_generate_visual_studio_files[regenerate Visual Studio project files],
+xref:Development/BeginnersGuide/project_setup.adoc#_visual_studio_파일_생성[regenerate Visual Studio project files],
 and rebuild the project.
 This ensures that any potential problems with your mods don't affect the build process.
 
@@ -432,7 +432,7 @@ Instead, open your `FactoryGame.uproject` and modify the `EngineAssociation` fie
 After you're sure the editor is working with just SML loaded,
 move on to the next sections.
 
-== Dealing with Multiple Mods in One Project
+== 하나의 프로젝트에서 여러 모드 처리
 
 If you develop multiple mods in the same project,
 odds are that one of them will not work after an update.
@@ -445,7 +445,7 @@ One way to do this is to rename the uplugin file to `<ModReference>.uplugin.disa
 to stop Unreal from loading it.
 You will probably have to regenerate the Visual Studio project files if you do this.
 Directions for that can be found
-xref:Development/BeginnersGuide/project_setup.adoc#_generate_visual_studio_files[here].
+xref:Development/BeginnersGuide/project_setup.adoc#_visual_studio_파일_생성[here].
 
 Since the uplugin file is the only file you're changing,
 this approach lets you turn off mods without causing a torrent of Git file changes.
@@ -470,7 +470,7 @@ xref:Development/BeginnersGuide/project_setup.adoc#_project_compilation[compile 
 2. Deal with Visual Studio build errors by:
 
 - Adding/removing xref:Development/ModLoader/AccessTransformers.adoc[Access Transformers]
-  (note, also see link:#_seemingly_ignored_access_transformers[Seemingly Ignored Access Transformers] section)
+  (note, also see link:#_무시된_접근_변환기[Seemingly Ignored Access Transformers] section)
 - Rewriting or To-Do commenting out broken functionality in your mod to account for codebase changes
 - Asking for help on the Discord
 
@@ -502,7 +502,7 @@ xref:Development/BeginnersGuide/project_setup.adoc#_project_compilation[compile 
 
 Below are notes on situations to watch out for.
 
-=== Seemingly Ignored Access Transformers
+=== 무시된 접근 변환기
 
 Sometimes, compilation in Visual Studio will fail due to your mod trying to access private fields of various classes,
 even though you have already have added said classes to your mod's

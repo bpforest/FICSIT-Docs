@@ -1,21 +1,21 @@
-= Next Steps
+= 다음 단계
 
-You've reached the end of the getting started guide - congratulations!
+시작하기 가이드를 모두 완료하셨습니다. 축하드립니다!
 
-If you're still looking to learn about a specific concept,
-check and see if we have a page on it in the other sections of the documentation.
+특정 개념에 대해 더 배우고 싶다면, 
+문서의 다른 섹션에 해당 페이지가 있는지 확인해 보십시오.
 
-Once you have a mod you're ready to upload, follow the
-xref:Development/BeginnersGuide/ReleaseMod.adoc[Releasing Your Mod]
-directions to export and upload it for other people to use.
+모드를 업로드할 준비가 되었다면,
+xref:Development/BeginnersGuide/ReleaseMod.adoc[모드 배포] 지침을 따라
+다른 사람들이 사용할 수 있도록 내보내고 업로드해 보십시오.
 
-You can also ask questions on the https://discord.ficsit.app[Discord Server].
+질문이 있다면 https://discord.ficsit.app[디스코드 서버]에서 물어보십시오.
 
-You may also be interested in {cpp} modding,
-which allows modifying and creating much more advanced game behaviors.
-More info can be found on that xref:Development/Cpp/index.adoc[here].
+또한, {cpp} 모딩은 더 고급 게임 동작을
+수정하고 생성할 수 있게 해줍니다.
+자세한 정보는 xref:Development/Cpp/index.adoc[여기]에서 확인할 수 있습니다.
 
-Consider checking out what mods on ficsit.app have their source code available and
-xref:Development/BeginnersGuide/ImportingAnotherMod.adoc[checking them out in your editor]
-to learn from their code.
-A curated list of open source examples can be found xref:Development/OpenSourceExamples.adoc[here].
+ficsit.app에서 소스 코드가 공개된 모드를 확인하고
+xref:Development/BeginnersGuide/ImportingAnotherMod.adoc[에디터에서 확인하여]
+그들의 코드를 배우는 것도 고려해 보십시오.
+오픈 소스 예제의 선별된 목록은 xref:Development/OpenSourceExamples.adoc[여기]에서 확인할 수 있습니다.
