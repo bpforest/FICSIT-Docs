@@ -26,6 +26,15 @@ body {
     font-family: "NanumSquareNeo";
 }
 
+.home-link {
+    background-image: url(home-o.svg);
+    background-size: contain;
+}
+
+.home-link.is-current, .home-link:hover {
+    background-image: url(home.svg);
+}
+
 code {
     font-family: "NanumGothicCoding";
     background: #303030 !important;
@@ -35,11 +44,13 @@ code:not([class]) {
     color: #d7ba7d !important;
 }
 
-em {
+/* 기울임 글꼴 */
+.doc em {
     color: #83d6c5;
 }
 
-strong {
+/* 굵은 글꼴 */
+.doc strong {
     font-family: "NanumSquareNeoExtraBold";
 }
 
@@ -47,12 +58,20 @@ strong {
     font-family: "NanumSquareNeoExtraBold";
 }
 
-.nav {
-    background-color: rgb(20, 21, 24);
+.nav-container {
+    width: 320px;
+}
+
+.nav, .navbar, .toolbar {
+    background-color: #ffffff00;
+}
+
+.navbar {
+    background-color: rgb(16, 16, 20);
 }
 
 .toolbar {
-    background-color: rgb(20, 21, 24);
+    backdrop-filter: blur(50px);
 }
 
 main>.content, .article {
@@ -63,6 +82,7 @@ main>.content {
     margin-left: auto;
     margin-right: auto;
     justify-content: center;
+    max-width: 1680px;
 }
 
 .doc {
@@ -71,8 +91,12 @@ main>.content {
 
 @media (min-width: 932px) {
     .doc {
-        width: 60%;
-        max-width: 60%;
+        max-width: 75%;
+    }
+    .toc.sidebar {
+        width: auto;
+        flex-basis: auto !important;
+        max-width: 25%;
     }
 }
 
@@ -81,17 +105,39 @@ main>.content {
     color: rgb(242, 200, 0);
 }
 
+/* 말풍선 박스 */
 .doc .admonitionblock td.content, .doc .exampleblock>.content, .doc details.result>.content {
     display: block;
     padding: 1.5rem;
     border-radius: 16px;
-    background-color: rgb(52, 53, 59);
-    border: .125rem solid #ffffff15;
+    background-color: #ffffff0d;
+    border: .0625rem solid rgba(255, 255, 255, .1);
     @media (max-width: 932px) {
         padding: .5rem;
     }
 }
 
+.toc .toc-menu a {
+    transition: all .2s;
+}
+
+/* 사이드바, 목차: 비활성화 */
+.nav-menu ul {
+    color: #c1c1c1;
+}
+.toc .toc-menu a:not([class="is-active"]) {
+    color: #c1c1c1;
+    border-left-color: #ffffff00;
+}
+
+.toc .toc-menu a:hover {
+    color: white;
+}
+
+/* 사이드바 활성화 */
+.is-current-page>.nav-link {
+    color: white;
+}
 .navbar-brand .navbar-item + .navbar-item {
     -ms-flex-positive: 1;
     -webkit-box-flex: 1;

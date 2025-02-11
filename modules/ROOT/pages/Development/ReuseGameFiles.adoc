@@ -1,132 +1,132 @@
-= Reusing Base Game Files
+= 기본 게임 파일 재사용
 
-Sometimes you may want want to directly reuse the game's
-icons, meshes, gui, etc. for content in your own mod.
-Doing this is a fairly straightforward process,
-and you do not need to extract any files from the game to do so.
+때로는 모드에서 게임의 아이콘, 메쉬, GUI 등을
+직접 재사용하고 싶을 수 있습니다.
+이 작업은 비교적 간단한 과정이며,
+게임에서 파일을 추출할 필요가 없습니다.
 
-As an example, you could reuse the base game's
-https://satisfactory.wiki.gg/HUB_Parts[HUB Parts] icon and mesh
-for your custom items as a placeholder until you have created assets of your own.
+예를 들어, 자신만의 에셋을 만들기 전까지 임시로
+https://satisfactory.wiki.gg/HUB_Parts[허브 부품]의 아이콘과 메쉬를
+맞춤 아이템에 재사용할 수 있습니다.
 
-When you use the method described on this page to re-use base game content,
-you do not need to be concerned about shipping copyrighted files with your mod,
-since this process does not actually include the game's files in your own.
+이 페이지에서 설명하는 방법으로 기본 게임 콘텐츠를 재사용할 때,
+실제로 게임 파일을 모드에 포함시키지 않기 때문에
+저작권이 있는 파일을 모드와 함께 배포하는 것에 대해 걱정할 필요가 없습니다.
 
 [TIP]
 ====
-If you're looking to make variations of base game's models and textures,
-you may have to extract and edit them externally, making this approach irrelevant.
-Check out the
-xref:Development/ExtractGameFiles.adoc[Extracting Game Files page] instead for more information.
+기본 게임의 모델과 텍스처의 변형을 만들고 싶다면,
+외부에서 추출하고 편집해야 할 수 있어 이 방법은 적절하지 않을 수 있습니다.
+자세한 내용은
+xref:Development/ExtractGameFiles.adoc[게임 파일 추출하기 페이지]를 확인하십시오.
 ====
 
-== Understanding Placeholders
+== 자리 표시자 이해하기
 
-As described on the xref:Development/BeginnersGuide/StarterProjectStructure.adoc[Starter Project Structure] page,
-all of the supposed base-game assets in the Starter Project are actually placeholders.
-If the starter project doesn't already have a placeholder for the base-game asset you wish to reference,
-you'll have to create it yourself
+xref:Development/BeginnersGuide/StarterProjectStructure.adoc[시작 프로젝트 구조] 페이지에서 설명한 것처럼,
+시작 프로젝트의 모든 기본 게임 에셋들은 사실 자리 표시자입니다.
+시작 프로젝트에 참조하고 싶은 기본 게임 에셋의 자리 표시자가 없다면,
+직접 만들어야 합니다.
 
 == 정적 메쉬 및 아이콘 재사용 예시
 
-As an example, let's say you wanted to reuse the static mesh and icon from the
-https://satisfactory.wiki.gg/HUB_Parts[HUB Parts]
-component mentioned earlier.
+예를 들어, 앞서 언급한 https://satisfactory.wiki.gg/HUB_Parts[허브 부품]
+컴포넌트의 정적 메쉬와 아이콘을
+재사용하고 싶다고 가정해보겠습니다.
 
-The first step is to track down the location of the asset in the base game.
-This is done by figuring out the Blueprint Path of the asset via the
-https://satisfactory.wiki.gg/[Satisfactory Wiki],
-finding the content on a
-https://github.com/Goz3rr/SatisfactorySaveEditor/tree/master/Reference%20Materials[reference list], or via searching around for it in
-xref:Development/ExtractGameFiles.adoc#FModel[FModel]
-(the case for most GUI elements).
+첫 번째 단계는 기본 게임에서 에셋의 위치를 찾는 것입니다.
+이는 https://satisfactory.wiki.gg/[새티스팩토리 위키]를 통해
+에셋의 블루프린트 경로를 찾거나,
+https://github.com/Goz3rr/SatisfactorySaveEditor/tree/master/Reference%20Materials[참조 목록]에서
+콘텐츠를 찾거나,
+xref:Development/ExtractGameFiles.adoc#FModel[FModel]에서
+검색하여 찾을 수 있습니다(대부분의 GUI 요소의 경우).
 
-image:ReuseContent/WikiHubPartsBox.png[HUB Parts on the Satisfactory Wiki]
-
-
-_HUB Parts on the Satisfactory Wiki_
-
-Next, you can go to that blueprint path in FModel to find out
-what the paths of the relevant static mesh and icon objects are.
-
-For the HUB Parts, this path is
-`/Game/FactoryGame/Resource/Parts/HUBParts/Desc_HUBParts.Desc_HUBParts_C`,
-so we should go to
-`\FactoryGame\Resource\Parts\HUBParts`
-in FModel to find the relevant files.
-
-image:ReuseContent/FModelFoundPath.png[HUB Parts inside of FModel]
+image:ReuseContent/WikiHubPartsBox.png[새티스팩토리 위키의 허브 부품]
 
 
-_HUB Parts inside of the FModel Folders browser_
+_새티스팩토리 위키의 허브 부품_
 
-Upon switching to the Packages tab we can see
-the `FGItemDescriptor` (`Desc_HUBParts.uasset`)
-and its static mesh (`SM_HUBparts_01.uasset`).
-Back in the Folders tab, we can see sub-folders that contain its Material Instance, textures, and icons.
+다음으로, FModel에서 해당 블루프린트 경로로 이동하여
+관련된 정적 메쉬와 아이콘 객체의 경로를 찾을 수 있습니다.
 
-If you want, you can open up the asset to view and make sure you've found the right thing.
-For this example, make sure you have `HUBParts` selected in the Folders tab,
-then open `SM_HUBparts_01` from the Packages tab to bring up the 3D viewer.
-Use the Commands button in the top left of the viewer to see navigation keybinds.
+허브 부품의 경우, 경로는
+`/Game/FactoryGame/Resource/Parts/HUBParts/Desc_HUBParts.Desc_HUBParts_C` 이므로,
+FModel에서
+`\FactoryGame\Resource\Parts\HUBParts` 로 이동하여
+관련 파일들을 찾아야 합니다.
 
-image:ReuseContent/FModelHubParts.png[HUB Parts in the FModel 3D Viewer]
+image:ReuseContent/FModelFoundPath.png[FModel 내의 허브 부품]
 
-_HUB Parts in the FModel 3D Viewer_
 
-Now that you've found the location of the asset in the base game,
-you're ready to set up the placeholder for it. Within your editor,
-you should go to the same path that you followed in FModel, creating
-folders with the exact same name if needed to reach your destination.
+_FModel 폴더 브라우저의 허브 부품_
 
-Since we are looking to reuse the static mesh and icons of the HUB parts
-for our example, we'll need to put a Static Mesh called `SM_HubParts_01` at the path
-`/Game/FactoryGame/Resource/Parts/HUBParts/`
-and a Texture called `IconDesc_HubParts_256` at the path 
-`/Game/FactoryGame/Resource/Parts/HUBParts/UI/`.
+패키지 탭으로 전환하면
+`FGItemDescriptor`(`Desc_HUBParts.uasset`)와
+그것의 정적 메쉬(`SM_HUBparts_01.uasset`)를 볼 수 있습니다.
+폴더 탭으로 돌아가면 머티리얼 인스턴스, 텍스처, 아이콘이 포함된 하위 폴더들을 볼 수 있습니다.
+
+원한다면 에셋을 열어서 올바른 것을 찾았는지 확인할 수 있습니다.
+이 예시에서는 폴더 탭에서 `HUBParts` 를 선택한 다음,
+패키지 탭에서 `SM_HUBparts_01` 을 열어 3D 뷰어를 실행합니다.
+뷰어 좌측 상단의 명령 버튼을 사용하여 탐색 단축키를 확인할 수 있습니다.
+
+image:ReuseContent/FModelHubParts.png[FModel 3D 뷰어의 허브 부품]
+
+_FModel 3D 뷰어의 허브 부품_
+
+기본 게임에서 에셋의 위치를 찾았다면,
+이제 자리 표시자를 설정할 준비가 되었습니다.
+에디터에서 FModel에서 따라간 것과 동일한 경로로 이동하고,
+필요한 경우 목적지까지 동일한 이름의 폴더들을 만드십시오.
+
+이 예시에서는 허브 부품의 정적 메쉬와 아이콘을 재사용하려고 하므로,
+`/Game/FactoryGame/Resource/Parts/HUBParts/` 경로에
+`SM_HubParts_01` 이라는 정적 메쉬를,
+`/Game/FactoryGame/Resource/Parts/HUBParts/UI/` 경로에
+`IconDesc_HubParts_256` 이라는 텍스처를 넣어야 합니다.
 
 [TIP]
 ====
-Notice that the actual content you use for the content you are
-creating a placeholder for _does not matter at all_ - just that it
-has the correct name, path, and asset type as the content you want to reference.
+자리 표시자로 만드는 콘텐츠의
+_실제 내용은 전혀 중요하지 않습니다_.
+참조하려는 콘텐츠와 동일한 이름, 경로, 에셋 유형을 가지고 있기만 하면 됩니다.
 ====
 
-For the mesh, we can reuse the
-link:{attachmentsdir}/BeginnersGuide/simpleMod/Mesh_DocBuild.fbx[Plantpot of Knowledge]
-from the
-xref:Development/BeginnersGuide/SimpleMod/buildable.adoc[Buildable tutorial],
-which you can copy in from the ExampleMod in your project, or download it again from the above link.
+메쉬의 경우,
+xref:Development/BeginnersGuide/SimpleMod/buildable.adoc[건물 튜토리얼]의
+link:{attachmentsdir}/BeginnersGuide/simpleMod/Mesh_DocBuild.fbx[지식의 화분]을
+재사용할 수 있습니다.
+프로젝트의 ExampleMod에서 복사하거나 위 링크에서 다시 다운로드할 수 있습니다.
 
-For the icon texture, we can reuse the 
-// Links to GH hosted image because cloudflare serves it as a webp -> can't be imported to Unreal
-link:https://raw.githubusercontent.com/satisfactorymodding/Documentation/master/modules/ROOT/attachments/BeginnersGuide/simpleMod/Icon_SchemDoc.png[Soon™ Icon]
-from the
-xref:Development/BeginnersGuide/SimpleMod/recipe.adoc[Recipe/Schematic tutorial],
-which you can copy in from the ExampleMod in your project or download it again from the above link.
+아이콘 텍스처의 경우,
+xref:Development/BeginnersGuide/SimpleMod/recipe.adoc[제작법/도면 튜토리얼]의
+// 클라우드플레어가webp(언리얼에서 사용 못 함)로호스팅하므로깃헙이미지호스팅링크사용아이걸몇번이나쓰는거야
+link:https://raw.githubusercontent.com/satisfactorymodding/Documentation/master/modules/ROOT/attachments/BeginnersGuide/simpleMod/Icon_SchemDoc.png[Soon™ 아이콘]을
+재사용할 수 있습니다.
+프로젝트의 ExampleMod에서 복사하거나 위 링크에서 다시 다운로드할 수 있습니다.
 
-image:ReuseContent/PlaceholderMesh.png[Final Placeholder Mesh]
-image:ReuseContent/PlaceholderIcon.png[Final Placeholder Icon]
+image:ReuseContent/PlaceholderMesh.png[최종 자리 표시자 메쉬]
+image:ReuseContent/PlaceholderIcon.png[최종 자리 표시자 아이콘]
 
-Note that these screenshots also contain placeholders
-of some other files related to the HUB Parts.
-You do not need to have placeholders for everything,
-just the content you want to reference.
+이 스크린샷들에는 허브 부품과 관련된
+다른 파일들의 자리 표시자도 포함되어 있습니다.
+모든 것의 자리 표시자를 가질 필요는 없고,
+참조하고 싶은 콘텐츠에 대해서만 있으면 됩니다.
 
-Once these placeholder assets are created,
-you can refer to them from elsewhere in your mod project.
-When you pack your mod, these placeholders will not be packed,
-and at runtime they will point to the assets from the base game
-and contain the correct textures, meshes, descriptors, etc.
-in place of whatever you used for the placeholder.
+이러한 자리 표시자 에셋들이 생성되면,
+모드 프로젝트의 다른 곳에서 이들을 참조할 수 있습니다.
+모드를 패킹할 때 이 자리 표시자들은 포함되지 않으며,
+런타임에는 기본 게임의 에셋들을 가리키게 되어
+자리 표시자로 사용한 것 대신
+올바른 텍스처, 메쉬, 디스크립터 등이 표시됩니다.
 
-== Generating a Complete Starter Project
+== 완전한 시작 프로젝트 생성하기
 
-It is possible to create a personal version of the Starter Project
-that includes most of these base game files accessible from within the editor.
-This version of the project would include models, textures, and other resources
-instead of their placeholder versions, allowing you to view them in-editor.
+에디터 내에서 접근 가능한 대부분의 기본 게임 파일이 포함된
+개인용 버전의 시작 프로젝트를 만드는 것이 가능합니다.
+이 버전의 프로젝트에는 자리 표시자 버전 대신 모델, 텍스처 및 기타 리소스가 포함되어
+에디터 내에서 볼 수 있습니다.
 
-You can read more about this in its section on the 
-xref:Development/BeginnersGuide/StarterProject/ObtainStarterProject.adoc[Extracting Game Files page].
+이에 대한 자세한 내용은 xref:Development/BeginnersGuide/StarterProject/ObtainStarterProject.adoc[게임 파일 추출하기 페이지]의
+해당 섹션에서 확인할 수 있습니다.

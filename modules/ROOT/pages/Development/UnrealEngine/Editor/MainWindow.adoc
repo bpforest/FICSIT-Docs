@@ -1,72 +1,72 @@
-= MainWindow
+= 메인 창
 
-The main window contains most important settings and docks for the
-primary editor features.
+메인 창은 에디터의 주요 기능을 위한
+가장 중요한 설정과 도크를 포함하고 있습니다.
 
-== Menu-Bar
+== 메뉴 바
 
-image:UnrealEditor/MainMenuBar.jpg[image]
+image:UnrealEditor/MainMenuBar.jpg[이미지]
 
-Every window has a menu bar, but the menu bar of the main window is a
-little bit special because it also contains entries for global settings,
-project settings and file management.
+모든 창에는 메뉴 바가 있지만, 메인 창의 메뉴 바는
+전역 설정, 프로젝트 설정, 파일 관리 등이 추가되어
+약간 특별합니다.
 
-== Tab-Bar
+== 탭 바
 
-image:UnrealEditor/TabBar.jpg[image]
+image:UnrealEditor/TabBar.jpg[이미지]
 
-Every window has a tab bar which can hold multiple views/windows. If the
-main window/view get closed (as tab or the containing "real" window) the
-project gets completely closed, also all other windows.
+모든 창에는 여러 뷰/창을 담을 수 있는 탭 바가 있습니다. 만약
+메인 창/뷰가 닫히면(탭 또는 "진짜" 창에 의해)
+다른 창을 포함, 프로젝트가 완전히 닫히게 됩니다.
 
-== Viewport
+== 뷰포트
 
-image:UnrealEditor/MainViewport.jpg[image]
+image:UnrealEditor/MainViewport.jpg[이미지]
 
-The viewport is simply a preview of the map, where you can place and
-manipulate a world. We don't have access to the Satisfactory map source files like Coffee Stain does,
-so this viewport is more or less useless to us. Our work will take place mainly in other windows.
+뷰포트는 간단하게 맵의 미리보기이며, 이를 통해 배치하고 세계를
+조종할 수 있습니다. 우리는 커피 스테인이 작업한 새티스팩토리 맵 소스 파일에 접근할 수 없으며,
+따라서 이 뷰포트는 우리에겐 덜 필요할 것입니다. 우리의 작업은 다른 창에서 주로 이루어질 것입니다.
 
-== Tool-Bar
+== 툴바
 
-image:UnrealEditor/MainToolBar.jpg[image]
+image:UnrealEditor/MainToolBar.jpg[이미지]
 
-The tool-bar is a strongly simplified version of the menubar and is icon
-base, but its the only place where you can find the access to the
-`+Alpakit+` window. The Tool-bar contains mainly shortcuts for the
-project settings, c++ building and source control, the remaining features are mostly
-not useful without a map as mentioned above in the Viewport section.
+툴바는 메뉴 바의 기능을 아이콘 기반으로
+간단하게 요약한 버전이며, `+알파킷+` 창에 접근할 수
+있는 곳이기도 합니다. 툴바는 프로젝트 설정, C++ 빌드 및 소스 제어를
+위한 바로가기가 포함되어 있으며, 나머지 기능들은 위의 뷰포트 섹션에서
+언급한 것처럼 맵 없이는 대부분 유용하지 않습니다.
 
-== Outliner
+== 아웃라이너
 
-image:UnrealEditor/MainOutliner.jpg[image]
+image:UnrealEditor/MainOutliner.jpg[이미지]
 
-The outliner is here again pretty useless because it contains the
-list of placed objects in the world, and again, we don't have the map files.
+아웃라이너는 세계에 배치된 오브젝트의 목록을 보여 줍니다.
+네, 저희는 맵 파일이 없습니다.
 
-== Modes
+== 모드 (Mode)
 
-image:UnrealEditor/MainModes.jpg[image]
+image:UnrealEditor/MainModes.jpg[이미지]
 
-One more useless view cause we don't have a proper map to edit, but this
-would help you to place things into the world and contains a list of
-basic actors and edit tools for brushes, terrain and so on.
+수정할 적절한 맵이 없기에 이 또한 쓸모가 없지만,
+브러시, 지형 등을 위한 기본 액터 목록과
+편집 도구를 포함하고 있습니다.
 
-== Content-Browser
+== 콘텐츠 브라우저
 
-image:UnrealEditor/MainContentBrowser.jpg[image]
+image:UnrealEditor/MainContentBrowser.jpg[이미지]
 
-Finally a very very useful and important view. This view is simply a
-file browser for all contents of your mod project and SF/UE source like
-C++ classes, models and textures, etc.
+마침내 정말 정말 유용하고 중요한 뷰입니다. 이는 간단히
+모드 프로젝트의 모든 콘텐츠를 담고, C++ 클래스, 모델, 텍스처 등
+새팩/언리얼의 소스를 담는 파일 탐색기라고 생각하면 됩니다.
 
-In the left half, you can see a tree structure based folder explorer
-where you can select a folder which contents get the displayed on the
-right-hand side half of the view.
+왼쪽 절반의 폴더 탐색기 기반 트리 구조에서는
+보기의 오른쪽 절반에 표시할
+폴더를 선택할 수 있습니다.
 
-It also has in the left upper corner or in the context menu
-(r-click-menu) the ability to create, import, export, delete or modify
-content.
+또한 좌측 상단 모서리나 컨텍스트 메뉴(우클릭 메뉴)에
+콘텐츠를 생성, 가져오기, 내보내기, 삭제, 수정할 수 있는
+기능이 있습니다.
 
-You can find in the `Content`-Root folder all "normal" assets and the
-`C++-Classes` root folder contains all c++ classes.
+`콘텐츠`-루트 폴더에서 모든 "일반" 애셋을 찾을 수 있으며,
+`C++ 클래스` 루트 폴더에는 모든 C++ 클래스가 포함되어 있습니다.
