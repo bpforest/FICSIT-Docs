@@ -1,47 +1,47 @@
-= Resource Sink
+= 자원 싱크
 
-By default, modded items can't be fed into the AWESOME Sink
-to gather coupon points since they have no associated point values.
+기본적으로, 모드된 아이템은 쿠폰 포인트를 얻기 위한
+관련 점수 값이 없으므로 A.W.E.S.O.M.E. 싱크에 공급할 수 없습니다.
 
-If you'd like your mod's items to be sinkable, you need to
-specify how many points they provide when sinked.
+모드의 아이템이 공급 가능하도록 하려면,
+공급 시 제공하는 포인트 수를 지정해야 합니다.
 
-SML provides a facility for you to easily load a list of FGItemDescriptors
-and assign points values to them through the use of a Data Table.
-Only one of these tables can exist per Game World (sub) Module.
+SML은 FGItemDescriptors 목록을 쉽게 로드하고
+데이터 테이블을 통해 포인트 값을 할당할 수 있는 기능을 제공합니다.
+게임 월드 (하위) 모듈당 하나의 테이블만 존재할 수 있습니다.
 
-== Data Table
+== 데이터 테이블
 
-To get started, go to a Content Browser window in the editor and add a new Data Table asset (it's an Advanced Asset in the Miscellaneous category).
-You'll be prompted to select a Row Structure, pick `Resource Sink Points Data` from the dropdown.
-Call it "Points_YourModName" or similar so it's easy to find later.
+시작하려면, 에디터의 콘텐츠 브라우저 창으로 가서 새로운 데이터 테이블 애셋을 추가합니다(기타 범주의 고급 자산입니다).
+행 구조를 선택하라는 메시지가 표시되면, 드롭다운에서 `Resource Sink Points Data` 를 선택합니다.
+"Points_모드이름" 또는 비슷한 이름을 사용해 나중에 쉽게 찾을 수 있도록 합니다.
 
-You'll need to create a row in the data table for each item you
-want to be sinkable. The `Row Name` does not matter, the `Item Class` should be 
-the FGItemDescriptor of the item, and the `Points` column is how many points it's worth
-in the sink. You can go to the https://satisfactory.wiki.gg/AWESOME_Sink#Points_generated_per_item[Satisfactory Wiki] to see how many
-points each vanilla item is worth for comparison. Consider making your item worth more
-points than the sum of its components to encourage crafting and sinking
-it as opposed to just sinking the raw materials. You can see the "point profit"
-of various vanilla recipes https://satisfactory.wiki.gg/AWESOME_Sink#Recipe_point_improvement_ratios[here] for comparison.
+공급 가능한 각 아이템에 대해 데이터 테이블에 행을 생성해야 합니다.
+`Row Name` 은 중요하지 않으며, `Item Class`는 아이템의 FGItemDescriptor여야 하고,
+`Points` 열은 공급 시 해당 아이템의 점수를 나타냅니다.
+각 기본 아이템이 얼마나 많은 점수를 제공하는지 비교하려면
+https://satisfactory.wiki.gg/AWESOME_Sink#Points_generated_per_item[새티스팩토리 위키]를 참고하십시오.
+아이템의 구성 요소 합계보다 더 많은 포인트를 제공하여
+원자재를 단순히 공급하는 것보다 제작 및 공급을 장려하는 것이 좋습니다.
+https://satisfactory.wiki.gg/AWESOME_Sink#Recipe_point_improvement_ratios[여기]에서 비교를 위한 다양한 기본 제작법의 "이득 점수"를 확인할 수 있습니다.
 
-There is an additional column, `Overridden Resource Sink Points`. This should always
-be set to -1. CSS uses a script to automatically calculate point values for them,
-and they use this column to manually override their generated values. Since we
-are specifying our values by hand, we don't have any use for this column.
-If you were to specify a value other than -1, the game would select the higher
-point value of the two fields.
+추가 열인 `Overridden Resource Sink Points` 가 있습니다. 이 값은 항상 -1로 설정해야 합니다.
+CSS는 스크립트를 사용하여 점수 값을 자동으로 계산하며,
+이 열을 사용하여 생성된 값을 수동으로 재정의합니다.
+우리는 수동으로 값을 지정하고 있으므로 이 열은 필요하지 않습니다.
+-1이 아닌 값을 지정하면 게임은 두 입력란 중
+더 높은 점수 값을 선택합니다.
 
-== Registering the Data Table
+== 데이터 테이블 등록
 
-Now we just need to tell Satisfactory to load the contents of the data table.
-Thankfully, SML can do this for you using the xref:Development/ModLoader/ModModules.adoc#_game_world_module_ugameworldmodule[Game World Module].
-Simply set the `M Resource Sink Item Points Data Table` variable in the defaults tab
-(in the Advanced subsection) to your own just created data table.
-SML will read the contents and adds them to the resource sink systems for you.
+이제 새티스팩토리에 데이터 테이블의 내용을 불러오도록 지시해야 합니다.
+다행히도 SML이 이를 도와줄 수 있습니다. xref:Development/ModLoader/ModModules.adoc#_game_world_module_ugameworldmodule[게임 월드 모듈]을 사용하여
+방금 생성한 데이터 테이블을 기본 탭(고급 하위 섹션)에서
+`M Resource Sink Item Points Data Table` 변수에 설정하십시오.
+SML은 내용을 읽고 자원 싱크 시스템에 추가합니다.
 
-== Overriding Vanilla Points Values
+== 기본 포인트 값 재정의
 
-It is possible to override the base-game's specified points values for an item by listing it with a new points value in your mod's Resource Sink data table.
+모드의 자원 공급 데이터 테이블에 새로운 점수 값으로 아이템을 나열하여 기본 게임에서 지정한 점수 값을 재정의할 수 있습니다.
 
-In the case that multiple mods specify a points value, the points value of the last mod to load will be the one used by the game.
+여러 모드가 점수 값을 지정하는 경우, 마지막으로 로드된 모드의 점수 값이 게임에서 사용됩니다.

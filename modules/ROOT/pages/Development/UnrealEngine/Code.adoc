@@ -1,73 +1,74 @@
-= Code & Content
+= 코드 및 콘텐츠
 
-In Unreal we have generally two types of codes and one type of content.
+언리얼에서는 일반적으로 두 유형의 코드와 한 유형의 콘텐츠가 있습니다.
+언리얼에서는 일반적으로 두 가지 유형의 코드와 한 가지 유형의 콘텐츠가 있습니다.
 
-== Content
+== 콘텐츠
 
-"Content" in terms of 3D models, sounds, textures, materials and so on
-are called `Assets`. You use these assets to make stuff in your game
-f.e. visible to the user. There are multiple types of assets:
+"콘텐츠"는 3D 모델, 소리, 텍스처, 머티리얼로 지정되며 `애셋` 이라고 불립니다.
+이 애셋을 사용하여 게임에서 사용자에게 보이는 것을 만듭니다.
+여러 유형의 애셋이 있습니다:
 
 * {blank}
 +
-StaticMesh::
-  A simple 3D Object like a `.obj` or `.fbx`
+정적 메쉬::
+  `.obj` 또는 `.fbx` 와 같은 간단한 3D 객체입니다.
 * {blank}
 +
-Sound::
-  Sounds like the background music or footsteps.
+소리::
+  배경 음악이나 발자국 소리와 같은 소리입니다.
 * {blank}
 +
-Skeleton::
-  Characters like the player or enemies have a skeleton to tell the
-  engine f.e. where bones and joints are.
+스켈레톤::
+  플레이어 또는 적과 같은 캐릭터는 엔진에
+  뼈와 관절의 위치를 알려주기 위해 스켈레톤을 가집니다.
 * {blank}
 +
-TextureSample::
-  Textures like the grass texture, ficsit logo or the items in the
-  inventory are simple images called "Texture Samples".
+텍스처 샘플::
+  풀 텍스처, FICSIT 로고, 인벤토리의 아이템과 같은 텍스처는
+  "텍스처 샘플"이라고 불리는 간단한 이미지입니다.
 * {blank}
 +
-Materials::
-  Every surface has a material applied on it, so the renderer does know
-  how he should let the surface look like. Here textures and surface
-  properties like reflection and roughness come together.
+머티리얼::
+  모든 표면에는 머티리얼이 적용되어 있어 렌더러가
+  표면을 어떻게 보이게 할지 알 수 있습니다.
+  여기서 텍스처와 반사 및 거칠기와 같은 표면 속성이 결합됩니다.
 * {blank}
 +
-Blueprints::
-  Discussed in its own xref:Development/UnrealEngine/BluePrints.adoc[Concept-Page].
+블루프린트::
+  별도의 xref:Development/UnrealEngine/BluePrints.adoc[개념 페이지]에서 논의됩니다.
 
-== Native Code
+== 네이티브 코드
 
-Native code describes code that is written in C++ and can't directly be
-changed in the Unreal Editor because the Editor itself uses this code.
-This kind of code can interact with the computer on a very low level and
-is often used when performance is really important. Much things of
-Satisfactory is written in C++ so you will often find out that there is
-the functionality you cant access from within `+Blueprints+`. Native
-code is compiled directly into machine code and that means for every
-platform you want to compile for, you would need to compile this code
-separately.
+네이티브 코드는 C++로 작성된 코드로, 언리얼 에디터에서
+직접 변경할 수 없습니다. 에디터 자체가 이 코드를 사용하기 때문입니다.
+이 종류의 코드는 컴퓨터와 매우 낮은 수준에서 상호작용할 수 있으며,
+성능이 정말 중요한 경우에 자주 사용됩니다.
+새티스팩토리의 많은 부분이 C++로 작성되어 있으므로
+`+블루프린트+` 내에서 접근할 수 없는 기능이 자주 발견됩니다.
+네이티브 코드는 기계어로 직접 컴파일되며,
+이는 컴파일할 플랫폼마다 이 코드를 별도로
+컴파일해야 함을 의미합니다.
 
 [WARNING]
 ====
-This can be a problem for you when the game updates. Because that would
-mean you need to download the C++ code again and compile it, and this
-can be difficult if you don't know what you do.
+게임 업데이트 시 문제가 발생할 수 있습니다.
+이는 C++ 코드를 다시 다운로드하고 컴파일해야 함을 의미하며,
+이를 잘 모를 경우 어려울 수 있습니다.
 ====
 
-Besides this downside, native code allows you to low-level
-manipulation of the engine environment and also allows you to implement
-third-party libraries like discord, curl and Lua.
+이러한 단점 외에도 네이티브 코드는
+엔진 환경을 저수준으로 조작할 수 있게 해주며,
+디스코드, curl, 루아와 같은 서드파티 라이브러리를 구현할 수 있게 해줍니다.
 
-== Blueprint Code
+== 블루프린트 코드
 
-This is a kind of asset which is compiled into the pak files as a kind
-of bytecode which then gets loaded and linked at runtime through the
-Unreal BP VM.
+이것은 언리얼 블루프린트 가상 머신을 통해
+런타임에 로드되고 연결되는 바이트코드의 일종으로,
+pak 파일에 컴파일됩니다.
 
 [TIP]
 ====
-To learn more about `Blueprints` visit the
-xref:/Development/UnrealEngine/BluePrints.adoc[Concept-Page] about that topic.
+`블루프린트` 에 대해 더 알고 싶다면
+xref:/Development/UnrealEngine/BluePrints.adoc[개념 페이지]를 방문하십시오.
 ====

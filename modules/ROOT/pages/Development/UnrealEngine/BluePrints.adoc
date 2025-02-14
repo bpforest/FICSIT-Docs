@@ -1,174 +1,172 @@
-= Blueprints
+= 블루프린트
 
-The `+Blueprint+` system is a node-based visual coding language for
-Unreal. Blueprints compile into a variant of bytecode which gets
-executed by the Unreal Blueprint Virtual Machine.
+`+블루프린트+` 시스템은 언리얼을 위한 노드 기반 비주얼 코딩 언어입니다.
+블루프린트는 바이트코드의 변형으로 컴파일되어
+언리얼 블루프린트 가상 머신에서 실행됩니다.
 
-We'll go over some of the aspects of the Blueprint system here, but if
-you'd like to learn more, you can read
-https://docs.unrealengine.com/en-US/Engine/Blueprints/GettingStarted/index.html[Unreal's
-documentation pages].
-
-[TIP]
-====
-Bytecode is a special fake machine code which gets executed by a machine
-running in a VM. This allows cross-platform compatibility without the
-need to compile the code for every platform individually.
-====
-
-== Unreal BP VM
-
-This "blueprint-bytecode" needs to get executed by a custom machine
-cause a normal machine like your CPU can't understand that code. Unreal
-BP VM is that machine which runs itself in a virtual machine.
-
-This creates a problem. Blueprint code can't use system functions like
-rendering with the GPU since such functions are isolated through this
-VM. But communication is essential for something like this, unreal uses
-for this its own reflection-system, the UObject-System.
-
-== Nodes
-
-Other than visual languages such as Scratch, the Blueprint system uses a
-nodes for describing behaviors. Everything is a node, from functions
-and events to simple operators like addition and constant values. A node
-can have multiple inputs and outputs for values and flow (execution).
-
-=== Pure Nodes
-
-Pure nodes are a special kind of node which doesn't have any execution
-connections, but it can still have a internal execution flow. These
-nodes get executed when a connected node (where one of its inputs is
-connected to one of the outputs of the pure node) wants to get executed.
-
-== Connection-Lines
-
-These nodes get connected with lines to describe which output is used
-for which input and what should happen after the given node got
-executed. There are two types of connection lines.
-
-* {blank}
-+
-Execution-Lines::
-  Describe which node should get explicitly get executed after the
-  previous node has finished executing. You can connect multiple outputs
-  to a single input, but you can't connect multiple inputs to one output
-  since this would break the flow execution into multiple threads and BP
-  does not support real multithreading.
-* {blank}
-+
-Data-Lines::
-  Describe the flow of data like a simple float value. You can connect
-  one output line to multiple inputs as well as (less commonly used)
-  multiple outputs to one input.
-
-== Data Types
-
-There are multiple data types in BP.
-
-=== Standard Types
-
-Standard types are often types which are directly used for calculations.
-
-* {blank}
-+
-boolean (bool 8bits)::
-  Boolean values can store two states true and false. They are mostly
-  used for logical comparisons.
-* {blank}
-+
-integer (int 32bits)::
-  Integers are countable (whole) numbers with negative space
-  (-2,147,483,647, ..., -2, -1, 0, 1, 2, ..., 2,147,483,647)
-* {blank}
-+
-float (float 32bit)::
-  Floats are like countable numbers but can also be everything between
-  whole numbers (-1.0, 0.5, 0.0125, 0.3, 75.0)
-* {blank}
-+
-string::
-  Strings are sequences of characters that form text.
-* {blank}
-+
-names::
-  Names are like strings but the characters are stored globally to make
-  it more optimized and to make renaming easier.
-* {blank}
-+
-vectors::
-  Vectors consist of 3 floats grouped for the purposes of vector math.
-* {blank}
-+
-List::
-  List of multiple values, sorted by their actual value. If you add a
-  new value, the order of the list can change.
-* {blank}
-+
-Array::
-  A list of multiple values of a given type, but every entry also
-  corresponds to index and so the order of values never changes.
-* {blank}
-+
-Map::
-  Similar to an array but instead of using numbers as the index, it uses
-  a given type as the key, which is "linked" to value.
-
-=== Structs
-
-Structures are simply multiple types grouped together. A struct can be
-made up of any number of different types. You need a description of a
-struct to then create instances of it. You can then use the description
-as a data type and the instances as values for the `+Value-Lines+`.
-
-=== Classes
-
-Classes are like structs but way more complex because they can have also
-methods, events and delegates. Classes describe just a value, to get an
-actual value you would need to use special functions to get an Object
-which is an Instance of that class. These objects then finally contain
-information like values for attributes or bounded functions of
-delegates. When you use the class as the type and the objects as values,
-these values are just references to the objects. That means if you copy
-the value, and change something in that object like an attribute, "it
-changes in every other value too".
+블루프린트 시스템의 몇 가지 측면을 살펴보겠지만,
+더 알고 싶다면
+https://docs.unrealengine.com/en-US/Engine/Blueprints/GettingStarted/index.html[언리얼의 문서 페이지]를
+참고하십시오.
 
 [TIP]
 ====
-Functions can be marked as pure, then they still work like normal
-functions but when you use them, they're a pure node.
+바이트코드는 가상 머신에서 실행되는 특수한 가짜 머신 코드입니다.
+이를 통해 각 플랫폼에 대해 코드를 개별적으로 컴파일할 필요 없이
+크로스 플랫폼 호환이 가능합니다.
 ====
 
-== Functions
+== 언리얼 블루프린트 가상 머신
 
-Functions are subroutines, capsulated code with its own scope, able to
-be used more than once, and is available to other scopes (function
-environments and also other classes, for example).
+이 "블루프린트-바이트코드"는 일반적인 머신인 CPU가
+이해할 수 없는 코드이기 때문에 커스텀 머신에서 실행되어야 합니다.
+언리얼 블루프린트 가상머신은 가상 머신에서 실행되는 그 머신입니다.
 
-=== Macros
+이로 인해 문제가 발생합니다. 블루프린트 코드는 GPU로 렌더링과 같은
+시스템 함수를 사용할 수 없습니다. 이러한 함수는 이 VM을 통해 격리되기 때문입니다.
+그러나 이러한 것에 대한 통신은 필수적이며,
+언리얼은 이를 위해 자체 반사 시스템인 UObject-System을 사용합니다.
 
-Macros are like functions but without their own scope and are only
-callable within the class. They work like a template for multiple usages
-and are also compiled as if they were a part of the calling function.
-Due to this property, macros can have multiple execution inputs and
-outputs and also support a special "any" type.
+== 노드
 
-=== Methods
+스크래치와 같은 비주얼 언어 외에도
+블루프린트 시스템은 동작을 설명하기 위해 노드를 사용합니다.
+함수와 이벤트에서부터 단순한 연산자와 상수 값에 이르기까지 모든 것이 노드입니다.
+노드는 값과 흐름(실행)을 위한 여러 입력과 출력을 가질 수 있습니다.
 
-Methods are a special kind of function that need the context of an
-object to execute because they can manipulate multiple values of that
-object. (so they get executes "as onto" an object)
+=== 순수 노드
 
-=== Events
+순수 노드는 실행 연결이 없는 특별한 종류의 노드이지만
+내부 실행 흐름을 가질 수 있습니다.
+이러한 노드는 연결된 노드(그 입력 중 하나가 순수 노드의 출력에 연결된 경우)가
+실행되기를 원할 때 실행됩니다.
 
-Events are a special kind of method that can't have any output values.
+== 연결선
 
-== Delegates
+노드는 어떤 출력이 어떤 입력에 사용되는지,
+주어진 노드가 실행된 후에 무엇이 발생해야 하는지를 설명하기 위해 선으로 연결됩니다.
+연결선에는 두 가지 유형이 있습니다.
 
-Delegates are holding a list of bound events. When a delegate gets
-executed, it calls all the bound events with the same input-values.
-(they can't have output values because `+BluePrints+` won't know how to
-merge all the output values of all these event calls and because they
-are events and not functions) This is like an array containing a
-reference to an event and also the corresponding bound context (Object)
-for use to call these events.
+* {blank}
++
+실행선::
+  이전 노드가 실행을 마친 후 어떤 노드가 명시적으로 실행되어야 하는지를 설명합니다.
+  여러 출력이 하나의 입력에 연결될 수 있지만,
+  하나의 출력이 여러 입력에 연결될 수는 없습니다.
+  블루프린트는 실제 멀티스레딩을 지원하지 않아 흐름 실행을 여러 스레드로 나눌 수 없기 때문입니다.
+* {blank}
++
+데이터선::
+  단순한 실수형 값과 같은 데이터의 흐름을 설명합니다.
+  하나의 출력 선을 여러 입력에 연결할 수 있으며,
+  (덜 일반적으로) 여러 출력을 하나의 입력에 연결할 수 있습니다.
+
+== 데이터 유형
+
+블루프린트에는 여러 데이터 유형이 있습니다.
+
+=== 표준 유형
+
+표준 유형은 종종 계산에 직접 사용되는 유형입니다.
+
+* {blank}
++
+불리언 (bool 8비트)::
+  불리언 값은 참과 거짓, 두 가지 상태를 저장할 수 있습니다.
+  주로 논리 비교에 사용됩니다.
+* {blank}
++
+정수 (int 32비트)::
+  정수는 음수를 포함한 (하나의) 셀 수 있는
+  숫자입니다(-2,147,483,647, ..., -2, -1, 0, 1, 2, ..., 2,147,483,647).
+* {blank}
++
+실수 (float 32비트)::
+  실수는 정수 사이의 모든 값을 포함한 셀 수 있는
+  숫자입니다(-1.0, 0.5, 0.0125, 0.3, 75.0).
+* {blank}
++
+문자열::
+  문자열은 텍스트를 형성하는 문자 시퀀스입니다.
+* {blank}
++
+이름::
+  이름은 문자열과 유사하지만 문자가 전역적으로 저장되어 최적화되고 이름 변경이 더 쉬워집니다.
+* {blank}
++
+벡터::
+  벡터는 벡터 수학을 위한 3개의 실수로 구성됩니다.
+* {blank}
++
+리스트::
+  여러 값의 목록으로, 실제 값에 따라 정렬됩니다.
+  새 값을 추가하면 목록의 순서가 변경될 수 있습니다.
+* {blank}
++
+배열::
+  주어진 유형의 여러 값의 목록이지만,
+  각 항목은 인덱스에 해당하므로 값의 순서는 변경되지 않습니다.
+* {blank}
++
+맵::
+  배열과 유사하지만 숫자를 인덱스로 사용하는 대신
+  주어진 유형을 키로 사용하여 값에 "연결"됩니다.
+
+=== 구조체
+
+구조체는 여러 유형이 함께 그룹화된 것입니다.
+구조체는 서로 다른 유형의 수에 관계없이 만들 수 있습니다.
+구조체를 생성하려면 설명이 필요합니다.
+그런 다음 설명을 데이터 유형으로 사용하고 인스턴스를 `+값 선+` 을 통해 값으로 사용할 수 있습니다.
+
+=== 클래스
+
+클래스는 구조체와 유사하지만 훨씬 더 복잡합니다.
+클래스는 메서드, 이벤트, 델리게이트를 가질 수 있습니다.
+클래스는 단순히 값을 설명하며, 실제 값을 얻으려면 해당 클래스의 인스턴스인
+객체를 얻기 위해 특별한 함수를 사용해야 합니다.
+이러한 객체는 최종적으로 속성의 값이나
+델리게이트의 바인딩된 함수와 같은 정보를 포함합니다.
+클래스를 유형으로 사용하고 객체를 값으로 사용할 때,
+이러한 값은 객체에 대한 참조일 뿐입니다.
+즉, 값을 복사하고 해당 객체의 속성을 변경하면 "모든 다른 값에서도 변경됩니다".
+
+[TIP]
+====
+함수는 순수로 표시될 수 있으며,
+정상 함수처럼 작동하지만 사용 시 순수 노드가 됩니다.
+====
+
+== 함수
+
+함수는 자체 범위를 가진 캡슐화된 코드이며
+서브루틴으로, 여러 번 사용할 수 있으며
+다른 범위(함수 환경 및 다른 클래스 등)에서도 사용할 수 있습니다.
+
+=== 매크로
+
+매크로는 함수와 유사하지만 자체 범위가 없으며
+클래스 내에서만 호출할 수 있습니다.
+여러 사용을 위한 템플릿처럼 작동하며 호출 함수의 일부로 컴파일됩니다.
+이러한 속성으로 인해 매크로는 여러 실행 입력 및 출력을 가질 수 있으며
+특별한 "아무" 유형도 지원합니다.
+
+=== 메서드
+
+메서드는 객체의 여러 값을 조작할 수 있기 때문에
+실행하기 위해 객체의 컨텍스트가 필요한 특별한 종류의 함수입니다.
+(따라서 객체에 "대하여" 실행됩니다.)
+
+=== 이벤트
+
+이벤트는 출력 값을 가질 수 없는 특별한 종류의 메서드입니다.
+
+== 델리게이트
+
+델리게이트는 바인딩된 이벤트 목록을 보유합니다.
+델리게이트가 실행되면 동일한 입력 값으로 모든 바인딩된 이벤트를 호출합니다.
+(출력 값을 가질 수 없기 때문에 `+블루프린트+` 는 이러한 이벤트 호출의
+모든 출력 값을 병합하는 방법을 알 수 없으며,
+함수가 아니라 이벤트이기 때문입니다.)
+이는 이벤트에 대한 참조와 이러한 이벤트를 호출하는 데 사용할 수 있는
+해당 바인딩된 컨텍스트(객체)를 포함하는 배열과 같습니다.

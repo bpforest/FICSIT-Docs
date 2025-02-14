@@ -1,65 +1,64 @@
-# Unreal String Classes
+# 언리얼 문자열 클래스
 
-Unreal offers different storage types for strings, each with its own use case.
+언리얼은 각기 다른 저장 유형의 문자열을 제공하며, 이들의 사용처 또한 다릅니다.
 
-This page serves as a brief overview of the 3 main string classes available in Unreal Engine 5
-and how they relate to modding.
+이 페이지는 언리얼 엔진 5에서 사용할 수 있는 3가지 주요 문자열 클래스와 모딩과의 관계에 대한 간략한 개요를 제공합니다.
 
-For more detailed information about these classes, check out the
-https://dev.epicgames.com/documentation/en-us/unreal-engine/string-handling-in-unreal-engine?application_version=5.3[Unreal Engine documentation].
+이 클래스에 대한 더 자세한 정보는
+https://dev.epicgames.com/documentation/en-us/unreal-engine/string-handling-in-unreal-engine?application_version=5.3[언리얼 엔진 문서]를 참고하십시오.
 
-## String Classes
+## 문자열 클래스
 
 ### FText
 
-If you are displaying a string to the end user, 99% of the time you want to be using this string type.
-It is mutable, provides nice formatter methods, and has built in engine localization support.
-In memory, FTexts store localization keys that point to external data providing the string's contents.
+사용자에게 문자열을 표시하는 경우, 99%의 경우 이 유형을 사용할 것입니다
+이것은 변경 가능하며, 멋진 포매터 메서드를 제공하고, 엔진 현지화 지원이 내장되어 있습니다.
+메모리에서 FText는 문자열의 내용을 제공하는 외부 데이터에 대한 현지화 키를 저장합니다.
 
-Special edits have been made to the modding engine to enable mods to take advantage of Unreal's localization system at the per-plugin level.
-Read more about how to use it on the xref:Development/Localization.adoc[Localizing Mods] page.
+모딩 엔진에 특별한 수정이 이루어져, 모드가 언리얼의 현지화 시스템을 플러그인 수준에서 활용할 수 있도록 합니다.
+사용 방법에 대한 자세한 내용은 xref:Development/Localization.adoc[모드 현지화] 페이지를 참고하십시오.
 
-Read more on the
-https://dev.epicgames.com/documentation/en-us/unreal-engine/ftext-in-unreal-engine?application_version=5.3[UE docs page for FText].
+FText에 대한 더 많은 정보는
+https://dev.epicgames.com/documentation/en-us/unreal-engine/ftext-in-unreal-engine?application_version=5.3[UE 문서 페이지]를 참고하십시오.
 
-In modding, FText should be used for any string you plan to display to the user.
-For example, schematic names, item descriptions, UI text, predefined chat messages, etc.
+모딩에서는 사용자에게 표시할 문자열에 대해 FText를 사용해야 합니다.
+예를 들어, 도면 이름, 아이템 설명, UI 텍스트, 미리 정의된 채팅 메시지 등이 있습니다.
 
 ### FName
 
-FNames are designed to be more efficient in cases where you are using a string as an identifier.
-They are case-insensitive and immutable.
-The actual string contents of an FName are stored once in a global data table.
-In memory, they are a 4 byte identifier that can be used with this table to retrieve the related string.
+FName은 문자열을 식별자로 사용할 때 더 효율적으로 설계되었습니다.
+대소문자를 구분하지 않으며 변경할 수 없습니다.
+FName의 실제 문자열 내용은 전역 데이터 테이블에 한 번 저장됩니다.
+메모리에서 FName은 이 테이블과 함께 관련 문자열을 검색하는 데 사용할 수 있는 4바이트 식별자입니다.
 
-FNames are useful as keys in maps because checking their equality is fast regardless of the length of the string.
+FName은 맵의 키로 유용하며, 문자열의 길이에 관계없이 동등성을 확인하는 것이 빠릅니다.
 
-Read more on the
-https://dev.epicgames.com/documentation/en-us/unreal-engine/ftext-in-unreal-engine?application_version=5.3[UE docs page for FName].
+FName에 대한 더 많은 정보는
+https://dev.epicgames.com/documentation/en-us/unreal-engine/ftext-in-unreal-engine?application_version=5.3[UE 문서 페이지]를 참고하십시오.
 
-In modding, FNames should be used in identifier, keys, or any other string you deem its optimizations beneficial.
+모딩에서는 FName을 식별자, 키 또는 최적화의 이점이 있는 다른 문자열에 사용해야 합니다.
 
 ### FString
 
-FStrings are generic mutable strings with no additional context.
-They take up as much memory as they have characters and offer the "typical" string operations like find and replace, substring, concatenation, comparison, etc.
+FString은 추가적인 맥락 없이 일반적인 변경 가능한 문자열입니다.
+문자 수만큼 메모리를 차지하며, 찾기 및 교체, 부분 문자열, 연결, 비교 등과 같은 "일반적인" 문자열 작업을 제공합니다.
 
-Read more on the
-https://dev.epicgames.com/documentation/en-us/unreal-engine/fstring-in-unreal-engine?application_version=5.3[UE docs page for FString].
+FString에 대한 더 많은 정보는
+https://dev.epicgames.com/documentation/en-us/unreal-engine/fstring-in-unreal-engine?application_version=5.3[UE 문서 페이지]를 참고하십시오.
 
-In modding, FString is generally used for log messages, strings that change contents often, or strings that doesn't benefit from the features of FText or FName.
+모딩에서는 FString이 일반적으로 로그 메시지, 자주 변경되는 문자열 또는 FText나 FName의 기능으로 이점을 얻지 못하는 문자열에 사용됩니다.
 
-## Conversion
+## 변환
 
-Although **it is possible to convert between all of the string types**,
-doing so usually results in **missing out on features or optimizations** offered by that type,
-and you lose the information about the original type of the string.
-For example, going from an FText to an FString loses you the context of its localization key,
-meaning you can't go "back" to the same FText you started with, even if you never changed the underlying string.
+모든 문자열 유형 간의 변환이 가능하지만,
+이렇게 하면 일반적으로 해당 유형이 제공하는 기능이나 최적화를 놓치게 되며,
+문자열의 원래 유형에 대한 정보도 잃게 됩니다.
+예를 들어, FText에서 FString으로 변환하면 현지화 키의 맥락을 잃게 되어,
+기본 문자열을 변경하지 않더라도 시작했던 동일한 FText로 "되돌아갈" 수 없습니다.
 
-To perform "typical" string operations on FText and FName you may need to convert them to FStrings first
-- just remember that going back is either unsafe or impossible.
+FText와 FName에서 "일반적인" 문자열 작업을 수행하려면 먼저 FString으로 변환해야 할 수 있습니다.
+단, 다시 돌아가는 것은 안전하지 않거나 불가능하다는 점을 기억하세요.
 
-If you're trying to make a hardcoded value in one of these types,
-make sure to use the "Literal" syntax for creating it rather than one of the conversion functions.
-For example, use the `Make Literal Name` blueprint node instead of the `String to Name` conversion function.
+이러한 유형 중 하나에 하드코딩된 값을 만들고자 한다면,
+변환 함수 중 하나 대신 "리터럴" 구문을 사용하여 생성해야 합니다.
+예를 들어, `Make Literal Name` 블루프린트 노드를 사용하고 `String to Name` 변환 함수를 사용하지 마십시오.

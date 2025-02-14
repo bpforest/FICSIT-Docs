@@ -1,17 +1,17 @@
-= In-Game Clipboard
+= 게임 내 클립보드
 
-Satisfactory offers a clipboard functionality to copy-paste configuration options between machines.
-It's possible to extend this functionality to work with your own custom buildings.
+새티스팩토리는 기계 간의 구성 옵션을 복사하고 붙여넣을 수 있는 클립보드 기능을 제공합니다.
+이 기능을 확장하여 자신만의 맞춤 건물과 함께 사용할 수 있습니다.
 
-The `AFGBuildable` class already implements the `IFGFactoryClipboardInterface` interface, the interface defining the functions that must be overridden to implement clipboard functionality, so listing this interface an extra time is not necessary.
+`AFGBuildable` 클래스는 이미 클립보드 기능을 구현하기 위해 오버라이드해야 하는 함수들을 정의하는 `IFGFactoryClipboardInterface` 인터페이스를 구현하고 있으므로, 이 인터페이스를 추가로 나열할 필요는 없습니다.
 
-1. Create a class with basetype `FGFactoryClipboardSettings` and add variables for the stuff you want to save in the clipboard
-2. Override the `GetClipboardSettingsClass` function and set the return value to your class
-3. Override the `GetClipboardMappingClass` and set the return value to the class of object that uses this clipboard
-4. Override the `CanUseFactoryClipboard` function to return true
-5. Override the copy and paste functions and implement your own logic
+1. `FGFactoryClipboardSettings` 기본 유형의 클래스를 생성하고 클립보드에 저장할 항목에 대한 변수를 추가합니다.
+2. `GetClipboardSettingsClass` 함수를 오버라이드하고 반환 값을 자신의 클래스로 설정합니다.
+3. `GetClipboardMappingClass` 를 오버라이드하고 반환 값을 이 클립보드를 사용하는 객체의 클래스로 설정합니다.
+4. `CanUseFactoryClipboard` 함수를 오버라이드하여 true를 반환합니다.
+5. 복사 및 붙여넣기 함수를 오버라이드하고 자신의 로직을 구현합니다.
 
-Below is an example implementation from the https://ficsit.app/mod/FicsitWiremod[Circuity] mod.
+아래는 https://ficsit.app/mod/FicsitWiremod[Circuity] 모드에서의 예제 구현입니다.
 
 image:Satisfactory/Clipboard/GetClipboardSettingsClass.png[GetClipboardSettingsClass]
 

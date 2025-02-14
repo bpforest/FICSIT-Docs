@@ -1,3 +1,3 @@
-= Satisfactory
+= 새티스팩토리
 
-In this section we will discuss some technical concepts and Coffee Stain Studios implementations on which Satisfactory operates. Reading and understanding the contents of this section is important, because these topics are where Satisfactory diverges the most from other Unreal Engine games.
+이 섹션에서는 일부 기술적 개념과 새티스팩토리가 작동하는 커피 스테인 스튜디오의 구현 방식에 대해 논의할 것입니다. 이 주제는 새티스팩토리 엔진 게임과 가장 많이 분기되는 곳이기 때문에 이 섹션의 내용을 읽고 이해하는 것이 중요합니다.

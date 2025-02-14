@@ -1,60 +1,61 @@
-= Paintable Materials & Tintable Lights
+= 색칠 가능 머티리얼 & 틴팅 가능 조명
 
-Making things paintable is not as difficult as it may seem. You can use the existing materials, or create your own implementation.
+요소를 색칠하는 것은 그리 어렵지 않습니다. 기존 머티리얼을 사용하거나, 직접 구현할 수 있습니다.
 
-== Existing Materials
+== 기존 머티리얼
 
-Making use of the xref:Development/Modeling/MainMaterials.adoc[existing materials] used by Satisfactory is the easiest way to make your models paintable.
-Simply use a paintable material on a mesh in your blueprint and the game will find it and apply the correct parameters from the customizer / light panel.
-Its important that when importing a mesh you do not import and use new materials. Instead point your meshes at the correct existing materials or your material instances which point to their materials.
+새티스팩토리에서 사용된 xref:Development/Modeling/MainMaterials.adoc[기존 머티리얼]을 사용하는 것은 나의 모델을 색칠할 수 있는 쉬운 방법입니다.
+간단히 메쉬의 블루프린트에서 색칠 가능 머티리얼을 사용하면 게임은 이를 찾아내 자동으로 올바른 커스터마이저 / 조명 패널의 매개변수를 적용할 것입니다.
 
-== New Custom Materials
+메쉬를 가져올 때 새 머티리얼을 가져오는 대신 올바른 기존 머티리얼 또는 머티리얼을 가리키는 재료 인스턴스를 가리키십시오.
 
-If the xref:Development/Modeling/MainMaterials.adoc[existing materials] don't do what you need and you need a special new feature you can make new materials respond to the painting system. New materials limit the best performance the game can have so consider adding them carefully.
+== 새 맞춤 머티리얼
 
-For Primary and Secondary paint colours find the corresponding Material Function (MF_Get-------Color) and use it in your node graph.
+xref:Development/Modeling/MainMaterials.adoc[기존 머티리얼]이 필요를 충족하지 못하고 특별한 새로운 기능이 필요한 경우, 새로운 머티리얼을 만들어 색칠 시스템에 반응하도록 할 수 있습니다. 새로운 머티리얼은 게임의 최상의 성능을 제한하므로 신중하게 추가하는 것이 좋습니다.
 
-For the Light colour you can use MF_HasPower and unfortunately there's no convenient node for the light colour, but it works identically to the other nodes, reference the list below for the correct values, or look at MM_Factory_Array.
+기본 및 보조 색상에 대해 해당하는 머티리얼 기능(MF_Get-------Color)을 찾아 노드 그래프에서 사용하십시오.
+
+조명 색상에 대해서는 MF_HasPower를 사용할 수 있으며, 불행히도 조명 색상에 대한 편리한 노드는 없지만, 다른 노드와 동일하게 작동하므로 아래 목록을 참조하여 올바른 값을 확인하거나 MM_Factory_Array를 확인하십시오.
 
 [NOTE]
 ====
-When making new materials it's important to properly set the https://docs.unrealengine.com/5.0/en-US/unreal-engine-material-properties/#usage[usage flags] for Satisfactory. The Game uses a lot of instances, and splines, so be sure to check Instanced Static Mesh, and think about on what the material is used.
+새로운 머티리얼을 만들 때는 새티스팩토리에 대한 https://docs.unrealengine.com/5.0/en-US/unreal-engine-material-properties/#usage[사용 플래그]를 올바르게 설정하는 것이 중요합니다. 게임은 많은 인스턴스를 사용하고 스플라인을 사용하므로, 인스턴스 정적 메쉬를 확인하고 머티리얼이 사용되는 방식을 고려하십시오.
 ====
 
-== Making Any Class Paintable
+== 모든 클래스를 색칠 가능하게 만들기
 
-You can implement the ability to paint in any object by implementing the `IFGColorInterface`. Simply override the given functions with the functionality you need and you're done. Consider asking about this on the Discord if you need help.
+`IFGColorInterface` 를 구현하여 모든 객체에서 색칠할 수 있는 기능을 구현할 수 있습니다. 주어진 기능을 필요에 맞게 오버라이드하면 완료됩니다. 도움이 필요하면 디스코드에서 질문하는 것을 고려하십시오.
 
-The customizer will now interact with your object, which is done via the reflection system.
+커스터마이저는 이제 반사 시스템을 통해 객체와 상호작용하게 됩니다.
 
-== Behind The Scenes
+== 비하인드 스토리
 
-The Update 5 Customizer changes provided a new and unified way of setting properties for customization.
-Every standard material is monitoring what's know as "Per Instance Custom Data", this is data that's provided to the instancing system to allow each and every object to receive unique parameters but still render in a fast instanced manner.
-This means the system is two disconnected parts working in sync. Code will set the parameters, materials and other objects will read them.
+업데이트 5 커스터마이저 변경 사항은 커스터마이징을 위한 속성을 설정하는 새로운 통합된 방법을 제공합니다.
+모든 표준 머티리얼은 "인스턴스 당 맞춤 데이터"로 알려진 것을 모니터링하고 있으며, 이는 인스턴싱 시스템에 제공되는 데이터로 각 객체가 고유한 매개변수를 수신할 수 있도록 하면서도 빠른 인스턴스 방식으로 렌더링할 수 있게 합니다.
+이는 시스템이 두 개의 분리된 부분이 동기화되어 작동하는 것을 의미합니다. 코드는 매개변수를 설정하고, 머티리얼 및 기타 객체는 이를 읽습니다.
 
-Coffee Stain Studios has an intended layout for the parameters found on objects, this is what the customizer is setting on objects and the materials are responding to.
-Anything marked with a * is not currently set by the customizer, but is guaranteed to exist. Higher indices may simply not be available.
-Lighting Colour for example is not set by a customizer but is used by some materials.
-Below is the currently known mapping of these parameters:
+커피 스테인 스튜디오는 객체에서 발견되는 매개변수에 대한 의도된 레이아웃을 가지고 있으며, 커스터마이저가 객체에 설정하는 것이며 머티리얼이 이에 반응합니다.
+*로 표시된 항목은 현재 커스터마이저에 의해 설정되지 않지만 존재하는 것이 보장됩니다. 더 높은 인덱스는 단순히 사용 가능하지 않을 수 있습니다.
+예를 들어 조명 색상은 커스터마이저에 의해 설정되지 않지만 일부 머티리얼에서 사용됩니다.
+아래는 현재 알려진 이러한 매개변수의 매핑입니다:
 
-- `0` PrimaryPaint ( R )
-- `1` PrimaryPaint ( G )
-- `2` PrimaryPaint ( B )
-- `3` SecondaryPaint ( R )
-- `4` SecondaryPaint ( G )
-- `5` SecondaryPaint ( B )
-- `6` HasPower
-- `7` Pattern ID ( Floor Markings )
-- `8` Material ID ( Floor Markings )
-- `9` Metallic ( No usages known )
-- `10` Roughness ( No usages known )
-- `11` *Light Colour ( R )
-- `12` *Light Colour ( G )
-- `13` *Light Colour ( B )
-- `14` *Available
-- `15` *Available
-- `16` *Available
-- `17` *Available
-- `18` *Available
+- `0` 주 색칠 ( R )
+- `1` 주 색칠 ( G )
+- `2` 주 색칠 ( B )
+- `3` 보조 색칠 ( R )
+- `4` 보조 색칠 ( G )
+- `5` 보조 색칠 ( B )
+- `6` 전력을 가짐
+- `7` 패턴 ID ( Floor Markings )
+- `8` 머티리얼 ID ( Floor Markings )
+- `9` 금속 ( No usages known )
+- `10` 거칢 ( No usages known )
+- `11` *조명 색상 ( R )
+- `12` *조명 색상 ( G )
+- `13` *조명 색상 ( B )
+- `14` *사용 가능
+- `15` *사용 가능
+- `16` *사용 가능
+- `17` *사용 가능
+- `18` *사용 가능
 

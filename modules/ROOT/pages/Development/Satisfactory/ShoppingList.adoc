@@ -1,40 +1,40 @@
-= To-Do List and Shopping List
+= 할 일 목록 및 쇼핑 목록
 
-Satisfactory offers players a to-do list to keep track of items to craft and leave notes for themselves and other multiplayer players.
+새티스팩토리는 제작할 아이템을 추적하고 자신과 다른 플레이어를 위한 메모를 남길 수 있는 할 일 목록을 플레이어에게 제공합니다.
 
-The list is displayed on the right side of the screen when it contains something,
-and players can edit the contents of the list by clicking on the right side of the screen
-from most GUIs (build gun, codex, etc).
+목록은 항목이 포함되어 있을 때 화면 오른쪽에 표시되며,
+플레이어는 대부분의 GUI(빌드건, 도감 등)에서
+화면 오른쪽을 클릭하여 목록의 내용을 편집할 수 있습니다.
 
-== Shopping List
+== 쇼핑 목록
 
-The shopping list portion of the to-do list is a list of items that the player wants to craft.
-Players can manually add items to it from the codex, crafting bench, and buildgun.
+쇼핑 목록 부분은 플레이어가 제작하고자 하는 아이템의 목록입니다.
+플레이어는 도감, 제작대, 빌드건에서 수동으로 아이템을 추가할 수 있습니다.
 
-The shopping list can hold arbitrary data,
-but the base game seems to have only implemented visualization of Recipes and Blueprints.
+쇼핑 목록은 임의의 데이터를 보유할 수 있지만,
+기본 게임은 제작법과 청사진의 시각화만 구현한 것으로 보입니다.
 
-Obtain a reference to the player's shopping list via
-the Get Shopping List Component static function of FGShoppingListComponent.
+플레이어의 쇼핑 목록에 대한 참조를 얻으려면
+**FGShoppingListComponent**의 **Get Shopping List Component** 정적 함수를 사용하십시오.
 
-=== Adding and Modifying Entries
+=== 항목 추가 및 수정
 
 [NOTE]
 ====
-This functionality has not been tested in multiplayer.
+이 기능은 멀티플레이에서 테스트되지 않았습니다.
 ====
 
-To work with shopping list entries, first call "Get Shopping List Object from Class"
-supplying the class (for example, recipe) you wish to either add or retrieve info for.
+쇼핑 목록 항목을 작업하려면 먼저 "Get Shopping List Object from Class"를 호출하여
+추가하거나 정보를 검색하려는 클래스(예: 제작법)를 제공해야 합니다.
 
-If the entry exists, it will be returned as an `FGShoppingListObject_Object`.
-If the entry doesn't exist yet, the function will return false
-and you can create one via Construct Object from Class: `FGShoppingListObject_Class`.
-Use the Shopping List Componenet as the Outer and your class as the mSubclass.
+항목이 존재하면 `FGShoppingListObject_Object` 로 반환됩니다.
+항목이 아직 존재하지 않으면 함수는 false를 반환하며,
+`FGShoppingListObject_Class` 에서 객체를 생성할 수 있습니다.
+Shopping List Component를 Outer로 사용하고 클래스는 mSubclass로 설정하십시오.
 
-You can then call Get, Set, Increase, or Decrease Amount to modify the values in the list.
+그런 다음 Get, Set, Increase, Decrease Amount를 호출하여 목록의 값을 수정할 수 있습니다.
 
-== Notes
+== 노트
 
-No documentation has been written yet about interacting with the Notes feature of the list.
-Please add some if you know how to use it.
+목록의 노트 기능과 상호작용하는 방법에 대한 문서가 아직 작성되지 않았습니다.
+사용 방법을 알고 있다면 추가해 주십시오.

@@ -1,38 +1,38 @@
-= Chainsaw and Foliage
+= 전기톱 및 초목
 
-In Satisfactory, the location of foliage is stored
-as part of the game map file that is shared across all saves.
-Imagine how large your save files would be if every save contained
-the location of every single plant in the map!
+새티스팩토리에서 초목의 위치는 모든 저장 파일에서
+공유되는 게임 맵 파일의 일부로 저장됩니다.
+모든 저장 파일이 맵의 모든 식물 위치를 포함하고 있다면
+저장 파일이 얼마나 클지 상상해 보십시오!
 
-Instead, Satisfactory saves the removal of plants in a certain radius.
-The Chainsaw (and Nobelisk, and hand picking) creates
-removal markers which are stored in the save file
-to tell the game a plant has been removed.
+대신, 새티스팩토리는 특정 반경 내에서 식물 제거를 저장합니다.
+전기톱(및 노벨리스크, 손으로 줍기)은
+저장 파일에 저장되는 제거 마커를 생성하여
+게임에 식물이 제거되었음을 알립니다.
 
-If you wanted, you could use a save editor such as
-https://github.com/Goz3rr/SatisfactorySaveEditor/[SatisfactorySaveEditor]
-to remove all of these markers, restoring foliage to its original state.
+원한다면, https://github.com/Goz3rr/SatisfactorySaveEditor/[SatisfactorySaveEditor]와 같은 저장 편집기를 사용하여
+이 모든 마커를 제거하고
+초목을 원래 상태로 복원할 수 있습니다.
 
-== Make Things Chainsawable
+== 물체를 전기톱으로 자를 수 있게 만들기
 
-To make custom foliage interact with the chainsaw,
-you need to the `FGFoliageIdentifier_Chainsawable` identifier to an `FGFoliage Resource User Data`
-entry in the Asset User Data of the foliage's static mesh.
+맞춤 초목이 전기톱과 상호작용하려면,
+`FGFoliageIdentifier_Chainsawable` 식별자를 초목의 정적 메쉬의
+애셋 사용자 데이터에 있는 `FGFoliage Resource User Data` 항목에 추가해야 합니다.
 
-image:Satisfactory/Chainsawable/StaticMesh_AssetUserData_1.png[Static Mesh Asset User Data Field]
+image:Satisfactory/Chainsawable/StaticMesh_AssetUserData_1.png[정적 메시 자산 사용자 데이터 입력란]
 
-image:Satisfactory/Chainsawable/StaticMesh_AssetUserData_2.png[Add Chainsawable Identifier]
+image:Satisfactory/Chainsawable/StaticMesh_AssetUserData_2.png[전기톱 가능 식별자 추가]
 
-This process was explained by Ben in https://discord.com/channels/555424930502541343/555515791592652823/779248979816218635[this message chain on the Discord].
+이 과정은 Ben이 https://discord.com/channels/555424930502541343/555515791592652823/779248979816218635[디스코드의 이 대화]에서 설명했습니다.
 
-== Make a Chainsaw
+== 전기톱 만들기
 
-You should extend the base chainsaw when creating your own for simplicity.
+자신의 전기톱을 만들 때는 기본 전기톱을 확장하는 것이 좋습니다.
 
-The property of a chainsaw that controls the radius of
-plant collection is `mCollateralPickupRadius`.
+식물 수집의 반경을 제어하는
+전기톱의 속성은 `mCollateralPickupRadius` 입니다.
 
-If you want something else to destroy foliage,
-it will need to create the foliage removal markers
-that existing methods use.
+다른 것이 초목을 파괴하려면,
+기존 방법이 사용하는
+초목 제거 마커를 생성해야 합니다.
