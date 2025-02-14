@@ -274,19 +274,20 @@ FModel의 link:#_파일_검색[패키지 검색 기능]이 유용할 것입니�
 
 [WARNING]
 ====
-일부 사용자는 FModel의 오디오 플레이어에서 사운드 파일을 `.wem.wem` 파일로 표기해 재생하지 못하는 문제를 보고했습니다.
-이 문제의 원인을 찾지 못했습니다.
-자세한 내용은 https://discord.com/channels/555424930502541343/1036634533077979146/1286942067125260320[이 디스코드 대화]를 참고하십시오(모드 개발자 역할 필요).
+일부 사용자는 FModel의 오디오 플레이어에서 사운드 파일을
+`.wem.wem` 파일로 표기해 재생하지 못하는 문제를 보고했습니다.
+이 문제가 발생했다면, FModel 설치 디렉터리에서 `/Output/.data/` 폴더를 확인해 보십시오.
+`vgmstream-win.zip` 및 추출된 여러 파일이 있을 것입니다.
+없다면, https://github.com/vgmstream/vgmstream/releases/tag/r1951[깃허브 릴리스 페이지]에서
+`vgmstream-win.zip` 의 복제를 받은 후 내용물을
+폴더에 바로 압축 해제하고 FModel을 재실행하십시오.
 
-이 문제에 영향을 받는 경우, 아래의 벌크 오디오 이름 변경기 접근 방식을 시도해 보십시오.
+작동하지 않는다면 https://discord.com/channels/555424930502541343/1036634533077979146/1318603952375468125[이 대화] 및
+https://discord.com/channels/555424930502541343/1036634533077979146/1286942067125260320[이 대화]를
+참고하십시오(모드 개발자 디스코드 역할 필요).
 ====
 
 === 벌크 오디오 이름 변경기
-
-// TODO unclear why MrCheese said that FModel can't play sound files since release.
-// Resolve before merge because it might change the above directions further.
-// https://github.com/orgs/satisfactorymodding/projects/15/views/1?pane=issue&itemId=80439924
-// https://discord.com/channels/555424930502541343/1036634533077979146/1286942067125260320
 
 커뮤니티 구성원 MrCheese는 내보낸 wem 파일을 관련된 이름을 가진 bnk 파일로 대량 이름 변경을 가능하게 하는 Python 스크립트를 만들었습니다.
 많은 수의 사운드를 추출하려는 경우 이 스크립트를 사용하면 시간을 절약할 수 있습니다.

@@ -13,6 +13,7 @@
 
 * xref:Development/index.adoc[개발]
     ** xref:Development/UpdatingFromSml38.adoc[SML 3.8.0에서 업데이트]
+    // ** xref:Development/UpdatingFromSml39.adoc[SML 3.9.0에서 업데이트] // TODO SML3.10.0
     ** xref:Development/UpdatingToNewVersions.adoc[_모드 업데이트_]
     ** xref:Development/BeginnersGuide/index.adoc[시작하기]
         *** 의존성 설치
@@ -128,7 +129,7 @@
     ** xref:CommunityResources/incredibuild.adoc[인크레더빌드]
     ** xref:CommunityResources/TrainSignalGuide.adoc[열차 신호 안내서]
 
-// TODO unhide once translating section is ready
+// TODO un-hide once translating section is ready
 // * Translating Mods
 //     ** xref:Translation/GetStartedTranslating.adoc[Get Started Translating]
 //     ** xref:Translation/UsingTolgee.adoc[Using Tolgee]

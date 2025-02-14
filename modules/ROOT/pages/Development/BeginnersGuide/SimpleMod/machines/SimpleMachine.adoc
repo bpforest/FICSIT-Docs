@@ -95,7 +95,7 @@ image:BeginnersGuide/simpleMod/machines/SimpleMachine_CreateItemTypesSet_Part2.p
 
 전반적인 로직은 다음과 같습니다: 전원이 있는지 확인합니다. 전원이 있다면 입력에서 아이템을 가져오려고 시도합니다. 아이템이 없으면 아무것도 하지 않습니다. 그러나 아이템을 가져오면 이를 세고 출력을 반환합니다.
 
-디버깅 목적으로 마지막에 `Log Display` 노드를 추가합니다. 게임 로그의 실시간 보기를 얻는 방법에 대한 세부 정보는 xref:Development/TestingResources.adoc#logging[여기]에서 확인할 수 있습니다.
+디버깅 목적으로 마지막에 `Log Display` 노드를 추가합니다. 게임 로그의 실시간 보기를 얻는 방법에 대한 세부 정보는 xref:Development/TestingResources.adoc#_sml_로깅[여기]에서 확인할 수 있습니다.
 
 .이 이미지를 잘 보기 위해 확대하는 것을 추천합니다.
 image::BeginnersGuide/simpleMod/machines/SimpleMachine_Grab.png[이미지]

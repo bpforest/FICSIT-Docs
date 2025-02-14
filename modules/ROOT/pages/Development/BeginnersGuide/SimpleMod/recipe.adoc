@@ -295,9 +295,8 @@ xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#_컴파일_및_�
 
 == 도면 등록
 
-도면을 등록하려면,
-이전에 생성한
-xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#_create_the_class[RootGameWorld_모드참조]
+도면을 등록하려면, 이전에 생성한
+xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#_게임_월드_모듈_생성[RootGameWorld_모드참조]
 애셋을 열고 `M Schematics` 배열에 도면을 추가합니다.
 
 이제 설정되었습니다! 우리의 제작법과 도면이 등록되었으며, 게임에 표시되어야 합니다.

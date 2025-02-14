@@ -98,14 +98,15 @@ VSCode에서 폴더를 열 때 자동으로 감지됩니다.
 변경 사항을 감지할 때 미리보기를 자동으로 다시 빌드하는 파일 감시기도 포함되어 있습니다.
 하지만 여전히 브라우저를 수동으로 새로 고쳐야 합니다...
 
-컨테이너와 로컬 개발 간에 전환하는 경우 `node_modules` 및/또는 `.pnpm_store` 폴더를 삭제해야 할 수도 있습니다.
+컨테이너와 로컬 개발 간에 전환하는 경우
+`node_modules` 및/또는 `.pnpm_store` 폴더를 삭제해야 할 수도 있습니다.
 
 ### 수동
 
 미리 구성된 devcontainer(또는 Codespaces)를 사용하고 싶지 않다면, 아래 지침을 따르십시오.
 
-`.adoc` 파일은 거의 모든 편집기로 편집할 수 있지만,
-Visual Studio Code(와 [Asciidoc](https://marketplace.visualstudio.com/items?itemName=asciidoctor.asciidoctor-vscode) 및 [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker) 플러그인) 또는 IntelliJ를 사용하는 것을 권장합니다.
+Visual Studio Code(와 [추천 확장](./.vscode/extensions.json))
+또는 IntelliJ를 사용하는 것을 권장합니다.
 
 페이지가 배포되기 전에 라이브 사이트에서 어떻게 보일지 확인하려면,
 아래 지침을 따르십시오.
@@ -123,11 +124,14 @@ Visual Studio Code(와 [Asciidoc](https://marketplace.visualstudio.com/items?ite
     pnpm install
     ```
 
-4. VSCode가 있다면, 폴더를 작업 공간으로 열고
-   명령 팔레트를 사용하여 작업: `Launch hot reloading development server` 를 실행하십시오.
-   그렇지 않다면, 아래의 빌드 및 미리보기 지침을 따르십시오.
+4. VSCode가 있다면, 폴더를 작업 공간으로 열어 기존 기능과 연결하십시오.
 
 #### 빌드
+
+VSCode가 있다면, 명령 팔레트를 사용하여 작업: `Launch hot reloading development server` 를 실행하십시오.
+이렇게 하면 문서를 변경할 때 자동으로 재구성하고 웹 브라우저를 열어 미리 볼 수 있습니다.
+재구성된 변경 사항을 보려면 페이지를 수동으로 새로 고쳐야 합니다.
+그렇지 않으면 아래 지침을 따르십시오.
 
 변경 사항을 만들 때 SML 문서를 자동으로 다시 빌드하는 개발 감시 서버를 설정하려면:
 
@@ -151,15 +155,24 @@ pnpm run build:dev
 
 #### 미리보기
 
-내용을 미리 보려면, 브라우저에서 출력 HTML 파일을 열 수 있습니다. 예: `build/site/satisfactory-modding/latest/index.html`
+VSCode가 있다면, 명령 팔레트를 사용하여 작업: `Launch hot reloading development server` 를 실행하십시오.
+이렇게 하면 문서를 변경할 때 자동으로 재구성하고 웹 브라우저를 열어 미리 볼 수 있습니다.
+재구성된 변경 사항을 보려면 페이지를 수동으로 새로 고쳐야 합니다.
+그렇지 않으면 아래 지침을 따르십시오.
+
+내용을 미리 보려면, 브라우저에서 출력 HTML 파일을 열 수 있습니다.
+예: `build/site/satisfactory-modding/latest/index.html`
 
 또한 `pnpm run serve` 를 실행하여 로컬 웹 서버를 시작할 수 있습니다.
 터미널에서 웹 서버에 사용할 수 있는 주소를 출력합니다.
 
 #### 링크 검사기
 
-CI는 또한 [lychee 링크 검사기](https://github.com/lycheeverse/lychee/tree/master)를 실행하여 끊어진 링크를 확인합니다.
-보고서는 레포지토리의 [Actions 탭](https://github.com/satisfactorymodding/Documentation/actions)에서 확인할 수 있습니다.
+CI는 또한
+[lychee 링크 검사기](https://github.com/lycheeverse/lychee/tree/master)를
+실행하여 끊어진 링크를 확인합니다.
+보고서는 저장소의 [Actions 탭](https://github.com/satisfactorymodding/Documentation/actions)에서 확인할 수 있습니다.
+
 로컬에서 실행하고 싶다면 lychee 문서를 따라 도구를 설치할 수 있습니다.
 
 ## 다른 모드에 대한 문서 추가
@@ -179,7 +192,9 @@ CI는 또한 [lychee 링크 검사기](https://github.com/lycheeverse/lychee/tre
 
 서브 모드 문서 사이트는 현재 CI에 의해 실행되는 Lychee 링크 검사기의 적용을 받으므로,
 문서에 끊어진 링크가 있는 경우 빌드가 실패하고 사이트가 업데이트되지 않습니다.
-이 레포의 [Actions](https://github.com/satisfactorymodding/Documentation/actions)를 확인하여 실패 이유를 확인할 수 있습니다. 모드 문서 업데이트는 SatisfactoryModdingBot github 사용자에 의해 `mod-docs-update` 라는 작업 이름으로 시작됩니다.
+이 저장소의 [Actions](https://github.com/satisfactorymodding/Documentation/actions)를
+확인하여 실패 이유를 확인할 수 있습니다.
+모드 문서 업데이트는 SatisfactoryModdingBot 깃허브 사용자에 의해 `mod-docs-update` 라는 작업 이름으로 시작됩니다.
 
 ## 새로운 버전 브랜치 추가
 

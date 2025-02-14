@@ -228,8 +228,8 @@ image:BeginnersGuide/simpleMod/NoMaterialImport.png[이미지]
 https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/MaterialInstances/index.html[머티리얼 인스턴스] 시스템을 활용하여 게임 성능을 개선하기 위함입니다.
 
 콘텐츠 브라우저에서 우클릭 후 `머티리얼 > 머티리얼 인스턴스` 를 눌러 고급 애셋을 생성합니다.
-이름은 Coffee Stain의 명명 규칙에 따라 `MI_DocItem` 으로 지정합니다.
-MI는 Material Instance(머티리얼 인스턴스)를 의미하며, MM은 Master Material(마스터 머티리얼)을 의미합니다.
+이름은 커피 스테인의 명명 규칙에 따라 `MI_DocItem` 으로 하겠습니다.
+MI는 머티리얼 인스턴스, MM은 마스터 머티리얼을 의미합니다.
 
 이 새로운 애셋을 열어 세부 정보 패널에서
 `부모` 입력란을 검색하여 `MM_FactoryBaked` 애셋을 설정합니다.
@@ -260,9 +260,12 @@ MI는 Material Instance(머티리얼 인스턴스)를 의미하며, MM은 Master
 이의 작동 방식은 이 튜토리얼의 범위를 벗어나므로,
 xref:Development/Modeling/index.adoc[모델링] 섹션에서 더 많은 정보를 찾을 수 있습니다.
 
-가져온 `Tex_Doc-Item_MREO` 텍스처를 열고, 디테일 패널의 텍스처 범주에서 `sRGB` 를 체크 해제합니다.
+가져온 `Tex_Doc-Item_MREO` 텍스처를 열고, 디테일 패널의 텍스처 범주에서
+`sRGB` 를 체크 해제하고,
+Compression Settings를 `Masks (no sRGB)` 로 설정합니다.
 이는 각 색상 채널의 특별한 데이터 때문이며, 언리얼이 이를 일반 이미지처럼 처리하지 않도록 하기 위함입니다.
-xref:Development/Modeling/MainMaterials.adoc#_공장_베이크_mm_factorybaked[마스터 머티리얼] 페이지에서 무슨 일이 일어나고 있는지에 대한 더 많은 세부 정보를 확인할 수 있습니다.
+xref:Development/Modeling/MainMaterials.adoc#_공장_베이크_mm_factorybaked[마스터 머티리얼] 페이지에서
+무슨 일이 일어나고 있는지에 대한 더 많은 세부 정보를 확인할 수 있습니다.
 그 후 애셋을 저장합니다.
 
 image:BeginnersGuide/simpleMod/sRGB_Off.png[이미지]
@@ -279,7 +282,7 @@ image:BeginnersGuide/simpleMod/sRGB_Off.png[이미지]
 - Normal 란에 `Tex_Doc-Item_N` 을 선택합니다.
 - Reflection Map 란에 `Tex_Doc-Item_MREO` 를 선택합니다.
 
-다음으로, AO(Ambient Occlusion) 섹션을 찾아 `UseAO` 상자를 체크합니다.
+다음으로, AO 섹션을 찾아 `UseAO` 상자를 체크합니다.
 
 Emissive 섹션에서 `UseEmissive` 상자를 체크합니다.
 

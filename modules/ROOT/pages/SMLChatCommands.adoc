@@ -102,6 +102,8 @@ xref:Development/BeginnersGuide/dependencies.adoc#CustomEngine[여기]에서 확
 모드 개발자는 xref:Development/Satisfactory/CheatBoard.adoc[이 지침]을 따라 여기에 치트를 추가할 수 있습니다.
 | (미지정)
 
+// From UE CheatManager
+
 |Teleport
 | 커서가 바라보는 위치로 텔레포트합니다.
 범위 제한이 없습니다.

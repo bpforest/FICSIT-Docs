@@ -37,15 +37,14 @@ xref:Development/BeginnersGuide/StarterProjectStructure.adoc[시작 프로젝트
 첫 번째 단계는 기본 게임에서 에셋의 위치를 찾는 것입니다.
 이는 https://satisfactory.wiki.gg/[새티스팩토리 위키]를 통해
 에셋의 블루프린트 경로를 찾거나,
-https://github.com/Goz3rr/SatisfactorySaveEditor/tree/master/Reference%20Materials[참조 목록]에서
-콘텐츠를 찾거나,
 xref:Development/ExtractGameFiles.adoc#FModel[FModel]에서
-검색하여 찾을 수 있습니다(대부분의 GUI 요소의 경우).
+검색하거나(대부분의 GUI 요소의 경우),
+https://ficsit.app/mod/ContentInspector[Content Inspector]와 같은 모드를 사용할 수 있습니다.
 
 image:ReuseContent/WikiHubPartsBox.png[새티스팩토리 위키의 허브 부품]
 
-
-_새티스팩토리 위키의 허브 부품_
+.새티스팩토리 위키의 허브 부품
+image::ReuseContent/WikiHubPartsBox.png[새티스팩토리 위키의 허브 부품]
 
 다음으로, FModel에서 해당 블루프린트 경로로 이동하여
 관련된 정적 메쉬와 아이콘 객체의 경로를 찾을 수 있습니다.
@@ -56,10 +55,8 @@ FModel에서
 `\FactoryGame\Resource\Parts\HUBParts` 로 이동하여
 관련 파일들을 찾아야 합니다.
 
+.FModel 폴더 브라우저 내의 허브 부품
 image:ReuseContent/FModelFoundPath.png[FModel 내의 허브 부품]
-
-
-_FModel 폴더 브라우저의 허브 부품_
 
 패키지 탭으로 전환하면
 `FGItemDescriptor`(`Desc_HUBParts.uasset`)와
@@ -71,9 +68,8 @@ _FModel 폴더 브라우저의 허브 부품_
 패키지 탭에서 `SM_HUBparts_01` 을 열어 3D 뷰어를 실행합니다.
 뷰어 좌측 상단의 명령 버튼을 사용하여 탐색 단축키를 확인할 수 있습니다.
 
+.FModel 3D 뷰어의 허브 부품
 image:ReuseContent/FModelHubParts.png[FModel 3D 뷰어의 허브 부품]
-
-_FModel 3D 뷰어의 허브 부품_
 
 기본 게임에서 에셋의 위치를 찾았다면,
 이제 자리 표시자를 설정할 준비가 되었습니다.
@@ -88,9 +84,10 @@ _FModel 3D 뷰어의 허브 부품_
 
 [TIP]
 ====
-자리 표시자로 만드는 콘텐츠의
-_실제 내용은 전혀 중요하지 않습니다_.
-참조하려는 콘텐츠와 동일한 이름, 경로, 에셋 유형을 가지고 있기만 하면 됩니다.
+자리 표시자의 애셋 유형을 모르겠다면,
+FModel에서 `Type`, `Class`, `SuperStruct` 속성을 확인하십시오.
+일부 클래스에는 유효한 {cpp} 스텁 구현이 없으며 에디터가 충돌할 수 있습니다.
+이 경우 충돌 클래스의 상위 클래스를 자리 표시자로 사용해 보십시오.
 ====
 
 메쉬의 경우,
@@ -128,5 +125,5 @@ image:ReuseContent/PlaceholderIcon.png[최종 자리 표시자 아이콘]
 이 버전의 프로젝트에는 자리 표시자 버전 대신 모델, 텍스처 및 기타 리소스가 포함되어
 에디터 내에서 볼 수 있습니다.
 
-이에 대한 자세한 내용은 xref:Development/BeginnersGuide/StarterProject/ObtainStarterProject.adoc[게임 파일 추출하기 페이지]의
+이에 대한 자세한 내용은 xref:Development/ExtractGameFiles.adoc#_완전한_시작_프로젝트_생성[게임 파일 추출하기 페이지]의
 해당 섹션에서 확인할 수 있습니다.
