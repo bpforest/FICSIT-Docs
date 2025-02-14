@@ -62,7 +62,7 @@ code:not([class]) {
     width: 320px;
 }
 
-.nav, .navbar, .toolbar {
+.navbar, .toolbar {
     background-color: #ffffff00;
 }
 
