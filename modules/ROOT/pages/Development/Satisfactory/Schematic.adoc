@@ -100,7 +100,7 @@ M Cost::
 +
 M Unlocks::
   이 도면을 해금할 때 플레이어가 받을 보상을 포함하는 배열입니다.
-  이는 xref::/Development/Satisfactory/Schematic.adoc#_fgunlock_ufgunlock[FGUnlock]의 배열입니다.
+  이는 link:#_fgunlock_ufgunlock[FGUnlock]의 배열입니다.
 * {blank}
 +
 M Schematic Dependencies::
