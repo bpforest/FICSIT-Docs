@@ -74,7 +74,7 @@ code:not([class]) {
     backdrop-filter: blur(50px);
 }
 
-main>.content, .article {
+main>.content, .article, .nav {
     background-color: rgb(32, 33, 37);
 }
 
