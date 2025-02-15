@@ -1,8 +1,9 @@
 .idea
-.vscode
+.vscode/*
+!.vscode/tasks.json
+!.vscode/extensions.json
 build/
 *.rst
 node_modules/
-!.vscode/tasks.json
 .pnpm-store/
 imgSource/
