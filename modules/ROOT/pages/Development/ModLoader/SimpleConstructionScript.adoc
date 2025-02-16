@@ -5,7 +5,7 @@ https://docs.unrealengine.com/5.1/en-US/components-in-unreal-engine/[Components]
 to any blueprint-based actor.
 
 Mods can define Blueprint SCS Hooks in their
-xref:Development/ModLoader/ModModules.adoc#_game_instance_bound_module_ugameinstancemodule[Game Instance Module] under Class Defaults -> Advanced -> Hooks -> Blueprint SCSHooks
+xref:Development/ModLoader/ModModules.adoc#_게임_인스턴스_할당_모듈ugameinstancemodule[Game Instance Module] under Class Defaults -> Advanced -> Hooks -> Blueprint SCSHooks
 
 This system is very flexible and it is difficult to summarize its capabilities.
 Here are some example usages:

@@ -23,7 +23,7 @@ In previous SML versions, servers were able to reject client connections if the 
 SML 3.9 now implements this check for clients.
 Clients will refuse to join servers that are missing mods present on the client side.
 The existing `RequiredOnRemote` and `RemoteVersionRange` uplugin fields control this behavior.
-Read more about them in the xref:Development/BeginnersGuide/ReleaseMod.adoc#_special_fields[uplugin Special Fields section].
+Read more about them in the xref:Development/BeginnersGuide/ReleaseMod.adoc#_특수_필드[uplugin Special Fields section].
 
 === Wwise Support 
 

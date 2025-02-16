@@ -8,7 +8,7 @@ If you have any feedback, please let us know in the Discord.
 ====
 
 Introduced in SML3.8, the Content Tag Registry is an
-xref:Development/ModLoader/ModModules.adoc#_game_instance_bound_module_ugameinstancemodule[Game Instance]
+xref:Development/ModLoader/ModModules.adoc#_게임_인스턴스_할당_모듈ugameinstancemodule[Game Instance]
 xref:Development/ModLoader/Subsystems.adoc[Subsystem]
 that manages
 https://dev.epicgames.com/documentation/en-us/unreal-engine/using-gameplay-tags-in-unreal-engine?application_version=5.3[Gameplay Tag Containers]

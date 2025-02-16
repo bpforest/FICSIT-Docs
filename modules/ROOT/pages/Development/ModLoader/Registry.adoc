@@ -1,211 +1,211 @@
-= Registry
+= 레지스트리
 
-SML provides a few registry mechanisms for quick and easy content management.
+SML은 빠르고 쉬운 콘텐츠 관리를 위한 몇 가지 레지스트리 메커니즘을 제공합니다.
 
-== Remote Call Object Registry
+== 원격 호출 객체 레지스트리
 
-The `Remote Call Object Registry` is a
-xref:Development/ModLoader/ModModules.adoc#_game_instance_bound_module_ugameinstancemodule[Game Instance]
-xref:Development/ModLoader/Subsystems.adoc[Subsystem]
-that automatically registers all listed remote call objects in the Satisfactory Player Character.
+``원격 호출 객체 레지스트리``는
+xref:Development/ModLoader/ModModules.adoc#_게임_인스턴스_할당_모듈ugameinstancemodule[게임 인스턴스]
+xref:Development/ModLoader/Subsystems.adoc[서브시스템]으로,
+새티스팩토리 플레이어 캐릭터에 나열된 모든 원격 호출 객체를 자동으로 등록합니다.
 
-You can use the `Register Remote Call Object`-Function to add the class of a remote call object to the registry
-so that it gets automatically registered in the player.
+`원격 호출 객체 등록` 기능을 사용하여 원격 호출 객체의 클래스를 레지스트리에 추가하여 플레이어에 자동으로 등록되도록 할 수 있습니다.
 
-== Subsystem Holder Registry
+== 서브시스템 홀더 레지스트리
 
-The `Subsystem Holder Registry` is a 
-xref:Development/ModLoader/ModModules.adoc#_game_instance_bound_module_ugameinstancemodule[Game Instance]
-xref:Development/ModLoader/Subsystems.adoc[Subsystem]
-that automatically registers all listed subsystem holders to the mod loader lifecycle.
-The holders are then manged by SML and called at the correct times.
+``서브시스템 홀더 레지스트리``는
+xref:Development/ModLoader/ModModules.adoc#_게임_인스턴스_할당_모듈ugameinstancemodule[게임 인스턴스]
+xref:Development/ModLoader/Subsystems.adoc[서브시스템]으로,
+모드 로더 생명 주기에 나열된 모든 서브시스템 홀더를 자동으로 등록합니다.
+홀더는 SML에 의해 관리되며 적절한 시점에 호출됩니다.
 
-You can use the `Register Subsystem Holder`-Function to add the class of a subsystem holder to the registry.
+`서브시스템 홀더 등록` 기능을 사용하여 서브시스템 홀더의 클래스를 레지스트리에 추가할 수 있습니다.
 
-== Mod Key Bind Registry
+== 모드 키 할당 레지스트리
 
-The `Mod Key Bind Registry` is a blueprint function library that provides a couple of functions
-that allow you to easily add your own key bindings and axis bindings to the game via the UE
-https://docs.unrealengine.com/en-US/InteractiveExperiences/Input/index.html?utm_source=editor&utm_medium=docs[ActionMappings]
-and AxisMappings system.
+``모드 키 할당 레지스트리``는 몇 가지 기능을 제공하는 블루프린트 함수 라이브러리로, UE의
+https://docs.unrealengine.com/en-US/InteractiveExperiences/Input/index.html?utm_source=editor&utm_medium=docs[행동 매핑]
+및 축 매핑 시스템을 통해 게임에
+자신의 키 할당 및 축 할당을 쉽게 추가할 수 있습니다.
 
-Since we don't have direct access to the Satisfactory project file, we can't add them directly to
-Project Settings > Engine > Input > Bindings, so instead we add them through this SML registry.
+새티스팩토리 프로젝트 파일에 직접 접근할 수 없기 때문에,
+프로젝트 설정 > 엔진 > 입력 > 할당에 직접 추가할 수는 없으므로,
+대신 이 SML 레지스트리를 통해 추가합니다.
 
-Users of your mod can edit these keybinds from the in-game keybindings screen in the options.
-Your keybinds will show up with the given display name grouped in a category with your mod's name,
-and their set values will persist between sessions of the game.
+모드 사용자는 게임 내 키 할당 화면에서 이러한 키 할당을 편집할 수 있습니다.
+당신의 키 할당은 주어진 표시 이름으로 모드 이름과 함께 그룹화되어 표시되며,
+설정된 값은 게임 세션 간에 지속됩니다.
 
-In order to get the keybinds to show up correctly inside the Blueprint editor,
-you may still have to add them to the Bindings section described above.
+키 할당이 블루프린트 에디터 내에서 올바르게 표시되도록 하려면,
+여전히 위에서 설명한 할당 섹션에 추가해야 할 수 있습니다.
 
-Once the keybinds are set up, they should show up when you type their name into the new node dialog.
-For example, if you named a keybind `DocMod.DebugPrint` then you can search
-`DocMod.DebugPrint` and the node for the DocMod.DebugPrint Action Event will show up.
+키 할당이 설정되면, 새로운 노드 대화 상자에 이름을 입력할 때 표시되어야 합니다.
+예를 들어, 키 할당을 ``DocMod.DebugPrint``로 명명했다면,
+``DocMod.DebugPrint``를 검색하면 DocMod.DebugPrint 행동 이벤트의 노드가 표시됩니다.
 
-=== `RegisterModKeyBind(String ModReference, InputActionKeyMapping KeyMapping, Text DisplayName)`
-Register a given key mapping and associates it with mod reference provided.
-The action name (part of the `InputActionKeyMapping`) should be unique and start with a "ModReference."
-prefix to avoid conflicts with other mods.
-This function will throw an exception if the action name doesn't start with the prefix described above.
-You can only register two keys with the same name.
-One of them should be a keyboard action and another is a gamepad action (optional).
+=== `RegisterModKeyBind(String 모드참조, InputActionKeyMapping 키매핑, Text 표시이름)`
+주어진 키 매핑을 등록하고 제공된 모드 참조와 연결합니다.
+행동 이름(``InputActionKeyMapping``의 일부)은 고유해야 하며
+"모드참조." 접두사로 시작해야 다른 모드와의 충돌을 피할 수 있습니다.
+이 함수는 행동 이름이 위에서 설명한 접두사로 시작하지 않으면 예외를 발생시킵니다.
+같은 이름으로 두 개의 키만 등록할 수 있습니다.
+하나는 키보드 행동이어야 하고 다른 하나는 게임패드 행동일 수 있습니다(선택 사항).
 
-=== `RegisterModAxisBind(String ModReference, InputAxisKeyMapping PositiveAxisMapping, InputAxisKeyMapping NegativeAxisMapping, Text PositiveDisplayName, Text NegativeDisplayName)`
-Registers the given axis key mappings and associate them with the given mod reference.
-The axis names (part of the `InputAxisKeyMapping`s) should be unique and start with a "ModReference."
-prefix to avoid conflicts with other mods.
-This function will an throw exception if the axis names don't start with the prefix described above.
-Both axis mappings should have equal action names, too.
-Satisfactory requires all axis binds to have 2 keys with opposite directions, and they will be displayed as 2 keys in the control options too.
-You can only register two axis binding pairs.
-One of them should be a keyboard axis and the other a gamepad axis (optional).
+=== `RegisterModAxisBind(String 모드참조, InputAxisKeyMapping 양의축매핑, InputAxisKeyMapping 음의축매핑, Text 양의표시이름, Text 음의표시이름)`
+주어진 축 키 매핑을 등록하고 주어진 모드 참조와 연결합니다.
+축 이름(``InputAxisKeyMapping``의 일부)은 고유해야 하며
+"모드참조." 접두사로 시작해야 다른 모드와의 충돌을 피할 수 있습니다.
+이 함수는 축 이름이 위에서 설명한 접두사로 시작하지 않으면 예외를 발생시킵니다.
+모든 축 매핑은 동일한 행동 이름을 가져야 합니다.
+새티스팩토리는 모든 축 할당이 반대 방향의 2개의 키를 가져야 하며, 제어 옵션에서도 2개의 키로 표시됩니다.
+두 쌍의 축 할당만 등록할 수 있습니다.
+하나는 키보드 축이어야 하고 다른 하나는 게임패드 축일 수 있습니다(선택 사항).
 
-== Content Tag Registry
+== 콘텐츠 태그 레지스트리
 
-See the xref:Development/ModLoader/ContentTagRegistry.adoc[Content Tag Registry] page for more information.
+자세한 내용은 xref:Development/ModLoader/ContentTagRegistry.adoc[콘텐츠 태그 레지스트리] 페이지를 참조하십시오.
 
-== Game Map Registry
+== 게임 맵 레지스트리
 
-See the xref:Development/ModLoader/GameMapRegistry.adoc[Game Map Registry] page for more information.
+자세한 내용은 xref:Development/ModLoader/GameMapRegistry.adoc[게임 맵 레지스트리] 페이지를 참조하십시오.
 
-== Mod Content Registry
+== 모드 콘텐츠 레지스트리
 
-The Mod Content Registry is a xref:Development/ModLoader/Subsystems.adoc[game instance subsystem]
-that manages registration and lifetime of any kind of modded content.
+모드 콘텐츠 레지스트리는 xref:Development/ModLoader/Subsystems.adoc[게임 인스턴스 서브시스템]으로,
+모드 콘텐츠의 등록 및 수명 관리를 담당합니다.
 
-All content you create and add with your mod that is of supported types
-should be registered through this registry.
-Meaning, you should **not** register it yourself in the games subsystems.
+모드로 생성하고 추가하는 모든 지원 유형의 콘텐츠는
+이 레지스트리를 통해 등록해야 합니다.
+즉, 게임의 서브시스템에 직접 등록해서는 *안 됩니다*.
 
-This essential in ensuring that it is correctly saved, loaded, and identified by the game and other mods.
+이는 콘텐츠가 게임 및 다른 모드에 의해 올바르게 저장되고 로드되며 식별되도록 보장하는 데 필수적입니다.
 
-If you don't need any of the dynamic behaviors the Mod Content Registry provides,
-you should use properties in your
-xref:Development/ModLoader/ModModules.adoc#_game_world_module_ugameworldmodule[RootGameWorld_YourModReferenceHere]
-module instance instead of calling methods on this object directly.
+모드 콘텐츠 레지스트리가 제공하는 동적 동작이 필요하지 않은 경우,
+이 객체의 메서드를 직접 호출하는 대신
+xref:Development/ModLoader/ModModules.adoc#_game_world_module_ugameworldmodule[RootGameWorld_모드참조]
+모듈 인스턴스의 속성을 사용해야 합니다.
 
 [IMPORTANT]
 ====
-Note that all `UObject*`s used by Mod Content Registry functions and in `FGameObjectRegistration`s
-are actually `UClass*`s (since UClass is a subclass of UObject),
-so you must cast them to UClass first before they can be used.
+모드 콘텐츠 레지스트리 함수 및 ``FGameObjectRegistration``에서 사용되는
+모든 ``UObject*``는 실제로 ``UClass*``입니다(왜냐하면 UClass는 UObject의 하위 클래스이기 때문입니다).
+따라서 사용하기 전에 먼저 UClass로 형변환해야 합니다.
 
-In blueprint, use the "Cast to Class" node with the class of `Class`.
-In C++, use `Cast<UClass>(theThing)` or `const_cast` depending on the use case.
+블루프린트에서는 ``Class``의 클래스를 사용하여 "Cast to Class" 노드를 사용하십시오.
+C++에서는 `Cast<UClass>(theThing)` 또는 상황에 따라 ``const_cast``를 사용하십시오.
 ====
 
 [WARNING]
 ====
-Schematic and Research Tree registrations are frozen on BeginPlay.
-After that moment, the registry is frozen and no changes can be made after that!
+도면 및 연구 트리 등록은 BeginPlay에서 동결됩니다.
+그 순간 이후로 레지스트리는 동결되며 그 이후에는 변경할 수 없습니다!
 ====
 
 === `UModContentRegistry* Get(UObject* WorldContext)`
 
-Get the global instance of the registry.
+레지스트리의 전역 인스턴스를 가져옵니다.
 
-=== `RegisterSchematic(FName ModReference, TSubclassOf<UFGSchematic> Schematic)`
-Registers schematic to be usable by the game.
-All recipes referenced by schematic are registered automatically.
-All items referenced by registered recipes are associated with passed mod reference too.
+=== `RegisterSchematic(FName 모드참조, TSubclassOf<UFGSchematic> 도면)`
+도면이 게임에서 사용 가능하도록 등록합니다.
+도면에 참조된 모든 제작법은 자동으로 등록됩니다.
+등록된 제작법에 참조된 모든 아잍메은 전달된 모드 참조와도 연결됩니다.
 
-You must also provide your mod reference so the content can get associated properly.
+또한 콘텐츠가 올바르게 연결될 수 있도록 모드 참조를 제공해야 합니다.
 
-=== `RegisterResearchTree(FName ModReference, TSubclassOf<UFGResearchTree> ResearchTree)`
-Registers research tree to be usable by the game.
-Also updates research trees so tree can be unlocked instantly if criteria are met.
-All schematics referenced by this research tree are registered automatically.
-Nodes should be of default BPD_ResearchTreeNode type to be discoverable for schematics.
+=== `RegisterResearchTree(FName 모드참조, TSubclassOf<UFGResearchTree> 연구트리)`
+연구 트리를 게임에서 사용 가능하도록 등록합니다.
+기준이 충족되면 연구 트리를 즉시 잠금 해제할 수 있도록 업데이트합니다.
+이 연구 트리에 참조된 모든 도면은 자동으로 등록됩니다.
+노드는 도면에 대해 발견 가능하도록 기본 BPD_ResearchTreeNode 유형이어야 합니다.
 
-You must also provide your mod reference so the content can get associated properly.
+또한 콘텐츠가 올바르게 연결될 수 있도록 모드 참조를 제공해야 합니다.
 
-=== `RegisterRecipe(FName ModReference, TSubclassOf<UFGRecipe> Recipe)`
-Registers recipe to be usable by the game.
-Also associates items referenced by this recipe with passed mod reference if they are not.
-associated with any other mod reference yet.
+=== `RegisterRecipe(FName 모드참조, TSubclassOf<UFGRecipe> 제작법)`
+제작법이 게임에서 사용 가능하도록 등록합니다.
+이 제작법에 의해 참조된 항목이 다른 모드 참조와 연결되지 않은 경우,
+전달된 모드 참조와도 연결됩니다.
 
-You must also provide your mod reference so the content can get associated properly.
+또한 콘텐츠가 올바르게 연결될 수 있도록 모드 참조를 제공해야 합니다.
 
-=== `RegisterResourceSinkItemPointTable(FName ModReference, UDataTable* PointTable, EResourceSinkTrack Track)`
-Register resource sink item points for each item row in the passed table object.
+=== `RegisterResourceSinkItemPointTable(FName 모드참조, UDataTable* 점수테이블, EResourceSinkTrack 트랙)`
+전달된 테이블 객체의 각 아이템 행에 대한 자원 싱크 아이템 점수를 등록합니다.
 
-You must also provide your mod reference so the content can get associated properly.
+또한 콘텐츠가 올바르게 연결될 수 있도록 모드 참조를 제공해야 합니다.
 
-=== `RemoveSchematic(TSubclassOf<UFGSchematic> Schematic)`
-Explicitly removes the given schematic from the registry
+=== `RemoveSchematic(TSubclassOf<UFGSchematic> 도면)`
+주어진 도면을 레지스트리에서 명시적으로 제거합니다.
 
-=== `RemoveResearchTree(TSubclassOf<UFGResearchTree> ResearchTree)`
-Explicitly removes the given research tree from the registry
+=== `RemoveResearchTree(TSubclassOf<UFGResearchTree> 연구트리)`
+주어진 연구 트리를 레지스트리에서 명시적으로 제거합니다.
 
 === `TArray<FGameObjectRegistration> GetLoadedItemDescriptors()`
-Returns a list of all currently loaded item descriptors.
+현재 로드된 모든 아이템 디스크립터의 목록을 반환합니다.
 
-=== `GetObtainableItemDescriptors(TArray<FGameObjectRegistration>& OutItemDescriptors, EGetObtainableItemDescriptorsFlags Flags)`
-Retrieves list of all obtainable item descriptors, e.g ones referenced by any recipe.
+=== `GetObtainableItemDescriptors(TArray<FGameObjectRegistration>& 출력아이템디스크립터, EGetObtainableItemDescriptorsFlags 플래그)`
+모든 획득 가능한 아이템 디스크립터의 목록을 검색합니다. 예를 들어, 제작법에 의해 참조된 것입니다.
 
-Use the Flags to further filter the results.
+결과를 추가로 필터링하려면 플래그를 사용하십시오.
 
 === `TArray<FGameObjectRegistration> GetRegisteredSchematics()`
-Returns a list of all currently registered schematics.
+현재 등록된 모든 도면의 목록을 반환합니다.
 
 === `TArray<FGameObjectRegistration> GetRegisteredResearchTrees()`
-Returns a list of all currently registered research trees.
+현재 등록된 모든 연구 트리의 목록을 반환합니다.
 
 === `TArray<FGameObjectRegistration> GetRegisteredRecipes()`
-Returns a list of all currently registered recipes.
+현재 등록된 모든 제작법의 목록을 반환합니다.
 
-=== `FGameObjectRegistration GetResearchTreeRegistrationInfo(TSubclassOf<UFGResearchTree> ResearchTree)`
-Returns the registration info of the given research tree.
+=== `FGameObjectRegistration GetResearchTreeRegistrationInfo(TSubclassOf<UFGResearchTree> 연구트리)`
+주어진 연구 트리의 등록 정보를 반환합니다.
 
-=== `FGameObjectRegistration GetSchematicRegistrationInfo(TSubclassOf<UFGSchematic> Schematic)`
-Returns the registration info of the given schematic.
+=== `FGameObjectRegistration GetSchematicRegistrationInfo(TSubclassOf<UFGSchematic> 도면)`
+주어진 도면의 등록 정보를 반환합니다.
 
-=== `FGameObjectRegistration GetRecipeInfo(TSubclassOf<UFGRecipe> Recipe)`
-Returns the registration info of the given recipe.
+=== `FGameObjectRegistration GetRecipeInfo(TSubclassOf<UFGRecipe> 제작법)`
+주어진 제작법의 등록 정보를 반환합니다.
 
-=== `FGameObjectRegistration GetItemDescriptorInfo(TSubclassOf<UFGItemDescriptor> ItemDescriptor)`
-Returns the registration info of the given item descriptor.
+=== `FGameObjectRegistration GetItemDescriptorInfo(TSubclassOf<UFGItemDescriptor> 아이템디스크립터)`
+주어진 아이템 디스크립터의 등록 정보를 반환합니다.
 
-=== `bool IsItemDescriptorVanilla(TSubclassOf<UFGItemDescriptor> ItemDescriptor)`
-Returns true when given item descriptor is considered vanilla.
+=== `bool IsItemDescriptorVanilla(TSubclassOf<UFGItemDescriptor> 아이템디스크립터)`
+주어진 아이템 디스크립터가 바닐라로 간주될 때 true를 반환합니다.
 
-=== `bool IsRecipeVanilla(TSubclassOf<UFGRecipe> Recipe)`
-Returns true when given recipe is considered vanilla.
+=== `bool IsRecipeVanilla(TSubclassOf<UFGRecipe> 제작법)`
+주어진 제작법이 바닐라로 간주될 때 true를 반환합니다.
 
-=== `bool IsSchematicVanilla(TSubclassOf<UFGSchematic> Schematic)`
-Returns true when given schematic is considered vanilla.
+=== `bool IsSchematicVanilla(TSubclassOf<UFGSchematic> 도면)`
+주어진 도면이 바닐라로 간주될 때 true를 반환합니다.
 
-=== `bool IsResearchTreeVanilla(TSubclassOf<UFGResearchTree> ResearchTree)`
-Returns true when given research tree is considered vanilla.
+=== `bool IsResearchTreeVanilla(TSubclassOf<UFGResearchTree> 연구트리)`
+주어진 연구 트리가 바닐라로 간주될 때 true를 반환합니다.
 
 === `FOnGameObjectRegistered OnRecipeRegistered`
-Called when recipe is registered into content registry.
+제작법이 콘텐츠 레지스트리에 등록될 때 호출됩니다.
 
 === `FOnGameObjectRegistered OnSchematicRegistered`
-Called when schematic is registered into content registry.
+도면이 콘텐츠 레지스트리에 등록될 때 호출됩니다.
 
 === `FOnGameObjectRegistered OnResearchTreeRegistered`
-Called when research tree is registered into the registry.
+연구 트리가 레지스트리에 등록될 때 호출됩니다.
 
 === `FGameObjectRegistration`
 
-Holds basic information about a single content registration entry.
+단일 콘텐츠 등록 항목에 대한 기본 정보를 보유합니다.
 
-This struct is used to hold information about all registered content types,
-so you must cast `UObject*`s into the relevant classes depending on what type of content you're working with
+이 구조체는 모든 등록된 콘텐츠 유형에 대한 정보를 보유하는 데 사용되므로,
+작업 중인 콘텐츠 유형에 따라 ``UObject*``를 관련 클래스에 캐스팅해야 합니다.
 
 ==== `FName RegistrarModReference`
-Mod reference of the plugin which actually performed the object registration. Usually same as OwnedByModReference.
+실제로 객체 등록을 수행한 플러그인의 모드 참조입니다. 일반적으로 OwnedByModReference와 동일합니다.
 
 ==== `FName OwnedByModReference`
-Mod reference of the plugin which owns the actual registered object.
+실제로 등록된 객체를 소유하는 플러그인의 모드 참조입니다.
 
 ==== `UObject* RegisteredObject`
-The object/content this registration info holds registry information about.
+이 등록 정보가 보유하는 레지스트리 정보에 대한 객체/콘텐츠입니다.
 
 === `EGameObjectRegistrationFlags Flags`
-Flags set on this object.
+이 객체에 설정된 플래그입니다.
 
 ==== `TArray<UObject*> ReferencedBy`
-List of all objects that reference this one.
+이 객체를 참조하는 모든 객체의 목록입니다.

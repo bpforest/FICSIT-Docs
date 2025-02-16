@@ -195,7 +195,7 @@ Check out the xref:Development/ModLoader/ModModules.adoc#_menu_world_module_umen
 All mod config structs should now extend xref:Development/ModLoader/Configuration.adoc[UModConfiguration].
 * There is now a system built into SML for making custom key bindings that work with
 the base game key binding menu. Read more about it on the
-xref:Development/ModLoader/Registry.adoc#_mod_key_bind_registry[Registry] page.
+xref:Development/ModLoader/Registry.adoc#_모드_키_할당_레지스트리[Registry] page.
 * Alpakit Overrides/Overwrites have been replaced with
 the new Reflection Blueprint Library functionality,
 and by BP hooking and C++ for additional functionality not covered by BP reflection.
@@ -213,7 +213,7 @@ Development
 
 * xref:Development/ModLoader/ModModules.adoc[Mod Modules]
 * xref:Development/ModLoader/ChatCommands.adoc[Chat Commands]
-* xref:Development/ModLoader/Registry.adoc#_mod_key_bind_registry[Key and Axis Binding System]
+* xref:Development/ModLoader/Registry.adoc#_모드_키_할당_레지스트리[Key and Axis Binding System]
 and xref:Development/ModLoader/Configuration.adoc[Configuration]
 * xref:Development/ModLoader/Subsystems.adoc[Subsystems]
 * xref:Development/ModLoader/Registry.adoc[Registry]

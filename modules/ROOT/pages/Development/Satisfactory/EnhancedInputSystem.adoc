@@ -1,175 +1,175 @@
-= Enhanced Input System
+= 향상된 입력 시스템
 
 [NOTE]
 ====
-This page is a work in progress.
+이 페이지는 작업 중입니다.
 ====
 
-Unreal Engine 5 introduces the Enhanced Input System which assits games in handling user input.
-Satisfactory extends this system to allow for automatic detection of mod keybinds in the game's settings menu
-and automatic integration with the base game's contexts.
+언리얼 엔진 5는 향상된 입력 시스템을 도입하여 게임이 사용자 입력을 처리하는 데 도움을 줍니다.
+새티스팩토리는 이 시스템을 확장하여 게임의 설정 메뉴에서 모드 키 할당을 자동으로 감지하고
+기본 게임의 컨텍스트와 자동으로 통합할 수 있도록 합니다.
 
-The https://docs.unrealengine.com/5.1/en-US/enhanced-input-in-unreal-engine/[Unreal Engine documentation]
-provides a good overview of the system, and you should read that page first,
-but there are a few extra steps required to interface correctly with Satisfactory's version of the system.
+https://docs.unrealengine.com/5.1/en-US/enhanced-input-in-unreal-engine/[언리얼 엔진 문서]는
+시스템에 대한 좋은 개요를 제공하며, 먼저 해당 페이지를 읽는 것이 좋습니다.
+하지만 새티스팩토리의 버전과 올바르게 접촉하기 위해 몇 가지 추가 단계가 필요합니다.
 
-== Introduction
+== 소개
 
-The Enhanced Input System differs from Unreal's previous input system in that it is data-driven.
-Actions that the player can take are defined in Input Action data assets,
-and Input Mapping Context data assets group actions into situations with information on how they are triggered.
+향상된 입력 시스템은 언리얼의 이전 입력 시스템과 달리 데이터 기반입니다.
+플레이어가 취할 수 있는 행동은 입력 행동 데이터 애셋에 정의되며,
+입력 매핑 컨텍스트 데이터 애셋은 행동을 상황에 따라 그룹화하고 어떻게 발동되는지에 대한 정보를 제공합니다.
 
-During gameplay, multiple Input Mapping Contexts are dynamically added or removed
-to process the player's input and determine which Input Actions to fire based on actual keyboard and mouse input.
+게임 플레이 중에 여러 입력 매핑 컨텍스트가 동적으로 추가되거나 제거되어
+플레이어의 입력을 처리하고 실제 키보드 및 마우스 입력에 따라 어떤 입력 행동을 실행할지 결정합니다.
 
-For example, the base game has controls for walking around and driving a train.
-Walking forwards and throttling the speed up on a train are generally both bound to the W key,
-so how does the game know what to do when the player presses W?
-The Enhanced Input System decides by looking at which Mapping Contexts are in play and what their priorities are.
-Separate Input Actions exist for walking as a player and throttling trains.
-The walking action is included in Mapping Context `MC_PlayerMovement` 
-and the train throttle action is included in `MC_Trains`.
-The `MC_Trains` context is only applied to the player when they enter a train and is removed when they exit it.
+예를 들어, 기본 게임에는 돌아다니고 기차를 운전하는 제어가 있습니다.
+앞으로 걷고 기차의 속도를 조절하는 것은 일반적으로 W 키에 할당되어 있습니다.
+그렇다면 플레이어가 W를 누를 때 게임은 어떻게 해야 할까요?
+향상된 입력 시스템은 어떤 매핑 컨텍스트가 활성화되어 있는지와 그 우선 순위를 확인하여 결정합니다.
+걷기와 기차 속도 조절을 위한 별도의 입력 행동이 존재합니다.
+걷기 행동은 `MC_PlayerMovement` 매핑 컨텍스트에 포함되어 있고,
+기차 속도 조절 행동은 `MC_Trains` 에 포함되어 있습니다.
+`MC_Trains` 컨텍스트는 플레이어가 기차에 탑승할 때만 적용되며, 기차에서 내릴 때 제거됩니다.
 
-When the player presses W, the Enhanced Input System checks the contexts in order of priority.
-If `MC_Trains` is active, the throttle action is fired,
-but if `MC_PlayerMovement` is active, the walking action is fired instead.
+플레이어가 W를 누르면 향상된 입력 시스템은 우선 순위에 따라 컨텍스트를 확인합니다.
+`MC_Trains` 가 활성화되어 있으면 속도 조절 행동이 실행되고,
+`MC_PlayerMovement` 가 활성화되어 있으면 걷기 행동이 대신 실행됩니다.
 
-In the real game, there are many more contexts and actions at play,
-and it could be the case that the player movement context is actually removed while the player is in a vehicle.
-Regardless, hopefully this example gives you an idea of how the system works.
+실제 게임에서는 훨씬 더 많은 컨텍스트와 행동이 작용하며,
+플레이어 이동 컨텍스트가 차량에 탑승하는 동안 실제로 제거될 수 있습니다.
+어쨌든 이 예제가 시스템이 어떻게 작동하는지에 대한 아이디어를 제공하길 바랍니다.
 
-== Organization
+== 조직
 
-The existing structure of the Enhanced Input System lends itself well to
-storing Input Action assets in folders with their contexts.
-Base-game input actions and contexts are mostly stored in `/FactoryGame/Inputs/`
-and `/FactoryGame/Interface/UI/Inputs/`.
-You can take inspiration on how your mod should organize its contexts from looking at those folders.
+향상된 입력 시스템의 기존 구조는
+컨텍스트와 함께 입력 행동을 애셋을 폴더에 저장하는 데 적합합니다.
+기본 게임의 입력 행동과 컨텍스트는 대부분 `/FactoryGame/Inputs/` 와
+`/FactoryGame/Interface/UI/Inputs/` 에 저장됩니다.
+모드가 자신의 컨텍스트를 어떻게 구성해야 하는지에 대한 영감을 얻으려면 이러한 폴더를 살펴보십시오.
 
-== Input Actions
+== 입력 행동
 
-Input Action assets can be created in Blueprint via
-`Create Advanced Asset` > `Input` > `Input Action` in a content browser window.
-The Unreal documentation explains how to create them in {cpp}.
+입력 행동 애셋은 블루프린트를 통해 생성할 수 있습니다.
+`고급 애셋 생성` > `입력` > `입력 행동` 을 콘텐츠 브라우저 창에서 선택합니다.
+{cpp}에서 이를 생성하는 방법은 언리얼 문서에 설명되어 있습니다.
 
-Note that Input Actions do not have any definition about what key they are bound to -
-that information is set by the context they are in.
+입력 행동은 어떤 키에 할당되었는지에 대한 정의가 없다는 점을 유의하십시오.
+그 정보는 그들이 있는 컨텍스트에 의해 설정됩니다.
 
-The "Action Description" text will appear to the user when they hover over the binding in the settings menu.
-"Consume Input" should be set to false unless you have a good reason to set it otherwise, since this means it will prevent any other bindings on this key from taking effect if the relevant Context the Action is in has higher priority.
+"행동 설명" 텍스트는 사용자가 설정 메뉴에서 할당 위에 마우스를 올릴 때 나타납니다.
+"입력 소비"는 특별한 이유가 없다면 false로 설정해야 하며, 이는 관련 컨텍스트에 행동이 더 높은 우선 순위를 가질 경우 이 키에 대한 다른 할당이 작동하지 않도록 방지합니다.
 
-Standard 'key presses' usually have a Value Type of `Digital (bool)`
-and have Triggers on `Pressed` and `Released` with a threshold of `0.5`.
-Look at the base game's input actions for other examples.
+표준 '키 누르기'는 일반적으로 `Digital (bool)` 의 값 유형을 가지며,
+`Pressed` 와 `Released` 에 대한 트리거가 있으며 임계값은 `0.5` 입니다.
+기본 게임의 입력 행동을 살펴보면 다른 예제를 확인할 수 있습니다.
 
-== Input Mapping Contexts
+== 입력 매핑 컨텍스트
 
-Satisfactory adds additional functionality to Input Mapping Contexts that are used instead of some of Unreal's fields.
+새티스팩토리는 일부 언리얼 입력란 대신 입력 매핑 컨텍스트에 추가 기능을 추가합니다.
 
-Your Input Mapping Contexts should be of type `FGInputMappingContext` and NOT `InputMappingContext`.
-Note that in order to create one in Blueprint you must use
-`Create Advanced Asset` > `Miscellaneous` > `Data Asset` and search for `FGInputMappingContext`.
-Alternatively, you can copy an existing mapping context and blank it out for your own use,
-for example, you can copy one from the base game or from ExampleMod.
-The Unreal documentation explains how to create them in {cpp},
-but you need to adapt it to use the aforementioned Satisfactory-specific parent class.
+입력 매핑 컨텍스트는 `FGInputMappingContext` 유형이어야 하며 `InputMappingContext` 가 아닙니다.
+블루프린트에서 이를 생성하려면
+`고급 애셋 생성` > `기타` > `데이터 애셋` 을 사용하고 `FGInputMappingContext` 를 검색해야 합니다.
+또는 기존 매핑 컨텍스트를 복사하고 자신의 용도로 비워둘 수 있습니다.
+예를 들어, 기본 게임에서 하나를 복사하거나 ExampleMod에서 복사할 수 있습니다.
+{cpp}에서 이를 생성하는 방법은 언리얼 문서에 설명되어 있지만,
+앞서 언급한 새티스팩토리 전용 부모 클래스를 사용하도록 조정해야 합니다.
 
 [IMPORTANT]
 ====
-Again, make sure that you are using `FGInputMappingContext` and NOT `InputMappingContext`!
+다시 말하지만, `InputMappingContext` 가 아닌 `FGInputMappingContext` 를 사용하고 있는지 확인하십시오!
 ====
 
-Input Mapping Contexts should have all of the relevant Input Actions provided in the Mapping field,
-which is also where you are allowed to assign default key bindings for each action.
-For each Input Action you list, you must:
+입력 매핑 컨텍스트는 매핑 입력란에 모든 관련 입력 행동을 제공해야 하며,
+각 행동에 대한 기본 키를 할당할 수 있는 곳이기도 합니다.
+나열한 각 입력 행동에 대해 다음을 수행해야 합니다:
 
-- Enable "Is Player Mappable" (unless you don't want it to be edited by the user, but 99% of the time you do)
-- Under "Player Mappable Options":
-    - Provide a "Name", otherwise the bind will not be user editable and attempting to look up its display name will fail.
-    - Set a "Display Name", which is the text that will appear to users when they view or search for the action in the settings menu.
-    - Note: the "Display Category" field here is ignored by Satisfactory.
+- "Is Player Mappable"을 활성화하십시오(사용자가 재할당하는 것을 막기 위함이 아니라면, 99%의 상황에서는 그래야 합니다).
+- "Player Mappable Options"에서:
+    - "Name"을 제공하십시오. 그렇지 않으면 할당이 사용자 편집 가능하지 않으며, 표시 이름을 찾으려 할 때 실패합니다.
+    - "Display Name"을 설정하십시오. 이는 사용자가 설정 메뉴에서 행동을 보거나 검색할 때 나타나는 텍스트입니다.
+    - 참고: 여기서 "Display Category" 필드는 새티스팩토리에 의해 무시됩니다.
 
-Satisfactory adds its own custom fields to Input Mapping Contexts that appear in the "Mapping" category.
+새티스팩토리는 "Mapping" 범주에서 입력 매핑 컨텍스트에 맞춤 입력란을 추가합니다.
 
-- The "Display Name" is the name of the section heading the Actions will be grouped under in the settings menu.
-This should usually be your mod's user friendly name.
-- "Menu Priority" presumably allows for reordering categories, but is `0.0` for all base-game Contexts and has not been tested.
-- "Parent Context" is described in detail below.
+- "Display Name"은 설정 메뉴에서 행동이 그룹화되는 섹션 제목의 이름입니다.
+이는 일반적으로 모드의 사용자 친화적인 이름이어야 합니다.
+- "Menu Priority"는 범주의 재정렬을 허용하는 것으로 보이지만, 모든 기본 게임 컨텍스트에 대해 `0.0` 이며 테스트되지 않았습니다.
+- "Parent Context"는 아래에서 자세히 설명합니다.
 
-Once an input action is added to a Context and the Context is properly formatted
-with a Display Name it will appear in the settings menu.
-You do not need to register your actions nor contexts anywhere else.
+입력 행동이 컨텍스트에 추가되고 컨텍스트가 적절하게 형식화되면
+설정 메뉴에 나타납니다.
+행동이나 컨텍스트를 다른 곳에 등록할 필요는 없습니다.
 
-If your mod has relatively few key binds you will probably only have one or two contexts for your mod:
-one that will be applied when the player is moving about as normal
-and one for when they are in the user interface.
+모드에 상대적으로 적은 수의 키 할당이 있는 경우, 모드에는 아마도 하나 또는 두 개의 컨텍스트만 있을 것입니다:
+플레이어가 정상적으로 이동할 때 적용되는 하나와
+사용자 인터페이스에 있을 때 적용되는 하나입니다.
 
 [id="ParentContext"]
-=== Parent Context
+=== 부모 컨텍스트
 
-Parent Contexts are a feature provided by Satisfactory for usage by mods.
-We can't add our own Actions to the existing Contexts that are shipped with the base game,
-but we can instead specify a Parent Context for our own Contexts.
-When the Context we specified as a parent is applied by the game,
-our context will also be applied,
-and vice versa when the parent context is removed.
+부모 컨텍스트는 모드에서 사용할 수 있는 새티스팩토리의 기능입니다.
+기본 게임과 함께 제공되는 기존 컨텍스트에 자신의 행동을 추가할 수는 없지만,
+대신 자신의 컨텍스트에 대한 부모 컨텍스트를 지정할 수 있습니다.
+게임에서 부모로 지정한 컨텍스트가 적용되면,
+우리의 컨텍스트도 적용되며,
+부모 컨텍스트가 제거되면 그 반대도 마찬가지입니다.
 
-If you want the context to be available:
+컨텍스트를 사용 가능하게 하려면:
 
-- All the time, even when in interaction widgets such as the inventory,
-  use `MC_PlayerController`. Be careful with this!
-  If you use this context, you should not have Consume Input enabled for the listed actions
-  because it will block other keybinds from working.
-- Whenever the player can interact with buildings and their held equipment,
-  use `MC_PlayerActions`
-- Whenever the player is in a building interaction widget,
-  use `MC_UserInterfaceBase`
-- Whenever the player is in their inventory,
-  use `MC_Window`
-- In a special condition, such as when the build gun is open in a certain mode,
-  look at the existing contexts to see which is the best choice
-- In an even more specific condition, then you may wish to use
-  link:#ManualRegisterContext[manual mapping context registration] instead.
+- 매 번, 상호작용 위젯(예: 인벤토리)에서도 사용 가능하게 하려면
+  `MC_PlayerController` 를 사용하십시오. 주의하십시오!
+  이 컨텍스트를 사용하면 나열된 행동에 대해 입력 소비가 활성화되어서는 안 되며,
+  그렇지 않으면 다른 키 할당이 작동하지 않게 됩니다.
+- 플레이어가 건물 및 보유 장비와 상호작용할 수 있을 때마다
+  `MC_PlayerActions` 를 사용하십시오.
+- 플레이어가 건물 상호작용 위젯에 있을 때
+  `MC_UserInterfaceBase` 를 사용하십시오.
+- 플레이어가 인벤토리에 있을 때
+  `MC_Window` 를 사용하십시오.
+- 특정 조건에서, 예를 들어 빌드건이 특정 모드로 열려 있을 때,
+  기존 컨텍스트를 살펴보고 가장 적합한 선택을 하십시오.
+- 더 구체적인 조건에서는
+  link:#ManualRegisterContext[수동 매핑 컨텍스트 등록]을 사용할 수 있습니다.
 
-== Responding to Input Actions in Code
+== 입력 행동에 대한 코드 응답
 
-It is suggested that your code respond to input actions in either an actor
-(such as a xref:Development/ModLoader/Subsystems.adoc[Subsystems]), a widget,
-or a custom actor component on the player character or controller attached
-via xref:Development/ModLoader/SimpleConstructionScript.adoc[Simple Construction Script (SCS) Hooks].
+사용자 코드는 xref:Development/ModLoader/Subsystems.adoc[서브시스템]과 같은 액터,
+위젯 또는 xref:Development/ModLoader/SimpleConstructionScript.adoc[단순 구성 스크립트(SCS) 훅]을 통해
+연결된 플레이어 캐릭터 또는 컨트롤러의 맞춤 액터 구성 요소 중
+하나에서 입력 작업에 응답하는 것이 좋습니다.
 
-On some actors, such as Subsystems,
-you may need to call Player Controller instance > EnableInput for them to process user input.
+일부 액터(예: 서브시스템)에서는 Player Controller Instance > EnableInput을 호출해야
+사용자 입력을 처리할 수 있습니다.
 
 [id="RespondInputActionsBlueprint"]
-=== Blueprint
+=== 블루프린트
 
-In order to create the Blueprint event node for responding to an input action,
-you may have to turn off "Context Sensitive" in the blueprint action selector for it to appear in the search results.
+입력 행동에 응답하기 위한 블루프린트 이벤트 노드를 생성하려면,
+블루프린트 행동 선택기에서 "컨텍스트에 따라"를 끄고 검색 결과에 나타나도록 해야 할 수 있습니다.
 
-Type the name of the input action to create the Event node for responding to it.
+입력 행동의 이름을 입력하여 해당 이벤트 노드를 생성하십시오.
 
 [id="RespondInputActionsCpp"]
 === {cpp}
 
-The Unreal documentation explains how to handle responding to Input Actions in {cpp},
-except it assumes we have control over the player controller, which modders do not.
-Thankfully Coffee Stain has created a delegate `AFGCharacterPlayer::OnPlayerInputInitialized`
-which mods can bind to.
-Each time `SetupPlayerInputComponent` is called
-the delegate will be called, giving you a chance to register your custom inputs.
+언리얼 문서는 {cpp}에서 입력 행동에 응답하는 방법을 설명합니다.
+단, 플레이어 컨트롤러에 대한 제어가 있다고 가정하는데, 모더는 그렇지 않습니다.
+다행히도 커피 스테인은 모드가 할당할 수 있는 `AFGCharacterPlayer::OnPlayerInputInitialized`
+델리게이트를 생성했습니다.
+`SetupPlayerInputComponent` 가 호출될 때마다
+델리게이트가 호출되어 맞춤 입력을 등록할 기회를 제공합니다.
 
-==== Gameplay Tags
+==== 게임 플레이 태그
 
-If you have a large number of input actions, it may be helpful to use Gameplay Tags to reference them.
+입력 행동이 많을 경우, 게임 플레이 태그를 사용하여 이를 참조하는 것이 유용할 수 있습니다.
 
-To use them, create a custom GameInstanceModule class in {cpp} containing a `TMap<FGameplayTag, UInputAction*>`
-and use your new class as the parent of your "real" GameInstanceModule blueprint asset:
+이를 사용하려면, {cpp}에서 `TMap<FGameplayTag, UInputAction*>` 를 포함하는 맞춤 GameInstanceModule 클래스를 생성하고,
+이 새로운 클래스를 "실제" GameInstanceModule 블루프린트 자산의 부모로 사용하십시오:
 
 // cspell:ignore MYMOD
 ```cpp
-// Includes left out
+// 포함된 부분 생략
 
 UCLASS(Blueprintable)
 class MYMOD_API UMyModGameInstanceModule : public UGameInstanceModule {
@@ -180,77 +180,77 @@ public:
 };
 ```
 
-Make sure to add calls to super functions if you add any additional blueprint code in this asset.
-Then, to use the bindings, you would do as follows:
+추가 블루프린트 코드를 이 애셋에 추가하는 경우, super 함수 호출을 추가해야 합니다.
+그런 다음 할당을 사용하려면 다음과 같이 합니다:
 
 ```cpp
-UGameInstance* GameInstance = GetWorld()->GetGameInstance(); // May vary depending on the class you're using this from 
+UGameInstance* GameInstance = GetWorld()->GetGameInstance(); // 사용하는 클래스에 따라 다를 수 있습니다.
 UGameInstanceModuleManager* GameInstanceModuleManager = GameInstance->GetSubsystem<UGameInstanceModuleManager>();
 UMyModGameInstanceModule* MyModGameInstanceModule = Cast<UMyModGameInstanceModule>(GameInstanceModuleManager ->FindModule(TEXT("MyMod")));
 EnhancedInputComponent->BindAction(MyModGameInstanceModule->InputActionTagBindings[FGameplayTag::RequestGameplayTag(TEXT("Tag.Name"))], ETriggerEvent::Triggered, this, &Class::Function);
 ```
 
-== Reading Input Action Information
+== 입력 행동 정보 읽기
 
-In order to retrieve the name(s) of the key(s) bound to an action for display to the user,
-call the FGInputLibrary function `Get Input Action Name as Text`
-on a Player Controller instance passing in the Name given to the action in its Mapping Context.
-This will automatically handle multi-key binds and display them in a combined format like `Left Alt + Q`.
-Note that if the mapping context is not registered at call time you will get back `UNKNOWN_KEY()`.
+사용자에게 표시할 입력 행동에 할당된 키의 이름을 검색하려면,
+플레이어 컨트롤러 인스턴스에서 FGInputLibrary 함수 `Get Input Action Name as Text` 를 호출하고,
+그 행동의 매핑 컨텍스트에서 주어진 이름을 전달합니다.
+이것은 자동으로 다중 키 할당을 처리하고 `왼쪽 Alt + Q` 와 같은 결합 형식으로 표시합니다.
+매핑 컨텍스트가 호출 시 등록되지 않은 경우 `UNKNOWN_KEY()` 를 반환합니다.
 
-If you need to retrieve the exact key structures involved in an input action,
-call the FGInputLibrary function `Get Current Mapping for Action`
-on a Player Controller instance passing in the Name given to the action in its Mapping Context.
-Be sure to check the boolean return value for success/failure status.
+입력 행동에 관련된 정확한 키 구조를 검색해야 하는 경우,
+플레이어 컨트롤러 인스턴스에서 FGInputLibrary 함수 `Get Current Mapping for Action` 을 호출하고,
+그 행동의 매핑 컨텍스트에서 주어진 이름을 전달합니다.
+성공/실패 상태에 대한 부울 반환 값을 확인해야 합니다.
 
 [id="ManualRegisterContext"]
-== Manual Mapping Context Registration
+== 수동 매핑 컨텍스트 등록
 
-The primary method of registering your Contexts is usually via the
-link:#ParentContext[Parent Context] system,
-however, is is possible to manually manage the registration of your context.
+컨텍스트를 등록하는 주요 방법은 일반적으로
+link:#ParentContext[부모 컨텍스트] 시스템을 통해 이루어지지만,
+컨텍스트 등록을 수동으로 관리하는 것도 가능합니다.
 
-You can get a reference to the EnhancedInputLocalPlayerSubsystem via a Get node on a player controller instance.
-From there, you can call `AFGPlayerController::SetMappingContextBound` to control when your context is applied.
+EnhancedInputLocalPlayerSubsystem에 대한 참조를 얻으려면 플레이어 컨트롤러 인스턴스에서 Get 노드를 사용하십시오.
+그런 다음 `AFGPlayerController::SetMappingContextBound` 를 호출하여 컨텍스트가 적용되는 시점을 제어할 수 있습니다.
 
-You should not use Add Mapping Context or Remove Mapping Context because those do not interact with Satisfactory's
-parent context system, meaning your contexts cannot be extended as described in the[Parent Context section.
+Add Mapping Context 또는 Remove Mapping Context를 사용해서는 안 됩니다.
+이것은 새티스팩토리의 부모 컨텍스트 시스템과 상호작용하지 않기 때문에, 설명된 대로 컨텍스트를 확장할 수 없습니다.
 
-== Chorded Actions
+== 연속 입력 행동
 
-TODO ask D4rk, required to do Ctrl/Alt/Shift + key
+TODO: D4rk한테 물어봐서 Ctrl/Alt/Shift + 키 알아내기
 
-== Handling Input in User Interfaces
+== 사용자 인터페이스에서 입력 처리
 
-Sometimes a modded user interface requires extra Actions to be bound while it is active.
-An example of this is the Workbench UI in the base game,
-which binds the spacebar to holding down the craft button.
+때로는 모드된 사용자 인터페이스는 위젯이 활성화되어 있을 때 추가 행동을 할당해야 합니다.
+이에 대한 예는 기본 게임의 작업대 UI입니다.
+이 UI는 스페이스 바를 누르고 있을 때 제작 버튼을 누르는 것과 할당합니다.
 
-Create a Context and Actions for use when the widget is open.
-As long as your modded interface widget extends Widget Usable Base, context management is handled for you.
-Simply specify the MC_UserInterfaceBase context and your own custom context
-in the widget's `mInputMappingContexts` field
-and enable `mInputGateDelayOpen`.
+위젯이 열려 있을 때 사용할 컨텍스트와 행동을 위한 컨텍스트를 생성하십시오.
+모드된 인터페이스 위젯이 Widget Usable Base를 확장하는 한, 컨텍스트 관리는 자동으로 처리됩니다.
+위젯의 `mInputMappingContexts` 입력란에
+MC_UserInterfaceBase 컨텍스트와 맞춤 컨텍스트를 지정하고
+`mInputGateDelayOpen` 을 활성화하십시오.
 
-An example of this can be found in `Widget_InputExample` in the ExampleMod.
+이에 대한 예는 ExampleMod의 `Widget_InputExample` 에서 찾을 수 있습니다.
 
 [IMPORTANT]
 =====
-If you override the Destruct method in your widget, make sure to call the parent implementation
-or the widget will not properly unregister the input contexts!
+Destruct 메서드를 오버라이드하는 경우, 위젯이 올바르게
+입력 컨텍스트를 등록 해제하도록 부모 구현을 호출하는지 확인하십시오!
 =====
 
-If your interface does not extend Widget Usable base you will have to
-link:#ManualRegisterContext[manually manage context registration],
-handle your input in a subsystem instead,
-or have the context always registered via parent context `MC_PlayerController`
-and decide based on additional conditions whether to handle the input or not.
+모드된 인터페이스가 Widget Usable base를 확장하지 않는 경우
+link:#ManualRegisterContext[수동으로 컨텍스트 등록을 관리]해야 하거나,
+서브시스템에서 입력을 처리해야 하거나,
+`MC_PlayerController` 부모 컨텍스트를 사용하여 컨텍스트를 항상 등록하고
+추가 조건에 따라 입력을 처리할지 여부를 결정해야 합니다.
 
-== Debugging
+== 디버깅
 
-Unfortunately the very useful `showdebug enhancedinput` console command
-described in the
-https://docs.unrealengine.com/5.1/en-US/enhanced-input-in-unreal-engine/#debugcommands[Unreal documentation]
-is not available in shipping builds.
-However, the command `showdebug INPUT` is available and displays a reduced set of information,
-such as which mapping contexts are currently bound.
+불행히도 매우 유용한
+`showdebug enhancedinput` 콘솔 명령어는
+https://docs.unrealengine.com/5.1/en-US/enhanced-input-in-unreal-engine/#debugcommands[언리얼 문서]에
+설명된 대로 배포 빌드에서는 사용할 수 없습니다.
+하지만 `showdebug INPUT` 명령어는 사용 가능하며,
+적용된 매핑 컨텍스트와 같은 정보를 줄임없이 표시합니다.

@@ -1,35 +1,35 @@
 = SML
 
-The Satisfactory Mod Loader provides framework for all the stuff you as modder might encounter
-but Unreal doesn't provide help with.
+새티스팩토리 모드 로더는 모더가 마주칠 수 있는 모든 것에 대한 프레임워크를 제공합니다.
+하지만 언리얼에서는 도움을 제공하지 않습니다.
 
-== Mod "Types"
+== 모드 "유형"
 
-All Satisfactory mods are full Unreal Engine plugins.
-There are three main ways to create a mod with this approach,
-each with advantages and disadvantages.
+모든 새티스팩토리 모드는 완전한 언리얼 엔진 플러그인입니다.
+이 접근 방식을 사용하여 모드를 생성하는 주요 방법은 세 가지가 있으며,
+각각 장단점이 있습니다.
 
 * {blank}
-Blueprint Mods::
-  Blueprint mods consist of Unreal Blueprint assets which can contain data (like meshes, sounds, textures)
-  and code written in Unreal Blueprint scripting.
-  SML provides a number of utilities and entry points to enable blueprint mods to function.
-  Blueprint mods can do a lot, but they can generally only access fields and methods have been made blueprint accessible from the {cpp} side.
+블루프린트 모드::
+  블루프린트 모드는 데이터(메쉬, 사운드, 텍스처 등)를 포함할 수 있는 언리얼 블루프린트 애셋과
+  언리얼 블루프린트 스크립팅으로 작성된 코드를 포함합니다.
+  SML은 블루프린트 모드가 작동할 수 있도록 여러 유틸리티와 진입점을 제공합니다.
+  블루프린트 모드는 많은 작업을 수행할 수 있지만, 일반적으로 {cpp} 측에서 블루프린트 접근 가능하도록 설정된 필드와 메서드만 접근할 수 있습니다.
 +
 * {blank}
-{cpp} Mods::
-  Writing a mod in Unreal {cpp} provides deep access to the Satisfactory runtime
-  and is usually more performant than blueprint code because it does not need to go through the overhead of the blueprint VM.
-  However, it's a pain to reference blueprint assets (a frequent requirement for working with base game content)
-  in a non-brittle manner, and working with widgets is agonizingly verbose.
-  Performing delayed actions is also much more involved than in Blueprint scripting.
+{cpp} 모드::
+  언리얼 {cpp}로 모드를 작성하면 새티스팩토리 런타임에 깊이 접근할 수 있으며,
+  일반적으로 블루프린트 코드보다 성능이 더 좋습니다. 왜냐하면 블루프린트 가상 머신의 오버헤드를 거치지 않아도 되기 때문입니다.
+  그러나 블루프린트 애셋을 참조하는 것은(기본 게임 콘텐츠 작업 시 자주 요구됨) 비틀리지 않게 하는 것이 어려우며,
+  위젯 작업은 매우 장황합니다.
+  지연된 작업을 수행하는 것도 블루프린트 스크립팅보다 훨씬 더 복잡합니다.
 +
 * {blank}
-Hybrid Blueprint and {cpp} Mods::
-  Writing a mod with {cpp} does not mean replacing all of your Blueprint assets with {cpp} code.
-  The best mods are implemented with a careful combination of both {cpp} and Blueprint code
-  since each side covers for the other's disadvantages.
-  For example, you can implement references to blueprint assets and widgets on the 
-  However, changes to your mod's class {cpp} structure will require closing the editor and rebuilding Development Editor
-  for the blueprint side to recognize the changes.
+하이브리드 블루프린트 및 {cpp} 모드::
+  {cpp}로 모드를 작성한다고 해서 모든 블루프린트 애셋을 {cpp} 코드로 대체해야 하는 것은 아닙니다.
+  최고의 모드는 {cpp}와 블루프린트 코드를 신중하게 조합하여 구현됩니다.
+  각 측면이 서로의 단점을 보완하기 때문입니다.
+  예를 들어, 블루프린트 애셋과 위젯에 대한 참조를 구현할 수 있습니다.
+  그러나 모드의 클래스 {cpp} 구조에 대한 변경 사항은 에디터를 닫고 개발 에디터를 재구성해야
+  블루프린트 측에서 변경 사항을 인식할 수 있습니다.
 +

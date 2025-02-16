@@ -1,20 +1,21 @@
-= Extended Attribute Provider
+= 확장 속성 제공자
 
-Introduced in SML3.8, `ISMLExtendedAttributeProvider` is an interface
-that allows any modded asset to offer additional data to other mod systems without involving a specific class in the hierarchy.
+SML3.8에서 도입된 ``ISMLExtendedAttributeProvider``는
+모든 모드 애셋이 특정 클래스 계층 구조에 관여하지 않고도
+다른 모드 시스템에 추가 데이터를 제공할 수 있도록 하는 인터페이스입니다.
 
-Consider the base game's `FGItemDescriptorNuclearFuel` and `FGItemDescriptorBiomass` classes.
-Nuclear Fuel adds new 2 properties to the standard item descriptor, while Biomass adds none.
-However, because they are implemented as full classes, it's impossible to have an item which is both nuclear fuel and biomass.
+기본 게임의 `FGItemDescriptorNuclearFuel` 및 `FGItemDescriptorBiomass` 클래스를 고려해 보십시오.
+핵 연료는 표준 아이템 디스크립터에 새로운 2개의 속성을 추가하는 반면, 바이오매스는 추가하지 않습니다.
+그러나 전체 클래스로 구현되기 때문에 핵 연료와 바이오매스 모두를 가진 아이템을 가질 수는 없습니다.
 
-As an interface, the Extended Attribute Provider can be used without locking you out of using another class as the parent.
+인터페이스로서 확장 속성 제공자는 다른 클래스를 부모로 사용하는 것을 잠그지 않고 사용할 수 있습니다.
 
-== Usage
+== 사용법
 
-To use the interface, implement it on your asset.
+인터페이스를 사용하려면 애셋에 구현하십시오.
 
-For blueprints, this is done in `Class Settings` > (Interfaces subheading) `Implemented Interfaces` > `Add`.
+블루프린트에서는 `클래스 설정` > (인터페이스 하위 제목) `구현된 인터페이스` > ``추가``에서 수행됩니다.
 
-== Features
+== 기능
 
-As of SML3.8, the only system that uses this interface is the xref:Development/ModLoader/ContentTagRegistry.adoc[Content Tag Registry].
+SML3.8 기준으로 이 인터페이스를 사용하는 유일한 시스템은 xref:Development/ModLoader/ContentTagRegistry.adoc[콘텐츠 태그 레지스트리]입니다.

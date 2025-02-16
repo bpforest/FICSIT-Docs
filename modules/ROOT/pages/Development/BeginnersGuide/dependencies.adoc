@@ -88,7 +88,7 @@ Visual Studio의 설치 및 다운로드는 오래 걸릴 수 있습니다.
 [TIP]
 ====
 {cpp} 모더들 사이에서 아주 인기있는 Visual Studio의 대체제는
-https://www.jetbrains.com/lp/rider-unreal/[Rider for Unreal Engine]입니다.
+https://www.jetbrains.com/lp/rider-unreal/[언리얼 엔진용 Rider]입니다.
 사용을 고려하고 있다면, 언리얼의 자체 컴파일러 시스템에서 사용되는 Visual Studio와 필요한 VS-{cpp} 패키지가
 여전히 설치되어 있는지 확인하고,
 `.sln` 프로젝트 모델을 사용해야 합니다.
@@ -104,7 +104,7 @@ Windows에서 리눅스로 크로스 컴파일하려면
 이 파일들의 다운로드 링크는 언리얼 문서 페이지의
 https://dev.epicgames.com/documentation/en-us/unreal-engine/linux-development-requirements-for-unreal-engine?application_version=5.3#nativetoolchain[리눅스용 크로스 컴파일]에서 찾을 수 있습니다.
 
-현재 새티스팩토리는 Coffee Stain Studios에서 제공하는 Unreal Engine 5.3.2의 맞춤형 변경을 사용하고 있습니다.
+현재 새티스팩토리는 커피 스테인 스튜디오에서 제공하는 언리얼 엔진 5.3.2의 맞춤 변형 버전을 사용하고 있습니다.
 따라서 필요한 Cross-Compile Toolchain 버전은 `-v22` 또는 `clang-16.0.6-based` 입니다.
 
 위 링크에서 올바른 크로스 컴파일 툴체인을 다운로드하고 실행하여 관련 파일을 설치하십시오.

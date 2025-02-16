@@ -50,11 +50,10 @@ code:not([class]) {
 }
 
 /* 굵은 글꼴 */
-.doc strong {
-    font-family: "NanumSquareNeoExtraBold";
-}
-
-.is-current-page>.nav-link, .is-current-page>.nav-text {
+.doc strong,
+.navbar-brand .navbar-item:first-child,
+.is-current-page>.nav-link,
+.is-current-page>.nav-text {
     font-family: "NanumSquareNeoExtraBold";
 }
 

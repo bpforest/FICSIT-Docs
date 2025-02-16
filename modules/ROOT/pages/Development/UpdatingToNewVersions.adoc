@@ -1,349 +1,349 @@
-= Updating your Mod and Starter Project
+= 모드와 시작 프로젝트 업데이트하기
 
 [IMPORTANT]
 ====
-Make sure to check the docs sidebar to see if there's an Updating guide written for the version you're updating to!
-It will have special directions and information that will save you a lot of time.
+업데이트하려는 버전에 대한 전용 업데이트 가이드가 문서 사이드바에 있는지 확인하십시오!
+해당 가이드에는 많은 시간을 절약할 수 있는 특별한 지침과 정보가 포함되어 있습니다.
 
-They're near the top of the Development section, usually directly above this page's listing.
+이러한 가이드는 일반적으로 개발 섹션 상단에 있으며, 보통 이 페이지 바로 위에 있습니다.
 ====
 
-When Coffee Stain updates Satisfactory,
-changes can occur to game internals that require mod developers to update their mods.
+커피 스테인이 새티스팩토리를 업데이트할 때,
+게임 내부가 변경되어 모드 개발자들이 모드를 업데이트해야 할 수 있습니다.
 
-This page will cover the general process of updating a mod development environment from one version to another,
-and things to look out for when seeing if your mod still works after transitioning.
+이 페이지에서는 모드 개발 환경을 한 버전에서 다른 버전으로 업데이트하는 일반적인 과정과,
+전환 후 모드가 여전히 작동하는지 확인할 때 주의해야 할 사항을 다룹니다.
 
-== Why Mods Need to Update
+== 모드가 업데이트가 필요한 이유
 
-Whether or not a game update or SML update requires a mod update depends on a number of factors:
+게임 업데이트나 SML 업데이트로 인해 모드 업데이트가 필요한지 여부는 여러 요소에 따라 달라집니다:
 
-- What game systems the mod interacts with
-- What game systems the game update modified
-- What files Coffee Stain changed in the background,
-  even if they weren't mentioned in the patch notes
-- Unreal Engine version transitions
-- Significant changes to SML APIs, usually denoted with a major version number bump
+- 모드가 상호작용하는 게임 시스템
+- 게임 업데이트가 수정한 게임 시스템
+- 커피 스테인이 패치 노트에 언급되지 않았더라도
+  백그라운드에서 변경한 파일들
+- 언리얼 엔진 버전 전환
+- SML API의 중요한 변경사항, 주로 메이저 버전 번호 증가로 표시됨
 
-If the systems a mod is working with wasn't touched by an update,
-it could end up working without any changes.
+모드가 사용하는 시스템이 업데이트에 영향을 받지 않았다면,
+변경 없이도 작동할 수 있습니다.
 
-== Avoid Breaking in the First Place
+== 처음부터 문제 방지하기
 
-There are a few measures you can take in order to decrease the chances of your mod breaking on an update.
+모드가 업데이트 시 깨지는 것을 방지하기 위해 취할 수 있는 몇 가지 조치가 있습니다.
 
-- Avoid header edits if at all possible.
-  Instead, use xref:Development/ModLoader/AccessTransformers.adoc[Access Transformers].
-- Use already-established systems to implement behavior.
-  For example, use the SML Keybinds system instead of writing your own keybind handling logic.
-  Then, if it breaks, there are more people on board to fix it, rather than just you.
-- Consider implementing some functionality in Blueprints,
-  since they are generally less likely to break when header updates occur.
-  This comes at a nonzero performance cost,
-  but that discussion is out of the scope of this docs page.
-  Consider the case of https://ficsit.app/mod/UtilityMod[Pak Utility Mod],
-  which has required extremely few updates in the scale of things,
-  partly because it uses no {cpp} code.
+- 가능한 한 헤더 수정을 피하십시오.
+  대신 xref:Development/ModLoader/AccessTransformers.adoc[접근 변환기]를 사용하십시오.
+- 이미 확립된 시스템을 사용하여 기능을 구현하십시오.
+  예를 들어, 자체 키 할당 처리 논리를 작성하는 대신 SML 키 할당 시스템을 사용하십시오.
+  그러면 문제가 발생했을 때 혼자가 아닌 더 많은 사람들이 해결할 수 있습니다.
+- 일부 기능을 블루프린트로 구현하는 것을 고려하십시오.
+  헤더 업데이트가 발생할 때 일반적으로 덜 깨질 수 있기 때문입니다.
+  이는 약간의 성능 비용이 발생하지만,
+  이 문서의 범위를 벗어나는 논의입니다.
+  https://ficsit.app/mod/UtilityMod[Pak Utility Mod]를 참고해 보십시오.
+  {cpp} 코드를 전혀 사용하지 않기 때문에
+  매우 적은 업데이트만 필요했습니다.
 
-== How to Tell Something Broke
+== 문제 발생 여부 확인 방법
 
-Sometimes, game systems will change in a way that breaks your mod,
-but not enough to cause it to crash on startup,
-or crash at all during normal gameplay.
-For example, if a base-game material or texture file you were depending on is moved or removed,
-it will silently be replaced with a default or None value!
+때로는 게임 시스템이 모드를 망가뜨리는 방식으로 변경될 수 있지만,
+시작 시 충돌이 발생하거나 일반적인 게임플레이 중에
+충돌이 발생할 정도는 아닐 수 있습니다.
+예를 들어, 의존하고 있던 기본 게임의 머티리얼이나 텍스처 파일이 이동되거나 제거된 경우,
+기본값이나 None 값으로 조용히 대체될 것입니다!
 
-In cases like this, it can be hard to track down these failures,
-especially as the scope of a mod grows to have more content and work with more game systems.
+이러한 경우, 특히 모드의 범위가 커져서 더 많은 콘텐츠를 가지고 더 많은 게임 시스템과
+작업하게 되면 이러한 실패를 추적하기가 어려울 수 있습니다.
 
-Here are some approaches you can follow to detect problems caused by updates.
+업데이트로 인한 문제를 감지하기 위해 따를 수 있는 몇 가지 접근 방법이 있습니다.
 
 * {blank}
 +
-Listen to Your Users::
-  Make sure that there's an easy way for users to contact you with problems if/when they find them.
-  This could involve listing your Discord tag on the mod page,
-  setting up and linking your Github issues page, etc.
-  https://github.com/budak7273/ArmorModules/blob/master/.github/ISSUE_TEMPLATE/bug_report.md[Here]
-  is an example Github issue template you may find useful.
+사용자의 의견 듣기::
+  사용자가 문제를 발견했을 때 쉽게 연락할 수 있는 방법이 있는지 확인하십시오.
+  모드 페이지에 디스코드 태그를 기재하거나,
+  깃허브 이슈 페이지를 설정하고 링크하는 등의 방법이 있습니다.
+  https://github.com/budak7273/ArmorModules/blob/master/.github/ISSUE_TEMPLATE/bug_report.md[여기]에
+  유용할 수 있는 깃허브 이슈 템플릿 예시가 있습니다.
 * {blank}
 +
-Keep an Old Game Version On Hand::
-  If your mod has complicated behaviors,
-  it may be beneficial to make a local copy of the previous version of the game before updating.
-  If you feel like something changed,
-  you can follow the same procedures in each version side-by-side to find discrepancies.
-  Also, if an asset you need was removed during the update,
-  you may be able to go back and extract it from the old copy of the game.
+이전 게임 버전 보관하기::
+  모드가 복잡한 동작을 가지고 있다면,
+  업데이트하기 전에 이전 버전의 게임의 로컬 복사본을 만드는 것이 유용할 수 있습니다.
+  무언가가 변경된 것 같다면,
+  각 버전에서 동일한 절차를 나란히 따라가면서 차이점을 찾을 수 있습니다.
+  또한 업데이트 중에 필요한 애셋이 제거된 경우,
+  이전 게임 복사본에서 추출할 수 있습니다.
   {blank} +
-  The process for doing this will be described in more detail in another section.
+  이 과정은 다른 섹션에서 더 자세히 설명될 것입니다.
 * {blank}
 +
-Run Standard-ish Tests::
-  Consider writing
-  https://en.wikipedia.org/wiki/Behavior-driven_development[behavior-driven development]
-  inspired tests for yourself (or generous users) to manually perform after an update.
-  By walking through the procedures that a new user would follow to start working with your mod,
-  or through common interactions a user would have,
-  you can find issues before your users report them to you.
+표준 테스트 실행하기::
+  업데이트 후 수동으로 수행할
+  https://en.wikipedia.org/wiki/Behavior-driven_development[행동 주도 개발]
+  기반 테스트를 작성하는 것을 고려하십시오.
+  새로운 사용자가 모드 작업을 시작하거나
+  일반적인 상호작용을 하는 절차를 따라가면서,
+  사용자가 보고하기 전에 문제를 찾을 수 있습니다.
   {blank} +
   {blank} +
-  For example, with the PowerSuit Modules mod,
-  a good test would be to craft a new suit,
-  install the Jetpack Module,
-  spawn in a specific amount of fuel items,
-  and fly to the top of a fixed height structure,
-  recording fuel levels before and after flight.
-  This imitates a common user activity,
-  and performing it would help detect any differences in the various mod systems between updates.
+  예를 들어, PowerSuit Modules 모드의 경우,
+  좋은 테스트는 새 슈트를 제작하고,
+  Jetpack Module을 설치하고,
+  특정 양의 연료 아이템을 생성하고,
+  고정된 높이의 구조물 꼭대기까지 날아가면서
+  비행 전후의 연료 수준을 기록하는 것입니다.
+  이는 일반적인 사용자 활동을 모방하며,
+  이를 수행하면 업데이트 간의 다양한 모드 시스템의 차이점을 감지하는 데 도움이 됩니다.
 
-== Before you Proceed
+== 진행하기 전에
 
-Below is a sequence of steps to follow while updating if you want to be as careful as possible.
+아래는 최대한 신중하게 업데이트하고 싶을 때 따라야 할 단계들입니다.
 
-Depending on the size of the update,
-you may be able to skip some of the steps,
-but it's better to play it safe than regret not making a useful, time-saving backup!
+업데이트의 규모에 따라 일부 단계를 건너뛸 수 있지만,
+유용하고 시간을 절약할 수 있는 백업을 만들지 않는 것보다는
+안전하게 진행하는 것이 좋습니다!
 
-Storage space is cheap, your time is not.
+저장 공간은 저렴하지만, 당신의 시간은 그렇지 않습니다.
 
-=== Back Up Your Game
+=== 게임 백업하기
 
-As described in the 'Keep an Old Game Version On Hand' bullet,
-by keeping an old install of the game on hand,
-you can check behaviors or retrieve assets that may have been deleted during an update.
+'이전 게임 버전 보관하기' 항목에서 설명한 대로,
+이전 게임 설치본을 보관하면 동작을 확인하거나
+업데이트 중에 삭제되었을 수 있는 애셋을 검색할 수 있습니다.
 
-In order to do this, simply make a copy of your entire game install directory,
-and put it somewhere that Steam/Epic won't try to meddle with it.
+이를 위해서는 전체 게임 설치 디렉터리를 복사하여
+스팀/에픽이 건드리지 않을 곳에 보관하면 됩니다.
 
-Note that you can only do this _before_ updating your copy of the game -
-outside of switching between the two branches, Early Access and Experimental,
-you can't go backwards in update history.
-This is a great reason to *turn off auto-update*,
-so that you can make a copy before Steam/Epic pulls out the rug under you.
+게임 복사본을 업데이트하기 _전에만_ 이 작업을 할 수 있다는 점에 유의하십시오.
+앞서 해보기와 실험적 두 분기 간의 전환을 제외하고는
+업데이트 기록에서 이전으로 돌아갈 수 없습니다.
+이것이 *자동 업데이트를 끄는* 좋은 이유입니다.
+스팀/에픽이 당신의 발밑에서 땅을 빼가기 전에 복사본을 만들 수 있습니다.
 
-There is an involved process for downloading older versions of the game from Steam,
-as described in the xref:faq.adoc#PlayOlderVersion_SteamCMD[FAQ],
-but it is time consuming and you'll save a lot of time by making backups instead.
+xref:faq.adoc#PlayOlderVersion_SteamCMD[FAQ]에 설명된 대로
+스팀에서 이전 버전의 게임을 다운로드하는 복잡한 과정이 있지만,
+시간이 많이 소요되므로 대신 백업을 만드는 것이 시간을 많이 절약할 수 있습니다.
 
-After making a copy, you are safe to update your game install as you normally would.
+복사본을 만든 후에는 일반적인 방법으로 게임 설치를 안전하게 업데이트할 수 있습니다.
 
-You can use the launch scripts in the
-xref:Development/TestingResources.adoc[Testing/Multiplayer Testing]
-page to launch this separate copy of the game
-while still having the new copy set up (even running at the same time)
-on Steam/Epic.
+xref:Development/TestingResources.adoc[테스트/멀티플레이 테스트] 페이지의
+실행 스크립트를 사용하여 이 별도의
+게임 복사본을 실행할 수 있으며,
+스팀/에픽에서 새 복사본을 설정한 상태에서도(동시에 실행 가능)
+사용할 수 있습니다.
 
-=== Back Up Your Old Engine
+=== 이전 엔진 백업하기
 
-When Coffee Stain updates to a newer version of Unreal Engine,
-or in the occasion that the SML team patches the engine for various reasons,
-you will have to update your locally installed Editor to build mods for the new version.
+커피 스테인이 새로운 버전의 언리얼 엔진으로 업데이트하거나,
+SML 팀이 다양한 이유로 엔진을 패치하는 경우,
+새 버전용 모드를 빌드하기 위해 로컬에 설치된 에디터를 업데이트해야 합니다.
 
-We *strongly* suggest that you keep the old editor installed
-until you are done porting your mods so that you can reference settings,
-blueprint fields, and code you have written that may have been removed
-or made impossible to open due to the update.
+모드 포팅을 완료할 때까지 이전 에디터를
+설치된 상태로 유지할 것을 **강력히 권장**합니다.
+그래야 설정, 블루프린트 필드, 업데이트로 인해 제거되거나
+열 수 없게 된 코드를 참조할 수 있습니다.
 
-In order to have both the old and new version of the editor installed on your computer,
-you should do the following:
+컴퓨터에 이전 버전과 새 버전의 에디터를 모두 설치하려면
+다음을 수행해야 합니다:
 
-1. Navigate to your editor install folder
-(probably `C:\Program Files\Unreal Engine - CSS`)
-2. Run `SetupScripts\Unregister.bat`
-(might need to do this as admin)
-3. Rename the install folder to
-`C:\Program Files\Unreal Engine - CSS_Previous-SML-Version-Here\` or similar
-4. Run `SetupScripts\Register.bat` from the new location
-(might need to do this as admin)
-5. Now, to launch the old editor, you can run
-`C:\Program Files\Unreal Engine - CSS_Previous-SML-Version-Here\Engine\Binaries\Win64\UE4Editor.exe`
-6. Install the new editor build from the directions in the next section
-7. Optionally, edit your Start Menu shortcuts
-(probably in `C:\ProgramData\Microsoft\Windows\Start Menu\Programs`)
-so that you have one for the old editor and one for the new editor
+1. 에디터 설치 폴더로 이동
+(아마도 `C:\Program Files\Unreal Engine - CSS`)
+2. `SetupScripts\Unregister.bat` 실행
+(관리자 권한 필요할 수 있음)
+3. 설치 폴더 이름을
+`C:\Program Files\Unreal Engine - CSS_이전-SML-버전-입력\` 등으로 변경
+4. 새 위치에서 `SetupScripts\Register.bat` 실행
+(관리자 권한 필요할 수 있음)
+5. 이제 이전 에디터를 실행하려면
+`C:\Program Files\Unreal Engine - CSS_이전-SML-버전-입력\Engine\Binaries\Win64\UE4Editor.exe` 실행
+6. 다음 섹션의 지침에 따라 새 에디터 빌드 설치
+7. 선택적으로, 시작 메뉴 바로 가기 편집
+(아마도 ``C:\ProgramData\Microsoft\Windows\Start Menu\Programs``에 있음)
+이전 에디터용과 새 에디터용 바로 가기를 각각 만들기
 
 [NOTE]
 ====
-If you have previously moved the editor folder without doing the `Unregister.bat` step,
-you may experience issues with the editor thinking Unreal projects are an incorrect version.
-To resolve this, perform the Unregister step for the old editor version.
-This should not be required for the new editor version.
+이전에 `Unregister.bat` 단계 없이 에디터 폴더를 이동한 경우,
+에디터가 언리얼 프로젝트가 잘못된 버전이라고 생각하는 문제가 발생할 수 있습니다.
+이를 해결하려면 이전 에디터 버전에 대해 Unregister 단계를 수행하십시오.
+새 에디터 버전에는 이 작업이 필요하지 않아야 합니다.
 
-You may have to edit a registry key entry to fix this - ask on the Discord for help with this.
+이를 수정하기 위해 레지스트리 키 항목을 편집해야 할 수 있습니다. 디스코드에서 도움을 요청하십시오.
 ====
 
-== Updating Dependencies
+== 의존성 업데이트하기
 
-You may need to install updated project dependencies depending on what has changed in the update.
-The version-specific upgrading guide page (check the sidebar)
-will tell you where in the docs to find the new version numbers.
+업데이트에서 변경된 사항에 따라 프로젝트 의존성을 업데이트해야 할 수 있습니다.
+버전별 업그레이드 가이드 페이지(사이드바 확인)에서
+문서의 어디에서 새 버전 번호를 찾을 수 있는지 알려줄 것입니다.
 
-* Engine version
-  ** Updated by Coffee Stain.
-  The modding team has custom engine edits to apply on top of the files they provide,
-  which will sometimes be updated even when Coffee Stain has not published a new version.
-* Wwise version
-  ** Updated by Coffee Stain, usually when engine versions are updated.
-* CLang toolchain version
-  ** Updated by Coffee Stain, usually when engine versions are updated.
-* Starter Project contents
-  ** Always changes with every SML version, since the Starter Project contains the SML source code.
+* 엔진 버전
+  ** 커피 스테인이 업데이트합니다.
+  모딩 팀은 그들이 제공하는 파일 위에 적용할 맞춤 엔진 수정사항이 있으며,
+  커피 스테인이 새 버전을 게시하지 않았더라도 때때로 업데이트됩니다.
+* Wwise 버전
+  ** 커피 스테인이 업데이트하며, 보통 엔진 버전이 업데이트될 때 함께 업데이트됩니다.
+* 클랭 툴체인 버전
+  ** 커피 스테인이 업데이트하며, 보통 엔진 버전이 업데이트될 때 함께 업데이트됩니다.
+* 시작 프로젝트 내용
+  ** 시작 프로젝트가 SML 소스 코드를 포함하고 있기 때문에 모든 SML 버전과 함께 항상 변경됩니다.
 
-== Install the New Engine
+== 새 엔진 설치하기
 
-New editor versions are usually downloaded from
-https://github.com/satisfactorymodding/UnrealEngine/releases[the GitHub releases page],
-but you should keep your eyes on the Discord
-to see if a specific branch or download link is mentioned instead.
-The specific files to download are described in the
-xref:Development/BeginnersGuide/dependencies.adoc#_download_the_custom_engine[Dependencies guide].
+새 에디터 버전은 일반적으로
+https://github.com/satisfactorymodding/UnrealEngine/releases[깃허브 릴리스 페이지]에서 다운로드하지만,
+특정 분기나 다운로드 링크가 언급되어 있는지
+디스코드를 주시해야 합니다.
+다운로드할 특정 파일은
+xref:Development/BeginnersGuide/dependencies.adoc#_맞춤형_엔진_다운로드[의존성 가이드]에 설명되어 있습니다.
 
-Remember, if you see a 404 page following that link,
-the page is not dead, you need to log into the right GitHub account.
-More info on this can be found
-xref:Development/BeginnersGuide/dependencies.adoc#CustomEngine[here].
+해당 링크를 따라갔을 때 404 페이지가 표시되면,
+페이지가 죽은 것이 아니라 올바른 깃허브 계정으로 로그인해야 합니다.
+이에 대한 자세한 정보는
+xref:Development/BeginnersGuide/dependencies.adoc#CustomEngine[여기]에서 찾을 수 있습니다.
 
-== Fixing the Start Menu Shortcuts (Optional)
+== 시작 메뉴 바로 가기 수정하기(선택사항)
 
-If you typically launch the editor via the Windows Start Menu
-you will likely have to repair the shortcuts there after moving engine folders around.
-You can open the folder containing the shortcuts by searching for "Unreal Engine - CSS" in the start menu,
-right clicking on the shortcut, then choosing `Open File Location`.
-From there you can edit the shortcut's properties to configure its target, name, and launch location.
+일반적으로 Windows 시작 메뉴를 통해 에디터를 실행하는 경우
+엔진 폴더를 이동한 후 바로 가기를 수정해야 할 것입니다.
+시작 메뉴에서 "Unreal Engine - CSS"를 검색하고, 바로 가기를 우클릭 후
+``파일 위치 열기``를 선택하여 바로 가기가 포함된 폴더를 열 수 있습니다.
+거기서 바로 가기의 속성을 편집하여 대상, 이름 및 실행 위치를 구성할 수 있습니다.
 
-You may also want to assign custom icons to each shortcut.
-This will change the appearance of the editor in the taskbar,
-making it easier to distinguish between multiple versions of the editor running at once.
-You can create your own icons or use 
-https://discord.com/channels/555424930502541343/689188183048585244/1043643638577631263[these ones from on the Discord].
-You may have to restart your computer for the icon changes to take effect,
-as Windows aggressively caches icons.
+각 바로 가기에 맞춤 아이콘을 할당할 수도 있습니다.
+이렇게 하면 작업 표시줄에서 에디터의 모양이 변경되어
+여러 버전의 에디터를 동시에 실행할 때 구별하기 쉬워집니다.
+자신만의 아이콘을 만들거나
+https://discord.com/channels/555424930502541343/689188183048585244/1043643638577631263[디스코드에 있는 것들]을 사용할 수 있습니다.
+Windows가 아이콘을 적극적으로 캐시하기 때문에
+아이콘 변경 사항을 적용하려면 컴퓨터를 다시 시작해야 할 수 있습니다.
 
-== Preparing to Update your Starter Project
+== 시작 프로젝트 업데이트 준비하기
 
-Depending on how you downloaded your modding starter project,
-one of these approaches will be easier than the rest,
-or you may _have_ to use one to get what you want.
+모딩 시작 프로젝트를 다운로드한 방법에 따라,
+이러한 접근 방식 중 하나가 다른 것보다 쉽거나,
+원하는 것을 얻기 위해 하나를 _사용해야_ 할 수 있습니다.
 
-You should read both options in full to make an informed decision.
+정보에 입각한 결정을 내리기 위해 두 옵션을 모두 완전히 읽어보아야 합니다.
 
-=== Option 1: Fresh Starter Project
+=== 옵션 1: 새로운 시작 프로젝트
 
-If you have a small, self contained mod,
-or the changes to SML or game systems are immense,
-it may be easier to simply set up a new starter project
-than bother trying to update your existing one.
+모드가 작고 자체적으로 포함되어 있거나,
+SML이나 게임 시스템의 변경사항이 엄청나다면,
+기존 프로젝트를 업데이트하려고 하는 것보다
+새로운 시작 프로젝트를 설정하는 것이 더 쉬울 수 있습니다.
 
-Note that getting a new starter project doesn't mean starting over on your mod -
-you still keep all of your mod-specific files.
+새로운 시작 프로젝트를 얻는다고 해서 모드를 처음부터 다시 시작한다는 의미는 아닙니다.
+모드별 파일은 모두 유지됩니다.
 
-If you have lots of project-level specific settings,
-such as special packaging rules or editor configurations, this may not be ideal.
+특별한 패키징 규칙이나 에디터 구성과 같은 프로젝트 수준의 특정 설정이 많다면,
+이상적이지 않을 수 있습니다.
 
-Perform the project setup steps described in the
-xref:Development/BeginnersGuide/index.adoc[Getting Started guide],
-which includes getting the new SML version and new Starter Project,
-as well as integrating a new Wwise version.
+xref:Development/BeginnersGuide/index.adoc[시작하기 가이드]에
+설명된 프로젝트 설정 단계를 수행하십시오.
+여기에는 새로운 SML 버전과 새로운 시작 프로젝트를 얻고,
+새로운 Wwise 버전을 통합하는 것이 포함됩니다.
 
-Your mod's files are probably all within its plugin folder,
-so you can simply transfer over that entire folder to the Mods folder of the new project.
-Remember to
-xref:Development/BeginnersGuide/project_setup.adoc#_visual_studio_파일_생성[regenerate Visual Studio project files]
-and build after you do this.
+모드의 파일은 아마도 모두 플러그인 폴더 내에 있을 것이므로,
+해당 폴더 전체를 새 프로젝트의 Mods 폴더로 간단히 전송할 수 있습니다.
+이 작업을 수행한 후에는
+xref:Development/BeginnersGuide/project_setup.adoc#_visual_studio_파일_생성[Visual Studio 프로젝트 파일을 재생성]하고
+빌드하는 것을 잊지 마십시오.
 
-==== Bring Over Editor Configs
+==== 에디터 구성 가져오기
 
-Editor settings are stored at the project level, and if you have any special ones,
-you probably don't want to lose them when you update.
-They are stored in the `/Config/` folder.
-For example, Action Mappings are stored in `DefaultInput.ini`.
-You should git diff the files to make sure
-that you are adding any new fields that were introduced by the update,
-while still keeping the old values you want.
+에디터 설정은 프로젝트 수준에서 저장되며, 특별한 설정이 있다면
+업데이트할 때 잃고 싶지 않을 것입니다.
+이들은 `/Config/` 폴더에 저장됩니다.
+예를 들어, 행동 매핑은 ``DefaultInput.ini``에 저장됩니다.
+업데이트로 인해 도입된 새 필드를 추가하면서도
+유지하고 싶은 이전 값을 계속 유지하고 있는지 확인하기 위해
+파일들을 git diff해야 합니다.
 
-=== Option 2: Replace Changed Files
+=== 옵션 2: 변경된 파일 교체하기
 
-If you have a lot of mods set up in one project,
-the changes to SML or game systems are small,
-or you want to preserve your _project's_ git history,
-(not mod, that would still be preserved by Option 1)
-this may be the route to update your existing project.
+한 프로젝트에 많은 모드가 설정되어 있거나,
+SML이나 게임 시스템의 변경사항이 작거나,
+_프로젝트의_ 깃 기록을 보존하고 싶다면
+(모드는 아님, 그것은 옵션 1로도 보존됨)
+이것이 기존 프로젝트를 업데이트하는 방법일 수 있습니다.
 
-After performing any of these approaches,
-you may or may not have to integrate Wwise again.
-You can find directions for that
-xref:Development/BeginnersGuide/project_setup.adoc#_setting_up_wwise[here].
+이러한 접근 방식 중 어느 것을 수행한 후에도,
+Wwise를 다시 통합해야 할 수도 있고 아닐 수도 있습니다.
+그에 대한 지침은
+xref:Development/BeginnersGuide/project_setup.adoc#_wwise_설정[여기]에서 찾을 수 있습니다.
 
-How to proceed from here depends on how you originally downloaded the starter project.
+여기서 어떻게 진행할지는 원래 시작 프로젝트를 어떻게 다운로드했는지에 따라 다릅니다.
 
-No matter which of the below situations applies to you,
-you should absolutely *make a backup copy of the old project before trying to move anything*.
-Even if you are a git wizard,
-it's a lot simpler to completely toss a broken copy instead of trying to patch it up again.
+아래 상황 중 어느 것이 적용되든 관계없이,
+*무언가를 이동하려고 시도하기 전에 이전 프로젝트의 백업 복사본을 만들어야 합니다*.
+깃 마법사라고 해도,
+망가진 복사본을 다시 패치하려고 하는 것보다 완전히 버리는 것이 훨씬 간단합니다.
 
-==== Option 2A: You Cloned or Forked the Starter Project
+==== 옵션 2A: 시작 프로젝트를 복제하거나 포크했음
 
-You will have to pull (if you cloned) or merge (if you forked)
-the changes made in the main SML repository.
-You may also have to switch branches and/or check out a newer commit.
-Check the xref:Development/BeginnersGuide/StarterProject/StarterProjectViaClone.adoc[Project Setup page]
-to determine what branch/commit you should be on.
+메인 SML 저장소에서 변경사항을
+pull(클론한 경우)하거나 merge(포크한 경우)해야 합니다.
+분기를 전환하거나 새로운 커밋을 체크아웃해야 할 수도 있습니다.
+어떤 분기/커밋을 사용해야 하는지 결정하려면
+xref:Development/BeginnersGuide/StarterProject/StarterProjectViaClone.adoc[프로젝트 설정 페이지]를 확인하십시오.
 
-There are a few files that will likely have been automatically modified,
-and you will have to discard or stash your own changes
-in order to merge in the upstream changes without conflict.
+자동으로 수정된 파일이 몇 개 있을 것이며,
+충돌 없이 업스트림 변경사항을 병합하려면
+자신의 변경사항을 버리거나 스태시해야 할 것입니다.
 
-They include, but are not necessarily limited to:
+여기에는 다음이 포함되지만 이에 국한되지는 않습니다:
 
 - FactoryGame.uproject
-- `/Configs/` folder contents
-  (see the link:#_bring_over_editor_configs[Bring Over Editor Configs] section)
-- `/Content/` folder contents
-  (see the link:#_dealing_with_the_content_folder[Dealing With the Content Folder]
-  and link:#_watch_out_complete_starter_projects_and_version_control[Watch Out: Complete Starter Projects and Version Control] sections)
+- `/Configs/` 폴더 내용
+  (link:#_에디터_구성_가져오기[에디터 구성 가져오기] 섹션 참조)
+- `/Content/` 폴더 내용
+  (link:#_콘텐츠_폴더_다루기[콘텐츠 폴더 다루기]
+  및 link:#_주의_완전한_시작_프로젝트와_버전_관리[주의: 완전한 시작 프로젝트와 버전 관리] 섹션 참조)
 
-Once you have stashed or discarded your changes to these files,
-you should be able to pull/merge in the files.
+이러한 파일에 대한 변경사항을 스태시하거나 버린 후에는
+파일들을 pull/merge할 수 있어야 합니다.
 
-You may wish to delete some project temporary folders, especially after an engine update, to save on disk space.
+특히 엔진 업데이트 후에는 디스크 공간을 절약하기 위해 일부 프로젝트 임시 폴더를 삭제하고 싶을 수 있습니다.
 
-- `<project directory>/Intermediate/`
-- `<project directory>/Build/`
-- `<project directory>/Binaries/`
-- `<your mod's directory>/Saved/`
+- `<프로젝트 경로>/Intermediate/`
+- `<프로젝트 경로>/Build/`
+- `<프로젝트 경로>/Binaries/`
+- `<모드 경로>/Saved/`
 
-===== Dealing With the Content Folder
+===== 콘텐츠 폴더 다루기
 
-The content folder will be regenerated with most game updates
-so that stubs are in the correct places.
+스텁이 올바른 위치에 있도록 대부분의 게임 업데이트에서
+콘텐츠 폴더가 재생성될 것입니다.
 
-Most Unreal Engine asset files are raw binary files, which means git diffing them is difficult.
-Panakotta has directions on using UE as diff tool
-https://gist.github.com/Panakotta00/c90d1017b89b4853e8b97d13501b2e62[here],
-but in the case of almost all base game assets,
-you probably just want to throw out the old ones and bring in the new ones instead.
+대부분의 언리얼 엔진 애셋 파일은 raw 바이너리 파일이므로 git diff하기가 어렵습니다.
+Panakotta는 UE를 diff 도구로 사용하는 방법에 대한 지침을
+https://gist.github.com/Panakotta00/c90d1017b89b4853e8b97d13501b2e62[여기]에 제공했지만,
+거의 모든 기본 게임 애셋의 경우,
+아마도 이전 것들을 버리고 새로운 것들을 가져오고 싶을 것입니다.
 
-This will involve a lot of changed files,
-but since the starter project ships with only stubs, they are tiny in file size.
+이는 많은 파일 변경을 포함하지만,
+시작 프로젝트는 스텁만 제공하므로 파일 크기는 매우 작습니다.
 
-==== Option 2B: You Downloaded a Zip of the Starter Project
+==== 옵션 2B: 시작 프로젝트의 Zip 파일을 다운로드했음
 
-Git is a powerful tool, and although it might take a bit to learn,
-it definitely pays off in the long run.
-Consider cloning the project instead to make future updates easier.
+깃은 강력한 도구이며, 배우는 데 시간이 좀 걸릴 수 있지만,
+장기적으로는 확실히 가치가 있습니다.
+향후 업데이트를 더 쉽게 하기 위해 프로젝트를 복제하는 것을 고려하십시오.
 
-You will have to delete all of the old files and folders and copy in the new ones.
-It's important to delete the entire directory of old files first
-to ensure that you don't accidentally leave something around that was deleted in the update.
+모든 이전 파일과 폴더를 삭제하고 새로운 것들을 복사해야 합니다.
+업데이트에서 삭제된 것을 실수로 남겨두지 않도록
+먼저 이전 파일의 전체 디렉터리를 삭제하는 것이 중요합니다.
 
-You can use https://github.com/satisfactorymodding/SatisfactoryModLoader/compare/[GitHub's branch/tag compare functionality]
-to see what changed.
-Just keep in mind that it can't preview uasset files for you.
+https://github.com/satisfactorymodding/SatisfactoryModLoader/compare/[깃허브의 분기/태그 비교 기능]을 사용하여
+무엇이 변경되었는지 볼 수 있습니다.
+단, uasset 파일은 미리보기할 수 없다는 점을 유의하십시오.
 
-As a general overview, changes could include any or all of the following:
+일반적인 개요로, 변경사항에는 다음 중 일부 또는 전부가 포함될 수 있습니다:
 
-- `/Content/` stub files
+- `/Content/` 스텁 파일
 - `/Source/`
 - `/Config/`
 - `/Plugins/`
@@ -355,252 +355,252 @@ As a general overview, changes could include any or all of the following:
 - `FactoryGame.uproject`
 - `.gitignore`
 
-==== Option 2C: You Have a Project Level Repo
+==== 옵션 2C: 프로젝트 수준 저장소가 있음
 
-Possible reasons to have a project-level repo include
-working with lots of copyrighted files,
-having a complete starter project,
-working with a team of people on multiple interdependent mods at once,
-or having custom project settings you want to preserve.
+프로젝트 수준 저장소를 가지고 있는 가능한 이유로는
+저작권이 있는 파일 작업,
+완전한 시작 프로젝트 보유,
+팀으로 여러 개의 상호 의존적인 모드 작업,
+또는 보존하고 싶은 맞춤 프로젝트 설정 보유 등이 있습니다.
 
-If you have a project level git repo,
-your project git history is probably vastly different from the base SML repo,
-so trying to merge in the changes is likely infeasible.
+프로젝트 수준 깃 저장소가 있다면,
+프로젝트 깃 기록이 기본 SML 저장소와 매우 다를 것이므로
+변경사항을 병합하려는 시도는 아마도 불가능할 것입니다.
 
-You'll have to go through most of the same process as the zip project download.
+zip 파일 프로젝트 다운로드와 거의 동일한 과정을 거쳐야 합니다.
 
-== Updating a Complete Starter Project
+== 완전한 시작 프로젝트 업데이트하기
 
-If you have generated a complete starter project using the
-xref:CommunityResources/AssetToolkit.adoc[Asset Toolkit],
-you will need to do so again to get the updated base-game files,
-since numerous assets will have changed,
-even if not mentioned in the patch notes.
+xref:CommunityResources/AssetToolkit.adoc[애셋 툴킷]을 사용하여
+완전한 시작 프로젝트를 생성한 경우,
+패치 노트에 언급되지 않았더라도
+많은 애셋이 변경되었을 것이므로
+업데이트된 기본 게임 파일을 얻기 위해 다시 생성해야 합니다.
 
-You should delete your entire previous base-game Content folder,
-as well as the stubs from the starter project you may have copied in
-during earlier update steps.
-It's important to fully replace the folder to be sure you don't have any no-longer-existing assets in there,
-which could lead to confusion or name conflicts when trying to use them in your mods.
+이전 기본 게임 콘텐츠 폴더 전체와
+이전 단계에서 복사했을 수 있는 시작 프로젝트의
+스텁을 삭제해야 합니다.
+더 이상 존재하지 않는 애셋이 남아있어 모드에서 사용하려 할 때 혼란이나
+이름 충돌이 발생하지 않도록 폴더를 완전히 교체하는 것이 중요합니다.
 
-Remember to copy back in AngryBeaver's recreated assets.
-The process for doing this is covered on the Asset Toolkit page.
+AngryBeaver의 재생성된 애셋을 다시 복사하는 것을 잊지 마십시오.
+이 과정은 애셋 툴킷 페이지에서 다룹니다.
 
-Also, make sure to download an updated version of the Asset Toolkit mods,
-because they may have been patched since you last generated your project.
+또한, 프로젝트를 마지막으로 생성한 이후 패치되었을 수 있으므로
+애셋 툴킷 모드의 업데이트된 버전을 다운로드해야 합니다.
 
-=== Watch Out: Complete Starter Projects and Version Control
+=== 주의: 완전한 시작 프로젝트와 버전 관리
 
-If you are using a project-level git repo and you have generated a complete starter project,
-updates present an additional risk.
+프로젝트 수준 깃 저장소를 사용하고 있고 완전한 시작 프로젝트를 생성한 경우,
+업데이트는 추가적인 위험을 제시합니다.
 
-You must be careful with how you bring the regenerated assets into version control.
-GitHub (and most other VC platforms) has a size limit on how big they will alow an individual commit to be,
-and hitting this limit is quite feasible when bringing in this many assets.
+버전 관리에 재생성된 애셋을 가져올 때 주의해야 합니다.
+깃허브(및 대부분의 다른 버전 관리 플랫폼)은 개별 커밋의 크기 제한이 있으며,
+이렇게 많은 애셋을 가져올 때 이 제한에 도달하는 것이 충분히 가능합니다.
 
-Before committing the regenerated assets,
-consider running a TreeSize or WinDirStat analysis
-to find out which directories are the largest
-so that you can split up the changes into separately committed and pushed units.
+재생성된 애셋을 커밋하기 전에,
+TreeSize나 WinDirStat 분석을 실행하여
+가장 큰 디렉터리를 찾아
+변경사항을 별도로 커밋하고 푸시할 단위로 나눌 수 있도록 하는 것을 고려하십시오.
 
-If you accidentally make a commit too large, you will have to use
-https://stackoverflow.com/questions/6217156/break-a-previous-commit-into-multiple-commits[git rebase]
-to break it apart into multiple smaller commits and make it possible to push your repo again.
+실수로 너무 큰 커밋을 만든 경우,
+https://stackoverflow.com/questions/6217156/break-a-previous-commit-into-multiple-commits[git rebase]를
+사용하여 여러 개의 작은 커밋으로 나누고 저장소를 다시 푸시할 수 있게 해야 합니다.
 
-== Making Sure the Starter Project Update Worked
+== 시작 프로젝트 업데이트가 제대로 되었는지 확인하기
 
-Now that you've brought in the updated files,
-you should try to build and open the editor to make sure it worked correctly.
+이제 업데이트된 파일을 가져왔으니,
+에디터를 빌드하고 열어서 제대로 작동하는지 확인해야 합니다.
 
-This step allows you to catch any problems that could have occurred now,
-as opposed to later when you're trying to fix your mods,
-and it's unclear what the cause is.
+이 단계에서 문제를 발견하면,
+나중에 모드를 수정하려고 할 때 발생할 수 있는
+원인이 불분명한 문제를 미리 잡을 수 있습니다.
 
-Temporarily move out all items from your `Mods/` folder
-except those that came with the Starter Project
-(Alpakit, ExampleMod, SML, SMLEditor),
-xref:Development/BeginnersGuide/project_setup.adoc#_visual_studio_파일_생성[regenerate Visual Studio project files],
-and rebuild the project.
-This ensures that any potential problems with your mods don't affect the build process.
+시작 프로젝트와 함께 제공된
+것들(알파킷, ExampleMod, SML, SMLEditor)을 제외한
+모든 항목을 `Mods/` 폴더에서 임시로 이동하고,
+xref:Development/BeginnersGuide/project_setup.adoc#_visual_studio_파일_생성[Visual Studio 프로젝트 파일을 재생성]하고,
+프로젝트를 다시 빌드하십시오.
+이렇게 하면 모드의 잠재적 문제가 빌드 과정에 영향을 미치지 않습니다.
 
-If it worked, you should be able to build and open the editor.
+제대로 되었다면, 에디터를 빌드하고 열 수 있어야 합니다.
 
-If Unreal complains about your project being compiled for a different version of the editor,
-close down the Editor entirely - do not use any of Unreal's prompts to port the project.
-Instead, open your `FactoryGame.uproject` and modify the `EngineAssociation` field to match the updated version number.
+언리얼이 프로젝트가 다른 버전의 에디터용으로 컴파일되었다고 알린다면,
+에디터를 완전히 종료하여 언리얼의 프로젝트 포팅 프롬프트를 사용하지 마십시오.
+대신, ``FactoryGame.uproject``를 열고 `EngineAssociation` 필드를 업데이트된 버전 번호와 일치하도록 수정하십시오.
 
-After you're sure the editor is working with just SML loaded,
-move on to the next sections.
+SML만 로드된 상태에서 에디터가 작동하는지 확인한 후,
+다음 섹션으로 진행하십시오.
 
 == 하나의 프로젝트에서 여러 모드 처리
 
-If you develop multiple mods in the same project,
-odds are that one of them will not work after an update.
+한 프로젝트에서 여러 모드를 개발하는 경우,
+업데이트 후에 그 중 하나가 작동하지 않을 가능성이 있습니다.
 
-Even if the mods are totally separate from each other,
-Unreal could prevent you from packaging any mods at all while a non-working mod is also present.
-You may need to temporarily move out some of the troublesome mods to allow building others.
+모드들이 서로 완전히 분리되어 있더라도,
+작동하지 않는 모드가 있는 동안에는 언리얼이 어떤 모드도 패키징하지 못하게 할 수 있습니다.
+다른 모드를 빌드할 수 있도록 문제가 있는 모드를 임시로 이동해야 할 수 있습니다.
 
-One way to do this is to rename the uplugin file to `<ModReference>.uplugin.disabled`
-to stop Unreal from loading it.
-You will probably have to regenerate the Visual Studio project files if you do this.
-Directions for that can be found
-xref:Development/BeginnersGuide/project_setup.adoc#_visual_studio_파일_생성[here].
+이를 위한 한 가지 방법은 uplugin 파일의 이름을 ``<모드참조>.uplugin.disabled``로
+변경하여 언리얼이 로드하지 않도록 하는 것입니다.
+이렇게 하면 Visual Studio 프로젝트 파일을 재생성해야 할 것입니다.
+그 방법은
+xref:Development/BeginnersGuide/project_setup.adoc#_visual_studio_파일_생성[여기]에서 찾을 수 있습니다.
 
-Since the uplugin file is the only file you're changing,
-this approach lets you turn off mods without causing a torrent of Git file changes.
+uplugin 파일만 변경하므로, 이 접근 방식을 사용하면
+깃 파일 변경의 홍수를 일으키지 않고도 모드를 비활성화할 수 있습니다.
 
-== Preparing to Update a Mod
+== 모드 업데이트 준비하기
 
-If your mod has dependencies, update them first.
-Consider disabling the dependent mod via the approach described above
-until the dependency is ready to prevent its errors from blocking packaging of the dependency.
+모드에 의존성이 있다면, 먼저 그것들을 업데이트하십시오.
+의존성이 준비될 때까지 의존 모드를 위에서 설명한 방법으로 비활성화하여
+오류가 의존성 패키징을 차단하는 것을 방지하는 것을 고려하십시오.
 
-If you keep your mods in separate plugin repos,
-consider creating a branch or tag on each named after the game version the code supported
-(ex. Update8) so that you (and others) can refer back to it later if needed.
+모드를 별도의 플러그인 저장소에 보관하는 경우,
+코드가 지원하는 게임 버전의 이름을 따서 각각에 분기나 태그를 만드는 것을 고려하십시오(예: Update8).
+그러면 나중에 필요할 때 당신(과 다른 사람들)이 참조할 수 있습니다.
 
-== The Cycle of Updating
+== 업데이트 주기
 
-Now that you have everything installed and backups taken,
-your updating process will cycle through the following steps:
+이제 모든 것이 설치되고 백업이 만들어졌으니,
+업데이트 과정은 다음 단계를 반복할 것입니다:
 
-1. Attempt to 
-xref:Development/BeginnersGuide/project_setup.adoc#_project_compilation[compile the Visual Studio project]
-2. Deal with Visual Studio build errors by:
+1. xref:Development/BeginnersGuide/project_setup.adoc#_프로젝트_컴파일[Visual Studio 프로젝트 컴파일]
+시도
+2. Visual Studio 빌드 오류 해결:
 
-- Adding/removing xref:Development/ModLoader/AccessTransformers.adoc[Access Transformers]
-  (note, also see link:#_무시된_접근_변환기[Seemingly Ignored Access Transformers] section)
-- Rewriting or To-Do commenting out broken functionality in your mod to account for codebase changes
-- Asking for help on the Discord
+- xref:Development/ModLoader/AccessTransformers.adoc[접근 변환기] 추가/제거
+  (참고: link:#_무시된_것처럼_보이는_접근_변환기[무시된 것처럼 보이는 접근 변환기] 섹션도 참조)
+- 코드베이스 변경을 반영하기 위해 모드의 깨진 기능을 재작성하거나 할 일 주석 처리
+- 디스코드에서 도움 요청
 
-3. Repeat steps 1-2 until the project builds successfully for both Development Editor and Shipping
-4. Open the Unreal Engine Editor for your project
-5. Run Alpakit on SML to install the latest version of SML in your copy of the game, or install it via SMM.
-   Problems in your own project files could prevent packaging from succeeding - if you encounter any, see Step 8.
-6. Use the Alpakit Edit Mod wizard, or warning buttons in the Alpakit Release tab,
-   to update your mod's GameVersion field and SML dependency version.
-7. Run Alpakit on your mod to see what fails (or maybe it works the first time!)
-8. Deal with errors that Alpakit encounters. Possible problems include:
+3. 프로젝트가 Development Editor와 Shipping 모두에 대해 성공적으로 빌드될 때까지 1-2단계 반복
+4. 프로젝트용 언리얼 엔진 에디터 열기
+5. 최신 버전의 SML을 게임 복사본에 설치하기 위해 SML에 대해 알파킷 실행, 또는 SMM을 통해 설치.
+   자체 프로젝트 파일의 문제로 인해 패키징이 실패할 수 있음. 문제가 발생하면 8단계 참조
+6. 알파킷 모드 편집 마법사나 알파킷 배포 탭의 경고 버튼을 사용하여
+   모드의 GameVersion 필드와 SML 의존성 버전 업데이트
+7. 모드에 대해 알파킷을 실행하여 무엇이 실패하는지 확인(또는 첫 시도에 성공할 수도 있음!)
+8. 알파킷이 마주하는 오류 해결. 가능한 문제들:
 
-- Blueprints that 'just' need to be opened and recompiled
-  (see link:#_beware_of_changed_files[Beware of Changed Files] section)
-- Missing assets.
-  Look back in your backups to find out what they were,
-  try to find their new locations,
-  and replace them or extract the files from your old game copy if needed.
-- No-longer-available function calls.
-  To-Do comment them out for later you, or try to replace them.
-- Something else entirely. Consider asking for help on the Discord.
+- 열고 다시 '컴파일만' 하면 되는 블루프린트
+  (link:#_변경된_파일_주의[변경된 파일 주의] 섹션 참조)
+- 누락된 애셋.
+  백업에서 무엇이었는지 찾아보고,
+  새 위치를 찾으려고 시도하고,
+  교체하거나 필요한 경우 이전 게임 복사본에서 파일을 추출
+- 더 이상 사용할 수 없는 함수 호출.
+  나중을 위해 할 일 주석 처리하거나 교체 시도
+- 전혀 다른 무언가. 디스코드에서 도움을 요청하는 것을 고려
 
-9. Repeat steps 7-8 until Alpakit builds your mod successfully
-10. Launch the game with your mod installed
-11. Resolve crashes that occur when you try to launch the game
-12. Restore the functionality you had to comment out or unhook in steps 3 and 8
-13. Test functionality in your mod to ensure nothing has broken
-14. Resolve any problems you find by testing your mod further
+9. 알파킷이 모드를 성공적으로 빌드할 때까지 7-8단계 반복
+10. 모드를 설치한 상태로 게임 실행
+11. 게임을 실행하려고 할 때 발생하는 충돌 해결
+12. 3단계와 8단계에서 주석 처리하거나 연결 해제해야 했던 기능 복원
+13. 모드의 기능을 테스트하여 아무것도 깨지지 않았는지 확인
+14. 모드를 더 테스트하면서 발견하는 문제 해결
 
-Below are notes on situations to watch out for.
+아래는 주의해야 할 상황에 대한 참고사항입니다.
 
-=== 무시된 접근 변환기
+=== 무시된 것처럼 보이는 접근 변환기
 
-Sometimes, compilation in Visual Studio will fail due to your mod trying to access private fields of various classes,
-even though you have already have added said classes to your mod's
-xref:Development/ModLoader/AccessTransformers.adoc[Access Transformers].
+때로는 모드가 이미 해당 클래스를
+xref:Development/ModLoader/AccessTransformers.adoc[접근 변환기]에 추가했음에도 불구하고,
+다양한 클래스의 비공개 필드에 접근하려고 할 때 Visual Studio에서 컴파일이 실패할 수 있습니다.
 
-You can resolve this by changing any line in that mod's access transformers file,
-for example, a comment (which are denoted with `;` semicolons.)
-The line can be changed back later; modifying the file will make the compiler rebuild the access transformers correctly.
-More info on why this works can be found on the Access Transformers page.
+이를 해결하려면 해당 모드의 접근 변환기 파일에서 아무 줄이나 변경하면 됩니다.
+예를 들어, 주석(`;` 세미콜론으로 표시)을 변경하십시오.
+나중에 줄을 다시 원래대로 되돌릴 수 있습니다. 파일을 수정하면 컴파일러가 접근 변환기를 올바르게 다시 빌드하게 됩니다.
+이것이 작동하는 이유에 대한 자세한 정보는 접근 변환기 페이지에서 찾을 수 있습니다.
 
-Alternatively, a full rebuild should also fix this.
+또는, 전체 재빌드도 이 문제를 해결할 수 있습니다.
 
-=== Beware of Changed Files
+=== 변경된 파일 주의
 
-If you open a file and see that Unreal wants to save it after you haven't changed anything,
-you should be cautious and try to find out what field may have changed on you.
-Sometimes Unreal will complain nosily about problems like this
-(ex. missing blueprint library, parent class not found),
-but sometimes it will silently replace it with a None reference (ex. textures or materials)!
+파일을 열었을 때 아무것도 변경하지 않았는데도 언리얼이 저장하려고 한다면,
+어떤 필드가 변경되었을 수 있는지 찾아보도록 주의해야 합니다.
+때로는 언리얼이 이러한 문제에 대해 지겹게 걸고 넘어질 것입니다(예:
+누락된 블루프린트 라이브러리, 부모 클래스를 찾을 수 없음).
+하지만 때로는 조용히 None 참조로 대체할 것입니다(예: 텍스처나 머티리얼)!
 
-If you open one of your mod assets,
-and it's broken for some reason (or has a missing reference), *DO NOT SAVE IT!*
-You will be saving the broken reference over the correct value.
+모드 애셋 중 하나를 열었을 때
+어떤 이유로 깨져 있다면(또는 누락된 참조가 있다면), *저장하지 마십시오!*
+깨진 참조를 올바른 값 위에 저장하게 될 것입니다.
 
-If you do save the file, or Unreal saves it on you,
-go into version control and discard the changes.
-As long as you can avoid keeping the saved copy,
-if you restore the missing referenced asset,
-it will be back without data loss next time you open the editor and/or file.
+파일을 저장하거나 언리얼이 저장해버린 경우,
+버전 관리로 가서 변경사항을 취소하십시오.
+저장된 복사본을 유지하지 않는 한,
+누락된 참조된 애셋을 복원하면,
+다음에 에디터나 파일을 열 때 데이터 손실 없이 다시 돌아올 것입니다.
 
-This is one of the many reasons to keep a copy of your old project.
-You can find out what _used_ to be in that field,
-then go fix it on all of your assets in one fell swoop without having to hunt down each usage.
+이것이 이전 프로젝트의 복사본을 유지해야 하는 많은 이유 중 하나입니다.
+그 필드에 _무엇이_ 있었는지 알아낼 수 있고,
+각각의 사용을 찾아다닐 필요 없이 한 번에 모든 애셋에서 수정할 수 있습니다.
 
-In the case of a missing or damaged parent class,
-looking at backup is one of the only ways to get info out of the inoperable asset.
+누락되거나 손상된 부모 클래스의 경우,
+백업을 보는 것이 작동하지 않는 애셋에서 정보를 얻을 수 있는 유일한 방법 중 하나입니다.
 
-=== Missing Parent Class
+=== 누락된 부모 클래스
 
-It's possible that, after an update, the parent class of one of your assets has changed due to Coffee Stain or another mod developer moving the location of the class on their end.
+업데이트 후에, 커피 스테인이나 다른 모드 개발자가 자신들 쪽에서 클래스의 위치를 이동했기 때문에 애셋의 부모 클래스가 변경되었을 수 있습니다.
 
-A broken parent class almost always makes an asset unable to be opened in the Unreal Engine Editor.
-Hopefully you followed the directions in the link:#_back_up_your_old_engine[Back Up Your Old Engine] 
-section, because if you did, you can open up the working version of the asset in the old editor
-and find out field values and other settings you configured.
+깨진 부모 클래스는 거의 항상 언리얼 엔진 에디터에서 애셋을 열 수 없게 만듭니다.
+<<이전 엔진 백업하기>> 섹션의 지침을 따랐기를 바랍니다.
+그랬다면, 이전 에디터에서 작동하는 버전의 애셋을 열어
+구성한 필드 값과 다른 설정을 찾을 수 있습니다.
 
-You can also try to set up a
-xref:Development/UnrealEngine/CoreRedirect.adoc#_using_core_redirects_in_the_editor[Core Redirect]
-in order to tell Unreal about the location of the new parent class,
-which may make make it possible to open the asset in the editor again.
-See the linked page for more details.
+또한
+xref:Development/UnrealEngine/CoreRedirect.adoc#_에디터에서_코어_리디렉션_사용하기[코어 리디렉션]을
+설정하여 언리얼에게 새 부모 클래스의 위치를 알려주어
+에디터에서 애셋을 다시 열 수 있게 만들 수 있습니다.
+자세한 내용은 링크된 페이지를 참고하십시오.
 
-== Releasing An Update
+== 업데이트 배포하기
 
-Once your mod is updated and you've done sufficient testing,
-it's time to release an update to the Mod Repository.
+모드가 업데이트되고 충분한 테스트를 마쳤다면,
+모드 저장소에 업데이트를 배포할 시간입니다.
 
-You'll want to do the following things:
+다음과 같은 작업을 수행해야 합니다:
 
-1. Write up patch notes for the update.
-   This should mention any new features, bugfixes, or changes to existing features
-   introduced by this version.
-2. Update the sem version number in your mod's uplugin file.
-   You can do this from the Alpakit Edit Mod wizard.
-   Remember, this number is in the `Major.Minor.Patch` format.
-   In general, follow these rules to decide what your new version number should be:
-   - Don't go "backwards" in total version number. For example, don't release `1.1.0` after releasing `1.2.0`.
-     The mod manager will always try to install the "largest" compatible version of your mod for players.
-   - If this update is only fixing bugs, you should increment only the Patch number.
-     (Example: `1.2.9` to `1.2.10`)
-   - If this update adds new features and is not likely to break compatibility with other mods,
-     you should increment the Minor number and reset the Patch number back to 0.
-     (Example: `1.9.3` to `1.10.0`)
-   - If the update is a significant rewrite or certainly breaks compatibility with other mods,
-     you should increment the Major number and reset the Minor and Patch numbers back to 0.
-     (Example: `1.9.3` to `2.0.0`)
-   - More info can be found on the xref:Development/BeginnersGuide/ReleaseMod.adoc[Releasing Your Mod] page.
-3. Update the version range of your mod's dependencies.
-   For example, every mod depends on SML, and the version of SML it depends on determines what game versions it is considered compatible with.
-   Find the latest SML version number by checking its Alpakit Edit Mod wizard in your editor
-   or by checking the https://ficsit.app/mod/SML[SML releases page].
-   You probably want to be using the caret range specifier here (ex. `^3.6.1`)
-   whose functionality is described in the
-   xref:Development/BeginnersGuide/ReleaseMod.adoc#_special_fields[Plugins > SemVersion section of the Releasing Your Mod page].
-4. Follow the directions on the
-   xref:UploadToSMR.adoc#_uploading_a_version[Uploading your Mod to SMR]
-   page to release the update
+1. 업데이트에 대한 패치 노트 작성
+   이 버전에서 도입된 새로운 기능, 버그 수정 또는 기존 기능의 변경사항을
+   언급해야 합니다.
+2. 모드의 uplugin 파일에서 sem 버전 번호 업데이트
+   알파킷 모드 편집 마법사에서 이 작업을 할 수 있습니다.
+   이 번호는 `메이저.마이너.패치` 형식임을 기억하십시오.
+   일반적으로, 새 버전 번호를 결정할 때 다음 규칙을 따르십시오:
+   - 버전 번호에서 "뒤로" 가지 마십시오. 예를 들어, ``1.2.0``을 배포한 후 ``1.1.0``을 배포하지 마십시오.
+     모드 관리자는 항상 플레이어를 위해 호환되는 "가장 큰" 버전의 모드를 설치하려고 할 것입니다.
+   - 이 업데이트가 버그만 수정하는 것이라면, 패치 번호만 증가시켜야 합니다.
+     (예: ``1.2.9``에서 ``1.2.10``으로)
+   - 이 업데이트가 새로운 기능을 추가하고 다른 모드와의 호환성을 망가뜨릴 가능성이 없다면,
+     마이너 번호를 증가시키고 패치 번호를 0으로 재설정해야 합니다.
+     (예: ``1.9.3``에서 ``1.10.0``으로)
+   - 업데이트가 중요한 재작성이거나 다른 모드와의 호환성을 확실히 망가뜨린다면,
+     메이저 번호를 증가시키고 마이너와 패치 번호를 0으로 재설정해야 합니다.
+     (예: ``1.9.3``에서 ``2.0.0``으로)
+   - 자세한 정보는 xref:Development/BeginnersGuide/ReleaseMod.adoc[모드 배포하기] 페이지에서 찾을 수 있습니다.
+3. 모드의 의존성 버전 범위 업데이트
+   예를 들어, 모든 모드는 SML에 의존하며, 의존하는 SML 버전은 어떤 게임 버전과 호환되는지를 결정합니다.
+   에디터의 알파킷 모드 편집 마법사나
+   https://ficsit.app/mod/SML[SML 배포 페이지]를 확인하여 최신 SML 버전 번호를 찾으십시오.
+   아마도 여기서 캐럿 범위 지정자(예: `^3.6.1`)를 사용하고 싶을 것입니다.
+   이 기능은
+   xref:Development/BeginnersGuide/ReleaseMod.adoc#_특수_필드[모드 배포하기 페이지의 플러그인 > SemVersion 섹션]에 설명되어 있습니다.
+4. xref:UploadToSMR.adoc#_버전_업로드[SMR에 모드 업로드하기]
+   페이지의 지침에 따라
+   업데이트를 배포하십시오.
 
-== You're (Hopefully) Done
+== (아마) 끝났습니다
 
-If you've gotten this far,
-you should have completed the process of updating your mod and starter project.
+여기까지 왔다면,
+모드와 시작 프로젝트 업데이트 과정을 완료했어야 합니다.
 
-Or, if you were reading through, you're better prepared to update in the future.
+또는, 읽어보았다면, 앞으로의 업데이트에 더 잘 준비되었을 것입니다.
 
-If you think this guide skipped over something,
-you've found a mistake,
-or you'd like to contribute more to this guide,
-please speak up on the Discord or open a PR.
+이 가이드가 무언가를 건너뛴 것 같거나,
+실수를 발견했거나,
+이 가이드에 더 기여하고 싶다면,
+디스코드에서 말씀해주시거나 PR을 열어주십시오.
 
-Thanks for reading!
+읽어주셔서 감사합니다!

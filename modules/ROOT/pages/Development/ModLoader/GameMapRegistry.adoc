@@ -1,13 +1,13 @@
-= Game Map Registry
+= 게임 맵 레지스트리
 
-Introduced in SML3.5, the Game Map Registry is a
-xref:Development/ModLoader/ModModules.adoc#_game_instance_bound_module_ugameinstancemodule[Game Instance]
-xref:Development/ModLoader/Subsystems.adoc[Subsystem]
-that allows mods to add additional game levels without fighting each others' main menu widget blueprint hooks to adjust the level select UI.
+SML3.5에서 도입된 게임 맵 레지스트리는
+xref:Development/ModLoader/ModModules.adoc#_게임_인스턴스_할당_모듈ugameinstancemodule[게임 인스턴스]
+xref:Development/ModLoader/Subsystems.adoc[서브시스템]으로,
+모드가 서로 충돌하지 않고 추가 게임 레벨을 추가하여 레벨 선택 UI를 조정할 수 있습니다.
 
-SML automatically creates a Game Map Registry entry for the base game's level and populates it with the original 4 starting locations.
+SML은 기본 게임의 레벨에 대한 게임 맵 레지스트리 항목을 자동으로 생성하고, 원래의 4개 시작 위치로 채웁니다.
 
-An example custom level and Game Map Registry entry can be found in the Example Mod shipped with the starter project.
+예제 모드에서 맞춤 레벨 및 게임 맵 레지스트리 항목을 찾을 수 있습니다.
 
-Mods can add levels to the registry via SMLGameMapData entries in the
-xref:Development/ModLoader/ModModules.adoc#_game_instance_bound_module_ugameinstancemodule[Game Instance Module].
+모드는 xref:Development/ModLoader/ModModules.adoc#_게임_인스턴스_할당_모듈ugameinstancemodule[게임 인스턴스 모듈]의
+SMLGameMapData 항목을 통해 레지스트리에 레벨을 추가할 수 있습니다.

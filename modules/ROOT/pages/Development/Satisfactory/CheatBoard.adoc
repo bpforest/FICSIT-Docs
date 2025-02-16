@@ -1,20 +1,20 @@
-= Cheat Board
+= 치트 보드
 
-Beginning with the 1.0 release, Coffee Stain now distributes their Unreal Cheat Board with the game.
-It can be accessed by
-xref:SMLChatCommands.adoc#EnableCheats[enabling cheats]
-then running the `Cheats` console command.
+1.0 릴리스부터 커피 스테인은 이제 게임과 함께 언리얼 치트 보드를 배포합니다.
+이것은
+xref:SMLChatCommands.adoc#EnableCheats[치트를 활성화]한 후
+`Cheats` 콘솔 명령어를 실행하여 접근할 수 있습니다.
 
-== Adding New Cheats
+== 새로운 치트 추가하기
 
-Mods can add additional cheats to the existing Cheat Board.
+모드는 기존 치트 보드에 치트를 추가할 수 있습니다.
 
-1. Implement a cheat UFunction as `CheatBoard` in a class derived from `UCheatManagerExtension`.
-2. Register the cheat manager extension class via `UCheatManager::OnCheatManagerCreatedDelegate`.
+1. `UCheatManagerExtension` 에서 파생된 클래스의 `CheatBoard` 로 치트 UFunction을 구현합니다.
+2. `UCheatManager::OnCheatManagerCreatedDelegate` 를 통해 치트 관리자 확장 클래스를 등록합니다.
 
-See the code example below from Archengius:
+아래는 Archengius의 코드 예제입니다:
 
-Header file:
+헤더 파일:
 
 ```h
 UCLASS(MinimalAPI)
@@ -27,7 +27,7 @@ public:
 }
 ```
 
-Registering the class in StartupModule:
+StartupModule에서 클래스를 등록하는 방법:
 
 ```cpp
 void FMyCoolModModule::StartupModule()

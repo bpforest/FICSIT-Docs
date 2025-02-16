@@ -168,7 +168,7 @@ xref:Development/UpdatingToNewVersions.adoc#_무시된_접근_변환기[여기]�
 
 ### 프로젝트 빌드
 
-xref:Development/BeginnersGuide/project_setup.adoc#_project_compilation[Visual Studio에서 Development Editor를 위해 빌드]하고,
+xref:Development/BeginnersGuide/project_setup.adoc#_프로젝트_컴파일[Visual Studio에서 Development Editor를 위해 빌드]하고,
 성공하면 Shipping을 위해 빌드하십시오.
 
 빌드가 실패하면,

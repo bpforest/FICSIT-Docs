@@ -79,11 +79,11 @@ https://docs.unrealengine.com/en-US/ProductionPipelines/Plugins/index.html#plugi
 |매개변수 |기능 설명
 
 |Version
-| 이 정수는 `SemVersion` 의 첫 번째 숫자와 일치해야 합니다(link:#_특수_입력_란[특수 입력란 섹션]에서 설명됨).
+| 이 정수는 `SemVersion` 의 첫 번째 숫자와 일치해야 합니다(link:#_특수_필드[특수 필드 섹션]에서 설명됨).
 예를 들어, SemVersion이 `1.0.0` 인 모드는 버전을 `1` 로 입력해야 합니다.
 
 |VersionName
-| 이 문자열은 `SemVersion` 과 정확히 일치해야 합니다(link:#_특수_입력_란[특수 입력란 섹션]에서 설명됨).
+| 이 문자열은 `SemVersion` 과 정확히 일치해야 합니다(link:#_특수_필드[특수 필드 섹션]에서 설명됨).
 
 |FriendlyName
 | 이 문자열은 게임 내 로드된 모드 목록 및 구성 화면에 표시될 모드의 이름입니다.

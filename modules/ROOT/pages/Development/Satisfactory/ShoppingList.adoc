@@ -34,7 +34,7 @@ Shopping List Component를 Outer로 사용하고 클래스는 mSubclass로 설�
 
 그런 다음 Get, Set, Increase, Decrease Amount를 호출하여 목록의 값을 수정할 수 있습니다.
 
-== 노트
+== 참고
 
 목록의 노트 기능과 상호작용하는 방법에 대한 문서가 아직 작성되지 않았습니다.
 사용 방법을 알고 있다면 추가해 주십시오.

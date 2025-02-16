@@ -5,7 +5,7 @@ Introduced in SML3.5, Widget Blueprint Hooks can be used to add your custom widg
 This functionality is used by SML to add the 'Mods' button to the main menu and pause menu.
 
 Mods can define widget blueprint hooks in their
-xref:Development/ModLoader/ModModules.adoc#_game_instance_bound_module_ugameinstancemodule[Game Instance Module].
+xref:Development/ModLoader/ModModules.adoc#_게임_인스턴스_할당_모듈ugameinstancemodule[Game Instance Module].
 
 An example usage of this feature applied to the player HUD can be found in the Example Mod shipped with the starter project.
 

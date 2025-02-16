@@ -81,7 +81,7 @@ then change it in the Class Defaults (blueprint) or constructor (C++).
 == Registering a Subsystem
 
 To register a subsystem, add it to the `Mod Subsystems` array of a
-xref:Development/ModLoader/ModModules.adoc#_game_instance_bound_module_ugameinstancemodule[Game World Module].
+xref:Development/ModLoader/ModModules.adoc#_게임_인스턴스_할당_모듈ugameinstancemodule[Game World Module].
 
 image:Satisfactory/Subsystems/Subsystems_gwm.PNG[GameWorldModule]
 

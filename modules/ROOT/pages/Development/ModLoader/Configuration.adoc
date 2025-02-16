@@ -4,7 +4,7 @@
 ====
 If you are looking to implement configurable keybindings,
 check out the Mod Key Bind Registry section on the 
-xref:Development/ModLoader/Registry.adoc#_mod_key_bind_registry[Registry page].
+xref:Development/ModLoader/Registry.adoc#_모드_키_할당_레지스트리[Registry page].
 ====
 
 SML adds a neat configuration system that allows you to easily define

@@ -103,7 +103,7 @@ In order to have a session setting only editable at save creation, use the "Don'
 A Session Setting must be registered to be usable by the player.
 
 To register a Session Setting, list it in the relevant array of your mod's
-xref:Development/ModLoader/ModModules.adoc#_game_instance_bound_module_ugameinstancemodule[Game Instance Module].
+xref:Development/ModLoader/ModModules.adoc#_게임_인스턴스_할당_모듈ugameinstancemodule[Game Instance Module].
 
 Registering a Session Setting makes it available to be configured in the SML Session Settings menu
 which is available at both world creation and in the pause menu.
