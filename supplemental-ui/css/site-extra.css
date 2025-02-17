@@ -37,7 +37,8 @@ body {
 
 code {
     font-family: "NanumGothicCoding";
-    background: #303030 !important;
+    border: .0625rem solid #404044;
+    background: #202024 !important;
 }
 
 code:not([class]) {
@@ -73,8 +74,9 @@ code:not([class]) {
     backdrop-filter: blur(50px);
 }
 
+/* 배경 색 */
 main>.content, .article, .nav {
-    background-color: rgb(32, 33, 37);
+    background-color: rgb(24, 24, 28);
 }
 
 main>.content {
@@ -86,6 +88,9 @@ main>.content {
 
 .doc {
     word-break: keep-all;
+    a, a:hover {
+        color: #26bbff;
+    }
 }
 
 @media (min-width: 932px) {
@@ -99,9 +104,11 @@ main>.content {
     }
 }
 
+/* 본문 제목 */
 .doc h1, .doc h2, .doc h3, .doc h4, .doc h5, .doc h6 {
     font-family: "NanumSquareNeoHeavy";
-    color: rgb(242, 200, 0);
+    color: rgb(49, 209, 156);
+    /* color: rgb(242, 200, 0); */
 }
 
 /* 말풍선 박스 */
@@ -144,6 +151,36 @@ main>.content {
     -ms-flex-pack: end;
     -webkit-box-pack: end;
     justify-content: flex-end;
+}
+
+/* 하이라이트 */
+.doc .admonitionblock .icon i[title="Note"]::after { content: "참고"}
+.doc .admonitionblock .icon i[title="Tip"]::after { content: "팁"}
+.doc .admonitionblock .icon i[title="Important"]::after { content: "중요"}
+.doc .admonitionblock .icon i[title="Warning"]::after { content: "경고"}
+.doc .admonitionblock .icon i[title="Caution"]::after { content: "주의"}
+
+/* 문서 선택 숨기기 */
+.nav-panel-explore {
+    display: none;
+}
+
+.nav-item {
+    margin-top: 0;
+    padding: 8px;
+    /* padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px; */
+}
+
+.nav-item.is-current-page {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+}
+
+.footer.footer {
+    background-color: rgb(30, 30, 34);
 }
 
 /* Modified from https://github.com/algolia/docsearch/blob/main/packages/docsearch-css/src/_variables.css */
