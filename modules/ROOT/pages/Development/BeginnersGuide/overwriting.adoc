@@ -5,7 +5,7 @@ This is not recommended as opposed to creating your own content that extends it,
 because mods that overwrite the same thing will likely be incompatible with each other.
 However, it is the most practical way to achieve certain functionality.
 
-== Use a Library Mod
+== 라이브러리 모드 사용하기
 
 Some other modders have already created mods that assist with the process of overwriting or modifying content.
 They can save you a lot of time.

@@ -57,11 +57,11 @@ image:BeginnersGuide/simpleMod/machines/SimpleMachine_Init.png[이미지]
 
 (이벤트 그래프의 논리)
 
-== 잡기 논리
+== 그랩 논리
 
 [WARNING]
 ====
-언리얼 블루프린트 코드에서 컨베이어 잡기 로직을 구현하는 것은 일반적으로 바람직하지 않습니다.
+언리얼 블루프린트 코드에서 컨베이어 그랩 로직을 구현하는 것은 일반적으로 바람직하지 않습니다.
 건물이 상당한 양으로 사용될 계획이라면,
 이 로직을 C++로 구현하여 블루프린트의 성능 오버헤드를 피해야 합니다.
 이 튜토리얼은 결국™ 더 나은 관행을 따르는 다른 튜토리얼로 대체될 것입니다.
@@ -87,11 +87,11 @@ image:BeginnersGuide/simpleMod/machines/SimpleMachine_CreateItemTypesSet_Part1.p
 
 image:BeginnersGuide/simpleMod/machines/SimpleMachine_CreateItemTypesSet_Part2.png[유형을 집합으로 변경]
 
-이제 잡기 논리에서 먼저 기계에 전원이 있는지 확인합니다. `FGPowerInfoComponent` 의 "HasPower" 노드를 사용하여 확인합니다. 응답이 false이면 아무것도 반환하지 않고 출력을 false로 설정합니다. 그러나 true인 경우, 입력 커넥터의 잡기 기능을 사용하여 새 아이템을 요청합니다.
+이제 그랩 논리에서 먼저 기계에 전원이 있는지 확인합니다. `FGPowerInfoComponent` 의 "HasPower" 노드를 사용하여 확인합니다. 응답이 false이면 아무것도 반환하지 않고 출력을 false로 설정합니다. 그러나 true인 경우, 입력 커넥터의 그랩 기능을 사용하여 새 아이템을 요청합니다.
 
-입력 잡기 불리언이 true이면, `ItemAmount` 정수를 1 증가시키고 아이템을 `ItemTypes` 에 추가합니다. 그 후, 잡은 아이템을 반환하고 출력 불리언을 true로 설정합니다.
+입력 그랩 불리언이 true이면, `ItemAmount` 정수를 1 증가시키고 아이템을 `ItemTypes` 에 추가합니다. 그 후, 잡은 아이템을 반환하고 출력 불리언을 true로 설정합니다.
 
-입력 잡기 불리언이 false이면, 아무것도 반환하지 않고 출력 불리언을 false로 설정합니다.
+입력 그랩 불리언이 false이면, 아무것도 반환하지 않고 출력 불리언을 false로 설정합니다.
 
 전반적인 로직은 다음과 같습니다: 전원이 있는지 확인합니다. 전원이 있다면 입력에서 아이템을 가져오려고 시도합니다. 아이템이 없으면 아무것도 하지 않습니다. 그러나 아이템을 가져오면 이를 세고 출력을 반환합니다.
 

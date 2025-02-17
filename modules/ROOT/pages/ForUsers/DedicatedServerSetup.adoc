@@ -1,353 +1,353 @@
-= Installing Mods on Dedicated Servers
+= 전용 서버에 모드 설치하기
 
-SML3.7.0 enabled the compilation of mods for Dedicated Servers
-and SMM3 makes it easy to manage mods on a server, be it a local server or hosted remotely.
+SML3.7.0은 전용 서버용 모드 컴파일을 가능하게 했으며,
+SMM3은 로컬 서버든 원격 호스팅된 서버든 서버에서 모드를 쉽게 관리할 수 있게 해줍니다.
 
-== Obtain a Server
+== 서버 구하기
 
-You need access to a dedicated server before you can start installing mods on it.
-Pick one of the options below to set one up.
+모드를 설치하기 전에 전용 서버에 대한 접근 권한이 필요합니다.
+아래 옵션 중 하나를 선택하여 서버를 설정하십시오.
 
 [id="SelfHostedServer"]
-=== Option 1: Self Hosted Server
+=== 옵션 1: 자체 호스팅 서버
 
-Hosting a server yourself is the best way to
-ensure you can work with the files required to get modded a server working.
-First, set up a copy of the vanilla dedicated server if you haven't done so yet.
-The Satisfactory Official Wiki already has a
-https://satisfactory.wiki.gg/wiki/Dedicated_servers[detailed guide covering how to do this].
-Follow that guide, then continue to the link:#GetModManager[next section].
+서버를 직접 호스팅하는 것이 모드가 설치된 서버를 구동하는 데 필요한
+파일들을 다루는 가장 좋은 방법입니다.
+우선, 아직 하지 않았다면 바닐라 전용 서버의 복사본을 설정하십시오.
+새티스팩토리 공식 위키에 이미
+https://satisfactory.wiki.gg/wiki/Dedicated_servers[자세한 설정 안내]가 있습니다.
+해당 가이드를 따른 후 link:#GetModManager[다음 섹션]으로 진행하십시오.
 
 [id="ThirdPartyServer"]
-=== Option 2: Third Party Hosted Server
+=== 옵션 2: 제3자 호스팅 서버
 
 [WARNING]
 ====
-We can only provided limited support for third-party hosted servers
-as we do not know or control their systems.
-Contact your server host's support lines if you encounter problems.
+제3자 호스팅 서버의 시스템을 알 수 없고 제어할 수 없기 때문에
+제한된 지원만 제공할 수 있습니다.
+문제가 발생하면 서버 호스트의 지원 라인에 문의하십시오.
 ====
 
-Third-party server hosts often restrict how you can access and modify files on the system,
-complicating the mod setup process.
+제3자 서버 호스트는 종종 시스템의 파일에 대한 접근과 수정을 제한하여
+모드 설치 과정을 복잡하게 만듭니다.
 
-You will have to follow your server host's own documentation about mod setup.
-If your server host provides (s)ftp access to server files
-the Mod Manager and ficsit-cli _should_ be able to interact with them normally.
+서버 호스트의 자체 모드 설치 문서를 따라야 합니다.
+만약 서버 호스트가 서버 파일에 대한 (s)ftp 접근을 제공한다면
+모드 관리자와 ficsit-cli가 정상적으로 상호작용할 _수 있어야_ 합니다.
 
 [id="UnsupportedHosting"]
-==== Unsupported Hosts
+==== 지원되지 않는 호스트
 
-We do not currently maintain a list of server hosts that support modded servers.
+현재 모드가 설치된 서버를 지원하는 서버 호스트 목록은 관리하지 않습니다.
 
 ====
-The following 3rd party hosting services are known to **_NOT_ support mods**,
-regardless of what their websites and marketing pages claim:
+다음 제3자 호스팅 서비스는 웹사이트와 마케팅 페이지의 주장과 관계없이
+**모드를 _지원하지 않는_ 것**으로 알려져 있습니다:
 
 // cspell:ignore nitroserv gportal
-- nitroserv.games - Allows creating but not deleting dot files, which bricks the server
-- Shockbyte - Doesn't show the root executable
-- 4netplayers - Doesn't show the root executable, as well as other game files
-- dawnserver.de - Provider does not allow mods
+- nitroserv.games - 점 파일 생성은 허용하지만 삭제는 허용하지 않아 서버가 작동하지 않게 됨
+- Shockbyte - 루트 실행 파일을 보여주지 않음
+- 4netplayers - 루트 실행 파일과 기타 게임 파일을 보여주지 않음
+- dawnserver.de - 제공자가 모드를 허용하지 않음
 ====
 
 ====
-The following hosts offer an incomplete modding experience -
-although it may be possible to get mods working on their platform,
-_we offer no support for them_.
+다음 호스트는 불완전한 모딩 경험을 제공합니다.
+그들의 플랫폼에서 모드를 작동시키는 것이 가능할 수 있지만,
+_우리는 이에 대한 지원을 제공하지 않습니다_.
 
-- low.ms - Does not allow executables, preventing SMM and ficsit-cli from functioning correctly.
-  They provide their own UI for mod installation, but we do not support this ourselves. See their docs for details.
-- gportal - Doesn't show the proper game file tree.
-  You may have success with manual mod installation, but we offer no support for that process.
+- low.ms - 실행 파일을 허용하지 않아 SMM과 ficsit-cli가 제대로 작동하지 않습니다.
+  자체 UI로 모드 설치를 제공하지만, 우리는 이를 지원하지 않습니다. 자세한 내용은 그들의 문서를 참고하십시오.
+- gportal - 적절한 게임 파일 트리를 보여주지 않습니다.
+  수동 모드 설치로 성공할 수 있지만, 우리는 그 과정에 대한 지원을 제공하지 않습니다.
 ====
 
-It is also worth noting that AMP causes SFTP to throw weird errors,
-but mods can be installed if pointing SMM to a network mount or local path as described link:#FileTransferMethods_SMB[here].
+AMP는 SFTP에서 이상한 오류를 발생시키지만,
+link:#FileTransferMethods_SMB[여기]에 설명된 대로 네트워크 마운트나 로컬 경로를 SMM에 지정하면 모드를 설치할 수 있다는 점도 주목할 만합니다.
 
-If you believe a host is listed here in error,
-contact us about it on the https://discord.ficsit.app[Discord].
+호스트가 여기에 잘못 나열되었다고 생각하시면,
+https://discord.ficsit.app[디스코드]에서 문의해 주십시오.
 
 [id="GetModManager"]
-== Use a Mod Manager to Connect to the Server
+== 모드 관리자를 사용하여 서버에 연결하기
 
-Both Satisfactory Mod Manager (version 3.0.0 and up) and ficsit-cli
-can be used to manage mods on a remote server installation
-as long as you have network filesystem or (s)ftp access to the server.
+새티스팩토리 모드 관리자(버전 3.0.0 이상)와 ficsit-cli 모두
+네트워크 파일시스템이나 (s)ftp 접근 권한이 있다면
+원격 서버 설치에서 모드를 관리하는 데 사용할 수 있습니다.
 
-You could also install ficsit-cli on the server and interact with its file system directly via its terminal user interface.
+서버에 ficsit-cli를 설치하고 터미널 사용자 인터페이스를 통해 파일 시스템과 직접 상호작용할 수도 있습니다.
 
 [id="GetModManager_SMM"]
-=== Satisfactory Mod Manager
+=== 새티스팩토리 모드 관리자
 
-If using the Mod Manager to manage your server:
+모드 관리자를 사용하여 서버를 관리하는 경우:
 
-. xref:ForUsers/SatisfactoryModManager.adoc[Download and install the Satisfactory Mod Manager].
-. Open the Mod Manager.
-. In the left panel, under Other, select "Manage Servers".
-   * Note that if your server is locally installed through Steam or Epic, the mod manager may automatically detect it, allowing you to skip the below step of manually adding it.
-. Enter server connection details in the popup window.
-   * Decide what method to select and what to enter
-     by reading the link:#FileTransferMethods[File Transfer Methods] section,
-     then return here.
-. The server will now appear in your Game Version dropdown and can be managed like a local install.
-. Skim the below ficsit-cli section to stay informed, then continue reading the link:#InstallingMods[next setup step].
+. xref:ForUsers/SatisfactoryModManager.adoc[새티스팩토리 모드 관리자를 다운로드하고 설치하십시오].
+. 모드 관리자를 실행하십시오.
+. 왼쪽 패널의 "그 외" 섹션에서 "서버 관리"를 선택하십시오.
+   * 서버가 스팀이나 에픽을 통해 로컬에 설치된 경우, 모드 관리자가 자동으로 감지할 수 있어 아래 수동 추가 단계를 건너뛸 수 있습니다.
+. 팝업 창에 서버 연결 정보를 입력하십시오.
+   * link:#FileTransferMethods[파일 전송 방법]
+     섹션을 읽고 어떤 방법을 선택하고
+     무엇을 입력할지 결정한 후 여기로 돌아오십시오.
+. 이제 서버가 게임 버전 드롭다운에 나타나고 로컬 설치처럼 관리할 수 있습니다.
+. 아래 ficsit-cli 섹션을 훑어보고 정보를 얻은 후 link:#InstallingMods[다음 설정 단계]를 계속 읽으십시오.
 
 [id="GetModManager_CLI"]
 === ficsit-cli
 
-If using ficsit-cli to manage your server:
+ficsit-cli를 사용하여 서버를 관리하는 경우:
 
-. Download https://github.com/satisfactorymodding/ficsit-cli[ficsit-cli]
-   either to your computer or to the server itself
-   depending on which environment you are more comfortable working with.
-   - Visit https://cli.ficsit.app/ to automatically download the latest stable release for your detected platform.
-   - Specific (pre-)releases can be manually download from the https://github.com/satisfactorymodding/ficsit-cli/releases[GitHub releases page].
-. Run the application in a terminal window.
-. Navigate to the "Installations" > "New Installation" screen.
-. Enter server connection details in the popup window.
-  a. If you are running ficsit-cli from your computer (not the server),
-     enter the server connection details. 
-   * Decide what to enter here by reading the link:#FileTransferMethods[File Transfer Methods] section,
-     then return here.
-  b. If ficsit-cli is installed on the server,
-     enter the file system path, for example `D:\SatisfactoryDS` or `/opt/SatisfactoryDedicatedServer`.
-. The server will now appear as an install you can select and manage as usual.
-. Continue to the link:#InstallingMods[next setup step].
+. https://github.com/satisfactorymodding/ficsit-cli[ficsit-cli]를
+   컴퓨터나 서버 자체에 다운로드하십시오(어느
+   환경에서 작업하기 더 편한지에 따라 선택).
+   - https://cli.ficsit.app/ 을 방문하여 감지된 플랫폼에 맞는 최신 안정 버전을 자동으로 다운로드하십시오.
+   - 특정 (사전)배포는 https://github.com/satisfactorymodding/ficsit-cli/releases[깃허브 릴리스 페이지]에서 수동으로 다운로드할 수 있습니다.
+. 터미널 창에서 애플리케이션을 실행하십시오.
+. "Installations" > "New Installation" 화면으로 이동하십시오.
+. 팝업 창에 서버 연결 정보를 입력하십시오.
+  a. ficsit-cli를 컴퓨터에서 실행하는 경우(서버가 아님),
+     서버 연결 정보를 입력하십시오.
+   * link:#FileTransferMethods[파일 전송 방법] 섹션을 읽고 무엇을 입력할지
+     결정한 후 여기로 돌아오십시오.
+  b. ficsit-cli가 서버에 설치된 경우,
+     파일 시스템 경로를 입력하십시오(예: `D:\SatisfactoryDS` 또는 `/opt/SatisfactoryDedicatedServer`).
+. 이제 서버가 선택하고 평소처럼 관리할 수 있는 설치로 나타납니다.
+. link:#InstallingMods[다음 설정 단계]로 진행하십시오.
 
 [id="FileTransferMethods"]
-== File Transfer Methods
+== 파일 전송 방법
 
-The Mod Manager and ficsit-cli support multiple methods of connecting to servers remotely to manage mod files.
-Select a method below based on what your server (or 3rd party server host) provides.
+모드 관리자와 ficsit-cli는 원격으로 서버에 연결하여 모드 파일을 관리하는 여러 가지 방법을 지원합니다.
+서버(또는 제3자 서버 호스트)가 제공하는 것에 따라 아래 방법 중 하나를 선택하십시오.
 
-For 3rd-party server hosts, refer to their documentation on how to connect to the server using a (S)FTP client.
-The mod manager uses the same username, password, IP and port.
-The path depends on how the server host has set things up (check their documentation),
-but it's relatively easy to figure it out: in the server's files,
-find a folder that contains a file named `FactoryServer.sh` or `FactoryServer.exe`.
-The mod manager will make sure the path points to an installation,
-so it will show an error if the path is not correct (no installations found).
+제3자 서버 호스트의 경우, (S)FTP 클라이언트를 사용하여 서버에 연결하는 방법은 해당 호스트의 문서를 참고하십시오.
+모드 관리자는 동일한 사용자 이름, 비밀번호, IP, 포트를 사용합니다.
+경로는 서버 호스트가 어떻게 설정했는지에 따라 다르지만(문서 확인),
+쉽게 알아낼 수 있습니다. 서버 파일에서
+`FactoryServer.sh` 또는 `FactoryServer.exe` 파일이 있는 폴더를 찾으십시오.
+모드 관리자는 경로가 설치를 가리키는지 확인할 것이므로,
+경로가 올바르지 않으면 오류를 표시합니다(설치를 찾을 수 없음).
 
 [id="FileTransferMethods_SFTP"]
 === SFTP
 
-Secure File Transfer Protocol (SFTP) is a common method to transfer files over the Internet/Network.
-It's more modern and secure than FTP as you may have guessed from its name.
-SFTP typically uses TCP port 22, but your server may differ.
-The examples below are for a self-hosted dedicated server.
+보안 파일 전송 프로토콜(SFTP)은 인터넷/네트워크를 통해 파일을 전송하는 일반적인 방법입니다.
+이름에서 알 수 있듯이 FTP보다 더 현대적이고 안전합니다.
+SFTP는 일반적으로 TCP 포트 22를 사용하지만, 서버마다 다를 수 있습니다.
+아래 예시는 자체 호스팅 전용 서버용입니다.
 
-* The authenticating user requires Read/Write/Delete or Read/Modify permissions.
-* The path should follow this format:
+* 인증하는 사용자는 읽기/쓰기/삭제 또는 읽기/수정 권한이 필요합니다.
+* 경로는 다음 형식을 따라야 합니다:
 +
-`sftp://username:password@ServerNameOrIP:Port/path/`
-* Enter the path to the directory containing `FactoryServer.exe` or `FactoryServer.sh`.
-If using Satisfactory Mod Manager, the built-in file browser
-will automatically select the correct subfolder if you select the root install directory.
+`sftp://사용자이름:암호@서버이름또는IP:포트/경로/`
+* `FactoryServer.exe` 또는 ``FactoryServer.sh``가 있는 디렉터리 경로를 입력하십시오.
+새티스팩토리 모드 관리자를 사용하는 경우, 내장 파일 브라우저가
+루트 설치 디렉터리를 선택하면 자동으로 올바른 하위 폴더를 선택합니다.
 
-.Satisfactory Mod Manager SFTP Example
-image::DedicatedServers/SMM_SFTP.png[Satisfactory Mod Manager Example]
-.Ficsit-CLI SFTP Example
-image::DedicatedServers/CLI_SFTP.png[Ficsit-CLI Example]
+.새티스팩토리 모드 관리자 SFTP 예시
+image::DedicatedServers/SMM_SFTP.png[새티스팩토리 모드 관리자 예시]
+.Ficsit-CLI SFTP 예시
+image::DedicatedServers/CLI_SFTP.png[Ficsit-CLI 예시]
 
 [id="FileTransferMethods_FTP"]
 === FTP
 
 [WARNING]
 ====
-You should use link:#FileTransferMethods_SFTP[SFTP] instead if it is available.
+가능하다면 link:#FileTransferMethods_SFTP[SFTP]를 대신 사용하십시오.
 ====
 
-File transfer protocol (FTP) is a common but outdated method to transfer files over the Internet/Network.
-FTP typically uses TCP port 21, but your server may differ.
-The examples below are for a self-hosted dedicated server.
+파일 전송 프로토콜(FTP)은 인터넷/네트워크를 통해 파일을 전송하는 일반적이지만 구식인 방법입니다.
+FTP는 일반적으로 TCP 포트 21을 사용하지만, 서버마다 다를 수 있습니다.
+아래 예시는 자체 호스팅 전용 서버용입니다.
 
-* The authenticating user requires Read/Write/Delete or Read/Modify permissions.
-* The path should follow this format:
+* 인증하는 사용자는 읽기/쓰기/삭제 또는 읽기/수정 권한이 필요합니다.
+* 경로는 다음 형식을 따라야 합니다:
 +
-`ftp://username:password@ServerNameOrIP:Port/path/`
-* Enter the path to the directory containing `FactoryServer.exe` or `FactoryServer.sh`.
-If using Satisfactory Mod Manager, the built-in file browser
-will automatically select the correct subfolder if you select the root install directory.
+`ftp://사용자이름:암호@서버이름또는IP:포트/경로/`
+* `FactoryServer.exe` 또는 ``FactoryServer.sh``가 있는 디렉터리 경로를 입력하십시오.
+새티스팩토리 모드 관리자를 사용하는 경우, 내장 파일 브라우저가
+루트 설치 디렉터리를 선택하면 자동으로 올바른 하위 폴더를 선택합니다.
 
-.Satisfactory Mod Manager FTP Example
-image::DedicatedServers/SMM_FTP.png[Satisfactory Mod Manager Example]
-.Ficsit-CLI FTP Example
-image::DedicatedServers/CLI_FTP.png[Ficsit-CLI Example]
+.새티스팩토리 모드 관리자 FTP 예시
+image::DedicatedServers/SMM_FTP.png[새티스팩토리 모드 관리자 예시]
+.Ficsit-CLI FTP 예시
+image::DedicatedServers/CLI_FTP.png[Ficsit-CLI 예시]
 
 //cspell:ignore CIFS
 [id="FileTransferMethods_SMB"]
-=== Filepath or SMB/CIFS
+=== 파일 경로 또는 SMB/CIFS
 
-Server Message Block (SMB), also known as CIFS (Common Internet File System) or Windows File Shares,
-is a network file transfer method commonly used on Windows Systems and occasionally Linux/Unix systems.
-Think of it like Windows file paths but expanded to supports network locations.
-SMB typically uses TCP port 445, but your server may differ.
-The examples below are for a self-hosted dedicated server.
+서버 메시지 블록(SMB), CIFS(공통 인터넷 파일 시스템) 또는 Windows 파일 공유라고도 알려진 이것은
+Windows 시스템과 가끔 Linux/Unix 시스템에서 사용되는 네트워크 파일 전송 방법입니다.
+네트워크 위치를 지원하도록 확장된 Windows 파일 경로라고 생각하면 됩니다.
+SMB는 일반적으로 TCP 포트 445를 사용하지만, 서버마다 다를 수 있습니다.
+아래 예시는 자체 호스팅 전용 서버용입니다.
 
-* The authenticating user requires Read/Write/Delete or Read/Modify permissions.
-* The path should follow this format:
-** Enter the path to the directory containing `FactoryServer.exe` or `FactoryServer.sh`.
-If using Satisfactory Mod Manager, the built-in file browser
-will automatically select the correct subfolder if you select the root install directory.
-** If running your chosen mod management tool on a Windows computer:
-*** If the server is installed on the same computer, use the file path, for example `C:\EpicGamesGames\SatisfactoryDSExperiment`
-*** If the server is on a network location: `\\ServerNameOrIP\ShareName\Path` or `//ServerNameOrIP/ShareName/Path`
-** If running your chosen mod management tool on a Linux computer:
-*** If the server is installed on the same computer: use the file path.
-*** If the server is on a network location, you first need to mount it to a local path,
-then you can treat it as a local installation.
-Mounting varies significantly depending on your setup;
-a good starting point is to check `linux mount cifs to path` on your favorite search engine.
-* Note that locally installed dedicated servers set up through Steam or Epic
-will likely be automatically detected by Satisfactory Mod Manager and appear with the "DS" note in the dropdown.
+* 인증하는 사용자는 읽기/쓰기/삭제 또는 읽기/수정 권한이 필요합니다.
+* 경로는 다음 형식을 따라야 합니다:
+** `FactoryServer.exe` 또는 ``FactoryServer.sh``가 있는 디렉터리 경로를 입력하십시오.
+새티스팩토리 모드 관리자를 사용하는 경우, 내장 파일 브라우저가
+루트 설치 디렉터리를 선택하면 자동으로 올바른 하위 폴더를 선택합니다.
+** Windows 컴퓨터에서 선택한 모드 관리 도구를 실행하는 경우:
+*** 서버가 같은 컴퓨터에 설치된 경우, 파일 경로를 사용하십시오(예: `C:\EpicGamesGames\SatisfactoryDSExperiment`)
+*** 서버가 네트워크 위치에 있는 경우: `\\서버이름또는IP\공유이름\경로` 또는 `//서버이름또는IP/ShareName/경로`
+** Linux 컴퓨터에서 선택한 모드 관리 도구를 실행하는 경우:
+*** 서버가 같은 컴퓨터에 설치된 경우: 파일 경로를 사용하십시오.
+*** 서버가 네트워크 위치에 있는 경우, 먼저 로컬 경로에 마운트한 다음
+로컬 설치처럼 취급할 수 있습니다.
+마운팅은 설정에 따라 크게 다르므로,
+좋아하는 검색 엔진에서 ``linux mount cifs to path``를 검색하는 것이 좋은 시작점입니다.
+* 스팀이나 에픽을 통해 로컬에 설치된 전용 서버는
+새티스팩토리 모드 관리자가 자동으로 감지하여 드롭다운에 "DS" 표시와 함께 나타날 수 있습니다.
 
-.Windows Satisfactory Mod Manager Example
-image::DedicatedServers/SMM_SMB.png[Satisfactory Mod Manager Example]
+.Windows 새티스팩토리 모드 관리자 예시
+image::DedicatedServers/SMM_SMB.png[새티스팩토리 모드 관리자 예시]
 
-.Windows Ficsit-CLI Example
-image::DedicatedServers/CLI_SMB.png[Ficsit-CLI Example]
+.Windows Ficsit-CLI 예시
+image::DedicatedServers/CLI_SMB.png[Ficsit-CLI 예시]
 
 [id="Troubleshooting"]
-== Troubleshooting
+== 문제 해결
 
-Remember, we can only provided limited support for third-party hosted servers
-as we do not know or control their systems.
-Contact your server host's support lines if you encounter problems.
+제3자 호스팅 서버의 시스템을 알 수 없고 제어할 수 없기 때문에
+제한된 지원만 제공할 수 있다는 점을 기억하십시오.
+문제가 발생하면 서버 호스트의 지원 라인에 문의하십시오.
 
-Contact us on the https://discord.ficsit.app[Discord Server] if something is confusing or goes wrong.
+무언가가 헷갈리거나 잘못되면 https://discord.ficsit.app[디스코드 서버]에서 문의하십시오.
 
 [id="InstallingMods"]
-== Installing Mods
+== 모드 설치하기
 
-Once you have set up the mod manager of choice you can start installing mods on the server.
-Read the below warnings, then check out the set of directions specific to the mod manager you chose.
+선택한 모드 관리자 설정을 완료했다면 서버에 모드를 설치하기 시작할 수 있습니다.
+아래 경고를 읽은 다음, 선택한 모드 관리자에 맞는 지침을 확인하십시오.
 
 [id="CheckModDedicatedServerSupport"]
-=== Checking if a Mod Supports Dedicated Servers
+=== 모드의 전용 서버 지원 여부 확인하기
 
-Most, but not all, mods are compatible with dedicated servers.
-They must be specially compiled and packaged for the alternative format.
+대부분의 모드가 전용 서버와 호환되지만, 일부는 그렇지 않습니다.
+대체 형식으로 특별히 컴파일되고 패키징되어야 합니다.
 
-When viewing the ficsit.app webpage for a mod, check the "Latest Version" section -
-if you see a table with a "Server" column, and a checkmark is present on your server type,
-the mod is compatible with dedicated servers.
-If you see an X, the mod does not yet support dedicated servers.
+ficsit.app 웹페이지에서 모드를 볼 때, "최신 버전" 섹션을 확인하십시오.
+"서버" 열이 있는 표가 보이고, 서버 유형에 체크 표시가 있다면
+해당 모드는 전용 서버와 호환됩니다.
+X 표시가 있다면, 해당 모드는 아직 전용 서버를 지원하지 않습니다.
 
-.Example Mod that Supports Dedicated Servers
-image::DedicatedServers/ExampleSupportsDedicatedServers.png[Supported Example]
-.Example Mod that Does NOT Support Dedicated Servers
-image::DedicatedServers/ExampleDoesNotSupportDedicatedServers.png[No Support Example]
+.전용 서버를 지원하는 모드 예시
+image::DedicatedServers/ExampleSupportsDedicatedServers.png[지원 예시]
+.전용 서버를 지원하지 않는 모드 예시
+image::DedicatedServers/ExampleDoesNotSupportDedicatedServers.png[미지원 예시]
 
-The ficsit.app website does not currently offer a way to filter mods for dedicated server support.
+ficsit.app 웹사이트는 현재 전용 서버 지원 여부로 모드를 필터링하는 기능을 제공하지 않습니다.
 
-Satisfactory Mod Manager offers a "compatible" filtering mode which,
-while managing a server install, causes only server-compatible mods to be displayed.
+새티스팩토리 모드 관리자는 서버 설치를 관리할 때
+서버 호환 모드만 표시하는 "호환됨" 필터링 모드를 제공합니다.
 
-Ficsit-cli does not currently have a way to filter mods for dedicated server support.
+Ficsit-cli는 현재 전용 서버 지원 여부로 모드를 필터링하는 방법을 제공하지 않습니다.
 
 [id="ServerClientConsistency"]
-=== Important: Server-Client Mod Consistency
+=== 중요: 서버-클라이언트 모드 일관성
 
-Although it is possible to use ficsit-cli or the Mod Manager to install mods one-by-one on the server,
-this is not recommended as you could easily end up with a mismatch between client and server mod versions,
-preventing you from connecting.
+ficsit-cli나 모드 관리자를 사용하여 서버에 모드를 하나씩 설치할 수는 있지만,
+클라이언트와 서버의 모드 버전이 일치하지 않아 연결이 불가능해질 수 있으므로
+이는 권장되지 않습니다.
 
-It is not feasible to export a profile created in SMM for a client to be used on a server
-because there are some mods that only exist client or server side.
-In the future, the ability to create and share "modpacks" will be introduced to resolve this problem,
-as modpacks will be able to keep track of mods that may not apply for a game target.
+클라이언트용으로 만든 SMM 프로필을 서버에서 사용하도록 내보내는 것은
+클라이언트나 서버 측에만 존재하는 모드가 있기 때문에 실현 가능하지 않습니다.
+향후에는 게임 대상에 적용되지 않을 수 있는 모드를 추적할 수 있는
+"모드팩" 기능이 도입되어 이 문제를 해결할 예정입니다.
 
-In the mean time, we suggest using an installation of SMM or ficsit-cli on your client computer
-so that you can use the same profile to manage both your client and remote server install.
-You can then export the SMM or ficsit-cli profile
-and send file to your server members so they can configure their own installs accordingly.
+그때까지는 클라이언트 컴퓨터에서 SMM이나 ficsit-cli를 설치하여
+동일한 프로필로 클라이언트와 원격 서버 설치를 모두 관리하는 것을 권장합니다.
+그런 다음 SMM이나 ficsit-cli 프로필을 내보내서
+서버 멤버들에게 파일을 보내 그들도 설치를 적절히 구성할 수 있게 할 수 있습니다.
 
-If you encounter any one-side-only mods
-you will have to switch to using separate profiles for the server and client until the Modpacks feature is released.
+한 쪽에만 설치 모드를 발견하면
+모드팩 기능이 출시될 때까지 서버와 클라이언트에 대해 별도의 프로필을 사용해야 합니다.
 
 [id="ShutDownServer"]
-=== Shut Down the Server
+=== 서버 종료하기
 
-Before you start installing mods, make sure the server is not currently running.
-A running server will keep mod files locked in use, preventing updating or uninstalling them.
-You'll have to reboot the server anyways for mod changes to take effect, so you might as well turn it off before you start.
+모드 설치를 시작하기 전에 서버가 현재 실행 중이 아닌지 확인하십시오.
+실행 중인 서버는 모드 파일을 사용 중인 상태로 잠그므로 업데이트나 제거가 불가능합니다.
+어차피 모드 변경 사항을 적용하려면 서버를 재부팅해야 하므로, 시작하기 전에 종료하는 것이 좋습니다.
 
 [id="InstallingMods_SMM"]
-=== Using Satisfactory Mod Manager
+=== 새티스팩토리 모드 관리자 사용하기
 
-The process of using Satisfactory Mod Manager from this point on is the same as managing a local install.
-If you need a refresher, check out the xref:ForUsers/SatisfactoryModManager.adoc[Installing and Using the Mod Manager] guide.
+이 시점부터 새티스팩토리 모드 관리자를 사용하는 과정은 로컬 설치를 관리하는 것과 동일합니다.
+다시 확인이 필요하다면, xref:ForUsers/SatisfactoryModManager.adoc[모드 관리자 설치 및 사용] 안내서를 확인하십시오.
 
 [id="InstallingMods_CLI"]
-=== Using ficsit-cli
+=== ficsit-cli 사용하기
 
-There is not currently documentation for using ficsit-cli to install mods,
-but as long as you heed the below advice, it will be pretty straightforward.
-As always, ask on the Discord if you get stuck.
+현재 ficsit-cli를 사용하여 모드를 설치하는 방법에 대한 문서는 없지만,
+아래 조언을 따른다면 꽤 간단할 것입니다.
+항상 그렇듯이, 막히면 디스코드에서 문의하십시오.
 
-ficsit-cli will probably see your local Satisfactory Mod Manager profiles and may have one selected by default.
-Consider creating a new profile to use for your server.
-Make sure to apply changes after installing mods or loading a profile,
-otherwise all changes will be discarded on exit.
+ficsit-cli는 아마도 로컬 새티스팩토리 모드 관리자 프로필을 보고 기본적으로 하나를 선택할 것입니다.
+서버용으로 새 프로필을 만드는 것을 고려하십시오.
+모드를 설치하거나 프로필을 로드한 후에는 변경 사항을 적용해야 합니다.
+그렇지 않으면 종료 시 모든 변경 사항이 취소됩니다.
 
-Note that applying changes in ficsit-cli is a global action -
-all installations the program is aware of will have any staged changes they may have applied in parallel.
-This does _not_ mean that all installs must be on the same profile.
+ficsit-cli에서 변경 사항을 적용하는 것은 전역 작업이라는 점에 유의하십시오.
+프로그램이 알고 있는 모든 설치에 대해 준비된 변경 사항이 있다면 병렬로 적용됩니다.
+이는 모든 설치가 동일한 프로필을 사용해야 한다는 의미는 _아닙니다_.
 
 [id="JoiningModdedDedicatedServer"]
-== Joining a Modded Dedicated Server
+== 모드가 설치된 전용 서버 접속하기
 
-As described in the link:#ServerClientConsistency[Server-Client Mod Consistency] section,
-client players must have the same mods installed as the server to be able to join.
-In the case of a failed join due to a mod mismatch,
-SML will attempt to provide a meaningful disconnect message, but this is not always possible.
+link:#ServerClientConsistency[서버-클라이언트 모드 일관성] 섹션에서 설명한 대로,
+클라이언트 플레이어는 서버에 접속하기 위해 서버와 동일한 모드를 설치해야 합니다.
+모드 불일치로 인해 접속에 실패한 경우,
+SML은 의미 있는 연결 해제 메시지를 제공하려고 시도하지만, 이것이 항상 가능한 것은 아닙니다.
 
-If you're having trouble joining your server,
-first verify that it is possible to connect to the server in its unmodified state
-by removing all mods from the server and client.
-Most connection issues people encounter also affect the unmodified server.
-If that works, try adding mods back in small groups to see which one is causing the problem.
+서버 접속에 문제가 있다면,
+먼저 서버와 클라이언트에서 모든 모드를 제거하여
+수정되지 않은 상태에서 서버에 연결할 수 있는지 확인하십시오.
+대부분의 연결 문제는 수정되지 않은 서버에도 영향을 미칩니다.
+그것이 작동한다면, 모드를 작은 그룹으로 나누어 다시 추가하면서 어떤 모드가 문제를 일으키는지 확인하십시오.
 
-If you're still encountering problems,
-join the https://discord.ficsit.app[Discord]
-and upload logs from both your client and server in the `#help-using-mods` channel.
+여전히 문제가 발생한다면,
+https://discord.ficsit.app[디스코드]에 가입하여
+`#help-using-mods` 채널에 클라이언트와 서버 모두의 로그를 업로드하십시오.
 
 [id="ModdedServerConfiguration"]
-== Configuring Mods on Servers
+== 서버의 모드 구성하기
 
-There is not currently an interface for adjusting
-xref:ForUsers/ConfiguringMods.adoc#_mod_configuration_options[Mod Configurations]
-remotely on dedicated servers.
-As such, you should configure mods client side and copy the config files over to the server.
-Note that some mods could stop working correctly or behave unexpectedly if client and server configs don't match!
-Check the xref:faq.adoc#Files_ModConfig[FAQ on where game files are located] to see where config files are stored.
+현재 전용 서버에서 원격으로
+xref:ForUsers/ConfiguringMods.adoc#_모드_구성_옵션[모드 구성 옵션]을
+조정하는 인터페이스는 없습니다.
+따라서 클라이언트 측에서 모드를 구성하고 구성 파일을 서버로 복사해야 합니다.
+일부 모드는 클라이언트와 서버의 구성이 일치하지 않으면 제대로 작동하지 않거나 예기치 않은 동작을 할 수 있다는 점에 유의하십시오!
+구성 파일이 저장되는 위치는 xref:faq.adoc#Files_ModConfig[FAQ의 게임 파일 위치]를 참고하십시오.
 
-Although xref:ForUsers/ConfiguringMods.adoc#_mod_savegame_settings[Mod Savegame Settings]
-can be configured mid-game using their usual interface,
-the Server Manager's save creation screen does not support setting Mod Savegame Settings that must be decided at save file creation.
-To work around this, create your save file with the desired settings on your client,
-then upload the save to the server using the normal save file upload process.
+xref:ForUsers/ConfiguringMods.adoc#_모드_저장게임_설정[모드 저장게임 설정]은
+일반적인 인터페이스를 사용하여 게임 중에 구성할 수 있지만,
+서버 관리자의 저장 생성 화면은 저장 파일 생성 시 결정해야 하는 모드 저장게임 설정을 지원하지 않습니다.
+이를 해결하려면 클라이언트에서 원하는 설정으로 저장 파일을 만든 다음,
+일반적인 저장 파일 업로드 과정을 통해 서버에 업로드하십시오.
 
-== (Not supported) Manual Mod Installation
+== (지원되지 않음) 수동 모드 설치
 
 [WARNING]
 ====
-We do not provide support on the Discord for dedicated servers that have had mods manually installed.
+수동으로 모드를 설치한 전용 서버에 대해서는 디스코드에서 지원을 제공하지 않습니다.
 ====
 
 [IMPORTANT]
 ====
-Do NOT naively copy-paste your client's mods folder to a server - this will not work!
-The compiled files used by the game client will not work on dedicated servers,
-so trying to give them client files will result in vague error messages.
+클라이언트의 모드 폴더를 서버에 단순히 복사-붙여넣기 하지 마세요. 이는 작동하지 않습니다!
+게임 클라이언트가 사용하는 컴파일된 파일은 전용 서버에서 작동하지 않으므로,
+클라이언트 파일을 제공하면 모호한 오류 메시지가 발생할 것입니다.
 ====
 
-It is possible to manually install mods on dedicated server installs
-without the help of the Mod Manager of ficsit-cli,
-however the process of doing so will vary based on your server
-and you will have to manually ensure you have downloaded compatible versions and all of their dependencies.
+모드 매니저나 ficsit-cli의 도움 없이
+전용 서버 설치에 수동으로 모드를 설치하는 것이 가능하지만,
+이 과정은 서버에 따라 다르며 호환되는 버전과 모든 의존성을
+수동으로 확인해야 합니다.
 
-The steps described in the xref:ManualInstallDirections.adoc[Manual Installation]
-directions for clients still generally apply,
-but be sure to download the correct target platform version of the mod for your server.
+클라이언트용 xref:ManualInstallDirections.adoc[수동 설치] 지침에
+설명된 단계들은 일반적으로 여전히 적용되지만,
+서버에 맞는 올바른 대상 플랫폼 버전의 모드를 다운로드해야 합니다.

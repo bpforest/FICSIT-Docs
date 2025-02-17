@@ -1,79 +1,79 @@
-= Factory-Connectors
+= 공장 연결부
 
-Factory connectors are Satisfactory's system for transferring items from one machine to the next.
-Conveyors also utilize factory connectors to transfer items from a machine into its internal buffer (the belt).
+공장 연결부는 한 기계에서 다음 기계로 아이템을 전송하는 새티스팩토리의 시스템입니다.
+컨베이어 또한 공장 연결부를 사용하여 기계에서 내부 버퍼(벨트)로 아이템을 전송합니다.
 
-The Factory-Connector-System is a pull-based system.
-That means if a machine has an empty internal buffer and wants to get filled by a factory connector,
-the machine requests (via a Grab call) an item from the given connector.
-The connector can then reply with nothing (if there aren't any items) or the item it transfers.
-If it returns something, the caller (the machine) needs to
-make sure it does something with that item,
-else the item just disappears.
-The Factory-Connector itself asks its connected
-Factory-Connector or it's outer object to return an item.
-A machine (`AFGBuildable`) contains a Factory-Connector which contains a
-reference to a connected one, and that one will grab the item from the connected machine (belt).
+공장-연결부-시스템은 풀(pull) 기반 시스템입니다.
+즉, 기계의 내부 버퍼가 비어있고 공장 연결부를 통해 채워지기를 원할 때,
+기계는 주어진 연결부로부터 아이템을 요청(그랩 호출을 통해)합니다.
+연결부는 아무것도 보내지 않거나(아이템이 없는 경우) 전송하는 아이템으로 응답할 수 있습니다.
+만약 무언가를 받았다면, 호출자(기계)는
+그 아이템으로 무언가를 해야 합니다.
+그렇지 않으면 아이템이 그냥 사라집니다.
+공장 연결부 자체는 연결된
+공장 연결부나 외부 객체에 아이템을 요청합니다.
+기계(`AFGBuildable`)는 공장 연결부를 포함하고 있으며, 이는
+연결된 연결부에 대한 참조를 가지고 있고, 그 연결부는 연결된 기계(벨트)로부터 아이템을 가져옵니다.
 
-This is a flow example of a machine output of the Grab calls.
+다음은 기계 출력의 그랩 호출 흐름 예시입니다.
 
-A conveyor which has a free space -> FactoryConnector in the conveyor
-which is connected to the machines connector -> Factory-Connector of the
-machine which is connected to the connector of the conveyor -> Machine
+빈 공간이 있는 컨베이어 -> 컨베이어의 FactoryConnector
+(기계의 연결부와 연결됨) -> 기계의 Factory-Connector
+(컨베이어의 연결부와 연결됨) -> 기계
 
-This is a flow example of a machine input of the Grab calls.
+다음은 기계 입력의 그랩 호출 흐름 예시입니다.
 
-Machine -> Factory-Connector of the machine connected to the connector
-of the conveyor -> Factory-Connector of the conveyor connected to the
-connector of the machine -> Conveyor
+기계 -> 기계의 Factory-Connector(컨베이어의 연결부와 연결됨)
+-> 컨베이어의 Factory-Connector(기계의 연결부와 연결됨)
+-> 컨베이어
 
-If the machine just want to know what it can grab without actually transferring any items, then it can use the Peek functions. An example use case of this is filtering what it allows on the input side.
-These Peek functions work mostly the same as the Grab functions, except they don't actually cause a item transfer to happen.
+만약 기계가 실제로 아이템을 전송하지 않고 무엇을 가져올 수 있는지만 알고 싶다면, 피크 함수를 사용할 수 있습니다. 이의 사용 예시로는 입력 측면에서 허용하는 것을 필터링하는 경우가 있습니다.
+이러한 피크 함수들은 실제로 아이템 전송이 발생하지 않는다는 점을 제외하고는 그랩 함수들과 거의 동일하게 작동합니다.
 
 [WARNING]
 ====
-It is highly recommended to do item transfers, peeks, etc. in the xref:/Development/Satisfactory/FactoryTick.adoc[Factory Tick] call so that they are optimized for multiple cores.
+아이템 전송, 피크 등은 다중 코어에 최적화되도록 xref:/Development/Satisfactory/FactoryTick.adoc[공장 틱] 호출에서 수행하는 것을 강력히 권장합니다.
 ====
 
-== Grab & Peak
+== 그랩 & 피크
 
-The `FGBuildable` adds two functions.
+``FGBuildable``은 두 가지 함수를 추가합니다.
 
 === `FactoryGrabOutput`
 
-This function gets called by `FGFactoryConnector`s which have the `mForwardPeekAndGrabToBuildable` option enabled.
-Information about what connector wants to grab is passed and the function returns what actually gets grabbed.
+이 함수는 `mForwardPeekAndGrabToBuildable` 옵션이 활성화된 ``FGFactoryConnector``에 의해 호출됩니다.
+어떤 연결부가 가져가려고 하는지에 대한 정보가 전달되고 함수는 실제로 가져가는 것을 반환합니다.
 
 [WARNING]
 ====
-If you interact with a inventory or what ever, you need to make sure that you have removed the item from it,
-else the component could grab indefinitely, and that's not what we want.
+인벤토리나 기타 요소와 상호작용할 때, 반드시 아이템을 제거했는지 확인해야 합니다.
+그렇지 않으면 컴포넌트가 무한정 가져갈 수 있으며, 이는 우리가 원하는 것이 아닙니다.
 ====
 
 ===  `FactoryPeekOutput`
 
-This function works just like `FactoryGrabOutput` but there you should not remove the item from your inventory or what ever.
-This function is only used to allow the output to check what it can grab if it wants to.
+이 함수는 ``FactoryGrabOutput``과 유사하게 작동하지만 인벤토리나 기타 요소에서 아이템을 제거하지 않아야 합니다.
+이 함수는 출력이 원하는 경우 무엇을 가져갈 수 있는지 확인하는 용도로만 사용됩니다.
 
 == FGFactoryConnection
 
-A `UFGFactoryConnectionComponent` is a `USceneComponent` used to implement a Factory-Connector.
-Use this directly as a component for you `AFGBuildable`.
+``UFGFactoryConnectionComponent``는 공장-연결부를 구현하는 데 사용되는 ``USceneComponent``입니다.
+이것을 ``AFGBuildable``의 컴포넌트로 직접 사용하십시오.
 
 * {blank}
 +
 M Connector::
-  The material type of connection. (Solid, Liquid, or Gas)
+  연결의 재료 유형입니다(고체, 액체, 기체).
 * {blank}
 +
 M Direction::
-  The I/O direction of the factory connector.
-  If it receives items or if it sends items.
+  공장 연결부의 I/O 방향입니다.
+  아이템을 받는지, 보내는지 결정합니다.
 * {blank}
 +
 M Connector Clearance::
-  The distance after which the connected conveyor is allowed to bend.
+  연결된 컨베이어가 구부러질 수 있는 거리입니다.
 * {blank}
 +
 M Forward Peek and Grab to Buildable::
-  If the grab and peeks should get redirected to the owner (just `FGBuildable` works)
+  그랩과 피크가 소유자에게 리디렉션되어야 하는지 여부입니다(``FGBuildable``만 작동).

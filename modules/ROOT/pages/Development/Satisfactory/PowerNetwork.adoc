@@ -1,99 +1,99 @@
-= Power-Network
+= 전력 네트워크
 
-We currently don't really know how the power network works, but we do
-know how we can use it, and in this chapter, we explain it to you.
+현재 우리는 전력 네트워크가 정확히 어떻게 작동하는지 완전히 알지 못하지만,
+어떻게 사용할 수 있는지는 알고 있으며, 이 장에서 그것을 설명하겠습니다.
 
 [WARNING]
 ====
-If you want to make changes to the power settings of a machine.
-(Settings values of FGInventoryComponent) and other stuff,
-then you should definitely perform this call in the xref:/Development/Satisfactory/FactoryTick.adoc[Factory Tick].
+기계의 전력 설정을 변경하고자
+할 때(FGInventoryComponent의 설정값) 및 기타 사항들은
+반드시 xref:/Development/Satisfactory/FactoryTick.adoc[공장 틱]에서 수행해야 합니다.
 ====
 
-The Power-Network consists of three key components.
+전력 네트워크는 세 가지 주요 구성 요소로 이루어져 있습니다.
 
 * {blank}
 +
 UFGPowerCircuit::
-  This class manages a power network (aka. PowerCircuit) itself. It
-  gathers data about the current production and consumption of the
-  network and decides what needs to happen.
+  이 클래스는 전력 네트워크(일명 PowerCircuit)를 관리합니다.
+  네트워크의 현재 생산량과 소비량에 대한 데이터를 수집하고
+  필요한 조치를 결정합니다.
 * {blank}
 +
 UFGPowerConnectionComponent::
-  This is the component used to connect components/machines. It manages
-  cable connections and hidden connections from other connection
-  components to itself. It f.e. limits the number of cables you can
-  attach to it.
+  이 컴포넌트는 구성요소/기계를 연결하는 데 사용됩니다.
+  케이블 연결과 다른 연결 컴포넌트로부터 자신으로의 숨겨진 연결을
+  관리합니다. 예를 들어, 부착할 수 있는
+  케이블의 수를 제한합니다.
 * {blank}
 +
 UFGPowerInfoComponent::
-  This component represents the needs of a power consumer/producer
-  itself (like production, consumption). If you want to know if
-  your machine has power or make it consume power, you will need to use this component.
+  이 컴포넌트는 전력 소비자/생산자의 필요사항(생산량, 소비량 등)을
+  나타냅니다. 기계에 전력이 공급되는지 확인하거나 전력을 소비하게
+  하려면 이 컴포넌트를 사용해야 합니다.
 
 == FGPowerConnectionComponent
 
-This class manages is a connection point for wires and hidden
-connections to "transfer" energy.
+이 클래스는 전선과 숨겨진 연결을 통해 에너지를 "전송"하는
+연결 지점을 관리합니다.
 
 * {blank}
 +
 M Max Num Connection Links::
-  Max number of connections allowed to get connected to the connections
+  연결부에 허용되는 최대 연결 수
 * {blank}
 +
 M Is Hidden Connection::
-  If the connections should be hidden (no cables allowed)
+  연결이 숨겨져야 하는지(케이블 허용되지 않음)
 * {blank}
 +
 M Wires::
-  The list of connected wires (cables)
+  연결된 전선(케이블)의 목록
 * {blank}
 +
 M Nb Wires connected::
-  Number of wires connected to this component
+  이 컴포넌트에 연결된 전선의 수
 * {blank}
 +
 M Circuit ID::
-  The ID of the connected power circuit
+  연결된 전력 회로의 ID
 * {blank}
 +
 M Hidden Connections::
-  The list of hidden connections (f.e. train rails)
+  숨겨진 연결의 목록(예: 기차 레일)
 
 == FGPowerInfoComponent
 
-This class handles and contains information about the needs and status
-of a power consumer/producer.
+이 클래스는 전력 소비자/생산자의 필요사항과 상태에 대한
+정보를 처리하고 포함합니다.
 
-You need to use the provided member functions (nodes) to set/get data
-like:
+다음과 같은 데이터를 설정/가져오기 위해 제공된 멤버 함수(노드)를
+사용해야 합니다:
 
 * {blank}
 +
 Target consumption::
-  The amount of power the power consumer needs to work
+  전력 소비자가 작동하는 데 필요한 전력량
 * {blank}
 +
 Base Production::
-  The amount of power the producer produces definitely (like a
-  geothermal generator) and doesn't get decreased dynamically like a
-  fuel generator.
+  생산자가 확실히 생산하는
+  전력량(지열 발전기와 같이)으로,
+  연료 발전기처럼 동적으로 감소하지 않습니다.
 * {blank}
 +
 Dynamic Production Capacity::
-  The max amount of power the producer can provide. (used to limit the
-  dynamic production)
+  생산자가 제공할 수 있는
+  최대 전력량(동적 생산을 제한하는 데 사용됨)
 * {blank}
 +
 Actual Consumption::
-  The consumption used in the last tick of the power grid.
+  전력망의 마지막 틱에서 사용된 소비량
 * {blank}
 +
 Regulated Dynamic Production::
-  The amount of power provided to the power circuit in the last tick.
+  마지막 틱에서 전력 회로에 제공된 전력량
 * {blank}
 +
 Has Power::
-  If the consumer has actual power
+  소비자가 실제로 전력을 가지고 있는지 여부
