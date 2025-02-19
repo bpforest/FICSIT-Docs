@@ -1,19 +1,19 @@
-= Simple Construction Script (SCS) Hooks
+= 간단 구축 스크립트(SCS) 훅
 
-Introduced in SML3.5, Blueprint Simple Construction Script hooks allow adding modded
-https://docs.unrealengine.com/5.1/en-US/components-in-unreal-engine/[Components]
-to any blueprint-based actor.
+SML3.5에서 도입된 블루프린트 간단 구축 스크립트 훅을 사용하면 블루프린트 기반 액터에 모드된
+https://docs.unrealengine.com/5.1/en-US/components-in-unreal-engine/[컴포넌트]를
+추가할 수 있습니다.
 
-Mods can define Blueprint SCS Hooks in their
-xref:Development/ModLoader/ModModules.adoc#_게임_인스턴스_할당_모듈ugameinstancemodule[Game Instance Module] under Class Defaults -> Advanced -> Hooks -> Blueprint SCSHooks
+모드는 xref:Development/ModLoader/ModModules.adoc#_게임_인스턴스_할당_모듈ugameinstancemodule[게임 인스턴스 모듈]의
+Class Defaults -> Advanced -> Hooks -> Blueprint SCSHooks에서 블루프린트 SCS 훅을 정의할 수 있습니다.
 
-This system is very flexible and it is difficult to summarize its capabilities.
-Here are some example usages:
+이 시스템은 매우 유연하여 그 기능을 요약하기가 어렵습니다.
+다음은 몇 가지 사용 예시입니다:
 
-* Spawn a component on the player character that does some custom logic
-    ** Example Mod uses this to add a hat to the player if they have an Example Item in their inventory.
-       Note that the component is always spawned, but custom logic controls if the hat is visible to the player.
-* Easily track (and potentially store with the save file) per-player data that is guaranteed to exist by hooking the construction of BP_PlayerState
-    ** The open-source https://ficsit.app/mod/FreeSamples[Free Samples] mod
-       attaches a FreeSampleDataComponent to each BP_PlayerState with this configuration on its RootInstance_FreeSamples blueprint:
-       image:ModLoader/SCSHook_Example_FreeSamples.png[FreeSamples SCS Hook Example]
+* 맞춤 로직을 수행하는 컴포넌트를 플레이어 캐릭터에 소환
+    ** 예시 모드는 플레이어가 인벤토리에 예시 아이템을 가지고 있을 때 플레이어에게 모자를 추가하는 데 이를 사용합니다.
+       컴포넌트는 항상 스폰되지만, 맞춤 로직이 모자가 플레이어에게 보이는지 여부를 제어한다는 점에 유의하십시오.
+* BP_PlayerState의 구축을 훅하여 플레이어별 데이터를 쉽게 추적(그리고 잠재적으로 저장 파일과 함께 저장)할 수 있습니다.
+    ** 오픈소스 https://ficsit.app/mod/FreeSamples[Free Samples] 모드는
+       RootInstance_FreeSamples 블루프린트의 다음 구성으로 각 BP_PlayerState에 FreeSampleDataComponent를 연결합니다:
+       image:ModLoader/SCSHook_Example_FreeSamples.png[FreeSamples SCS 훅 예시]

@@ -1,303 +1,303 @@
-= Open Source Examples
+= 오픈 소스 예제
 
-It's impossible for this documentation to cover every aspect of making Satisfactory mods.
-However, there are quite a few open-source mods you can download and check out the code of
-to learn how they accomplish certain behaviors or features.
+새티스팩토리 모드 제작의 모든 면을 이 문서에서 다루는 것은 불가능합니다.
+하지만 특정 동작이나 기능을 구현하는 방법을 배우기 위해 다운로드하고 코드를 확인할 수 있는
+오픈 소스 모드들이 꽤 있습니다.
 
-This page contains a community-maintained list of open-source mods,
-as well as what Satisfactory and SML features they make use of,
-to help guide your learning.
+이 페이지는 커뮤니티에서 관리하는 오픈 소스 모드 목록과
+그들이 사용하는 새티스팩토리 및 SML 기능들을 포함하고 있어
+학습에 도움을 줄 수 있습니다.
 
-Open source mods typically provide their source code in the "Source" section of the infobox on the mod repository.
+오픈 소스 모드들은 일반적으로 모드 저장소의 "Source" 섹션에서 소스 코드를 제공합니다.
 
-You can set up these mods in your editor by following the
-xref:Development/BeginnersGuide/ImportingAnotherMod.adoc[Importing Other Mods to your Project] guide.
+xref:Development/BeginnersGuide/ImportingAnotherMod.adoc[다른 모드를 프로젝트로 가져오기] 가이드를 따라
+이러한 모드들을 에디터에서 설정할 수 있습니다.
 
-Would you like to make your mod open source so others can learn from it as well?
-Get started by following the xref:Development/BeginnersGuide/CreateGitRepo.adoc[Creating a Mod Git Repo] guide.
+다른 사람들도 배울 수 있도록 당신의 모드를 오픈 소스로 만들고 싶으십니까?
+xref:Development/BeginnersGuide/CreateGitRepo.adoc[모드 깃 저장소 만들기] 안내를 따라 시작해 보십시오.
 
 [TIP]
 ====
-This page is a continual work in progress.
-Are you aware of an open-source mod to list here?
-Add it via the "Edit This Page" button in the top right corner and open a Pull Request to bring in your changes.
+이 페이지는 지속적으로 작업 중입니다.
+여기에 등록할 만한 오픈 소스 모드를 알고 계십니까?
+우측 상단의 "이 페이지 편집" 버튼을 통해 추가하고 풀 리퀘스트를 열어 변경사항을 반영해 주십시오.
 ====
 
 == MAM Enhancer
 
-Modifies the base game MAM, HUB, and AWESOME Shop UI to provide additional information to the player and improve the user experience.
+기본 게임의 M.A.M., 허브, A.W.E.S.O.M.E. 상점 UI를 수정하여 플레이어에게 추가 정보를 제공하고 사용자 경험을 개선합니다.
 
-_Source Code_: Linked on the https://ficsit.app/mod/MAMTips[Mod Page]
+_소스 코드_: https://ficsit.app/mod/MAMTips[모드 페이지]에서 링크됨
 
-_Mod Type_: Hybrid Blueprint/{cpp}
+_모드 유형_: 하이브리드 블루프린트/{cpp}
 
-_Notable Techniques Used:_
+_주목할 만한 기술:_
 
-* Widget Injection
-** Modify the base game's interface to hide, change, and add new elements
-* In-game tutorial
-** An icon with a tooltip that encourages the player to see how to use the mod after installing it,
-   then dismisses itself for later
+* 위젯 주입
+** 기본 게임의 인터페이스를 수정하여 요소를 숨기고, 변경하고, 새로운 요소 추가
+* 게임 내 튜토리얼
+** 모드 설치 후 사용 방법을 안내하는 툴팁이 있는 아이콘으로,
+   나중에는 자동으로 사라짐
 
-_Notable Satisfactory Features Used:_
+_사용된 주목할 만한 새티스팩토리 기능:_
 
-* xref:Development/Satisfactory/ShoppingList.adoc[To-Do/Shopping List]
-** Adds schematics to the player's Shopping List list
+* xref:Development/Satisfactory/ShoppingList.adoc[할 일/쇼핑 목록]
+** 플레이어의 쇼핑 목록에 도면 추가
 
-_Notable Mod Loader Features Used:_
+_사용된 주목할 만한 모드 로더 기능:_
 
-* Mod Configuration
-** Live preview of user's selected config options
-** Binding events to the change of config options
-** Programatically modifying config values and saving the changes
-* Bind on BP Function
-* Widget Blueprint Hooks
-* Session Settings
+* 모드 설정
+** 사용자가 선택한 설정 옵션의 실시간 미리보기
+** 설정 옵션 변경에 이벤트 바인딩
+** 프로그래밍 방식으로 설정값 수정 및 변경사항 저장
+* BP 함수에 바인딩
+* 위젯 블루프린트 훅
+* 세션 설정
 
 == Free Samples
 
-Whenever you unlock a technology that grants you a recipe, receive a configurable amount of 'free samples' of that recipe. For equipment and component crafting recipes, this is the output product. For buildings, this is the ingredients for the building. Every player in multiplayer gets a copy of the free sample items.
+기술을 해금하여 제작법을 얻을 때마다 해당 제작법의 '무료 샘플'을 설정 가능한 수량만큼 받습니다. 장비와 구성품 제작법의 경우 출력 제품을, 건물의 경우 건물 재료를 받습니다. 멀티플레이에서는 모든 플레이어가 무료 샘플 아이템 복사본을 받습니다.
 
-_Source Code_: Linked on the https://ficsit.app/mod/FreeSamples[Mod Page]
+_소스 코드_: https://ficsit.app/mod/FreeSamples[모드 페이지]에서 링크됨
 
-_Mod Type_: Hybrid Blueprint/{cpp}
+_모드 유형_: 하이브리드 블루프린트/{cpp}
 
-_Notable Techniques Used:_
+_주목할 만한 기술:_
 
-* Programatically giving items to players
-* Compatibility with runtime-generated assets
-** Works properly with Recipes and Schematics that might not yet exist when the player loads the world
-* Per-player data storage (multiplayer compatibility)
-* Save/loading of soft class and soft object fields
-* Hybrid Blueprint/{cpp} subsystems
-** Subsystems' final implementations are in Blueprint,
-   but they are backed by custom {cpp} parent classes to allow {cpp} mods to reference the data fields.
-* Zero-dependency cross mod interaction
-** Mod is coded to inspect other mod's assets for fields with a certain name,
-   and then change behavior based on those fields values.
-   Enables cross-mod interaction without either mod needing the other's source code.
+* 프로그래밍 방식으로 플레이어에게 아이템 지급
+* 런타임 생성 애셋과의 호환성
+** 플레이어가 월드를 불러올 때 아직 존재하지 않을 수 있는 제작법과 도면에도 정상 작동
+* 플레이어별 데이터 저장(멀티플레이 호환성)
+* 소프트 클래스 및 소프트 오브젝트 필드의 저장/로딩
+* 하이브리드 블루프린트/{cpp} 서브시스템
+** 서브시스템의 최종 구현은 블루프린트에 있지만,
+   {cpp} 모드가 데이터 필드를 참조할 수 있도록 맞춤 {cpp} 부모 클래스로 지원됨
+* 의존성 없이 모드 간 상호작용
+** 모드가 다른 모드의 애셋에서 특정 이름을 가진 필드를 검사하고,
+   해당 필드의 값에 따라 동작을 변경하도록 코딩됨.
+   어느 모드도 상대방의 소스 코드 없이 크로스 모드 상호작용 가능
 
-_Notable Satisfactory Features Used:_
+_사용된 주목할 만한 새티스팩토리 기능:_
 
-* None
+* 없음
 
-_Notable Mod Loader Features Used:_
+_사용된 주목할 만한 모드 로더 기능:_
 
-* Mod Subsystems
-** Server-side only subsystems since adding inventory items requires authority
-* Simple Construction Script (SCS) Hooks
-** Used to implement per-player data storage
-* Chat Commands
-* Mod Configuration
-** Custom config widget to make entering data easier
-** Tracking if the user has modified the config from the defaults
-   to know if future mod updates should automatically overwrite them with updated default data
-** Programatically modifying config values and saving the changes
-* xref:Development/ModLoader/ContentTagRegistry.adoc[Content Tags]
-** Tags can be used to specify items/recipes/schematics to skip from sample consideration without mod source dependencies.
+* 모드 서브시스템
+** 인벤토리 아이템 추가에는 권한이 필요하므로 서버 측 전용 서브시스템 사용
+* 간단 구축 스크립트(SCS) 훅
+** 플레이어별 데이터 저장 구현에 사용
+* 채팅 명령어
+* 모드 설정
+** 데이터 입력을 쉽게 하는 맞춤 설정 위젯
+** 사용자가 기본값에서 설정을 수정했는지 추적하여
+   향후 모드 업데이트 시 업데이트된 기본 데이터로 자동 덮어쓰기 여부 결정
+** 프로그래밍 방식으로 설정값 수정 및 변경사항 저장
+* xref:Development/ModLoader/ContentTagRegistry.adoc[콘텐츠 태그]
+** 태그를 사용하여 모드 소스 의존성 없이 샘플 고려 대상에서 제외할 아이템/제작법/도면 지정 가능
 
 == Screw It
 
-Meme mod, changes most things to be named and/or look like Screws.
+밈 모드로, 대부분의 것들의 이름과/또는 외형을 나사로 변경합니다.
 
-_Source Code_: Linked on the https://ficsit.app/mod/ScrewIt[Mod Page]
+_소스 코드_: https://ficsit.app/mod/ScrewIt[모드 페이지]에서 링크됨
 
-_Mod Type_: Hybrid Blueprint/{cpp}
+_모드 유형_: 하이브리드 블루프린트/{cpp}
 
-_Notable Techniques Used:_
+_주목할 만한 기술:_
 
-* Using the Asset Registry to quickly discover subclasses (both vanilla and modded)
-* Asynchronous asset loading to avoid stalling the game while waiting for disk I/O
-* Class Default Object (CDO) modification
-** CDO edits in bulk (on the aforementioned loaded classes), implemented in {cpp}
-* Hybrid Blueprint/{cpp} game instance module
-** Root instance's final implementations is in Blueprint,
-   but it is backed by a custom {cpp} parent class to be
-   able to easily reference Blueprint-only assets
+* 애셋 레지스트리를 사용하여 서브클래스(기본 게임 및 모드)를 빠르게 발견
+* 디스크 I/O 대기로 인한 게임 지연을 피하기 위한 비동기 애셋 로딩
+* 클래스 기본 오브젝트(CDO) 수정
+** {cpp}로 구현된 (앞서 언급한 로드된 클래스들의) 대량 CDO 편집
+* 하이브리드 블루프린트/{cpp} 게임 인스턴스 모듈
+** 루트 인스턴스의 최종 구현은 블루프린트에 있지만,
+   블루프린트 전용 애셋을 쉽게 참조할 수 있도록
+   커스텀 {cpp} 부모 클래스로 지원됨
 
-_Notable Satisfactory Features Used:_
+_사용된 주목할 만한 새티스팩토리 기능:_
 
-* None
+* 없음
 
-_Notable Mod Loader Features Used:_
+_사용된 주목할 만한 모드 로더 기능:_
 
-* Access Transformers, to be able to change otherwise inaccessible member variables.
+* 접근 변환기, 접근할 수 없는 멤버 변수를 변경하기 위해 사용
 
 [id="CableChoicesPlus"]
 == Cable Choices {plus}
 
-Adds a number of new variants of existing buildings (power cables and poles) as well as some buildings with custom functionality.
+기존 건물(송전선과 전신주)의 새로운 변형과 커스텀 기능이 있는 몇 가지 건물을 추가합니다.
 
-_Source Code_: Linked on the https://ficsit.app/mod/AB_CableMod[Mod Page]
+_소스 코드_: https://ficsit.app/mod/AB_CableMod[모드 페이지]에서 링크됨
 
-_Mod Type_: Hybrid Blueprint/{cpp}
+_모드 유형_: 하이브리드 블루프린트/{cpp}
 
-_Notable Techniques Used:_
+_주목할 만한 기술:_
 
-* Custom models that follow the Satisfactory style
-* Building icons generated with xref:CommunityResources/IconGenerator.adoc#_beavers_icon_generator[Beaver's Icon Generator]
-* GitHub repository that contains additional files (the source models) in a clean structure
-* Custom UI/UX
-** Settings panel to reorganize build menu
-* Base game content modifications
-** Adds an additional recipe for the existing FICSMAS powerline lights
-** Injects some unlocks into existing milestones
+* 새티스팩토리 스타일을 따르는 맞춤 모델
+* xref:CommunityResources/IconGenerator.adoc#_beavers_icon_generator[Beaver의 아이콘 생성기]로 생성된 건물 아이콘
+* 추가 파일(소스 모델)을 깔끔한 구조로 포함하는 깃허브 저장소
+* 맞춤 UI/UX
+** 건설 메뉴 재구성을 위한 설정 패널
+* 기본 게임 콘텐츠 수정
+** 기존 FICSMAS 송전선 조명에 추가 제작법 추가
+** 기존 마일스톤에 일부 해금 요소 주입
 
-_Notable Satisfactory Features Used:_
+_사용된 주목할 만한 새티스팩토리 기능:_
 
-* Customizer
-** Skins (Power Cables)
-** Building Materials (Power Cables)
-* xref:Development/Satisfactory/BuildableHolograms.adoc[Buildable Holograms] with custom logic
-** Snapping a power connector to spline based rail tracks
-** Snapping power towers to each other with simple rules
-** Behaviors for well aligned wall/foundation snapping (Delay Switch)
-* Building interaction UIs
-** Completely new UIs with source (Delay Switch)
-** Retrofitted vanilla UIs to function elsewhere (Rail Power Box)
+* 커스터마이저
+** 스킨(송전선)
+** 건물 재료(송전선)
+* xref:Development/Satisfactory/BuildableHolograms.adoc[건물 홀로그램] 맞춤 로직
+** 스플라인 기반 철도 노선에 전원 연결부 부착
+** 간단한 규칙으로 송전탑끼리 부착
+** 벽/토대에 잘 정렬된 부착 동작(지연 스위치)
+* 건물 상호작용 UI
+** 소스가 있는 완전히 새로운 UI(지연 스위치)
+** 다른 곳에서 작동하도록 개조된 기본 게임 UI(철도 전원 박스)
 
-_Notable Mod Loader Features Used:_
+_사용된 주목할 만한 모드 로더 기능:_
 
-* Mod Configuration
-** Settings panel to reorganize build menu
+* 모드 설정
+** 건설 메뉴 재구성을 위한 설정 패널
 
 [id="FluidExtras"]
 == Fluid Extras
 
-Adds a number of new variants of existing fluid junctions as well as several buildings with custom functionality.
+기존 유체 접합부의 새로운 변형과 맞춤 기능이 있는 여러 건물을 추가합니다.
 
-_Source Code_: Linked on the https://ficsit.app/mod/AB_FluidExtras[Mod Page]
+_소스 코드_: https://ficsit.app/mod/AB_FluidExtras[모드 페이지]에서 링크됨
 
-_Mod Type_: Hybrid Blueprint/{cpp}
+_모드 유형_: 하이브리드 블루프린트/{cpp}
 
-_Notable Techniques Used:_
+_주목할 만한 기술:_
 
-* Custom models that follow the Satisfactory style
-* Building icons generated with xref:CommunityResources/IconGenerator.adoc#_beavers_icon_generator[Beaver's Icon Generator]
-* GitHub repository that contains additional files (the source models) in a clean structure
-* Custom Building Logic
-** Custom fluid building that deletes input and animates based upon it (Exhaust)
-** Custom building that detects input and selects recipes based on it (AI Packager)
-* Custom UI/UX
-** Settings panel to reorganize build menu
+* 새티스팩토리 스타일을 따르는 커스텀 모델
+* xref:CommunityResources/IconGenerator.adoc#_beavers_icon_generator[Beaver의 아이콘 생성기]로 생성된 건물 아이콘
+* 추가 파일(소스 모델)을 깔끔한 구조로 포함하는 깃허브 저장소
+* 맞춤 건물 로직
+** 입력을 삭제하고 이에 기반하여 애니메이션하는 맞춤 유체 건물(배기구)
+** 입력을 감지하고 이에 기반하여 제작법을 선택하는 맞춤 건물(AI 포장기)
+* 맞춤 UI/UX
+** 건설 메뉴 재구성을 위한 설정 패널
 
-_Notable Satisfactory Features Used:_
+_사용된 주목할 만한 새티스팩토리 기능:_
 
-* xref:Development/Satisfactory/BuildableHolograms.adoc[Buildable Holograms] with custom logic
-** New and expanded behaviors for Junctions (in development)
-** Modified Water Extractor that can snap to foundations (in development)
-** Building that can snap to pipes and walls (Exhaust: Unreleased but pushed)
-** Complex placement tolerance rules (Exhaust: in development)
-* Building interaction UIs
-** Completely new UIs with source (Exhaust)
+* xref:Development/Satisfactory/BuildableHolograms.adoc[건물 홀로그램] 맞춤 로직
+** 접합부를 위한 새롭고 확장된 동작(개발 중)
+** 토대에 부착할 수 있는 수정된 물 추출기(개발 중)
+** 파이프와 벽에 부착할 수 있는 건물(배기구: 미출시지만 푸시됨)
+** 복잡한 배치 허용 규칙(배기구: 개발 중)
+* 건물 상호작용 UI
+** 소스가 있는 완전히 새로운 UI(배기구)
 
-_Notable Mod Loader Features Used:_
+_사용된 주목할 만한 모드 로더 기능:_
 
-* Mod Configuration
-** Settings panel to reorganize build menu
+* 모드 설정
+** 건설 메뉴 재구성을 위한 설정 패널
 
 [id="BeaversFicsmasBooster"]
 == Beaver's Ficsmas Booster
 
-Adds a number of new customizer building material and complex decorative parts. Uses seasonal toggles and several new from scratch materials.
+새로운 커스터마이저 건물 자재와 복잡한 장식 부품을 다수 추가합니다. 계절성 토글과 여러 새로운 재료를 처음부터 사용합니다.
 
-_Source Code_: Linked on the https://ficsit.app/mod/AB_XMASBooster[Mod Page]
+_소스 코드_: https://ficsit.app/mod/AB_XMASBooster[모드 페이지]에서 링크됨
 
-_Mod Type_: Hybrid Blueprint/{cpp}
+_모드 유형_: 하이브리드 블루프린트/{cpp}
 
-_Notable Techniques Used:_
+_주목할 만한 기술:_
 
-* Seasonal development each year
-* Custom models that follow the Satisfactory style
-* Building icons generated with xref:CommunityResources/IconGenerator.adoc#_beavers_icon_generator[Beaver's Icon Generator]
-* GitHub repository that contains additional files (the source models) in a clean structure
-* New Content
-** Complex shader/mesh combo to create seamless gingerbread pieces when built
-** Freeform spline buildings unlike other decorative parts (Icing)
+* 매년 계절성 개발
+* 새티스팩토리 스타일을 따르는 커스텀 모델
+* xref:CommunityResources/IconGenerator.adoc#_beavers_icon_generator[Beaver의 아이콘 생성기]로 생성된 건물 아이콘
+* 추가 파일(소스 모델)을 깔끔한 구조로 포함하는 깃허브 저장소
+* 새로운 콘텐츠
+** 건설 시 이음매 없는 진저브레드 조각을 만드는 복잡한 셰이더/메쉬 조합
+** 다른 장식 부품과 달리 자유형 스플라인 건물(아이싱)
 
-_Notable Satisfactory Features Used:_
+_사용된 주목할 만한 새티스팩토리 기능:_
 
-* Seasonal Events
-** Many schematics and recipes are hidden behind the event check
-* Customizer
-** Building Materials (Gingerbread)
-** Custom render material that still respects foundation decals (Gingerbread)
-* xref:Development/Satisfactory/BuildableHolograms.adoc[Buildable Holograms] with custom logic
-** Multi stage, Multi mode; Spline drawing hologram (Icing)
+* 계절성 이벤트
+** 많은 도면과 제작법이 이벤트 체크 뒤에 숨겨져 있음
+* 커스터마이저
+** 건물 자재(진저브레드)
+** 토대 데칼을 여전히 고려하는 맞춤 렌더 자재(진저브레드)
+* xref:Development/Satisfactory/BuildableHolograms.adoc[건물 홀로그램] 맞춤 로직
+** 다단계, 다중 모드; 스플라인 그리기 홀로그램(아이싱)
 
-_Notable Mod Loader Features Used:_
+_사용된 주목할 만한 모드 로더 기능:_
 
-* None
+* 없음
 
 [id="BetterTrainCollision"]
 == Better Train Collision
 
-Replaces base game locomotive collision mesh.
+기본 게임 기관차의 충돌 메쉬를 교체합니다.
 
-_Source Code_: Linked on the https://ficsit.app/mod/BetterTrainCollision[Mod Page]
+_소스 코드_: https://ficsit.app/mod/BetterTrainCollision[모드 페이지]에서 링크됨
 
-_Mod Type_: Pure Blueprint
+_모드 유형_: 순수 블루프린트
 
-_Notable Techniques Used:_
+_주목할 만한 기술:_
 
-* Runtime actor modification
-** Replaces locomotive collisions with custom collision mesh
-** Makes sure only the base game train's mesh collisions are replaced,
-   avoiding accidentally modifying other mods' trains
+* 런타임 액터 수정
+** 기관차 콜리전을 맞춤 콜리전 메쉬로 교체
+** 기본 게임 열차의 메쉬 충돌만 교체되도록 하여
+   실수로 다른 모드의 열차를 수정하는 것을 방지
 
-_Notable Satisfactory Features Used:_
+_사용된 주목할 만한 새티스팩토리 기능:_
 
-* None
+* 없음
 
-_Notable Mod Loader Features Used:_
+_사용된 주목할 만한 모드 로더 기능:_
 
-* Simple Construction Script (SCS) Hooks
-** Used to detect instances of locomotives and trigger the code to replace their collision mesh
+* 간단 구축 스크립트(SCS) 훅
+** 기관차 인스턴스를 감지하고 충돌 메쉬 교체 코드를 발동하는 데 사용
 
 [id="EarlyAndFreeBlueprintDesigner"]
 == Early Free Blueprint Designer
 
-Unlocks the Blueprint Designer Mk1-3 and Blueprint usage from the start of the game,
-and makes designers cost no resources to build.
+게임 시작부터 청사진 설계소 Mk.1-3와 청사진 사용을 해금하고,
+설계소를 건설하는 데 자원이 들지 않게 합니다.
 
-_Source Code_: Linked on the https://ficsit.app/mod/EarlyAndFreeBlueprintDesigner[Mod Page]
+_소스 코드_: https://ficsit.app/mod/EarlyAndFreeBlueprintDesigner[모드 페이지]에서 링크됨
 
-_Mod Type_: Pure Blueprint
+_모드 유형_: 순수 블루프린트
 
-_Notable Techniques Used:_
+_주목할 만한 기술:_
 
-* Class Default Object (CDO) modification
-** Class default object of recipes to make them free to build
+* 클래스 기본 오브젝트(CDO) 수정
+** 무료로 건설할 수 있도록 제작법의 클래스 기본 오브젝트 수정
 
-_Notable Satisfactory Features Used:_
+_사용된 주목할 만한 새티스팩토리 기능:_
 
-* None
+* 없음
 
-_Notable Mod Loader Features Used:_
+_사용된 주목할 만한 모드 로더 기능:_
 
-* xref:Development/ModLoader/ContentTagRegistry.adoc[Content Tags]
-** Scans all recipes and all schematics for a specific tag and modifies them when present
-** Enables easy extending the mod to affect other mods' blueprint designers.
-   Any recipe with the relevant tag is made free and any schematic with the relevant tag is given for free.
+* xref:Development/ModLoader/ContentTagRegistry.adoc[콘텐츠 태그]
+** 특정 태그가 있는 모든 제작법과 도면을 스캔하고, 있을 때 수정
+** 모드를 다른 모드의 청사진 설계소에도 쉽게 적용할 수 있게 함.
+   관련 태그가 있는 제작법은 무료가 되고 관련 태그가 있는 도면은 무료로 제공됨.
 
 [id="ThisSignUp"]
 == This Sign Up
 
-Adds arrows to indicate which way is up when building a sign.
+전광판을 건설할 때 위쪽 방향을 표시하는 화살표를 추가합니다.
 
-_Source Code_: Linked on the https://ficsit.app/mod/ThisSignUp[Mod Page]
+_소스 코드_: https://ficsit.app/mod/ThisSignUp[모드 페이지]에서 링크됨
 
-_Mod Type_: Pure Blueprint
+_모드 유형_: 순수 블루프린트
 
-_Notable Techniques Used:_
+_주목할 만한 기술:_
 
-* None
+* 없음
 
-_Notable Satisfactory Features Used:_
+_사용된 주목할 만한 새티스팩토리 기능:_
 
-* None
+* 없음
 
-_Notable Mod Loader Features Used:_
+_사용된 주목할 만한 모드 로더 기능:_
 
-* Simple Construction Script (SCS) Hooks
-** Used to spawn an additional actor component on sign placement holograms (the upwards facing arrow)
+* 간단 구축 스크립트(SCS) 훅
+** 전광판 배치 홀로그램에 추가 액터 컴포넌트(위쪽을 가리키는 화살표)를 소환하는 데 사용

@@ -1,159 +1,159 @@
-= Session Settings
+= 세션 설정
 
 [NOTE]
 ====
-This page is a work in progress.
+이 페이지는 작업 중입니다.
 ====
 
-Introduced in SML3.5, Session Settings
-(referred to in-game as Mod Savegame Settings)
-are a feature similar to Advanced Game Settings
-that allows mods to store configuration information on a per-game-save basis.
-They do not require Advanced Game Settings to be enabled to be used.
+SML3.5에서 도입된 세션
+설정(게임 내에서 모드 저장 게임 설정으로 언급됨)은
+고급 게임 설정과 유사한 기능으로,
+모드가 게임 저장 기준으로 구성 정보를 저장할 수 있게 해줍니다.
+고급 게임 설정이 활성화되지 않아도 사용할 수 있습니다.
 
-Session Settings are currently stored in the Map Travel URL,
-making them available exceedingly early in the loading process.
-This may change in the future.
+세션 설정은 현재 맵 여행 URL에 저장되며,
+로딩 과정 초기에 매우 쉽게 접근할 수 있습니다.
+이는 향후 변경될 수 있습니다.
 
-It's possible to make a session setting specific to only a certain level,
-making them particularly useful for providing config options for custom levels
-since they can be edited before the save is created.
+특정 레벨에만 세션 설정을 만들 수 있으며,
+맞춤 레벨에 대한 구성 옵션을 제공하는 데 특히 유용합니다.
+저장이 생성되기 전에 편집할 수 있습니다.
 
-== Defining New Session Settings
+== 새로운 세션 설정 정의하기
 
-Session Settings are defined by Data Assets.
-To create a Session Setting in Blueprint, in a content browser right click and select
-`Create Advanced Asset` > `Miscellaneous` > `Data Asset` and search for `SMLSessionSetting`.
+세션 설정은 데이터 애셋으로 정의됩니다.
+블루프린트에서 세션 설정을 만들려면, 콘텐츠 브라우저에서 우클릭하고
+`고급 자산 생성` > `기타` > ``데이터 애셋``을 선택한 후 ``SMLSessionSetting``을 검색합니다.
 
-=== Selecting a Str Id
+=== Str Id 선택하기
 
-Session Settings inherit from `UFGUserSetting`, the class the game uses to define the configuration options in the settings menu.
+세션 설정은 ``UFGUserSetting``에서 상속되며, 이는 게임이 설정 메뉴에서 구성 옵션을 정의하는 데 사용하는 클래스입니다.
 
-The "Str Id" field is a unique identifier for the session setting
-and is used for retriving the value of the session setting later.
-See the table below for some examples of Str Ids and things to keep in mind when selecting one.
+"Str Id" 필드는 세션 설정의 고유 식별자이며,
+나중에 세션 설정의 값을 검색하는 데 사용됩니다.
+아래 표에서 Str Id의 예시와 선택 시 유의해야 할 사항을 확인하십시오.
 
-.Example Session Setting Str Ids
+.예시 세션 설정 Str Id
 |===
-|✔️ Good Example |❌ Bad Practice
+|✔️ 좋은 예시 |❌ 나쁜 예시
 
-|✔️ `YourModReference.EnableFizzBuzz`
+|✔️ `모드참조.EnableFizzBuzz`
 
-Prefix the id with your Mod Reference to ensure it is unique across mods.
+모드 참조를 ID 접두사로 사용하여 모드 간에 고유성을 보장합니다.
 
 | ❌ `EnableFizzBuzz`
 
-Another mod could implement a session setting by this name,
-leading to a conflict.
+다른 모드가 이 이름으로 세션 설정을 구현할 수 있어
+충돌이 발생할 수 있습니다.
 
-|✔️ `YourModReference.WhizzbangStrengthMult`
+|✔️ `모드참조.WhizzbangStrengthMult`
 
-Since session settings are referenced by their string id,
-giving them a verbose, unique name makes it easy to find all usages of the setting in code
-via a find operation.
+세션 설정은 문자열 ID로 참조되므로,
+상세하고 고유한 이름을 부여하면 코드에서 설정의 모든 사용을
+쉽게 찾을 수 있습니다.
 
-| ❌ `YourModReference.Multiplier`
+| ❌ `모드참조.Multiplier`
 
-Multiplier for what? It's easy to forget what this setting controls,
-and if you ever decide to add other "multipliers" in the future,
-they could easily be mentally confused with this one.
+"뭘 위한 배수였지?" 이 설정이 무엇을 제어하는지 잊기 쉽고,
+미래에 다른 "배수"를 추가하기로 결정하면,
+이것과 혼동될 수 있습니다.
 
-|✔️ `YourModReference.PowerCostMultFloat`
+|✔️ `모드참조.PowerCostMultFloat`
 
-Since you must use a type-specific method to read/write a Session Setting,
-consider including the setting's type as part of its id as a reminder of what type it is.
-Unfortunately using the wrong getter method is currently a silent error due to how the FG Options system is implemented,
-making this problem particularly annoying to track down.
-
-|
-// intentionally blank
-
-|✔️ `YourModRef.MinerMk1.PowerCostMultFloat`
-
-Consider indicating which building/feature a setting applies to
-if you offer multiple settings with similar names or functionality.
+세션 설정을 읽고 쓰기 위해 유형별 메서드를 사용해야 하므로,
+설정의 유형을 ID의 일부로 포함하는 것을 고려하십시오.
+불행히도 잘못된 getter 메서드를 사용하는 것은 현재 조용한 오류로,
+FG 옵션 시스템의 구현 방식 때문에 이 문제를 추적하기가 특히 어렵습니다.
 
 |
-// intentionally blank
+// 의도적으로 비어 있음
+
+|✔️ `모드참조.MinerMk1.PowerCostMultFloat`
+
+유사한 이름이나 기능을 가진 여러 설정을 제공하는 경우,
+어떤 건물/기능에 설정이 적용되는지를 나타내는 것을 고려하십시오.
+
+|
+// 의도적으로 비어 있음
 
 
 |===
 
-=== Selecting Session Setting Behaviors
+=== 세션 설정 동작 선택하기
 
-Not all of the properties of `UFGUserSetting` are relevant to Session Settings.
-You will have to experiment to see which ones have an effect.
-Please update this documentation page via "Edit This Page" in the top right with your findings.
+``UFGUserSetting``의 모든 속성이 세션 설정과 관련이 있는 것은 아닙니다.
+어떤 속성이 효과가 있는지 실험해 보아야 합니다.
+발견한 내용을 바탕으로 "이 페이지 편집"을 통해 이 문서 페이지를 업데이트해 주십시오.
 
-Checking the "Use CVar" field is only required
-if you wish to allow modifying the value of the session setting via the game console.
+"Use CVar" 필드를 체크하는 것은
+게임 콘솔을 통해 세션 설정의 값을 수정할 수 있도록 하려는 경우에만 필요합니다.
 
-SML automatically forces the following property values on Session Settings.
-If you change any of these properties they will be automatically reset to these values
-next time the asset is loaded.
+SML은 세션 설정에 대해 다음 속성 값을 자동으로 강제합니다.
+이 속성을 변경하면 애셋이 다음에 로드될 때 이 값으로
+자동으로 재설정됩니다.
 
-* ShowInBuilds: `Public Builds` to ensure that session settings are visible to the user
-* ManagerAvailability: `USM MAX`, which is an invalid value, ensuring that the setting never displays in base-game options menus.
-* IsSettingSessionWide: `true` to ensure that multiplayer clients are able to modify session settings and have their changes stored with the save file.
+* ShowInBuilds: ``Public Builds``로 설정하여 세션 설정이 사용자에게 표시되도록 합니다.
+* ManagerAvailability: `USM MAX`, 이는 유효하지 않은 값으로, 설정이 기본 게임 옵션 메뉴에 표시되지 않도록 합니다.
+* IsSettingSessionWide: ``true``로 설정하여 멀티플레이 클라이언트가 세션 설정을 수정하고 변경 사항이 저장 파일에 저장될 수 있도록 합니다.
 
-In order to have a session setting only editable at save creation, use the "Don't show in game" Visibility Disqualifier.
+세션 설정을 저장 생성 시에만 편집 가능하게 하려면, "게임에서 표시하지 않음" 가시성 제외자를 사용하십시오.
 
-=== Registration
+=== 등록
 
-A Session Setting must be registered to be usable by the player.
+세션 설정은 플레이어가 사용할 수 있도록 등록해야 합니다.
 
-To register a Session Setting, list it in the relevant array of your mod's
-xref:Development/ModLoader/ModModules.adoc#_게임_인스턴스_할당_모듈ugameinstancemodule[Game Instance Module].
+세션 설정을 등록하려면, 모드의
+xref:Development/ModLoader/ModModules.adoc#_게임_인스턴스_할당_모듈ugameinstancemodule[게임 인스턴스 모듈]에서 관련 배열에 나열해야 합니다.
 
-Registering a Session Setting makes it available to be configured in the SML Session Settings menu
-which is available at both world creation and in the pause menu.
+세션 설정을 등록하면 SML 세션 설정 메뉴에서 구성할 수 있게 되며,
+이는 월드 생성 시와 일시 정지 메뉴에서 모두 사용할 수 있습니다.
 
-== Reading and Writing Session Settings
+== 세션 설정 읽기 및 쓰기
 
-You can read the value of a session setting via the "Get <something> Option Value" method of the Session Settings Manager.
-You can also subscribe to changes via "Subscribe to Dynamic Option Update".
+세션 설정의 값을 읽으려면 세션 설정 관리자에서 "Get <뭐시기> Option Value" 메서드를 사용하십시오.
+변경 사항에 구독하려면 "Subscribe to Dynamic Option Update"를 사용하십시오.
 
-If you want to programatically modify the value of a session setting,
-use the "Set <something> Option Value" method of the Session Settings Manager.
+세션 설정의 값을 프로그래밍적으로 수정하려면,
+세션 설정 관리자에서 "Set <뭐시기> Option Value" 메서드를 사용하십시오.
 
-Check ExampleMod for some example session settings and how to read their values.
-There is an example in the ExampleMod Level Blueprint and in the Game World Module.
+ExampleMod에서 세션 설정의 예시와 값을 읽는 방법을 확인할 수 있습니다.
+ExampleMod 레벨 블루프린트와 게임 월드 모듈에서 예시가 있습니다.
 
-An example of reading a integer Session Setting value from {cpp}:
+정수형 세션 설정 값을 읽는 예시 {cpp}:
 
 ```cpp
-// self->GetWorld() can be substituted with any other method of obtaining world context
+// self->GetWorld()는 월드 컨텍스트를 얻는 다른 방법으로 대체할 수 있습니다.
 USessionSettingsManager* SessionSettings = self->GetWorld()->GetSubsystem<USessionSettingsManager>();
-auto optionValue = SessionSettings->GetIntOptionValue("YourModReference.IntSessionSetting");
+auto optionValue = SessionSettings->GetIntOptionValue("모드참조.IntSessionSetting");
 ```
 
-// TODO verify
-// Session settings are stored in the session settings subsystem https://discord.com/channels/555424930502541343/562722670974599227/1126996669481889903
+// TODO 확인하기:
+// 세션 설정은 세션 설정 서브시스템에 저장되는지 https://discord.com/channels/555424930502541343/562722670974599227/1126996669481889903
 
-// Session Settings can optionally be marked as TODO, meaning that they will be stored (uncompressed) in the Unreal session URL as part of the save header. This means their values will be loaded as soon as the game mode is initialized and before world actors are initialized.
+// 세션 설정은 선택적으로 TODO로 표시될 수 있으며, 이는 세션 설정 URL의 저장 헤더의 일부로 (압축되지 않고) 저장됩니다. 이는 게임 모드가 초기화되고 월드 액터가 초기화되기 전에 값이 로드됨을 의미합니다.
 
-=== Unreal Console Commands
+=== 언리얼 콘솔 명령어
 
-If your session setting is configured to use a CVar its value can be set using
-xref:SMLChatCommands.adoc#ConsoleCommands[Unreal console commands].
-For example `SML.ForceAllowCheats 1` will set the SML session setting `ForceAllowCheats` to 1.
+세션 설정이 CVar를 사용하도록 구성된 경우,
+xref:SMLChatCommands.adoc#ConsoleCommands[언리얼 콘솔 명령어]를 사용하여 값을 설정할 수 있습니다.
+예를 들어 ``SML.ForceAllowCheats 1``은 SML 세션 설정 ``ForceAllowCheats``를 1로 설정합니다.
 
-== Session Settings vs. Mod Config
+== 세션 설정 vs 모드 구성
 
 TODO
 
-Mod Config is better for user interface or visual stuff since it is saved with the user's game and carries over between saves.
+모드 구성은 사용자 인터페이스나 시각적 요소에 더 적합하며, 사용자의 게임과 함께 저장되고 저장 간에 유지됩니다.
 
-Session Settings are good for things you want to be a choice per save file, such as options for a custom level.
+세션 설정은 사용자 정의 레벨에 대한 옵션과 같이 저장 파일별 선택이 필요한 것에 적합합니다.
 
-Session Setting values are xref:Development/Satisfactory/Multiplayer.adoc[replicated in multiplayer].
+세션 설정 값은 xref:Development/Satisfactory/Multiplayer.adoc[멀티플레이에서 복제됩니다].
 
-== Advanced Game Settings
+== 고급 게임 설정
 
-In order to create an Advanced Game Setting instead of a Session Setting,
-create a data asset of type `FGUserSetting` instead of `SMLSessionSetting`.
+세션 설정 대신 고급 게임 설정을 만들려면,
+`SMLSessionSetting` 대신 `FGUserSetting` 유형의 데이터 애셋을 생성하십시오.
 
-Once the type is set to `Advanced Game Setting` in the asset properties,
-the game will automatically discover it and add it to the Advanced Game Settings menu for you.
-You can use the same category system as Session Settings to control what categories it appears in.
-This is also true for Photo Mode and Options Menu settings, if for some reason you want to add values to those.
+자산 속성에서 타입을 ``Advanced Game Setting``으로 설정하면,
+게임이 자동으로 이를 발견하고 고급 게임 설정 메뉴에 추가합니다.
+세션 설정과 동일한 범주 시스템을 사용하여 어떤 범주에 나타날지를 제어할 수 있습니다.
+사진 모드 및 옵션 메뉴 설정에도 적용됩니다.

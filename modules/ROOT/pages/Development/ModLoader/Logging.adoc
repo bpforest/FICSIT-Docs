@@ -1,62 +1,62 @@
-= SML Logging
+= SML 로깅
 
-The SML Logging system is an essential resource when developing your mod,
-especially for Blueprint mods, which can't be debugged with a debugger like {cpp} mods.
+SML 로깅 시스템은 모드 개발 시 필수적인 자원입니다.
+특히 디버거로 디버깅할 수 없는 블루프린트 모드에서 더욱 그렇습니다.
 
-The messages you log will be recorded to a text file
-that is automatically submitted when users use
-xref:index.adoc#_새티스팩토리_모드_관리자_smm[Satisfactory Mod Manager] to generate a debug log.
+로깅한 메시지들은 텍스트 파일에 기록되며,
+사용자가 xref:index.adoc#_새티스팩토리_모드_관리자_smm[새티스팩토리 모드 관리자]를 사용하여
+디버그 로그를 생성할 때 자동으로 제출됩니다.
 
-The log file will be replaced at every game launch,
-and if you xref:Development/TestingResources.adoc#_multiplayer_testing[have multiple copies of the game open],
-a suffix will be appended to the file name to differentiate them (ex. `FactoryGame_2.log`)
+로그 파일은 게임을 실행할 때마다 새로 생성되며,
+xref:Development/TestingResources.adoc#_멀티플레이_테스트[여러 개의 게임을 동시에 실행]하는 경우
+파일 이름 뒤에 접미사가 붙어 구분됩니다(예: `FactoryGame_2.log`)
 
-== Viewing Logs
+== 로그 보기
 
-By default, the game client's logs are be stored in
-`\AppData\Local\FactoryGame\Saved\Logs\FactoryGame.log`.
-For information on log file locations for other platforms, see the xref:faq.adoc#Files_Logs[FAQ].
+기본적으로 게임 클라이언트의 로그는
+``\AppData\Local\FactoryGame\Saved\Logs\FactoryGame.log``에 저장됩니다.
+다른 플랫폼의 로그 파일 위치에 대한 정보는 xref:faq.adoc#Files_Logs[FAQ]를 참고하십시오.
 
-You can also view the logs live in a terminal as the game is running.
-To view the terminal, add `-log` to the game's launch arguments.
-You can also use the enhanced Unreal Console via `-log -NewConsole` as described xref:Development/TestingResources.adoc#_unreal_console[here].
-Learn how to configure launch arguments on the
-xref:faq.adoc#_게임을_시작할_때_실행_인수를_어떻게_설정합니까[FAQ page].
+게임이 실행되는 동안 터미널에서 실시간으로 로그를 볼 수도 있습니다.
+터미널을 보려면 게임 실행 인수에 ``-log``를 추가하십시오.
+xref:Development/TestingResources.adoc#_언리얼_콘솔[여기]에서 설명한 대로
+``-log -NewConsole``을 사용하여 향상된 언리얼 콘솔을 사용할 수도 있습니다.
+실행 인수 설정 방법은 xref:faq.adoc#_게임을_시작할_때_실행_인수를_어떻게_설정합니까[FAQ 페이지]에서 확인할 수 있습니다.
 
-== Logging from Blueprints
+== 블루프린트에서 로깅하기
 
-The Log functions provided by
-xref:Development/ModLoader/BlueprintInterface.adoc#_logging[the SML blueprint libraries]
-allow for logging strings, which most types can be converted to.
+xref:Development/ModLoader/BlueprintInterface.adoc#_logging[SML 블루프린트 라이브러리]가 제공하는
+로그 함수를 사용하면 대부분의 유형을
+문자열로 변환하여 로깅할 수 있습니다.
 
-Strings logged with this function will appear under the `LogYourModReference` log category,
-which will be automatically created if it doesn't exist yet.
+이 함수로 로깅한 문자열은 `LogYourModReference` 로그 범주 아래에 표시되며,
+이 범주는 아직 없다면 자동으로 생성됩니다.
 
-== Logging from {cpp}
+== {cpp}에서 로깅하기
 
-Logging from {cpp} is usually accomplished via the `UE_LOG` macro,
-or the new `UE_LOGFMT` macro introduced in Unreal Engine 5.2.
+{cpp}에서 로깅은 주로 `UE_LOG` 매크로나,
+언리얼 엔진 5.2에서 도입된 새로운 `UE_LOGFMT` 매크로를 통해 이루어집니다.
 
-https://unrealcommunity.wiki/logging-lgpidy6i[This Unreal Engine community wiki page]
-does a good job of explaining how to use the macros,
-set up your own custom logging categories,
-and the macro's formatting capabilities.
+https://unrealcommunity.wiki/logging-lgpidy6i[이 언리얼 엔진 커뮤니티 위키 페이지]는
+매크로 사용법,
+커스텀 로그 범주 설정 방법,
+그리고 매크로의 포맷팅 기능에 대해 잘 설명하고 있습니다.
 
-An example definition for a log category that matches the name and behavior of SML's auto-created blueprint logging categories:
+SML의 자동 생성된 블루프린트 로깅 범주와 이름과 동작이 일치하는 로그 범주 정의 예시:
 
-In `YourModReference.h`:
+``모드참조.h``에서:
 ```cpp
 DECLARE_LOG_CATEGORY_EXTERN(LogYourModReference, Verbose, All);
 ```
 
-In `YourModReference.cpp`:
+``모드참조.cpp``에서:
 ```cpp
 DEFINE_LOG_CATEGORY(LogYourModReference);
 ```
 
-In a cpp file where you want to log something:
+로깅을 사용할 cpp 파일에서:
 ```cpp
-#include "YourModReference.h"
+#include "모드참조.h"
 // [...]
 UE_LOG(LogYourModReference, Verbose, TEXT("Hello World!"));
 
@@ -64,66 +64,63 @@ UE_LOG(LogYourModReference, Verbose, TEXT("Hello World!"));
 
 [WARNING]
 ====
-When creating a log category with the `DECLARE_LOG_CATEGORY_EXTERN` macro in your headers,
-make sure that the compile-time verbosity (the third argument) is set to `All`.
+헤더에서 ``DECLARE_LOG_CATEGORY_EXTERN`` 매크로로 로그 범주를 만들 때,
+컴파일 시간 상세도(세 번째 인자)를 ``All``로 설정해야 합니다.
 
-If the category is named `LogYourModReference` and has a compile-time verbosity other than `All`,
-whenever a blueprint logging call is fired, the engine will attempt to re-create the logging category with the All category,
-leading to two different verbosity levels being specified for the same logging category,
-causing the game to hard crash.
+범주 이름이 ``LogYourModReference``이고 컴파일 시간 상세도가 ``All``이 아닌 경우,
+블루프린트 로깅 호출이 발생할 때 엔진이 All 범주로 로깅 범주를 다시 생성하려고 시도하여,
+동일한 로깅 범주에 대해 서로 다른 상세도가 지정되어
+게임이 충돌됩니다.
 
-The second argument is the default verbosity, whose value does not need to match with SML's.
+두 번째 인자는 기본 상세도로, SML의 값과 일치할 필요는 없습니다.
 
-Note that if you redefine the blueprint log category (`LogYourModReference`) with a Default Verbosity other than SML's value of `Verbose`, your blueprint logging calls will also be affected be filtered.
+블루프린트 로그 범주(`LogYourModReference`)를 기본 상세도를 SML의 값인 ``Verbose``가 아닌 다른 값으로 재정의하면, 블루프린트 로깅 호출도 필터링됩니다.
 ====
 
-As with most {cpp} macros,
-making a mistake with the syntax can lead to some messy compile time errors,
-so compile often when first trying this out to try and catch the mistakes early.
+대부분의 {cpp} 매크로와 마찬가지로,
+문법을 잘못 사용하면 복잡한 컴파일 에러가 발생할 수 있으므로,
+처음 사용할 때는 자주 컴파일하여 실수를 일찍 발견하는 것이 좋습니다.
 
-Consider looking at some open source {cpp} mods for more examples of UE_LOG in practice.
+실제 UE_LOG 사용 예시를 보려면 오픈 소스 {cpp} 모드를 참고해 보십시오.
 
-Examples:
+예시:
 
 - https://github.com/Nogg-aholic/ContentLib/tree/master/Source/ContentLib/Private[ContentLib]
-- https://github.com/mklierman/SatisfactoryMods[SirDigby's mods]
+- https://github.com/mklierman/SatisfactoryMods[SirDigby의 모드들]
 - https://github.com/Nogg-aholic/NogsResearch/tree/main/Source/NogsResearch/Private[NogsResearch]
 
-== Default Behavior
+== 기본 동작
 
-By default, the game will obey the logging verbosity settings configured by CSS,
-followed by the settings you set in
-`%LOCALAPPDATA%\FactoryGame\Saved\Config\Windows\Engine.ini`
+기본적으로 게임은 CSS가 구성한 로깅 상세도 설정을 따르며,
+그 다음으로 ``%LOCALAPPDATA%\FactoryGame\Saved\Config\Windows\Engine.ini``에서
+설정한 값을 따릅니다.
 
-With these settings, all mod logging calls will be displayed in the terminal and `FactoryGame.log`.
+이러한 설정으로 모든 모드 로깅 호출이 터미널과 ``FactoryGame.log``에 표시됩니다.
 
-== Redirect Logs for a Specific Mod
+== 특정 모드의 로그 리디렉션
 
-You can use the Unreal Engine `LogCategoryFiles` launch argument to redirect a specific log category into a separate file.
-This means that, in addition to appearing in `FactoryGame.log`,
-they will appear in a file of your choice.
+언리얼 엔진의 `LogCategoryFiles` 실행 인수를 사용하여 특정 로그 범주를 별도의 파일로 리디렉션할 수 있습니다.
+이렇게 하면 ``FactoryGame.log``에 표시되는 것 외에도
+지정한 파일에도 로그가 기록됩니다.
 
-The path specified in the launch argument is relative to your **game install directory**,
-not the Local AppData folder like the default log.
+실행 인수에 지정된 경로는 Local Appdata인 기본 로그와 달리 **게임 설치 디렉터리**를 기준으로 합니다.
 
-For example, using the argument
-`-LogCategoryFiles="FilteredLogs\LogExampleMod.log=LogExampleMod"`
-will put a LogExampleMod.log file at
-`<your game install path>\SatisfactoryExperimental\Engine\Binaries\Win64\FilteredLogs\LogExampleMod.log`
+예를 들어, `-LogCategoryFiles="FilteredLogs\LogExampleMod.log=LogExampleMod"` 인수를 사용하면
+LogExampleMod.log 파일이 ``<게임 설치 경로>\SatisfactoryExperimental\Engine\Binaries\Win64\FilteredLogs\LogExampleMod.log``에 생성됩니다.
 
-If you want the log file to appear in the same folders as the default FactoryGame.log,
-you will have to use a full path, for example:
+로그 파일을 기본 FactoryGame.log와 같은 폴더에 저장하려면
+전체 경로를 사용해야 합니다. 예:
 
-`-LogCategoryFiles="C:\Users\YourUsernameHere\AppData\Local\FactoryGame\Saved\Logs\LogSlate.log=LogSlate"`
+`-LogCategoryFiles="C:\Users\사용자이름\AppData\Local\FactoryGame\Saved\Logs\LogSlate.log=LogSlate"`
 
-You can group multiple mods into one file with a plus,
-for example, TODO Arch Example
+여러 모드를 하나의 파일로 그룹화하려면 플러스를 사용할 수 있습니다.
+예: TODO: Arch 예시
 
-== Change Verbosity for a Specific Mod
+== 특정 모드의 상세도 변경
 
-You can filter which log messages are output via editing your Engine config file.
+엔진 구성 파일을 편집하여 어떤 로그 메시지를 출력할지 필터링할 수 있습니다.
 
-From: `%LocalAppData%/FactoryGame/Saved/Config/Windows/Engine.ini`
+위치: `%LocalAppData%/FactoryGame/Saved/Config/Windows/Engine.ini`
 
 ```ini
 [Core.Log]
@@ -134,16 +131,16 @@ LogExampleMod=BreakOnLog
 ```
 
 // cSpell:ignore Cmds
-You should also be able to use the `-LogCmds` launch argument,
-but this has not been tested.
+`-LogCmds` 실행 인수를 사용할 수도 있지만,
+이는 테스트되지 않았습니다.
 
-Example:
+예시:
 `-LogCmds="global warning, SML all"`
 
-== Redirect your Log File to Another Location
+== 로그 파일을 다른 위치로 리디렉션
 
-You may wish for your default log file to be stored in a different location
-or under a different name than the default.
+기본 로그 파일을 다른 위치나
+다른 이름으로 저장하고 싶을 수 있습니다.
 
-For example, `-LOG="GameLogFileLocationOverride.log"` will rename your log file,
-but it will still be located in the default folder location.
+예를 들어, ``-LOG="GameLogFileLocationOverride.log"``는 로그 파일의 이름을 변경하지만,
+여전히 기본 폴더 위치에 저장됩니다.

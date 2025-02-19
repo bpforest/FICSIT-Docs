@@ -1,196 +1,196 @@
-= Content Tag Registry
+= 콘텐츠 태그 레지스트리
 
 [NOTE]
 ====
-This page is still a work in progress.
+이 페이지는 아직 작업 중입니다.
 
-If you have any feedback, please let us know in the Discord.
+피드백이 있으시다면 디스코드에서 알려주십시오.
 ====
 
-Introduced in SML3.8, the Content Tag Registry is an
-xref:Development/ModLoader/ModModules.adoc#_게임_인스턴스_할당_모듈ugameinstancemodule[Game Instance]
-xref:Development/ModLoader/Subsystems.adoc[Subsystem]
-that manages
-https://dev.epicgames.com/documentation/en-us/unreal-engine/using-gameplay-tags-in-unreal-engine?application_version=5.3[Gameplay Tag Containers]
-at a per-class level to be utilized by mod systems.
+SML3.8에서 도입된 콘텐츠 태그 레지스트리는
+xref:Development/ModLoader/ModModules.adoc#_게임_인스턴스_할당_모듈ugameinstancemodule[게임 인스턴스]
+xref:Development/ModLoader/Subsystems.adoc[서브시스템]을
+관리하는
+https://dev.epicgames.com/documentation/en-us/unreal-engine/using-gameplay-tags-in-unreal-engine?application_version=5.3[게임플레이 태그 컨테이너]를
+클래스별로 활용할 수 있도록 합니다.
 
-Gameplay Tags are essentially a structured hierarchical system of FName tags that Unreal has built further libraries and optimizations around.
-Since the tags are text-based, using this system makes implementing cross-mod interactions with no hard dependencies easier.
+게임플레이 태그는 본질적으로 언리얼이 추가 라이브러리와 최적화를 위해 구축한 구조화된 계층적 FName 태그 시스템입니다.
+태그가 텍스트 기반이기 때문에 이 시스템을 사용하면 하드 의존성 없이 모드 간 상호작용을 구현하는 것이 더 쉬워집니다.
 
-Tags do not inherently do anything by themselves, but other systems can use them to control behavior.
+태그는 본질적으로 아무것도 하지 않지만, 다른 시스템이 이를 사용하여 동작을 제어할 수 있습니다.
 
-== Tag Usage Examples
+== 태그 사용 예시
 
-Learn more about practical use cases for Gameplay Tags in 
-https://www.tomlooman.com/unreal-engine-gameplaytags-data-driven-design/[this blog post].
+게임플레이 태그의 실제 사용 사례에 대해 더 알고 싶다면
+https://www.tomlooman.com/unreal-engine-gameplaytags-data-driven-design/[이 블로그 게시물]을 참고하십시오.
 
-=== SML Special Item Descriptor Tag
+=== SML 특별 아이템 디스크립터 태그
 
-By adding the `SML.Registry.Item.SpecialItemDescriptor` tag to an item descriptor, the 
-`GetObtainableItemDescriptors` and `IsDescriptorFilteredOut` utilities in `UModContentRegistry` will consider it a Special item descriptor,
-meaning it will be filtered according to usage of the `EGetObtainableItemDescriptorsFlags::IncludeSpecial` flag.
+`SML.Registry.Item.SpecialItemDescriptor` 태그를 아이템 디스크립터에 추가하면,
+``UModContentRegistry``의 `GetObtainableItemDescriptors` 및 `IsDescriptorFilteredOut` 유틸리티가 이를 특별 아이템 디스크립터로 간주하여,
+`EGetObtainableItemDescriptorsFlags::IncludeSpecial` 플래그의 사용에 따라 필터링됩니다.
 
-== Limitations
+== 제한 사항
 
-=== Registry Freeze
+=== 레지스트리 고정
 
-The tag registry is frozen at the same time as the Content Registry.
-It's not possible to add more tags to a class after the registry is frozen.
+태그 레지스트리는 콘텐츠 레지스트리와 동시에 고정됩니다.
+레지스트리가 고정된 후에는 클래스에 더 많은 태그를 추가할 수 없습니다.
 
-=== Lookup
+=== 조회
 
-Unlike other tags systems you may be familiar with, neither Unreal nor SML provide a system for looking up what content has a specific tag.
-For example, you can't ask the system to give you a list of every FGItemDescriptor class with the "ReallyCool" tag.
+다른 태그 시스템과 달리, 언리얼이나 SML은 특정 태그가 있는 콘텐츠를 조회하는 시스템을 제공하지 않습니다.
+예를 들어, "ReallyCool" 태그가 있는 모든 FGItemDescriptor 클래스를 요청할 수 없습니다.
 
-If this behavior is desired it must be implemented separately.
-An example implementation could build these records by iterating over all registered item descriptor classes and checking them for the "ReallyCool" tag.
-Caching the results is highly recommended because they should never change after the registry is frozen.
+이 동작이 필요하다면 별도로 구현해야 합니다.
+예시 구현은 모든 등록된 아이템 디스크립터 클래스를 반복하고 "ReallyCool" 태그가 있는지 확인하여 이러한 기록을 구축할 수 있습니다.
+결과를 캐싱하는 것이 좋습니다. 왜냐하면 레지스트리가 고정된 후에는 절대 변경되지 않을 것이기 때문입니다.
 
-=== Not Replicated
+=== 복제되지 않음
 
-Since the Content Registry state is not replicated, neither is the Content Tag Registry.
-Tags must be set up on both server and client for the data to be consistent.
+콘텐츠 레지스트리 상태가 복제되지 않기 때문에 콘텐츠 태그 레지스트리도 복제되지 않습니다.
+데이터의 일관성을 유지하려면 태그를 서버와 클라이언트 모두에서 설정해야 합니다.
 
-=== Class-level Tagging
+=== 클래스 수준 태깅
 
-Unreal Engine makes few assumptions about how Content Tags are used to allow for implementation flexibility.
-Tag containers are structs that can be returned by anything or used by anything.
+언리얼 엔진은 콘텐츠 태그가 사용되는 방식에 대해 몇 가지 가정을 하여 구현 유연성을 허용합니다.
+태그 컨테이너는 어떤 것이든 반환되거나 사용될 수 있는 구조체입니다.
 
-SML's Content Tag Registry implementation only assists with managing tags at the UClass level.
-Tagging arbitrary UObjects, for example, must be implemented separately.
+SML의 콘텐츠 태그 레지스트리 구현은 UClass 수준에서 태그 관리를 지원합니다.
+임의의 UObject에 태그를 지정하는 것은 별도로 구현해야 합니다.
 
-== Defining Tags
+== 태그 정의하기
 
-Satisfactory Mod Loader adds mod config folders to Unreal Engine's search path as a gameplay tag source,
-allowing each mod to define Gameplay Tags via config files even though they are typically a project-level setting.
+새티스팩토리 모드 로더는 모드 구성 폴더를 언리얼 엔진의 검색 경로에 추가하여 게임플레이 태그 소스로 사용합니다.
+각 모드는 일반적으로 프로젝트 수준 설정임에도 불구하고 구성 파일을 통해 게임플레이 태그를 정의할 수 있습니다.
 
-Use the in-editor gameplay tag editor to define new tags and tag sources.
-You can find this manager in any editor field that uses gameplay tags, or by going to
-`Edit` > `Project Settings...` > (Project heading) `GameplayTags` > `Gameplay Tag List`.
+에디터 내 게임플레이 태그 에디터를 사용하여 새 태그와 태그 소스를 정의할 수 있습니다.
+이 관리자는 게임플레이 태그를 사용하는 모든 에디터 필드에서 찾을 수 있으며,
+`편집` > `프로젝트 설정...` > (프로젝트 제목) `GameplayTags` > ``Gameplay Tag List``로 이동하여 찾을 수 있습니다.
 
-To define new tags, you must first create a tag source for your mod.
-To do this, open the "Add New Tag Source" section of the manager.
-Make sure your mod reference is included in the "Name" so it can be distinguished later.
-For example, `YourModReferenceGameplayTags.ini`.
-Select your mod in the "Config Path" dropdown, then press `Add New Source`.
+새 태그를 정의하려면 먼저 모드에 대한 태그 소스를 생성해야 합니다.
+이를 위해 관리자의 "새 태그 소스 추가" 섹션을 엽니다.
+나중에 구분할 수 있도록 "이름"에 모드 참조가 포함되어 있는지 확인하십시오.
+예: `모드참조GameplayTags.ini`
+"Config Path" 드롭다운에서 모드를 선택한 후 ``Add New Source``를 누릅니다.
 
-Once you have a tag source, open the "Add New Gameplay Tag" section to define new tags.
-Make sure to follow the link:#TagNameConventions[Tag Naming Conventions] when defining new tags.
-Leave a comment explaining the purpose of the tag, which will appear in editor hover tooltips.
-Finally, pick your mod's ini as the Source and press `Add New Tag`.
+태그 소스를 만든 후 "새 게임플레이 태그 추가" 섹션을 열어 새 태그를 정의합니다.
+새 태그를 정의할 때는 link:#TagNameConventions[태그 명명 규칙]을 따르십시오.
+태그의 목적을 설명하는 주석을 남기면, 이는 에디터 호버 툴팁에 표시됩니다.
+마지막으로, 모드의 ini를 소스로 선택하고 ``Add New Tag``를 누릅니다.
 
-Tag comments can be edited later in the tag source ini file.
+태그 주석은 나중에 태그 소스 ini 파일에서 수정할 수 있습니다.
 
 [id="TagNameConventions"]
-=== Tag Naming Conventions
+=== 태그 명명 규칙
 
-UE Tags are hierarchical with each "level" separated by periods.
-For an example, see https://www.tomlooman.com/unreal-engine-gameplaytags-data-driven-design/[this blog post]
-and https://dev.epicgames.com/documentation/en-us/unreal-engine/using-gameplay-tags-in-unreal-engine?application_version=5.3[the UE documentation].
+UE 태그는 각 "레벨"이 점으로 구분된 계층적 구조입니다.
+예시로는 https://www.tomlooman.com/unreal-engine-gameplaytags-data-driven-design/[이 블로그 게시물]과
+https://dev.epicgames.com/documentation/en-us/unreal-engine/using-gameplay-tags-in-unreal-engine?application_version=5.3[UE 문서]를 참고하십시오.
 
-Tag names should be written with this behavior in mind.
+태그 이름은 이 동작을 염두에 두고 작성해야 합니다.
 
-If your tag is intended to apply to a specific asset type, consider using that as a prefix.
+태그가 특정 애셋 유형에 적용되도록 하려면, 해당 애셋 유형을 접두사로 사용하는 것을 고려하십시오.
 
-If your tag pertains to something specific to your mod, consider prefixing the tag with your mod reference.
+태그가 모드에 특정한 것과 관련이 있다면, 태그를 모드 참조로 접두사하는 것을 고려하십시오.
 
-Example general tag names:
+일반 태그 이름 예시:
 
 * ✔️ `Item.Organic`
-    ** Organic, compostable material
-    ** SML defines this tag and has already applied it to multiple vanilla items
+    ** 유기물, 퇴비화 가능한 물질
+    ** SML은 이 태그를 정의하고 여러 기본 아이템에 이미 적용했습니다.
 * ✔️ `Recipe.Package`
-    ** Combines resources and packages into a Packaged item
-    ** SML defines this tag and has already applied it to multiple vanilla recipes
+    ** 자원과 패키지를 결합하여 패키지 아이템으로 만듭니다.
+    ** SML은 이 태그를 정의하고 여러 기본 제작법에 이미 적용했습니다.
 
-Example mod-specific tag names
+모드 특정 태그 이름 예시:
 
 * ✔️ `MyCoolMod.Item.SpecialGeneratorFuel`
-    ** This tag could be used to allow other mods to enable their fuels to be burned in your mod's custom generator building.
+    ** 이 태그는 다른 모드가 자신의 연료를 여러분 모드의 맞춤 발전기 건물에서 연소할 수 있도록 허용하는 데 사용될 수 있습니다.
 
-Poor tag names:
+부적절한 태그 이름:
 
 * ❌ `Item.Radioactive`
-    ** Items already have the `mRadioactiveDecay` field to indicate radioactivity.
+    ** 아이템은 이미 방사능을 나타내기 위해 `mRadioactiveDecay` 필드를 가지고 있습니다.
 * ❌ `Item.Liquid` / `Item.Gas` / `Item.Solid`
-    ** Items already have the `mForm` field to indicate resource state.
+    ** 아이템은 이미 자원 상태를 나타내기 위해 `mForm` 필드를 가지고 있습니다.
 * ❌ `Item.RawResource` / `Item.Biomass` / `Item.NuclearFuel`
-    ** The base game already uses specific classes to differentiate these. Consider using those instead.
+    ** 기본 게임은 이미 이러한 것을 구별하기 위해 특정 클래스를 사용합니다. 대신 이를 사용하는 것을 고려하십시오.
 * ❌ `Thing`
-    ** Not specific enough to be useful.
+    ** 유용할 만큼 구체적이지 않습니다.
 
-== Applying Tags to Assets
+== 자산에 태그 적용하기
 
-SML provides multiple approaches for applying tags in the registry.
+SML은 레지스트리에서 태그를 적용하기 위한 여러 접근 방식을 제공합니다.
 
-=== Extended Attribute Provider Interface
+=== 확장 속성 제공자 인터페이스
 
-If your mod owns the asset you wish to tag, you can implement the `ISMLExtendedAttributeProvider` interface on it to offer tags.
-It's convenient for defining an item's tags on the item itself, keeping all the details in one place.
+모드가 태그를 지정하려는 자산을 소유하는 경우, `ISMLExtendedAttributeProvider` 인터페이스를 구현하여 태그를 제공할 수 있습니다.
+이는 아이템 자체에서 태그를 정의하는 데 편리하며, 모든 세부 정보를 한 곳에 유지할 수 있습니다.
 
-Epic's existing `IGameplayTagAssetInterface` is not useful for modding purposes because it must be implemented in {cpp}
-and we often want to apply tags to assets we don't have control over the parent class structure of, like FGItemDescriptors.
+에픽의 기존 ``IGameplayTagAssetInterface``는 {cpp}에서 구현해야 하므로 모딩 목적에는 유용하지 않습니다.
+우리는 종종 FGItemDescriptors와 같이 부모 클래스 구조를 제어할 수 없는 자산에 태그를 적용하고 싶어합니다.
 
-=== Tag Table
+=== 태그 테이블
 
-The Tag Table approach is ideal when the content you wish to tag is accessible in the editor, but not necessarily owned by your mod.
-For example, applying tags to vanilla assets or assets from other mods.
-It's also useful for bringing in tag data from an external source like a spreadsheet.
+태그 테이블 접근 방식은 태그를 적용하려는 콘텐츠가 에디터에서 접근 가능하지만 반드시 모드 소유는 아닐 때 이상적입니다.
+예를 들어, 기본 애셋이나 다른 모드의 애셋에 태그를 적용하는 경우입니다.
+외부 소스(예: 스프레드시트)에서 태그 데이터를 가져오는 데도 유용합니다.
 
-To get started, go to a Content Browser window in the editor and create a new Data Table asset (it's an Advanced Asset in the Miscellaneous category).
-You'll be prompted to select a Row Structure, pick `ContentTagRegistryAddition` from the dropdown.
+시작하려면, 에디터의 콘텐츠 브라우저 창에서 새 데이터 테이블 애셋을 생성하십시오(기타 범주의 고급 애셋).
+행 구조를 선택하라는 메시지가 표시되면 드롭다운에서 ``ContentTagRegistryAddition``을 선택하십시오.
 
-- Row names must be unique but are ignored by code.
-- Use the `Class` column to specify the asset you want to tag.
-- Use the `Tag Container` column to supply the tags to apply to the asset.
+- 행 이름은 고유해야 하지만 코드에서는 무시됩니다.
+- `Class` 열을 사용하여 태그를 적용할 애셋을 지정하십시오.
+- `Tag Container` 열을 사용하여 애셋에 적용할 태그를 제공합니다.
 
-Register the data table by adding it 
+데이터 테이블을 등록하려면 추가하십시오.
 
-=== Script Calls
+=== 스크립트 호출
 
-If you need to apply tags based programatically based on some kind of condition,
-or need want to tag assets that might not exist at editor time,
-use the methods offered by the Content Tag Registry.
+조건에 따라 태그를 프로그래밍적으로 적용해야 하거나,
+에디터 시간에 존재하지 않을 수 있는 애셋에 태그를 지정해야 하는 경우,
+콘텐츠 태그 레지스트리에서 제공하는 메서드를 사용하십시오.
 
-Use `UContentTagRegistry:AddGameplayTagsTo` to register tags directly or `UContentTagRegistry:RegisterTagAdditionTable` to register a Data Table.
+``UContentTagRegistry:AddGameplayTagsTo``를 사용하여 태그를 직접 등록하거나 ``UContentTagRegistry:RegisterTagAdditionTable``을 사용하여 데이터 테이블을 등록하십시오.
 
-== Removing Tags from Assets
+== 애셋에서 태그 제거하기
 
-=== Script Calls
+=== 스크립트 호출
 
-Use `UContentTagRegistry:RemoveGameplayTagsFrom` to remove a tag.
-This will only work before the registry is frozen.
+``UContentTagRegistry:RemoveGameplayTagsFrom``를 사용하여 태그를 제거하십시오.
+이는 레지스트리가 고정되기 전에만 작동합니다.
 
-There is no "removal record" left behind, so something else could theoretically add the tag back later.
-You probably want to call this late in the loading process to avoid that.
+"제거 기록"이 남지 않으므로, 이론적으로 다른 것이 나중에 태그를 다시 추가할 수 있습니다.
+이를 피하려면 로딩 과정이 끝날 무렵에 호출하는 것이 좋습니다.
 
-== Checking Assets for Tags
+== 애셋의 태그 확인하기
 
-You can query the Content Tag Registry to get the "final" tag container for a class,
-which is an unmodifiable copy of the aggregated tags the class has from all sources.
+콘텐츠 태그 레지스트리를 쿼리하여 클래스의 "최종" 태그 컨테이너를 가져올 수 있습니다.
+이는 클래스가 모든 소스에서 가져온 태그의 집합을 복사한 것입니다.
 
-From there, standard UE methods can be used to operate on the tag container.
+그 후, 표준 UE 메서드를 사용하여 태그 컨테이너에서 작업할 수 있습니다.
 
 [id="CheckTags_Blueprint"]
-=== In Blueprint
+=== 블루프린트에서
 
-Use either available "GetContentTagRegistry" node to get a reference to the registry,
-then use `Get Gameplay Tag Container For` to get the tag container for a class.
+사용 가능한 "GetContentTagRegistry" 노드를 사용하여 레지스트리에 대한 참조를 가져오고,
+그런 다음 ``Get Gameplay Tag Container For``를 사용하여 클래스의 태그 컨테이너를 가져옵니다.
 
-From there, use tag container methods like "Has Tag" and "Has All" to make decisions based on what tags are present.
+그 후, "Has Tag" 및 "Has All"과 같은 태그 컨테이너 메서드를 사용하여 현재 태그에 따라 결정을 내릴 수 있습니다.
 
-"GetDebugStringFromGameplayTagContainer" can be useful for debugging.
+"GetDebugStringFromGameplayTagContainer"는 디버깅에 유용할 수 있습니다.
 
 [id="CheckTags_Cpp"]
-=== In C++
+=== C++에서
 
-Use `UContentTagRegistry:GetGameplayTagContainerFor` to get the tag container for a class.
+`UContentTagRegistry:GetGameplayTagContainerFor`를 사용하여 클래스의 태그 컨테이너를 가져옵니다.
 
-From there, use
-https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/GameplayTags/FGameplayTagContainer?application_version=5.3[tag container methods].
+그 후,
+https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/GameplayTags/FGameplayTagContainer?application_version=5.3[태그 컨테이너 메서드]를 사용하십시오.
 
-== Using Tags from Other Mods
+== 다른 모드의 태그 사용하기
 
-Since tags are defined by string names,
-if you want to use a tag name from another mod without that mod's source in your editor,
-simply create a new tag source in your own mod for the other source with the exact same hierarchical tag name.
+태그는 문자열 이름으로 정의되므로,
+다른 모드의 태그 이름을 사용하고 싶지만 해당 모드의 소스가 에디터에 없는 경우,
+정확히 동일한 계층적 태그 이름으로 다른 모드에서 새 태그 소스를 생성하십시오.

@@ -1,52 +1,52 @@
-= Getting Started
+= 시작하기
 
-In this section, we will cover a variety of topics about making models and visuals for Satisfactory mods.
-It is essential you have a modding environment and working mod to test you changes. If you don't, go and follow the xref:Development/BeginnersGuide/index.adoc[Beginners Guide].
+이 섹션에서는 새티스팩토리 모드를 위한 모델과 시각적 요소를 만드는 것에 대한 다양한 주제를 다룰 것입니다.
+모딩 환경과 변경사항을 테스트할 수 있는 작동하는 모드가 있어야 합니다. 없다면 xref:Development/BeginnersGuide/index.adoc[초보자 가이드]를 따라 설정하십시오.
 
-== Basic Theories
+== 기본 이론
 
-While we're not going to teach you how to model, that's too big of a concept to fit in these docs, but if you're just getting started try some intro to Blender tutorials before continuing further.
+모델링 방법을 직접 가르치지는 않을 것입니다. 그것은 이 문서에 담기에는 너무 큰 개념이지만, 처음 시작하시는 분들은 계속 진행하기 전에 블렌더 입문 튜토리얼을 먼저 시도해보시기 바랍니다.
 
-Even if you do know how to model there may be some concepts/processes the game is using you might want to lookup/practice. Below is a list of some major technologies or techniques you should at least be aware of.
+모델링 방법을 알고 계시더라도 게임에서 사용하는 일부 개념/과정을 찾아보거나 연습해보고 싶으실 수 있습니다. 아래는 최소한 알고 있어야 할 주요 기술이나 기법들의 목록입니다.
 
 * {blank}
 +
-Weighted Vertex Normals::
-  Save triangles and make you mesh look good. Very important for mechanical or hard surface models.
-  Used extensively on all buildable objects.
+가중치 정점 노멀::
+  삼각형을 절약하고 메쉬를 보기 좋게 만듭니다. 기계적이거나 강한 표면 모델에 매우 중요합니다.
+  모든 건물 오브젝트에 광범위하게 사용됩니다.
     ** {blank}
-      https://www.youtube.com/watch?v=sqGFhiP-2mc[Vertex Normals and/with Modifiers(Youtube)]
+      https://www.youtube.com/watch?v=sqGFhiP-2mc[정점 노멀과 모디파이어(유튜브)]
     ** {blank}
-      https://www.youtube.com/watch?v=DgEBfdYD7aE[Vertex Normals and Game Engines(Youtube)]
+      https://www.youtube.com/watch?v=DgEBfdYD7aE[정점 노멀과 게임 엔진(유튜브)]
     * {blank}
 +
-PBR Materials::
-  Use a collection of textures together to better represent metal vs plastic vs rock etc.
-  There's many tools to help create PBR textures like Substance or Quixel.
-  https://www.adobe.com/learn/substance-3d-designer/web/the-pbr-guide-part-1[Indepth Article]
+PBR 머티리얼::
+  여러 텍스처를 함께 사용하여 금속, 플라스틱, 돌 등을 더 잘 표현합니다.
+  Substance나 Quixel 같은 PBR 텍스처 제작을 돕는 도구들이 많이 있습니다.
+  https://www.adobe.com/learn/substance-3d-designer/web/the-pbr-guide-part-1[상세 설명 문서]
 * {blank}
 +
-Texture Atlases::
-  Helps understand the painting system (which allows you to change factory colours) and allows you to use decals on your models.
-  https://web.archive.org/web/20200101133356/https://blog.immersed.team/texture-atlasing-an-inside-look-at-optimizing-3d-worlds-8a07145856d7?gi=9b479f256ecc[Tutorial Article]
+텍스처 아틀라스::
+  페인팅 시스템(공장 색상을 변경할 수 있게 해주는)을 이해하는 데 도움이 되며 모델에 데칼을 사용할 수 있게 해줍니다.
+  https://web.archive.org/web/20200101133356/https://blog.immersed.team/texture-atlasing-an-inside-look-at-optimizing-3d-worlds-8a07145856d7?gi=9b479f256ecc[튜토리얼 문서]
 * {blank}
 +
-Normal Map Decals::
-  Exceptionally important for adding extra details without adding massive triangle counts.
-  https://www.youtube.com/watch?v=66IGMnPgEW0[Youtube walkthrough]
+노멀 맵 데칼::
+  삼각형 수를 크게 늘리지 않고도 추가 디테일을 넣는 데 매우 중요합니다.
+  https://www.youtube.com/watch?v=66IGMnPgEW0[유튜브 설명]
 * {blank}
 +
-Lightmap UVs::
-  Give every portion of the mesh unique surface area so that lighting calculations can save information to the right spots without issues.
-  https://www.youtube.com/watch?v=UnUn4nRoh-E[Youtube Example]
+라이트맵 UV::
+  메쉬의 모든 부분에 고유한 표면 영역을 부여하여 조명 계산이 문제없이 올바른 위치에 정보를 저장할 수 있게 합니다.
+  https://www.youtube.com/watch?v=UnUn4nRoh-E[유튜브 예시]
 * {blank}
 +
-Ambient Occlusion Bake::
-  Help the lighting engine do a better job by making a texture to describe where the nooks, crannies, and edges of meshes are.
-  https://web.archive.org/web/20231202113004/https://www.katsbits.com/tutorials/blender/baking-ambient-occlusion.php[Tutorial Article]
+앰비언트 오클루전 베이크::
+  메쉬의 구석, 틈새, 모서리가 어디에 있는지 설명하는 텍스처를 만들어 조명 엔진이 더 나은 작업을 할 수 있도록 돕습니다.
+  https://web.archive.org/web/20231202113004/https://www.katsbits.com/tutorials/blender/baking-ambient-occlusion.php[튜토리얼 문서]
 
-== Help
+== 도움말
 
-Keep in mind these are common techniques and many more resources are available to learn from.
+이것들은 일반적인 기법들이며 배울 수 있는 더 많은 자료들이 있다는 점을 기억하십시오.
 
-Feel free to ask for help in the `#general-help` channel on the https://discord.ficsit.app[Discord server]
+https://discord.ficsit.app[딧코드 서버]의 `#general-help` 채널에서 자유롭게 도움을 요청하십시오.

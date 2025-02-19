@@ -1,43 +1,43 @@
-= Satisfactory Style
-If you're trying to get a handle on the Satisfactory visual style for custom and new assets and want some pointers then keep reading.
+= 새티스팩토리 스타일
+새티스팩토리의 시각적 스타일을 이해하고, 새로운 애셋을 제작할 때 참고할 만한 내용을 찾고 있다면 계속 읽어보시기 바랍니다.
 
-== Industrial Sci-Fi
-Satisfactory's style sits in a bit of a grey zone on the edge of popular styles like CyberPunk. Similar to Cyberpunk its futuristic, impersonal, detailed, industrial, and fits well with Brutalism.
-While it shares the glib attitude about corporate overlords, there is one particular sticking point in the design. Satisfactory has a clean Retro-Future aesthetic and focuses on designs, mechanisms, and processes that in reality have already been supplanted by new technology.
+== 산업적 SF
+새티스팩토리의 스타일은 사이버펑크와 같은 인기 있는 스타일의 경계에 위치해 있습니다. 사이버펑크와 마찬가지로 미래적이고 비인격적이며, 디테일이 많고 산업적인 분위기를 갖추고 있으며, 브루탈리즘과도 잘 어울립니다.
+또한, 기업 지배에 대한 냉소적인 태도를 공유하고 있지만, 디자인 면에서는 한 가지 중요한 차이점이 있습니다. 새티스팩토리는 깔끔한 레트로 퓨처 스타일을 유지하며, 현실에서는 이미 대체된 기술과 메커니즘, 공정을 중심으로 디자인됩니다.
 
-Like many retro-future aesthetics it extrapolates how more modern ideas may be implemented with older designs. Everything is quite bright, clean, and well maintained. A stark contrast to the general dirt and oppression of cyberpunk. Hard edges and thin bevels, 45 degree turns. No smooth eggshell clearcoat finishes or organic forms in sight.
+일반적인 레트로 퓨처 스타일처럼, 현대적인 개념을 오래된 디자인을 통해 구현하는 방식으로 표현됩니다. 모든 요소가 밝고 깨끗하며, 잘 관리된 모습입니다. 이는 사이버펑크의 일반적인 더러움과 억압적인 분위기와는 대조적입니다. 날카로운 모서리, 얇은 베벨 처리, 45도 각도의 디자인이 주를 이루며, 매끄러운 유선형 마감이나 유기적인 형태는 찾아볼 수 없습니다.
 
 // cSpell:ignore lumifibre
-Many parts of Cyberpunk designs are the complete immersion in cybernetic and digital life, robots and neon signs in the sky. Satisfactory explicitly shuns many of these Sci-Fi tropes and styles in gameplay and visuals. Note the general absence of lasers, holograms, plasma, lumifibre, and digital/robotic things.
-Sure vehicle paths and the build gun use holograms, the xeno-basher and foundries glow, and ADA is a digital assistant, etc. But look closer. Vehicles use wheels, the xeno-basher is only a big taser, we have a Windows XP desktop background, ADA is using Google Text to Speech (literally). This is not a future we'll reach, we have to rewind technology 30 years to even get on the right path to this point.
+새티스팩토리는 사이버펑크 스타일의 대표적인 특징인 디지털 및 사이버네틱 요소를 의도적으로 배제합니다. 사이버펑크에서는 로봇과 네온사인이 하늘을 뒤덮고 있지만, 새티스팩토리는 이러한 SF적 요소와 스타일을 게임플레이와 시각적 디자인에서 철저히 배제합니다. 레이저, 홀로그램, 플라즈마, 발광 섬유, 디지털/로봇 기술 등이 거의 등장하지 않습니다.
+물론, 빌드건과 차량 경로에서 홀로그램이 사용되며, 외계 파쇄기와 제련기가 빛을 내고, ADA가 디지털 보조 AI로 작동하는 등의 예외는 있지만, 이를 면밀히 살펴보면 본질적으로 미래적인 기술이 아니라는 점을 알 수 있습니다. 차량은 바퀴를 사용하며, 외계 파쇄기는 단순히 대형 테이저일 뿐이고, 배경에는 Windows XP 기본 배경화면이 사용되며, ADA의 음성도 구글 텍스트 음성 변환을 그대로 사용합니다. 이는 우리가 도달할 미래가 아니라, 30년 전의 기술 수준으로 되돌아가야만 도달할 수 있는 세계입니다.
 
-Further, Satisfactory embraces the intricacies of the industrial process. We've all spent time watching the machine's animations, we love watching the first motor go down a conveyer belt.
-The fantasy being sold and glorified to the end user is one of a giant machine with a thousand moving parts. Seeing the motion, seeing the process, understanding the steps involved. When designing content for Satisfactory its important to show the user the industrial process at work. Its a game for the people that can binge watch "How its made" videos on youtube.
+또한, 새티스팩토리는 산업 공정의 복잡성을 적극적으로 수용합니다. 플레이어들은 기계 애니메이션을 감상하는 데 많은 시간을 할애하며, 처음으로 모터가 컨베이어 벨트를 따라 이동하는 모습을 지켜보는 것을 즐깁니다.
+게임이 사용자에게 전달하는 환상은 수천 개의 움직이는 부품을 가진 거대한 기계를 조립하고 운영하는 경험입니다. 움직임을 보고, 공정을 이해하고, 단계별 진행 과정을 시각적으로 확인하는 것이 중요합니다. 따라서 새티스팩토리에서 콘텐츠를 디자인할 때는 반드시 산업 공정이 작동하는 모습을 명확하게 보여줄 수 있어야 합니다. 이 게임은 유튜브에서 **"개발 과정"**같은 제조 과정을 다룬 영상을 몰입해서 감상하는 사람들을 위한 게임입니다.
 
-At every opportunity Satisfactory focuses on industrial designs, machines, and mechanisms of the 90's to 00's when they were new and cool. While it embraces Sci-Fi it keeps a leash on it to prevent it from running away into energy beams, AI drones, and warp drive. It's a style of Industrial Sci-Fi Retro Futurism that asks, what if heavy industry could of landed on other planets in the 90's.
+새티스팩토리는 1990년대에서 2000년대 초반의 산업 디자인을 SF적인 요소와 절묘하게 결합합니다. SF적인 요소를 수용하면서도 그것이 과하게 확장되지 않도록 통제하여, 에너지 빔, AI 드론, 워프 드라이브 같은 미래 기술로 지나치게 나아가는 것을 방지합니다. 이를 통해 "1990년대의 중공업이 다른 행성에 진출했다면 어떤 모습이었을까?"라는 질문에 대한 대답을 스타일로 구현하고 있습니다.
 
-== Technical implementation
-Due to the sheer number of elements the game intends to display, the eventual technical implementation feeds back into visuals.
-The strong corporate presences of Ficsit excuses modular, repetitive, and colorful designs.
+== 기술적 구현
+새티스팩토리는 화면에 수많은 요소를 동시에 표시해야 하기 때문에, 기술적 구현 방식이 시각적 디자인에도 영향을 미칩니다.
+FICSIT의 강력한 기업 정체성은 모듈식, 반복적인 디자인과 선명한 색상을 활용할 수 있는 근거를 제공합니다.
 
-The Brand Identity allows the underlying rendering to use modular visuals and shared materials extensively.
-Instanced rendering systems (how to display a lot of something) prefer medium polygon objects and limited texture sources. Satisfactory's medium poly modeling (with texture atlas based decals) ends up playing into this setup perfectly. Further this modeling approach excels at large complex areas with physical details or spots of interest.
-This matches up exactly with the look of large industrial machines with panels and warning labels.
-Unfortunately this makes the workflow a little non standard, but its full of excellent choices. Before shunning the workflow and doing a unique unwrap consider leaning into the limits for style's sake.
+브랜드 아이덴티티를 유지하면서 렌더링 효율성을 극대화하기 위해, 게임에서는 모듈화된 시각적 요소와 공유 재질을 광범위하게 사용합니다.
+대량의 개체를 효과적으로 렌더링하기 위해, 중간 폴리곤 모델과 제한된 텍스처 소스를 활용하는 인스턴스 렌더링 시스템이 사용됩니다. 새티스팩토리의 중간 폴리곤 모델링 기법과 텍스처 아틀라스를 활용한 데칼 기법은 이러한 기술적 요구 사항과 완벽하게 부합합니다. 또한, 이 모델링 방식은 넓고 복잡한 공간을 물리적 디테일과 포인트 요소로 채우는 데 매우 효과적입니다.
+이러한 방식은 대형 산업 기계의 패널, 경고 라벨과 같은 디테일을 구현하는 데 적합하지만, 전통적인 게임 모델링 방식과는 차이가 있어 작업 흐름이 다소 비표준적일 수 있습니다.
+그러나 이러한 기법을 단순히 회피하기보다는 스타일적 측면에서 강점으로 활용하는 것이 바람직합니다. 개별적으로 UV 언랩을 수행하기 전에, 이러한 제한을 스타일적으로 활용할 수 있는 방법을 먼저 고려해보는 것이 좋습니다.
 
-== Case Studies
-Without the authors original notes its often helpful to work backwards from their final decisions, this section is for a few deep dives of specific choices.
+== 사례 연구
+디자이너의 원래 기획 문서를 확인할 수 없는 경우, 최종 결과물을 분석하여 그들의 의도를 역으로 추론하는 것이 유용할 수 있습니다. 이 섹션에서는 몇 가지 구체적인 디자인 선택을 깊이 분석합니다.
 
-=== Train System
-The train system's visual design in Satisfactory clearly demonstrates the aesthetic choices being made and how to mix in Sci-Fi into 90s industrial.
-When choosing a design for trains there are a lot of types to choose from, diesel trains are synonymous with heavy industry and the inspiration is clear. So rather than anything like a Maglev, or Electric train design the final design is heavily reminiscent of diesel locomotives, despite being electric in game.
+=== 기차 시스템
+새티스팩토리의 기차 시스템 디자인은 게임의 전체적인 미적 방향과 90년대 산업 디자인에 SF적 요소를 어떻게 결합하는지를 잘 보여주는 대표적인 사례입니다.
 
-Further, it's more similar to the 90's and 00 era of design than even other angular designs. More modern and older designs both feature more gradual curves, and/or more plain undetailed space. While better for efficiency or implying futuristic shapes, the angular 90's design was prioritized.
-Of note though, an entirely normal diesel locomotive would look out of place and imply it needed packaged fuel.
+기차를 디자인할 때 선택할 수 있는 유형은 다양합니다. 디젤 기관차는 중공업과 밀접하게 연관되어 있으며, 게임 내 기차 디자인도 디젤 기관차에서 명확한 영감을 얻었습니다.
+따라서, 자기부상열차나 최신 전기열차 디자인이 아닌, 디젤 기관차와 유사한 외형을 채택했습니다. 하지만 게임 내 기차는 실제로 전기 동력으로 작동하기 때문에, 기존의 디젤 기관차와는 차별점을 두어야 했습니다.
 
-Taking some of the back planar areas of the train and adding in Classic glowing Sci-Fi engines helps reinvent the design. This also helps stop assumptions it would need diesel fuel.
-Importantly though, the glowing engines do not fit neatly inside the machine. They push the silhouette out giving it interest and shape, but also making the more cutting edge parts look less refined and industrial.
+여기서 중요한 점은, 새티스팩토리의 디자인 철학이 특정 시대의 디자인 요소를 단순히 재현하는 것이 아니라, 과거의 디자인을 현대적인 감각으로 재구성하는 데 있다는 것입니다. 더 구체적으로, 게임의 기차 디자인은 90년대와 2000년대 초반의 각진 디자인을 유지하면서도, 더 현대적이거나 오래된 기관차와 비교했을 때 보다 세밀한 디테일과 구조적 복잡성을 갖추고 있습니다. 최신 디자인이나 과거의 더 단순한 디자인과 달리, 각진 형태를 강조하고, 디테일이 풍부한 디자인을 유지한 것입니다.
 
-Interestingly after shunning many Maglev and monorail train shapes, because of their modern design, the design of mono-rails are brought back. This more modern rail design and the Sci-Fi engine help solidify the train into the future, as without these changes would essentially be from the 90's. This balance of futuristic and past industrial styles is where Satisfactory is best represented and is a style to strive for.
+그러나 단순히 디젤 기관차를 그대로 모방할 경우, 플레이어가 연료가 필요하다고 오해할 가능성이 있습니다. 이를 방지하기 위해, 기차의 후면과 평면적인 부분 일부를 SF적인 발광 엔진으로 대체하여 디자인을 재구성했습니다. 이러한 요소는 기차의 실루엣을 더욱 흥미롭게 만들고 형태에 변화를 주는 동시에, 더 미래적인 기술이 적용되었음을 강조하는 역할을 합니다. 중요한 점은, 이러한 엔진이 기차의 본체에 완전히 통합되지 않고, 다소 거칠고 산업적인 느낌을 유지하면서도 실루엣을 확장시키는 방식으로 배치되었다는 것입니다. 이를 통해 기차의 첨단 기술 요소가 세련되기보다는, 공업적인 분위기를 유지하며 거칠고 기능적인 디자인으로 표현되었습니다.
 
+또한 흥미로운 점은, 최신식 자기부상열차나 모노레일 형태를 처음에는 현대적인 디자인이라는 이유로 배제했음에도 불구하고, 결국 모노레일 스타일의 철도 시스템이 최종적으로 채택되었다는 것입니다. 자기부상열차와 같은 미래적인 디자인을 직접적으로 사용하지 않으면서도, 모노레일과 SF적인 엔진을 추가하여 기차가 단순히 90년대의 디젤 기관차를 재현하는 것이 아니라, 적절한 미래적 요소를 가미한 디자인으로 완성되었습니다.
 
+이러한 과거의 산업 디자인과 미래적인 SF 요소의 균형이 새티스팩토리의 핵심 스타일이며, 이를 반영하는 것이 게임 내 디자인 방향에 부합합니다.

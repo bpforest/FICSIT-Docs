@@ -35,7 +35,7 @@ CSS는 스크립트를 사용하여 점수 값을 자동으로 계산하며,
 == 데이터 테이블 등록
 
 이제 새티스팩토리에 데이터 테이블의 내용을 불러오도록 지시해야 합니다.
-다행히도 SML이 이를 도와줄 수 있습니다. xref:Development/ModLoader/ModModules.adoc#_game_world_module_ugameworldmodule[게임 월드 모듈]을 사용하여
+다행히도 SML이 이를 도와줄 수 있습니다. xref:Development/ModLoader/ModModules.adoc#_게임_월드_모듈ugameworldmodule[게임 월드 모듈]을 사용하여
 방금 생성한 데이터 테이블을 기본 탭(고급 하위 섹션)에서
 `M Resource Sink Item Points Data Table` 변수에 설정하십시오.
 SML은 내용을 읽고 자원 싱크 시스템에 추가합니다.

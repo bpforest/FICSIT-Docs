@@ -1,148 +1,148 @@
-= Access Transformers
+= 접근 변환기
 
-UE-CSS 4.25.3 build 42 adds a new feature: the ability to make accessors for fields, add friend classes, and make properties BlueprintReadWrite without modifying the game headers.
+UE-CSS 4.25.3 빌드 42에서 추가된 새로운 기능으로 인해 게임 헤더를 수정하지 않고도 필드에 대한 접근자를 만들고, friend 클래스를 추가하고, 프로퍼티를 BlueprintReadWrite로 만들 수 있습니다.
 
-This ability, called the **Access Transformer** system, is beneficial because it allows you to essentially make header accessor edits without the cost of having to deal with merge conflicts when bringing in updated SML and game headers later down the line. It also makes it easier to collaborate with other developers, because normal header edits are made in files outside of the plugin directory, meaning they would not be included in plugin (mod) source code repositories. Access transformers are defined in a file within the plugin directory, so they can easily be included in repositories.
+**접근 변환기** 시스템이라고 불리는 이 기능은 나중에 SML과 게임 헤더를 업데이트할 때 병합 충돌을 처리할 필요 없이 헤더 접근자 수정을 할 수 있게 해주므로 유용합니다. 또한 다른 개발자들과의 협업도 더 쉽게 만들어주는데, 일반적인 헤더 수정은 플러그인 디렉터리 외부의 파일에서 이루어지므로 플러그인(모드) 소스 코드 저장소에 포함되지 않기 때문입니다. 접근 변환기는 플러그인 디렉터리 내의 파일에 정의되므로 저장소에 쉽게 포함될 수 있습니다.
 
-As of UE-CSS 4.26.2 build 30, BlueprintCallable is also supported.
+UE-CSS 4.26.2 빌드 30부터는 BlueprintCallable도 지원됩니다.
 
-As of SML 3.8, UStructs can be modified by access transformers.
+SML 3.8부터는 UStruct도 접근 변환기로 수정할 수 있습니다.
 
 [NOTE]
 ====
-Remember, Access Transformers only work for {cpp} classes.
-If you're trying to make a particular property on a blueprint asset Blueprint Read/Write,
-you will have to find the parent {cpp} class that owns that property and use it in the access transformer.
+접근 변환기는 C++ 클래스에만 작동한다는 점을 기억하십시오.
+블루프린트 애셋의 특정 프로퍼티를 블루프린트가 읽고 쓰게 만들려면,
+해당 프로퍼티를 소유한 부모 C++ 클래스를 찾아서 접근 변환기에서 사용해야 합니다.
 
-An xref:_blueprint_asset_property_tracing_example[example of this] can be found below.
+이에 대한 xref:_blueprint_asset_property_tracing_example[예시]는 아래에서 확인할 수 있습니다.
 ====
 
-== Config File
+== 설정 파일
 
-In order to use Access Transformers, create a file in `YourPluginModReference\Config` named `AccessTransformers.ini` with the following format:
+접근 변환기를 사용하려면 `모드참조\Config` 디렉터리에 다음 형식의 `AccessTransformers.ini` 파일을 생성하십시오:
 
 [source,ini]
 ----
 [AccessTransformers]
-; You can use semicolons for comments if you want to leave notes about the purpose of an access transformer
+; 접근 변환기의 목적에 대해 주석을 남기고 싶다면 세미콜론을 사용할 수 있습니다
 Friend=(Class="AFGSomeClass", FriendClass="UMyClass")
 Accessor=(Class="AFGSomeClass", Property="mSomeProperty")
 BlueprintReadWrite=(Class="/Script/FactoryGame.FGSomeClass", Property="mSomeProperty")
 BlueprintCallable=(Class="/Script/FactoryGame.FGSomeClass", Function="SomeFunction")
 ----
 
-You can have multiple (or none) of each of the access transformer types in one file,
-but they should all be under the same `[AccessTransformers]` section header.
+하나의 파일에 각 접근 변환기 유형을 여러 개(또는 없이) 가질 수 있지만,
+모두 동일한 `[AccessTransformers]` 섹션 헤더 아래에 있어야 합니다.
 
-== Target Class
+== 대상 클래스
 
-All access transformers require a target class (or struct) to be specified in the Class field.
-This is the class being modified by the transformer.
-It should be specified in the format `"/Script/CppModuleName.ClassName"`.
+모든 접근 변환기는 Class 필드에 대상 클래스(또는 구조체)를 지정해야 합니다.
+이는 변환기가 수정하는 클래스입니다.
+`"/Script/CppModuleName.ClassName"` 형식으로 지정해야 합니다.
 
-Remove any Unreal type prefixes (like `U`, `F`, or `A`) from the class name when specifying it in the Class field.
-For example, the `FFootstepEffectSurface` struct should use `FootstepEffectSurface` in the class name field.
+클래스 이름을 Class 필드에 지정할 때 언리얼 유형 접두사(`U`, `F`, `A` 등)를 제거하십시오.
+예를 들어, `FFootstepEffectSurface` 구조체는 클래스 이름 필드에서 ``FootstepEffectSurface``를 사용해야 합니다.
 
-== Troubleshooting
+== 문제 해결
 
-Access transformers that are not written correctly,
-or refer to fields that are no longer present,
-will result in an error message at compile time and in the Output Log:
-`Unused <transformer type> for class <ClassName>, <extra details>. Requested by <ModReference>`.
-If you see this error message, it means you probably made a typo in your access transformer, or you are not using that access transformer type correctly.
+올바르게 작성되지 않았거나 더 이상
+존재하지 않는 필드를 참조하는 접근 변환기는
+컴파일 시와 출력 로그에서 다음과 같은 오류 메시지를 표시할 것입니다:
+`Unused <변환기 유형> for class <클래스 이름>, <추가 정보>. Requested by <모드참조>`.
+이 오류 메시지가 표시되면 접근 변환기에 오타가 있거나 해당 접근 변환기 유형을 올바르게 사용하지 않은 것일 수 있습니다.
 
-== Definitions
+== 정의
 
 === Friend
 
-Adds `friend class UMyClass;` into the class you specify, allowing `UMyClass` to access all private fields and methods of AFGSomeClass.
+클래스에 ``friend class UMyClass;``를 추가하여 ``UMyClass``가 AFGSomeClass의 모든 private 필드와 메서드에 접근할 수 있게 합니다.
 
-=== Accessor
+=== 접근기
 
-Creates the public methods `FORCEINLINE PropertyType GetSomeProperty() { return mSomeProperty; }` and `FORCEINLINE void SetSomeProperty(PropertyType SomeProperty) { mSomeProperty = SomeProperty; }`.
+public 메서드 ``FORCEINLINE PropertyType GetSomeProperty() { return mSomeProperty; }``와 ``FORCEINLINE void SetSomeProperty(PropertyType SomeProperty) { mSomeProperty = SomeProperty; }``를 생성합니다.
 
-This is beneficial when you are trying to access a field and you are not in a class to use Friend for.
-Below is a usage example from PowerSuit for the FEquipmentStats struct.
+Friend를 사용할 수 없는 클래스에서 필드에 접근하려 할 때 유용합니다.
+아래는 PowerSuit의 FEquipmentStats 구조체에 대한 사용 예시입니다.
 
 // cspell:ignore Getm
 [source,cpp]
 ----
-// Instead of this ...
+// 이렇게 하는 대신...
 SuitCostToUse = Parent->EquipmentParent->mCostToUse;
-// ... use this
+// ...이렇게 하십시오
 SuitCostToUse = Parent->EquipmentParent.GetmCostToUse();
 ----
 
 === BlueprintReadWrite
 
-Adds `BlueprintReadWrite` to the specified UPROPERTY, allowing you to access that property from blueprints.
-It cannot be added to a non-`UPROPERTY` field.
-It also bypasses the private BPRW conflict check (which is compile time only, it does not affect the editor, or the game),
-so that no changes to the game headers are required.
+지정된 UPROPERTY에 ``BlueprintReadWrite``를 추가하여 블루프린트에서 해당 프로퍼티에 접근할 수 있게 합니다.
+``UPROPERTY``가 아닌 필드에는 추가할 수 없습니다.
+또한 private BPRW 충돌 검사를 우회하여(컴파일 시에만 적용되며 에디터나 게임에는 영향을 미치지 않음)
+게임 헤더를 수정할 필요가 없게 합니다.
 
 === BlueprintCallable
 
-Adds `BlueprintCallable` to the specified UFUNCTION, allowing you to call that function from blueprints.
-It cannot be added to a non-`UFUNCTION` function.
+지정된 UFUNCTION에 ``BlueprintCallable``을 추가하여 블루프린트에서 해당 함수를 호출할 수 있게 합니다.
+``UFUNCTION``이 아닌 함수에는 추가할 수 없습니다.
 
 // TODO SML3.10.0
 
 // === EditAnywhere
 
-// Adds `EditAnywhere` to the specified UPROPERTY,
-// allowing you the property to be modified in the Details panel of blueprint assets and instances.
+// 지정된 UPROPERTY에 ``EditAnywhere``를 추가하여
+// 블루프린트 애셋과 인스턴스의 디테일 패널에서 프로퍼티를 수정할 수 있게 합니다.
 
 // === BlueprintType
 
-// Adds `BlueprintType` to the specified USTRUCT, allowing that struct to be made or split using blueprint nodes.
+// 지정된 USTRUCT에 ``BlueprintType``을 추가하여 해당 구조체를 블루프린트 노드로 만들거나 분할할 수 있게 합니다.
 
-== Loading
+== 로딩
 
-As of SML3.5.0, BlueprintReadWrite and BlueprintCallable Access Transformers are now applied at runtime,
-meaning you don't need to rebuild {cpp} nor restart your editor the project to apply them.
-As soon as you modify the `.ini` file the editor should pop up with a notice
-informing you that the changes have been applied.
-Check the Output Log for more details.
-If the changes to Blueprint nodes don't appear when you search,
-try checking and then un-checking "Context Sensitive" in the popup for searching for a node,
-and if that doesn't work, try restarting the editor.
+SML3.5.0부터 BlueprintReadWrite와 BlueprintCallable 접근 변환기는 런타임에 적용되므로,
+적용하기 위해 {cpp}를 다시 빌드하거나 에디터를 다시 시작할 필요가 없습니다.
+`.ini` 파일을 수정하자마자 에디터에서
+변경사항이 적용되었다는 알림이 표시될 것입니다.
+자세한 내용은 출력 로그를 확인하십시오.
+블루프린트 노드를 검색할 때 변경사항이 나타나지 않으면,
+노드 검색 팝업에서 "컨텍스트에 따라"를 체크했다가 해제해보고,
+그래도 작동하지 않으면 에디터를 다시 시작해 보십시오.
 
-Friend and Accessor transformers require rebuilding {cpp} to take effect.
+Friend와 접근기 변환기는 적용되려면 {cpp}를 다시 빌드해야 합니다.
 
-== Disclaimers
+== 주의사항
 
-The header generator decides to rebuild access transformers
-based on the last changed date of the AccessTransformers.ini file.
-As such, you may need to modify the file (ex. by adding or removing lines, such as semicolon comments)
-to cause it to realize that a rebuild is needed.
-An example of a situation in which this would happen is
-bringing the code for another mod into your copy of the project -
-its files' change date could be far in the past from the last time you built,
-so the generator will mistakenly decide not to build the transformers in that file.
+헤더 생성기는 `AccessTransformers.ini` 파일의 마지막 수정 날짜를 기준으로
+접근 변환기를 다시 빌드할지 결정합니다.
+따라서 파일을 수정(예: 세미콜론 주석 추가/제거와 같은 라인 추가나 제거)하여
+다시 빌드가 필요하다는 것을 인식하게 해야 할 수 있습니다.
+이런 상황이 발생하는 예로는 다른 모드의
+코드를 프로젝트로 가져올 때가 있습니다.
+해당 파일들의 변경 날짜가 마지막 빌드 시점보다 훨씬 이전일 수 있어서
+생성기가 실수로 해당 파일의 변환기를 빌드하지 않을 수 있습니다.
 
-The Access Transformers system does not currently support fields using forward declarations.
-An example field using a forward declaration is the `mTargetList` property on `AFGSavedWheeledVehiclePath`.
-
-[WARNING]
-====
-Access Transformers can't modify engine classes,
-since the UHT will not generate `.generated.h` files for the engine classes when using a prebuilt engine.
-It has not been tested if they would work on a source built engine.
-====
+접근 변환기 시스템은 현재 전방 선언을 사용하는 필드를 지원하지 않습니다.
+전방 선언을 사용하는 필드의 예로는 ``AFGSavedWheeledVehiclePath``의 `mTargetList` 프로퍼티가 있습니다.
 
 [WARNING]
 ====
-Rider will not find the generated getters and setters,
-and will still show private fields as private for friended classes,
-because it completely ignores the `.generated.h` file in which the modified UHT generates them.
-Visual Studio does not have this problem.
-The code will still compile, but Rider will still show the accessed fields as errors.
+접근 변환기는 엔진 클래스를 수정할 수 없습니다.
+미리 빌드된 엔진을 사용할 때는 UHT가 엔진 클래스에 대한 `.generated.h` 파일을 생성하지 않기 때문입니다.
+소스 빌드된 엔진에서 작동할지는 테스트되지 않았습니다.
 ====
 
-== Examples
+[WARNING]
+====
+접근 변환기는 게임 헤더를 수정하지 않고도
+private 멤버에 접근할 수 있게 해주지만,
+이는 여전히 게임 코드를 수정하는 것입니다.
+게임 업데이트로 인해 접근하려는 필드나 함수가 변경되거나 제거될 수 있으므로,
+이를 사용할 때는 주의해야 합니다.
+====
 
-Below is an example of the AccessTransformers.ini that uses each of accessor type.
-Some of the Friend classes are from the Area Actions mod.
+== 예시
+
+아래는 각 접근자 타입을 사용하는 AccessTransformers.ini의 예시입니다.
+일부 Friend 클래스는 Area Actions 모드에서 가져온 것입니다.
 
 [source,ini]
 ----
@@ -160,18 +160,18 @@ BlueprintCallable=(Class="/Script/FactoryGame.FGDismantleInterface", Function="D
 // EditAnywhere=(Class="/Script/FactoryGame.IconData", Property="ID")
 // BlueprintType=(Struct="/Script/FactoryGame.WorldScannableData")
 
-=== Blueprint Asset Property Tracing Example
+=== 블루프린트 에셋 프로퍼티 추적 예시
 
-As an example, if you wanted the `mMaxZoopAmount` property of the blueprint asset `Holo_Foundation` to be Blueprint Read-Writeable,
-you will need to determine its parent {cpp} class
-(which will appear in the top right corner of the UE editor when you open the asset)
-and use that as the `Class` for the access transformer.
-Note that the parent {cpp} class could have another parent class as well -
-you may have to search multiple classes to find the property you're looking for.
+예를 들어, 블루프린트 에셋 ``Holo_Foundation``의 `mMaxZoopAmount` 프로퍼티를 블루프린트에서 읽고 쓰게 만들고 싶다면,
+해당 에셋의 부모 {cpp} 클래스를 확인해야 합니다
+(에셋을 열면 UE 에디터의 오른쪽 상단에 표시됨).
+이를 접근 변환기의 ``Class``로 사용하면 됩니다.
+부모 {cpp} 클래스가 또 다른 부모 클래스를 가질 수 있다는 점에 주의하십시오.
+찾고자 하는 프로퍼티를 찾기 위해 여러 클래스를 검색해야 할 수 있습니다.
 
-In this example, the property belongs to the `AFGFoundationHologram` class,
-so we should use the below access transformer,
-which will make the `mMaxZoopAmount` property on _any asset_ that is a descendent of `AFGFoundationHologram` Blueprint Read-Writable.
+이 예시에서는 프로퍼티가 `AFGFoundationHologram` 클래스에 속하므로,
+아래의 접근 변환기를 사용해야 합니다.
+이렇게 하면 ``AFGFoundationHologram``의 자식인 _모든 에셋_ 의 `mMaxZoopAmount` 프로퍼티가 블루프린트에서 읽고 쓸 수 있게 됩니다.
 
 [source,ini]
 ----

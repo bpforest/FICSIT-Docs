@@ -1,70 +1,69 @@
-= Abstract Instance
+= 추상 인스턴스
 
-Coffee Stain created the Abstract Instance system
-as a way to reduce the amount of UObjects that static buildings take up and improve performance.
-The base game uses this system for walls, foundations, and more,
-with plans to expand it according to Ben.
+커피 스테인은 추상 인스턴스 시스템을 만들어
+정적 건물이 차지하는 UObject의 양을 줄이고 성능을 향상시키는 방법을 제공합니다.
+기본 게임은 이 시스템을 벽, 토대, 기타 여러 요소에 사용하며,
+Ben에 따르면 이를 확장할 계획이 있다고 합니다.
 
-The abstract instance system can be used for any building component that doesn't require gameplay interaction,
-and Ben states that almost everything that is static can utilize the system, in theory.
+추상 인스턴스 시스템은 게임 플레이 상호작용이 필요하지 않은 모든 건물 구성 요소에 사용할 수 있으며,
+Ben은 이론적으로 정적일 수 있는 거의 모든 것이 이 시스템을 활용할 수 있다고 말합니다.
 
 [id="WorkWithAbstractInstances"]
-== Working with Abstract Instances
+== 추상 인스턴스 작업하기
 
-Since Abstract Instances work differently from other actors,
-you may need to adapt your code to respond to and interact with them.
-For example, if you perform a Line Trace for Actors and hit an abstract instance,
-the hit actor will be the Abstract Instance Manager,
-which is a singleton that manages all abstract instances,
-instead of the building itself.
+추상 인스턴스는 다른 액터와 다르게 작동하므로,
+코드가 이를 반영하고 상호작용하도록 조정해야 할 수 있습니다.
+예를 들어, 액터에 대한 선형 추적을 수행하고 추상 인스턴스에 부딪히면,
+충돌한 액터는 모든 추상 인스턴스를 관리하는
+싱글톤인 추상 인스턴스 관리자(AAbstractInstanceManager)가 됩니다.
+이것은 건물 자체가 아닙니다.
 
-In order to get the actual building from the hit result,
-you must call the Abstract Instance Manager's "Resolve Hit" method,
-supplying the hit structure from the trace (or whatever else you're using).
+충돌 결과에서 실제 건물을 얻으려면,
+추상 인스턴스 관리자의 "Resolve Hit" 메서드를 호출해야 하며,
+추적에서 얻은 충돌 구조체(또는 사용하는 다른 것)를 제공해야 합니다.
 
 [id="CreateAbstractInstanceBuildings"]
-== Creating Your Own Abstract Instances
+== 나만의 추상 인스턴스 만들기
 
-You can make use of the abstract instance system for your own modded buildings to improve performance.
+모드화된 건물에 대해 추상 인스턴스 시스템을 활용하여 성능을 향상시킬 수 있습니다.
 
-In order to set up your buildable for abstract instances,
-edit the following properties on your buildable:
+추상 인스턴스를 위한 건물을 설정하려면,
+건물에서 다음 속성을 편집해야 합니다:
 
-1. Enable `mCanContainLightweightInstances`
-2. Add an Abstact Instance Data Object to `mInstanceData`
-3. Create a new array element in the data object
-4. Set the Static Mesh accordingly
-5. Set `Num Custom Data Floats` to 20
+1. `mCanContainLightweightInstances` 활성화
+2. ``mInstanceData``에 추상 인스턴스 데이터 객체 추가
+3. 데이터 객체에 새로운 배열 요소 생성
+4. 정적 메쉬에 따라 설정
+5. ``Num Custom Data Floats``를 20으로 설정
 
-A building can have multiple abstract instance meshes via multiple array elements.
-You may also find the following properties useful:
+건물은 여러 배열 요소를 통해 여러 추상 인스턴스 메쉬를 가질 수 있습니다.
+다음 속성도 유용할 수 있습니다:
 
-* Use Relative Transform to apply a transform this specific mesh relative to the overall building.
-* If the building has no components set `mContainsComponents` on the buildable to false
-* The "apply random offset" properties can be used to mitigate z-fighting issues when multiple copies of the building overlap.
+* 상대 변환을 사용하여 특정 메쉬를 전체 건물에 상대적으로 변환 적용
+* 건물에 구성 요소가 없으면 건물에서 ``mContainsComponents``를 false로 설정
+* "무작위 오프셋 적용" 속성은 여러 복사본의 건물이 겹칠 때 z-파이팅 문제를 완화하는 데 사용할 수 있습니다.
 
 [id="Examples"]
-== Examples for Custom Implementations
+== 맞춤 구현을 위한 예시
 
-You may find the below examples useful
-if you're planning to implement Abstract Instances on things that don't inherit from `AFGBuildable`.
+추상 인스턴스를 ``AFGBuildable``에서 상속받지 않는 것에 구현할 계획이라면, 아래 예시가 유용할 수 있습니다.
 
-=== Storing Instance Handles
+=== 인스턴스 핸들 저장하기
 
-Custom implementations should define a field to hold instance handles.
-Consider `TArray< struct FInstanceHandle* > mInstanceHandles` used by `AFGBuildable`.
+맞춤 구현은 인스턴스 핸들을 보관할 필드를 정의해야 합니다.
+``TArray< struct FInstanceHandle* > mInstanceHandles``를 ``AFGBuildable``에서 사용하는 것을 고려하십시오.
 
-=== Resolve Hits on Abstract Instances
+=== 추상 인스턴스에서 충돌 해결하기
 
 [NOTE]
 ====
-Hits in Holograms are already resolved and don't need this implementation.
+홀로그램에서의 충돌은 이미 해결되었으므로 이 구현이 필요하지 않습니다.
 ====
 
-To resolve the hit, we have two options:
+충돌을 해결하기 위해 두 가지 옵션이 있습니다:
 
-- Hit result `bool ResolveHit( const FHitResult& Result, FInstanceHandle& OutHandle )`
-- Overlap Result `bool ResolveOverlap( const FOverlapResult& Result, FInstanceHandle& OutHandle )`
+- 충돌 결과 `bool ResolveHit( const FHitResult& Result, FInstanceHandle& OutHandle )`
+- 겹침 결과 `bool ResolveOverlap( const FOverlapResult& Result, FInstanceHandle& OutHandle )`
 
 ```cpp
 AMyModActor::ResolveHitResult(const FHitResult& Hit) {
@@ -73,20 +72,20 @@ AMyModActor::ResolveHitResult(const FHitResult& Hit) {
 
     FInstanceHandle OutHandle;
     if(Manager->ResolveHit(Hit, OutHandle)) {
-        // We hit a abstract instance, so we can get information, like the owner, from that handle
-        OutHandle.GetOwner() // AActor* who owns the Instance
+        // 우리는 추상 인스턴스에 충돌했으므로, 해당 핸들에서 소유자와 같은 정보를 얻을 수 있습니다.
+        OutHandle.GetOwner() // 인스턴스를 소유하는 AActor*
     }
-    // We don't hit a abstract instance so we can continue with the Hit
+    // 우리는 추상 인스턴스에 충돌하지 않았으므로, 충돌을 계속 진행할 수 있습니다.
 }
 ```
 
-=== Create Abstract Instances at Runtime
+=== 런타임에 추상 인스턴스 생성하기
 
 ```cpp
 static void SetInstanceFromDataStatic( AActor* OwnerActor, const FTransform& ActorTransform, const FInstanceData& InstanceData, FInstanceHandle* &OutHandle, bool bInitializeHidden = false );
 
 AMyModActor::CreateInstanceFromMesh(UStaticMesh* Mesh) {
-    // Prepare the InstanceData with a given Mesh at the relative Transform 0.
+    // 주어진 메시를 상대 변환 0에서 준비합니다.
     FInstanceData InstanceData;
     InstanceData.StaticMesh = Mesh;
     InstanceData.Mobility = EComponentMobility::Static;
@@ -96,18 +95,18 @@ AMyModActor::CreateInstanceFromMesh(UStaticMesh* Mesh) {
     FInstanceHandle* Handle;
     AAbstractInstanceManager::SetInstanceFromDataStatic(this, GetActorTransform(), InstanceData, Handle);
 
-    // You should add this Handle to the array so we can destroy them if the actor is destroyed (for example, dismantled).
+    // 이 핸들을 배열에 추가하여, 액터가 파괴될 경우(예: 해체) 이를 파괴할 수 있도록 합니다.
     mInstanceHandles.Add(Handle);
 }
 ```
 
-=== Destroy Abstract Instances at Runtime
+=== 런타임에 추상 인스턴스 파괴하기
 
 ```cpp
 static void RemoveInstances( UObject* WorldContext, TArray<FInstanceHandle*>& Handles, bool bEmptyHandleArray = true );
 
 AMyModActor::ClearInstances(UStaticMesh* Mesh) {
-    // Will remove/destroy all instances and empty mInstanceHandles.
+    // 모든 인스턴스를 제거/파괴하고 mInstanceHandles를 비웁니다.
     AAbstractInstanceManager::RemoveInstances( GetWorld( ), mInstanceHandles );
 }
 ```

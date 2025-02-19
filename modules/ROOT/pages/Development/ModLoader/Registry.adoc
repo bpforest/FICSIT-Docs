@@ -16,7 +16,7 @@ xref:Development/ModLoader/Subsystems.adoc[서브시스템]으로,
 ``서브시스템 홀더 레지스트리``는
 xref:Development/ModLoader/ModModules.adoc#_게임_인스턴스_할당_모듈ugameinstancemodule[게임 인스턴스]
 xref:Development/ModLoader/Subsystems.adoc[서브시스템]으로,
-모드 로더 생명 주기에 나열된 모든 서브시스템 홀더를 자동으로 등록합니다.
+모드 로더 생명주기에 나열된 모든 서브시스템 홀더를 자동으로 등록합니다.
 홀더는 SML에 의해 관리되며 적절한 시점에 호출됩니다.
 
 `서브시스템 홀더 등록` 기능을 사용하여 서브시스템 홀더의 클래스를 레지스트리에 추가할 수 있습니다.
@@ -82,7 +82,7 @@ https://docs.unrealengine.com/en-US/InteractiveExperiences/Input/index.html?utm_
 
 모드 콘텐츠 레지스트리가 제공하는 동적 동작이 필요하지 않은 경우,
 이 객체의 메서드를 직접 호출하는 대신
-xref:Development/ModLoader/ModModules.adoc#_game_world_module_ugameworldmodule[RootGameWorld_모드참조]
+xref:Development/ModLoader/ModModules.adoc#_게임_월드_모듈ugameworldmodule[RootGameWorld_모드참조]
 모듈 인스턴스의 속성을 사용해야 합니다.
 
 [IMPORTANT]

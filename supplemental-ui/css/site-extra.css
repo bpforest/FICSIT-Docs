@@ -37,12 +37,22 @@ body {
 
 code {
     font-family: "NanumGothicCoding";
-    border: .0625rem solid #404044;
+    border: .0625rem solid #404044 !important;
+    border-radius: 4px !important;
     background: #202024 !important;
+    padding: .125em .25em;
 }
 
 code:not([class]) {
     color: #d7ba7d !important;
+}
+
+.source-toolbox {
+    visibility: visible !important;
+}
+
+.copy-toast {
+    color: black !important;
 }
 
 /* 기울임 글꼴 */

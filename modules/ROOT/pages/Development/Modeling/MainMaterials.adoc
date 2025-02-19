@@ -1,141 +1,141 @@
-= Main Materials
+= 메인 머티리얼
 
-This is a breakdown of how to use some of the master/common materials found in Satisfactory. While not exhaustive and updated manually it should be relatively accurate and helpful to anyone creating visual content. For performance's sake it's important to reuse materials in any game, Satisfactory especially so.
+이것은 새티스팩토리에서 찾을 수 있는 마스터/공통 머티리얼들의 사용법에 대한 설명입니다. 수동으로 업데이트되어 완벽하지는 않지만, 시각적 콘텐츠를 만드는 분들에게 비교적 정확하고 도움이 될 것입니다. 게임의 성능을 위해 머티리얼을 재사용하는 것이 중요하며, 새티스팩토리에서는 특히 더 그렇습니다.
 
-If you want to re-use other existing materials or textures that are not currently in the modding project, checkout xref::/Development/ReuseGameFiles.adoc[this guide]; however, materials with static compilation flags may not work perfectly by reference alone and may require more accurate reverse engineering.
+다른 기존 머티리얼이나 텍스처를 재사용하고 싶지만 현재 모딩 프로젝트에 없는 경우, xref::/Development/ReuseGameFiles.adoc[이 안내]를 확인하십시오. 단, 정적 컴파일 플래그가 있는 머티리얼은 참조만으로는 완벽하게 작동하지 않을 수 있으며 더 정확한 리버스 엔지니어링이 필요할 수 있습니다.
 
 [NOTE]
 ====
-It's important to understand the Unreal Engine concept of https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/MaterialInstances/index.html[material instances].
+언리얼 엔진의 https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/MaterialInstances/index.html[머티리얼 인스턴스] 개념을 이해하는 것이 중요합니다.
 ====
 
 [WARNING]
 ====
-**Normal maps, AO Masks, and Surface Maps should have sRGB disabled.** Unreal will do this automatically for normal maps, but is not smart enough to do it for all linear textures like the ReflectionMap on Factory_Baked.
+**노멀 맵, AO 마스크, 표면 맵은 sRGB를 비활성화해야 합니다.** 언리얼은 노멀 맵에 대해서는 자동으로 이를 처리하지만, Factory_Baked의 ReflectionMap과 같은 모든 선형 텍스처에 대해서는 충분히 똑똑하지 않습니다.
 
-**Albedo textures should still have sRGB enabled.**
+**알베도 텍스처도 sRGB가 활성화되어 있어야 합니다.**
 ====
 
-== Factory Machine/Array (MM_Factory_Array)
-Main material used on most buildable factory parts and recommended material for most building content. Works with the painting system. Uses an atlas of several material types, expects decals to be added with `DecalColor_Masked` and `Decal_Normal` to add detail, is responsible for the metal texture on most machines.
+== 공장 기계/배열 (MM_Factory_Array)
+대부분의 건물 공장 부품에 사용되는 주요 머티리얼이며 대부분의 건설 콘텐츠에 권장되는 머티리얼입니다. 색칠 시스템과 함께 작동합니다. 여러 머티리얼 유형의 아틀라스를 사용하며, ``DecalColor_Masked``와 ``Decal_Normal``로 디테일을 추가할 것으로 예상하고, 대부분의 기계에서 금속 텍스처를 담당합니다.
 
-Several materials are based off the one master material, many exist for legacy purposes to not break old content, for example.
+하나의 마스터 머티리얼을 기반으로 여러 머티리얼이 존재하며, 많은 경우 이전 콘텐츠를 깨지 않기 위해 레거시 목적으로 존재합니다.
 
 // cSpell:ignore Emsiv
-- `/FactoryGame/MasterMaterials/MM_Factory_Array` Master Material
-- `/FactoryGame/-Shared/Material/MI_Factory_Base_01` Instance of MM_Factory_Array
-- `/FactoryGame/-Shared/Material/MI_Factory_Base_01_Emsiv_AO` Instance of MI_Factory_Base_01
+- `/FactoryGame/MasterMaterials/MM_Factory_Array` 마스터 머티리얼
+- `/FactoryGame/-Shared/Material/MI_Factory_Base_01` MM_Factory_Array의 인스턴스
+- `/FactoryGame/-Shared/Material/MI_Factory_Base_01_Emsiv_AO` MI_Factory_Base_01의 인스턴스
 
-The below image from the
-xref:CommunityResources/ModelingTools.adoc[Modeling Tools]
-shows what purpose each region of the texture atlas serves:
+아래 이미지는
+xref:CommunityResources/ModelingTools.adoc[모델링 도구]에서 가져온 것으로,
+텍스처 아틀라스의 각 영역이 어떤 용도로 사용되는지 보여줍니다:
 
-image:https://raw.githubusercontent.com/DavidHGillen/Satisfactory_ModelingTools/master/Factory_Base_UVSheet.png[AngryBeaver texture atlas image]
+image:Modeling/Factory_Base_UVSheet.png[AngryBeaver 텍스처 아틀라스 이미지]
 
-=== Inner workings
-At runtime the game creates a texture atlas which contains the base colours from several parameters, notably the primary and secondary colour. Several other textures are then overlaid and mixed to create proper PBR surfaces for use in the game. A full list of parameters and their expected uses can be found by looking in the material editor of the version in the sample project.
+=== 내부 작동 방식
+런타임에 게임은 기본 색상, 특히 주 색상과 보조 색상과 같은 여러 매개변수에서 색상을 가져와 텍스처 아틀라스를 만듭니다. 그런 다음 다른 여러 텍스처가 오버레이되고 혼합되어 게임에서 사용할 적절한 PBR 표면을 만듭니다. 매개변수의 전체 목록과 예상되는 용도는 샘플 프로젝트의 머티리얼 에디터에서 확인할 수 있습니다.
 
-Notably the master material is not directly applied to most machines and instead material instances that customize the properties like bloom, composite color, and overlay density are created.
+주목할 점은 마스터 머티리얼이 대부분의 기계에 직접 적용되지 않고, 대신 블룸, 복합 색상, 오버레이 밀도와 같은 속성을 맞춤 설정하는 머티리얼 인스턴스가 생성된다는 것입니다.
 
-UV channel 0 is used for mapping the main surface, UV channel 1 was previously for adding an AO map; however, that is no longer done. Vertex colours are ignored.
+UV 채널 0은 주 표면 매핑에 사용되고, UV 채널 1은 이전에 AO 맵을 추가하는 데 사용되었지만 더 이상 사용되지 않습니다. 정점 색상은 무시됩니다.
 
-=== How to use
-Do you wish to customize some properties not covered by the painting system like composite_color (I.E. The awesome sink does this)?
+=== 사용 방법
+색칠 시스템이 다루지 않는 복합_색상과 같은 속성을 맞춤 설정하고 싶으십니까(예: A.W.E.S.O.M.E. 싱크가 이렇게 함)?
 
-*No?* Apply `MI_Factory_Base_01` directly as your base material and do not create any instances.
+*아닙니까?* ``MI_Factory_Base_01``을 기본 머티리얼로 직접 적용하고 인스턴스를 만들지 마십시오.
 
-*Yes?* Create a material instance of `MI_Factory_Base_01` and apply your custom settings. If desired you may copy `/Utils/Materials/MI_MachineStarter` into your mod folder and rename it, but you will need to adjust custom settings still.
-
-
-== Color Decals (DecalColor_Masked)
-Used to add signs, hazard stripes, and screws to the surface of a mesh.
-
-=== Inner workings
-Satisfactory uses a deferred rendering pipeline, this means that new data can be injected onto already drawn surfaces to great effect. This is used to simply inject only the relevant new information found in the material leaving as much from the material before as possible.
-
-This material performs a depth hack and may appear over other surfaces when viewed at distance, for performance and to avoid this glitch remove it from distant LODs.
-
-UV channel 0 is used for the textures.
-
-=== How to use
-When making your mesh float geometry above your regular surface, use small values but not microscopic (~1 millimeter not micrometers). Adjust the UVs to show the decal in full or part as desired. Apply the `/FactoryGame/Buildable/-Shared/Material/DecalColor_Masked` material in editor. Or if your decals lack any transparent elements you may use the `/FactoryGame/Buildable/-Shared/Material/Decal_Color` material instead.
+*그렇습니까?* ``MI_Factory_Base_01``의 머티리얼 인스턴스를 만들고 맞춤 설정을 적용하십시오. 원하는 경우 ``/Utils/Materials/MI_MachineStarter``를 모드 폴더로 복사하고 이름을 바꿀 수 있지만, 여전히 맞춤 설정을 조정해야 합니다.
 
 
-== Normal Decals (Decal_Normal)
-Used to add dents, details, and bolts to the surface of a mesh.
+== 색상 데칼 (DecalColor_Masked)
+메쉬 표면에 기호, 위험 줄무늬, 나사를 추가하는 데 사용됩니다.
 
-=== Inner workings
-Satisfactory uses a deferred rendering pipeline, this means that new data can be injected onto already drawn surfaces to great effect. This is used to simply inject only the relevant new information found in the material leaving as much from the material before as possible.
+=== 내부 작동 방식
+새티스팩토리는 지연 렌더링 파이프라인을 사용하므로, 이미 그려진 표면에 새로운 데이터를 효과적으로 주입할 수 있습니다. 이는 이전 머티리얼에서 가능한 한 많은 정보를 유지하면서 머티리얼에서 찾은 관련 새 정보만 주입하는 데 사용됩니다.
 
-When applying normals SF doesn't merge with existing normals but instead overwrites them, it also re-calculates the tangent surface so that mirrored or scaled UVs don't create artifacts.
+이 머티리얼은 깊이 해킹을 수행하므로 거리가 멀어지면 다른 표면 위에 나타날 수 있습니다. 성능을 위해 그리고 이 글리치를 피하기 위해 먼 LOD에서는 제거하십시오.
 
-This material performs a depth hack and may appear over other surfaces when viewed at distance, for performance and to avoid this glitch remove it from distant LODs.
+UV 채널 0이 텍스처에 사용됩니다.
 
-UV channel 0 is used for the textures.
+=== 사용 방법
+메쉬를 만들 때 일반 표면 위에 데칼을 위한 실수형 지오메트리를 만드십시오. 작은 값을 사용하되 미시적인 값은 사용하지 마십시오(마이크로미터가 아니라 ~1밀리미터). UV를 원하는 대로 데칼의 전체 또는 일부를 보여주도록 조정하십시오. 에디터에서 `/FactoryGame/Buildable/-Shared/Material/DecalColor_Masked` 머티리얼을 적용하십시오. 또는 데칼에 투명한 요소가 없다면 `/FactoryGame/Buildable/-Shared/Material/Decal_Color` 머티리얼을 대신 사용할 수 있습니다.
 
-=== How to use
-When making your mesh, make floating geometry above your regular surface to hold the decal. Use small distances but not microscopic (~1 millimeter not micrometers). Adjust the UVs to show the decal in full or part as desired. Apply the `/FactoryGame/Buildable/-Shared/Material/Decal_Normal` material in editor.
 
-It is possible, and expected, to mirror flip and stretch the normal decals. Several details are half details that are mirrored against themselves and others use https://en.wikipedia.org/wiki/9-slice_scaling["9-slice"] like approaches to stretch the parts of the mesh needed to reshape the detail. However, take care with your vertex normals. The vertex normals of your decal geometry should be as similar as possible to the underlying normals else visible seams appear at decal edges. If using Blender you may want to use the "Transfer Data" modifier.
+== 노멀 데칼 (Decal_Normal)
+메쉬 표면에 움푹 들어간 부분, 디테일, 볼트를 추가하는 데 사용됩니다.
+
+=== 내부 작동 방식
+새티스팩토리는 지연 렌더링 파이프라인을 사용하므로, 이미 그려진 표면에 새로운 데이터를 효과적으로 주입할 수 있습니다. 이는 이전 머티리얼에서 가능한 한 많은 정보를 유지하면서 머티리얼에서 찾은 관련 새 정보만 주입하는 데 사용됩니다.
+
+노멀을 적용할 때 SF는 기존 노멀과 병합하지 않고 덮어쓰며, 탄젠트 표면도 다시 계산하므로 미러링되거나 스케일된 UV가 아티팩트를 만들지 않습니다.
+
+이 머티리얼은 깊이 해킹을 수행하므로 거리가 멀어지면 다른 표면 위에 나타날 수 있습니다. 성능을 위해 그리고 이 글리치를 피하기 위해 먼 LOD에서는 제거하십시오.
+
+UV 채널 0이 텍스처에 사용됩니다.
+
+=== 사용 방법
+메쉬를 만들 때 데칼을 위한 실수형 지오메트리를 일반 표면 위에 만드십시오. 작은 거리를 사용하되 미시적인 값은 사용하지 마십시오(마이크로미터가 아니라 ~1밀리미터). UV를 원하는 대로 데칼의 전체 또는 일부를 보여주도록 조정하십시오. 에디터에서 `/FactoryGame/Buildable/-Shared/Material/Decal_Normal` 머티리얼을 적용하십시오.
+
+노멀 데칼을 대칭으로 뒤집고 늘리는 것이 가능하며 예상되는 동작입니다. 여러 디테일이 자체적으로 미러링되는 반쪽 디테일이며 다른 것들은 디테일을 재형성하는 데 필요한 메쉬 부분을 늘리기 위해 https://en.wikipedia.org/wiki/9-slice_scaling["9슬라이스"] 같은 접근 방식을 사용합니다. 하지만 정점 노멀에 주의하십시오. 데칼 지오메트리의 정점 노멀은 기본 노멀과 최대한 비슷해야 하며, 그렇지 않으면 데칼 가장자리에서 눈에 띄는 이음매가 생깁니다. 블렌더를 사용하는 경우 "데이터 전송" 모디파이어를 사용하고 싶을 수 있습니다.
 
 
 == 공장 베이크 (MM_FactoryBaked)
 
-This material handles several separate use cases; player equipment, items in world, items on belts, small detailed machines, and more. Works with the painting and conveyor systems. Requires unique textures per mesh to take advantage of. Never used directly and always used via material instances. Common examples are xeno-basher, workbench, power poles, and any conveyor belt items.
+이 머티리얼은 플레이어 장비, 월드의 아이템, 벨트의 아이템, 세부 디테일 기계 등 여러 가지 별도의 사용 사례를 처리합니다. 색칠 및 컨베이어 시스템과 함께 작동합니다. 메쉬별로 고유한 텍스처가 필요합니다. 직접 사용되지 않고 항상 머티리얼 인스턴스를 통해 사용됩니다. 일반적인 예로는 외계 파쇄기, 작업대, 전신주, 컨베이어 벨트 아이템이 있습니다.
 
-=== Inner workings
+=== 내부 작동 방식
 
-The full internal workings of this material for Update 4.2 & 5.0 were provide by CSS (#PraiseBen) and are implemented in the material found in your Unreal starter project. Importantly this material went under major changes, 'Legacy' behavior is 4.2 and documented behavior is 5.0. Pre 4.2 behavior is not longer available.
+업데이트 4.2 & 5.0의 이 머티리얼의 전체 내부 작동 방식은 CSS(#PraiseBen)에서 제공되었으며 언리얼 시작 프로젝트에서 찾을 수 있는 머티리얼에 구현되어 있습니다. 중요한 점은 이 머티리얼이 주요 변경을 거쳤다는 것입니다. '레거시' 동작은 4.2이고 문서화된 동작은 5.0입니다. 4.2 이전 동작은 더 이상 사용할 수 없습니다.
 
-When marked as paintable the main Albedo texture is faded out to match the primary or secondary colour. This is done via the 'AOMasks' Texture's channel packing:
+색칠 가능으로 표시된 경우 주 알베도 텍스처는 주 또는 보조 색상과 일치하도록 페이드 아웃됩니다. 이는 'AOMasks' 텍스처의 채널 패킹을 통해 이루어집니다:
 
 - `R:` AO
-- `G:` PaintPrimary
-- `B:` PaintSecondary
+- `G:` 주색칠
+- `B:` 보조색칠
 
-The 'ReflectionMap' is a Linear Texture (sRGB off) which is channel packed texture. Just like AOMasks; however, it targets different properties. You can tell what the packing is by looking at a textures suffix, commonly MRE for baked materials.
+'ReflectionMap'은 선형 텍스처(sRGB 꺼짐)이며 채널 패킹된 텍스처입니다. AOMasks와 마찬가지지만 다른 속성을 대상으로 합니다. 텍스처의 접미사를 보면 패킹을 알 수 있으며, 일반적으로 베이크된 머티리얼의 경우 MRE입니다.
 
-- `R:` Metalness
-- `G:` Roughness
-- `B:` Emission Mask
+- `R:` 금속성
+- `G:` 거칢
+- `B:` 방출 마스크
 
-For full information on how to setup the material to perform as a Conveyor Item, please reference the
-xref::/Development/Satisfactory/ConveyorRendering.adoc[Conveyor Rendering] page.
+컨베이어 아이템으로 머티리얼을 설정하는 방법에 대한 자세한 정보는
+xref::/Development/Satisfactory/ConveyorRendering.adoc[컨베이어 렌더링] 페이지를 참고하십시오.
 
-UV channel 0 is used for all textures.
+UV 채널 0이 모든 텍스처에 사용됩니다.
 
-=== How to use
+=== 사용 방법
 
-Setup a PBR painting workflow like Substance or Quixel and then configure its outputs to match what is listed in the Inner workings. Once your output textures are made, import them into your mod.
+Substance나 Quixel과 같은 PBR 페인팅 작업환경을 설정하고 출력을 내부 작동 방식에 나열된 대로 구성하십시오. 출력 텍스처가 만들어지면 모드로 가져오십시오.
 
-Next step is to create a material instance of `MM_Factory_Baked` and configure it according to your intended use.
-Located in the `/Utils/Materials/` folder you will find several start materials you can copy into your mod and reconfigure at will:
+다음 단계는 ``MM_Factory_Baked``의 머티리얼 인스턴스를 만들고 의도한 용도에 따라 구성하는 것입니다.
+`/Utils/Materials/` 폴더에서 모드로 복사하고 원하는 대로 재구성할 수 있는 여러 시작 머티리얼을 찾을 수 있습니다:
 
-- `MI_BakedMachineStarter:` Common setup for factory machines like workbenches and power poles.
+- `MI_BakedMachineStarter:` 작업대와 전신주 같은 공장 기계를 위한 일반적인 설정.
 
-== Factory Glass (MM_FactoryGlass)
-Pair of glass materials to be swapped between at distance.
+== 공장 유리 (MM_FactoryGlass)
+거리에 따라 전환할 수 있는 한 쌍의 유리 머티리얼입니다.
 
-=== Inner workings
-Classic transparent tint-able glass with scalable repeating dirt that fades to opaque with distance.
-On the LOD shader the m and s properties are for metalness and smoothness respectively.
-On the main shader adjust the fade falloff and distance fade property to help control the opacity.
-The normal and refraction textures are hard coded and not parameters that can be adjusted.
+=== 내부 작동 방식
+거리에 따라 불투명해지는 고전적인 투명하고 색상을 입힐 수 있는 유리입니다.
+LOD 셰이더에서 m과 s 속성은 각각 금속성과 매끄러움을 나타냅니다.
+메인 셰이더에서는 페이드 폴오프와 거리 페이드 속성을 조정하여 불투명도를 제어할 수 있습니다.
+노멀과 굴절 텍스처는 하드코딩되어 있으며 조정할 수 있는 매개변수가 아닙니다.
 
-=== How to use
-Apply a material instance of MM_FactoryGlass to LOD0. Add LODs to your model and tweak the model LOD timing and the materials fading to match up. On the new LOD model when, everything is opaque, switch to a material instance of MM_FactoryGlass_LOD. Keep the settings as identical as you can in both to reduce popping.
+=== 사용 방법
+LOD0에 MM_Factory_Glass의 머티리얼 인스턴스를 적용하십시오. 모델에 LOD를 추가하고 모델 LOD 타이밍과 머티리얼의 페이딩을 맞추십시오. 새 LOD 모델에서 모든 것이 불투명해지면 MM_Factory_Glass_LOD의 머티리얼 인스턴스로 전환하십시오. 팝핑을 줄이기 위해 두 머티리얼에서 설정을 최대한 동일하게 유지하십시오.
 
-The wavy textures may seem overly harsh with the default settings on a new material instance. `/Utils/Materials/` has two material instances you can copy with more common parameters compared to the other in-game glass. `MI_StarterGlass` for the transparent version and `MI_StarterGlass_LOD` for the distant LOD version.
+새 머티리얼 인스턴스의 기본 설정에서는 물결 텍스처가 지나치게 강해 보일 수 있습니다. ``/Utils/Materials/``에는 게임 내 다른 유리와 비교하여 더 일반적인 매개변수를 가진 두 머티리얼 인스턴스가 있습니다. 투명 버전용 ``MI_StarterGlass``와 원거리 LOD 버전용 ``MI_StarterGlass_LOD``입니다.
 
 
-== Fog Plane (InputFog)
-Used to fade objects to black as they enter belt connectors or other parts of a factory machine.
+== 평면 안개 (InputFog)
+벨트 연결부나 다른 공장 기계 부분으로 들어갈 때 오브젝트를 검은색으로 페이드하는 데 사용됩니다.
 
-=== Inner workings
-Simple Unreal Depth fog
+=== 내부 작동 방식
+단순한 언리얼 깊이 안개입니다.
 
-=== How to use
-Apply the material `/FactoryGame/Buildable/-Shared/Material/InputFog` to a mesh where you want the fading to start. It will take a short distance to fade 100% so the mesh surface should be away from the actual vanishing point.
+=== 사용 방법
+페이딩이 시작되길 원하는 곳에 있는 메쉬에 `/FactoryGame/Buildable/-Shared/Material/InputFog` 머티리얼을 적용하십시오. 100% 페이드까지 짧은 거리가 필요하므로 메쉬 표면은 실제 사라지는 지점에서 떨어져 있어야 합니다.
 
-The material can be applied directly to your static mesh, a custom static mesh, or the `InputFogPlane` mesh of which several instances are then placed in your blueprint. Post Update 4 it is recommended to use Fog Plane instances.
+이 머티리얼은 정적 메쉬에 직접, 맞춤 정적 메쉬에, 또는 블루프린트에 여러 인스턴스가 배치되는 `InputFogPlane` 메쉬에 적용할 수 있습니다. 업데이트 4 이후에는 안개 평면 인스턴스를 사용하는 것이 권장됩니다.
 

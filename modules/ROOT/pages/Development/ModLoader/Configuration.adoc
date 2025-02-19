@@ -1,237 +1,237 @@
-= Configuration
+= 구성
 
 [NOTE]
 ====
-If you are looking to implement configurable keybindings,
-check out the Mod Key Bind Registry section on the 
-xref:Development/ModLoader/Registry.adoc#_모드_키_할당_레지스트리[Registry page].
+키 할당을 구현하고 싶다면,
+xref:Development/ModLoader/Registry.adoc#_모드_키_할당_레지스트리[레지스트리 페이지]의
+모드 키 할당 레지스트리 섹션을 확인하십시오.
 ====
 
-SML adds a neat configuration system that allows you to easily define
-a config structure based on default values.
-These defaults can then be changed by the user,
-either from the in-game Mods menu,
-or via editing json files in their file system.
+SML은 기본값을 기반으로 구성 구조를 쉽게 정의할 수 있는
+편리한 구성 시스템을 제공합니다.
+이러한 기본값은 사용자가 게임 내 모드 메뉴에서
+또는 파일 시스템에서
+json 파일을 편집하여 변경할 수 있습니다.
 
-These configuration files are then loaded automatically on game boot
-and override the default values with the values specified by the user.
+이러한 구성 파일은 게임 부팅 시 자동으로 로드되어
+사용자가 지정한 값으로 기본값을 덮어씁니다.
 
-The mod can then access this configuration data to
-change its behavior depending on this static user input.
+그러면 모드는 이 설정 데이터에 접근하여
+이러한 정적 사용자 입력에 따라 동작을 변경할 수 있습니다.
 
-== Using the Mod Configuration system
+== 모드 구성 시스템 사용하기
 
-1. Create a new blueprint that extends ModConfiguration.
-Call it "<your mod reference>_Config" or similar.
-2. Set the 'Mod Reference' to your mod reference
-and configure the display name and description as desired.
-3. Set the Root Section to `BP Config Property Section`
-4. Your config items go in the Root Section's "Section Properties"
-Left is the property name, right is the type
-If you want to have sub-categories in your config,
-use property type `BP Config Property Section` again.
-You can define custom widgets for your config properties if desired,
-otherwise SML will automatically select one for you based on the property type.
-5. Right click on your configuration asset from the content browser
+1. ModConfiguration을 상속하는 새 블루프린트를 만드십시오.
+이름은 "<모드 참조>_Config" 또는 비슷하게 지으십시오.
+2. '모드 참조'를 여러분의 모드 참조로 설정하고
+표시 이름과 설명을 원하는 대로 구성하십시오.
+3. 루트 섹션을 ``BP Config Property Section``으로 설정하십시오.
+4. 구성 항목은 루트 섹션의 "Section Properties"에 넣으십시오.
+왼쪽은 속성 이름, 오른쪽은 유형입니다.
+구성에 하위 범주를 만들고 싶다면,
+속성 유형으로 ``BP Config Property Section``을 다시 사용하십시오.
+원한다면 구성 속성에 대한 맞춤 위젯을 정의할 수 있고,
+그렇지 않으면 SML이 속성 타입에 따라 자동으로 위젯을 선택합니다.
+5. 콘텐츠 브라우저에서 설정 에셋을 우클릭하십시오.
 
-* If you want your configuration accessible in {cpp},
-choose "Generate {cpp} Configuration Header,"
-then save the header in your plugin's source folders.
+* {cpp}에서 설정에 접근하고 싶다면,
+"Generate {cpp} Configuration Header"를 선택하고,
+헤더를 플러그인의 소스 폴더에 저장하십시오.
 
-* Next, select "Regenerate Configuration Structs,"
-and SML will generate your mod's config struct for you. Very convenient!
-Note that you will need to do this every time you make changes to your config.
+* 다음으로, "Regenerate Configuration Structs"를 선택하면,
+SML이 모드의 설정 구조체를 자동으로 생성합니다. 매우 편리하죠!
+설정을 변경할 때마다 이 작업을 다시 해야 한다는 점에 유의하십시오.
 
-6. You need to create a Game Instance Module for your mod,
-if you haven't already made one yet,
-and specify your config under Mod Configurations there.
-Make sure to mark it as the root module if you've just made it.
+6. 아직 만들지 않았다면
+모드를 위한 게임 인스턴스 모듈을 만드십시오.
+그리고 그곳의 Mod Configurations 아래에 구성을 지정하십시오.
+방금 만들었다면 루트 모듈로 표시하는 것을 잊지 마십시오.
 
-== Preview your Config
+== 구성 미리보기
 
-You can use the fancy SML Menu Preview Widget to view your mod config as it would appear in the game!
-In a content browser, navigate to `SMLEditor Content/Menu Preview` and right click on SML_MenuPreviewWidget,
-then choose Run Editor Utility Widget. You should probably make the window fullscreen.
+멋진 SML 메뉴 미리보기 위젯을 사용하여 게임에서 보이는 것처럼 모드 설정을 미리볼 수 있습니다!
+콘텐츠 브라우저에서 ``SMLEditor Content/Menu Preview``로 이동하여 SML_MenuPreviewWidget을 우클릭한 다음,
+Run Editor Utility Widget을 선택하십시오. 창을 전체 화면으로 하는 것이 좋습니다.
 
-To look at your mod's config in the previewer,
-select your ModConfiguration in the content browser,
-then press the Set Selected Mod Config button inside the preview window.
-Scroll down to see the config UI.
+미리보기에서 모드의 구성을 보려면,
+콘텐츠 브라우저에서 ModConfiguration을 선택한 다음,
+미리보기 창 안에서 Set Selected Mod Config 버튼을 누르십시오.
+아래로 스크롤하여 설정 UI를 확인하십시오.
 
-== Interacting with the Config System in Blueprints
+== 블루프린트에서 구성 시스템 사용하기
 
-The following image shows how to interact with the Configuration System from Blueprints.
-image:ModLoader/NewConfigurationSystemExample.png[image]
+다음 이미지는 블루프린트에서 구성 시스템을 사용하는 방법을 보여줍니다.
+image:ModLoader/NewConfigurationSystemExample.png[이미지]
 
-Below is a text explanation of the above image.
+아래는 위 이미지에 대한 텍스트 설명입니다.
 
-=== Creating a reference to your config
+=== 구성에 대한 참조 만들기
 
-To interact with your config, you first need to create a reference to it:
+구성과 상호작용하려면 먼저 참조를 만들어야 합니다:
 
-* Inside your blueprint, add a node called 'MC to ConfigProperty' and set the input class to your configuration's class
-* From the node you just created, drag off the output pin and create a cast node to 'BP_ConfigPropertySection'
+* 블루프린트 안에서 'MC to ConfigProperty'라는 노드를 추가하고 입력 클래스를 구성의 클래스로 설정하십시오.
+* 방금 만든 노드에서 출력 핀을 끌어와서 'BP_ConfigPropertySection'으로의 형변환 노드를 만드십시오.
 
-=== Creating a reference to a property
+=== 속성에 대한 참조 만들기
 
-To create a reference to a property in your config, you will need a reference to a ConfigPropertySection.
-See the above section if you haven't done so already
+구성의 속성에 대한 참조를 만들려면 ConfigPropertySection에 대한 참조가 필요합니다.
+아직 하지 않았다면 위 섹션을 참고하십시오.
 
-* From the ConfigPropertySection, search for the node "To Section". The string input this node requires is the key of the property you want to retrieve
+* ConfigPropertySection에서 "To Section" 노드를 검색하십시오. 이 노드가 필요로 하는 문자열 입력은 가져오려는 속성의 키입니다.
 
-=== Get Value
+=== 값 가져오기
 
-To get the value of a property from your config, you will need a reference to that property.
-See the above section if you haven't done so already
+구성에서 속성의 값을 가져오려면 해당 속성에 대한 참조가 필요합니다.
+아직 하지 않았다면 위 섹션을 참고하십시오.
 
-* Drag from the "To Section" node output pin and search for "CP to". This should list a number of "CP to " nodes followed by a type. Select the type of the config property you're trying to get the value from. The output pin of the "CP to" node will give you the value of the config property.
-* If you have nested layers of Config Sections in your config, you can use another cast to 'BP_ConfigPropertySection', and then keep going as needed to get to the final value.
+* "To Section" 노드의 출력 핀을 끌어와서 "CP to"를 검색하십시오. 이는 유형에 맞는 여러 "CP to " 노드를 나열할 것입니다. 값을 가져오려는 구성 속성의 유형을 선택하십시오. "CP to" 노드의 출력 핀이 구성 속성의 값을 제공합니다.
+* 구성에 Config Section의 중첩 레이어가 있다면, 다른 'BP_ConfigPropertySection'으로의 형변환을 사용하고, 필요에 따라 계속해서 최종 값에 도달할 수 있습니다.
 
-=== Set Value
+=== 값 설정하기
 
-To set the value of a property from your config, you will need a reference to that property.
-See the "Creating a reference to a property" section above if you haven't done so already
+구성에서 속성의 값을 설정하려면 해당 속성에 대한 참조가 필요합니다.
+위의 "속성에 대한 참조 만들기" 섹션을 참고하십시오.
 
-* You first have to cast your property to the correct type. Drag from the "To Section" node output pin and search for "BP_ConfigProperty". This should list a number of cast nodes to different BP_ConfigProperty classes. Select the type of the config property you're trying to get the value from.
-* From your Cast output pin search for "Set Value" and assign the new value you wish to set
+* 먼저 속성을 올바른 유형으로 형변환해야 합니다. "To Section" 노드 출력 핀을 끌어와서 "BP_ConfigProperty"를 검색하십시오. 이는 다양한 BP_ConfigProperty 클래스로의 형변환 노드를 나열할 것입니다. 값을 가져오려는 구성 속성의 유형을 선택하십시오.
+* 형변환 출력 핀에서 "Set Value"를 검색하고 설정하려는 새 값을 할당하십시오.
 
-=== Saving your config after changing a value
+=== 값을 변경한 후 구성 저장하기
 
-If you make a change to a config property from your code and want it saved,
-you must explicitly tell the configuration system to save changes.
-You'll need a reference to your config;
-see the "Creating a reference to your config" section above if you haven't done so already.
+코드에서 구성 속성을 변경하고 저장하고 싶다면,
+구성 시스템에 명시적으로 변경 사항을 저장하라고 알려야 합니다.
+구성에 대한 참조가 필요합니다.
+위의 "설정에 대한 참조 만들기" 섹션을 참고하십시오.
 
-* Drag from the output pin of the To Instance node you created and search for the function "Mark Dirty". This will save the whole config.
+* To Instance 노드의 출력 핀에서 끌어와서 "Mark Dirty" 함수를 검색하십시오. 이것이 전체 구성을 저장합니다.
 
-You can also save just one property if you want to. To do that, use the "Mark Property Dirty" function with the output from the "To Section" node as an input.
+원한다면 하나의 속성만 저장할 수도 있습니다. 그러려면 "To Section" 노드의 출력을 입력으로 사용하여 "Mark Property Dirty" 함수를 사용하십시오.
 
-=== Further Examples
+=== 추가 예시
 
-Check out the ExampleMod's configs for a great demo of all the valid fields and how they appear in the editor.
-Be sure to check out the custom widget (with custom button) for something cool.
+모든 유효한 필드와 에디터에서 어떻게 보이는지에 대한 훌륭한 시범을 위해 ExampleMod의 설정을 확인하십시오.
+맞춤 위젯(맞춤 버튼 포함)도 확인해 보십시오.
 
-For a more detailed demonstration of how to read configuration values from Blueprint code,
-check out how ExampleMod does it in `ExampleModGameInstanceModule`
+블루프린트 코드에서 구성 값을 읽는 방법에 대한 더 자세한 예시는
+``ExampleModGameInstanceModule``에서 ExampleMod가 어떻게 하는지 확인하십시오.
 
-== Interacting with the Config System in {cpp}
+== {cpp}에서 구성 시스템 사용하기
 
 [WARNING]
 ====
-This section was written while the SML Configuration system was still being developed.
-As such, these partially out of date, and are still being worked on.
-If you would like to use this system, see
-https://discord.com/channels/555424930502541343/555515791592652823/826653787514470450[this message chain]
-and ask on the discord for help.
+이 섹션은 SML 구성 시스템이 아직 개발 중일 때 작성되었습니다.
+따라서 일부 내용이 오래되었으며, 여전히 작업 중입니다.
+이 시스템을 사용하고 싶다면
+https://discord.com/channels/555424930502541343/555515791592652823/826653787514470450[이 대화]를 참고하고
+디스코드에서 도움을 요청하십시오.
 ====
 
 [TIP]
 ====
-If you are looking to implement configs with Blueprints,
-you should read about the helper functions provided by the 
-xref:Development/ModLoader/BlueprintInterface.adoc#_config[SML Blueprint Interface]
-and check out the ExampleMod.
+블루프린트로 설정을 구현하고 싶다면,
+xref:Development/ModLoader/BlueprintInterface.adoc#_config[SML 블루프린트 인터페이스]가 제공하는
+헬퍼 함수에 대해 읽어보고
+ExampleMod를 확인하십시오.
 ====
 
-== Configuration Manager
+== 구성 관리자
 
-The configuration manager is a Game Instance subsystem that manages all configurations loaded into the game.
+구성 관리자는 게임에 로드된 모든 구성을 관리하는 게임 인스턴스 서브시스템입니다.
 
-It will then be able to load and save registered configurations.
+이는 등록된 구성을 로드하고 저장할 수 있습니다.
 
-The registered mod configurations can get marked as dirty.
-This means that the user applied changes to the configuration values and that these changes need to be saved.
+등록된 모드 구성은 더티로 표시될 수 있습니다.
+이는 사용자가 구성 값을 변경했고 이러한 변경 사항을 저장해야 한다는 의미입니다.
 
-When loading a configuration, first the configuration value gets loaded based on default values.
-Then, or when the manager gets told to, it will load the configuration file, parse it and make the changes
-defined in these config files to the loaded configuration value.
+구성을 로드할 때, 먼저 기본값을 기반으로 구성 값이 로드됩니다.
+그런 다음, 또는 관리자가 지시받을 때, 구성 파일을 로드하고 파싱하여
+이러한 구성 파일에 정의된 변경 사항을 로드된 구성 값에 적용합니다.
 
-It is important to differentiate between 'schema' and 'value' of the configuration.
-The Schema works like a class or declaration of how the configuration is structured and what attributes it has.
-The value is then basically the actual config values, which should be structured as described in the schema.
+구성의 '스키마'와 '값'을 구분하는 것이 중요합니다.
+스키마는 클래스나 구성이 어떻게 구조화되고 어떤 속성을 가지는지에 대한 선언처럼 작동합니다.
+값은 기본적으로 스키마에 설명된 대로 구조화되어야 하는 실제 구성 값입니다.
 
 === `ReloadModConfigurations(bool bSaveOnSchemaChange)`
-Reloads all registered mod configurations from disk.
-Optionally saving changes to the schema.
+등록된 모든 모드 구성을 디스크에서 다시 로드합니다.
+선택적으로 스키마 변경 사항을 저장합니다.
 
 === `FlushPendingSaves()`
-Saves all changes in the loaded config instances to the filesystem.
+로드된 구성 인스턴스의 모든 변경 사항을 파일 시스템에 저장합니다.
 
 === `MarkConfigurationDirty(FConfigId ConfigId)`
-Marks the configuration referenced by the given ID as dirty and pending save.
+주어진 ID로 참조되는 구성을 더티로 표시하고 저장 대기 상태로 만듭니다.
 
 === `FillConfigurationStruct(FConfigId ConfigId, <struct>)`
-Fills the passed struct with data obtained from the active configuration referenced by the given config id.
+주어진 구성 id로 참조되는 활성 구성에서 얻은 데이터로 전달된 구조체를 채웁니다.
 
 === `UUserWidget CreateConfigurationWidget(FConfigId ConfigId, UUserWidget Outer)`
-Creates a configuration widget hierarchy for the active configuration referenced by the given config id.
+주어진 구성 id로 참조되는 활성 구성에 대한 구성 위젯 계층을 만듭니다.
 
 === `RegisterModConfiguration(FConfigId ConfigId, SubclassOf<UModConfiguration> Configuration)`
-Registers the given configuration under the given config ID.
+주어진 구성을 주어진 구성 ID로 등록합니다.
 
-Should only be called on start-up.
+시작 시에만 호출되어야 합니다.
 
 == FConfigId
-An identifier for a configuration consisting of the mod the configuration is part of and a category.
+구성이 속한 모드와 범주로 구성된 구성 식별자입니다.
 
 === `FString ModReference`
-The mod reference referencing the parent mod of this configuration.
+이 구성의 부모 모드를 참조하는 모드 참조입니다.
 
 === `FString ConfigCategory`
-The category or name for this configuration. This basically allows you to further identify multiple configurations for the same mod.
+이 구성의 카테고리나 이름입니다. 이는 기본적으로 동일한 모드에 대한 여러 구성을 추가로 식별할 수 있게 해줍니다.
 
 == UModConfiguration
-A `UModConfiguration` is essentially the object that holds the whole schema of a configuration.
+``UModConfiguration``은 기본적으로 구성의 전체 스키마를 보유하는 객체입니다.
 
-It works like a descriptor, meaning, the structure only needs to be defined in the class (aka default object)
-so we can simply reference the schema (aka mod configuration) by just passing the UClass around.
+이는 디스크립터처럼 작동하므로, 구조는 클래스(즉, 기본 객체)에만 정의되면 되어
+UClass를 전달하는 것만으로도 스키마(즉, 모드 구성)를 참조할 수 있습니다.
 
-That means if you want to define your own configuration schema, you need to create new class based on this one.
-Then apply the changes (defining the schema itself and additional metadata) in the default values or the constructor.
+즉, 자신만의 구성 스키마를 정의하고 싶다면 이것을 기반으로 새 클래스를 만들어야 합니다.
+그런 다음 기본값이나 생성자에서 변경 사항(스키마 자체와 추가 메타데이터 정의)을 적용합니다.
 
 === `FString DisplayName`
-Display of this configuration, as it will be visible to the user.
+사용자에게 보이는 이 구성의 표시 이름입니다.
 
 === `FString Description`
-The description of this configuration shown to the user.
+사용자에게 보이는 이 구성의 설명입니다.
 
 === `UConfigPropertySection RootSection`
-Holds the root "node" of your configuration schema.
+구성 스키마의 루트 "노드"를 보유합니다.
 
-This is an instanceable variable, meaning, you can create inline an instance of this object and define its default values in the editors "defaults" panel.
+이는 인스턴스화 가능한 변수로, 에디터의 "defaults" 패널에서 이 객체의 인스턴스를 인라인으로 만들고 기본값을 정의할 수 있습니다.
 
 == `UConfigProperty`
-A config property is essentially a node of a configuration schema, describing a specific value.
+구성 속성은 기본적으로 특정 값을 설명하는 구성 스키마의 노드입니다.
 
-This used for creating the config value in the end.
+이는 최종적으로 구성 값을 만드는 데 사용됩니다.
 
-Default values of child classes are also instanceable, so you can further define the schema.
+자식 클래스의 기본값도 인스턴스화 가능하므로 스키마를 더 정의할 수 있습니다.
 
 === `FString DisplayName`
-The display name of this property that is shown to the user.
+사용자에게 보이는 이 속성의 표시 이름입니다.
 
 === `FString Tooltip`
-The short description of this property that is shown to the user when he hovers over the property.
+사용자가 속성 위에 마우스를 올렸을 때 보이는 이 속성의 짧은 설명입니다.
 
 === `SubclassOf<UConfigValue> GetValueClass()`
-Allows to retrieve the type of the configuration value the property is based on.
+속성이 기반으로 하는 구성 값의 유형을 검색할 수 있게 합니다.
 
 === `ApplyDefaultPropertyValue(UConfigValue Value)`
-Fills the given config value object with the default value of this property.
+주어진 구성 값 객체를 이 속성의 기본값으로 채웁니다.
 
 === `UConfigValue CreateNewValue(UObject Outer)`
-Creates a new config value based on the type of this property and fills it with the default value defined by this property.
+이 속성의 유형을 기반으로 새 구성 값을 만들고 이 속성이 정의한 기본값으로 채웁니다.
 
 === `UUserWidget CreateEditorWidget(UUserWidget* ParentWidget)`
-Creates a widget instance that allows for editing config values described by this property.
+이 속성이 설명하는 구성 값을 편집할 수 있는 위젯 인스턴스를 만듭니다.
 
 === `FConfigVariableDescriptor CreatePropertyDescriptor(UConfigGenerationContext Context, FString OuterPath)`
-Creates a config property descriptor for code generation.
+코드 생성을 위한 구성 속성 디스크립터를 만듭니다.
 
-== Config Property Children
-There are multiple classes inheriting `<<_uconfigproperty, UConfigProperty>>` describing a specific type of property.
+== 구성 속성 자식 클래스들
+``<<_uconfigproperty, UConfigProperty>>``를 상속하는 여러 클래스들이 있으며, 각각 특정 유형의 속성을 설명합니다.
 
-There are classes for all main primitives like:
+다음과 같은 모든 주요 프리미티브에 대한 클래스가 있습니다:
 
 * bool
 * int
@@ -240,48 +240,48 @@ There are classes for all main primitives like:
 * class
 * color
 
-There are also two special ones that allow for more complex configuration structures.
+더 복잡한 구성 구조를 가능하게 하는 두 가지 특별한 클래스도 있습니다.
 
 === `UConfigPropertyArray`
-A config value array allows you to store multiple values of the same type in a list.
+구성 값 배열을 사용하면 동일한 유형의 여러 값을 리스트에 저장할 수 있습니다.
 
-For this you have the `ElementValue` attribute, with which you can define the type of these list entries.
+이를 위해 `ElementValue` 속성이 있으며, 이를 통해 이러한 리스트 항목의 유형을 정의할 수 있습니다.
 
-The list is dynamic, meaning, the amount of entries in the list can vary depending on what the user defined.
+리스트는 동적이므로, 리스트의 항목 수는 사용자가 정의한 내용에 따라 달라질 수 있습니다.
 
 === `UConfigPropertySection`
-A config value section allows you to store multiple values of different types in one object.
+구성 값 섹션을 사용하면 하나의 객체에 서로 다른 유형의 여러 값을 저장할 수 있습니다.
 
-For each entry you can have there is one property describing the type of this entry.
+가질 수 있는 각 항목에 대해 해당 항목의 유형을 설명하는 하나의 속성이 있습니다.
 
-So with this you can basically have nested configurations allowing for more complex configuration structures.
+이를 통해 기본적으로 중첩된 구성을 가질 수 있어 더 복잡한 구성 구조가 가능합니다.
 
-== Config Values
-For each <<_uconfigproperty>> there is a value counterpart.
+== 설정 값
+각 <<_uconfigproperty>>에 대한 값이 있습니다.
 
-It essentially holds then a value described by the property.
+이는 기본적으로 속성이 설명하는 값을 보유합니다.
 
-Like the actual state, or... configuration loaded from the file / default values.
+실제 상태나... 파일/기본값에서 로드된 설정과 같은 것입니다.
 
 === `UConfigProperty GetAssociatedProperty()`
-Returns the property that describes this value.
+이 값을 설명하는 속성을 반환합니다.
 
 === `FString DescribeValue()`
-Converts the value into a string.
+값을 문자열로 변환합니다.
 
-Useful for debugging purposes.
+디버깅 목적으로 유용합니다.
 
 === `URawFormatValue Serialize(UObject Outer)`
-Converts the value into the raw configuration format.
+값을 원시 구성 형식으로 변환합니다.
 
 === `Deserialize(URawFormatValue Value)`
-Converts the given value in the raw configuration format to the type of this value and stores it in this value object.
+주어진 원시 구성 형식의 값을 이 값의 유형으로 변환하여 이 값 객체에 저장합니다.
 
 === `FillConfigStruct(FReflectedObject ReflectedObject, FString VariableName)`
-Fills the given config struct with the data provided by the referencing property and this value.
+주어진 구성 구조체를 참조하는 속성과 이 값이 제공하는 데이터로 채웁니다.
 
 === `InitializedFromProperty()`
-Gets called when the config value is initialized with the associated property.
+구성 값이 연관된 속성으로 초기화될 때 호출됩니다.
 
 === `MarkDirty()`
-Marks the value as dirty, e.g. that it needs to be synced with the file system.
+값을 더티로 표시합니다. 즉, 파일 시스템과 동기화해야 함을 나타냅니다.

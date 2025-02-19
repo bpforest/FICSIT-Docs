@@ -1,74 +1,74 @@
-= Setting Up a Workflow
+= 작업환경 설정하기
 
-Getting your custom models into the game has a few steps along the way. This process will guide those who already know how to use Blender and already have a modding environment setup. It may help to read about the xref:Development/Modeling/MainMaterials.adoc[different material setups] to get some context.
+맞춤 모델을 게임에 넣는 과정에는 몇 가지 단계가 있습니다. 이 과정은 블렌더 사용법을 알고 있고 모딩 환경이 이미 설정되어 있는 분들을 위한 안내입니다. xref:Development/Modeling/MainMaterials.adoc[다양한 머티리얼 설정]에 대해 읽어보시면 맥락을 이해하는 데 도움이 될 수 있습니다.
 
-== Configuring Blender FBX Export
+== 블렌더 FBX 내보내기 설정
 
-This is focused on setting up export for Blender 2.8 or later, but it may assist the right settings in other programs.
+이 내용은 블렌더 2.8 이상 버전의 내보내기 설정에 초점을 맞추고 있지만, 다른 프로그램에서도 올바른 설정을 찾는 데 도움이 될 수 있습니다.
 
 [TIP]
 ====
-This portion of the documentation was written back when Satisfactory was on UE 4.22.
-Now that Satisfactory has updated to UE 4.25, we are able to make use of the new
-Unreal Blender addons, which require UE 4.23 or newer to function.
-You can find out more about them
-https://www.unrealengine.com/en-US/blog/download-our-new-blender-addons[here]
-if you're interested, but know that this section of the docs is not yet updated with them in mind.
+이 문서의 이 부분은 새티스팩토리가 UE 4.22를 사용하던 때에 작성되었습니다.
+이제 새티스팩토리가 UE 4.25로 업데이트되어, UE 4.23 이상에서 작동하는
+새로운 언리얼 블렌더 애드온을 사용할 수 있게 되었습니다.
+https://www.unrealengine.com/en-US/blog/download-our-new-blender-addons[여기]에서
+자세히 알아보실 수 있지만,
+이 섹션은 아직 이를 반영하여 업데이트되지 않았음을 참고해 주십시오.
 ====
 
-. Open up Blender
-. Open up your `Properties Panel > Scene Properties > Units`
-.. Ensure the `Unit System` is set to `Metric` (Unreal uses centimeters as its unit)
-.. Ensure the `Unit Scale` is set to `0.01` (1/100) so that animation data saves correctly.
-.. If you had to adjust these you will need to scale your mesh and apply it. Your animations will also have to be redone.
-.. You may also have issues viewing your model, press `n` in a 3D viewport and adjust your `View > View > Clip Start/End` values.
-. If you have vertex color data to export, be sure the attribute layer is "Face Corner > Byte Color"
-. Select the objects you wish to export
-. Open `File > Export > FBX`
-. On the export options on the right, set the following.
-.. In the topmost dropdown pick `Restore Operator Defaults` or your UE5 preset if you have one
-.. Change `Include > Selected Objects` to true
-.. For Object types only `Armature` and `Mesh` should be on (blue)
-.. Change `Geometry > Smoothing` to `Face`
-.. Check `Bake Animation`, and there's a decision to make
-... Only one of `All Actions` or `NLA Strips` should be checked to prevent duplicates.
-... Its personal preference but NLA strips are more complex so I recommend unchecking them.
-.. Back in the topmost dropdown click the plus
-.. Save this as your default UE5 export and reuse it in the future
-. Make sure your filename and path are correct
-. Click `Export FBX` and you're done
+. 블렌더를 실행합니다.
+. ``프로퍼티스 패널 > 씬 > 단위``를 엽니다.
+.. ``단위 시스템``이 ``메트릭(미터법)``으로 설정되어 있는지 확인합니다(언리얼은 센티미터를 단위로 사용합니다).
+.. ``단위 축적``이 `0.01`(1/100)로 설정되어 있는지 확인하여 애니메이션 데이터가 올바르게 저장되도록 합니다.
+.. 이러한 설정을 조정했다면 메쉬의 크기를 조정하고 적용해야 합니다. 애니메이션도 다시 작업해야 합니다.
+.. 모델을 보는 데 문제가 있을 수 있습니다. 3D 뷰포트에서 ``n``을 누르고 `뷰 > 뷰 > 클립 시작/종료` 값을 조정하십시오.
+. 정점 색상 데이터를 내보내야 한다면, 속성 레이어가 "Face Corner > Byte Color"인지 확인하십시오.
+. 내보내고자 하는 오브젝트를 선택합니다.
+. ``파일 > 내보내기 > FBX``를 엽니다.
+. 오른쪽의 내보내기 옵션에서 다음을 설정합니다.
+.. 최상단 드롭다운에서 ``Restore Operator Defaults``를 선택하거나 UE5 프리셋이 있다면 그것을 선택합니다.
+.. ``포함 > 선택된 오브젝트``를 체크합니다.
+.. 오브젝트 유형에서는 ``아마튜어``와 ``메쉬``만 켜져 있어야 합니다(파란색).
+.. ``지오메트리 > 스무딩``을 ``페이스``로 변경합니다.
+.. ``애니메이션``을 체크하고, 결정해야 할 사항이 있습니다.
+... 중복을 방지하기 위해 ``모든 액션``이나 `NLA 스트립` 중 하나만 체크해야 합니다.
+... 개인적인 선호도의 문제이지만 NLA 스트립이 더 복잡하므로 체크 해제를 추천합니다.
+.. 최상단 드롭다운으로 돌아가서 십자를 클릭합니다.
+.. 이것을 UE5 기본 내보내기 설정으로 저장하고 앞으로 재사용하십시오.
+. 파일 이름과 경로가 올바른지 확인합니다.
+. ``FBX를 내보내기``를 클릭하면 완료됩니다.
 
 [WARNING]
 ====
-Every time you export you should re-select the preset from the dropdown.
+내보내기를 할 때마다 드롭다운에서 프리셋을 다시 선택해야 합니다.
 
-Blender will revert to default export options without warning or obvious changes often, it's safest to develop the habit of re-applying the preset every export.
+블렌더는 경고나 명확한 변경 없이 기본 내보내기 옵션으로 되돌아가는 경우가 자주 있으므로, 매번 내보내기 전에 프리셋을 다시 적용하는 습관을 들이는 것이 가장 안전합니다.
 ====
 
-== Importing meshes and using material instances
+== 메쉬 가져오기와 머티리얼 인스턴스 사용하기
 
-The last step of the process is bringing a mesh into unreal and swapping it to correct materials/material instances.
-While you can probably import just fine without any changes there's several things to look out for: 
+과정의 마지막 단계는 메쉬를 언리얼로 가져오고 올바른 머티리얼/머티리얼 인스턴스로 교체하는 것입니다.
+아무 변경 없이도 가져오기가 잘 될 수 있지만 주의해야 할 사항이 몇 가지 있습니다:
 
-* Make sure the `Mesh` section has these settings beyond the obvious like LODs or vertex colours if you have them
-** Only check `Skeletal Mesh` if you have animation data or need a skeleton
-** `Remove Degenerates` is checked
-** `Normal Import Method` is `Import Normals`
-* Ensure that `Miscellaneous > Convert Scene` is checked
-* Make sure `Material` section has these settings
-** `Search Location` set to `All Assets`
-** `Material Import Method` set to `Do Not Create Materials`
-* If importing a skeletal mesh there's a couple more
-** Make sure `Mesh > Use T0 as Ref Pose` is checked
-** If your mesh has animations make sure `Import Animations` is checked
+* LOD나 정점 색상과 같은 명확한 것들 외에도 `메쉬` 섹션에서 다음 설정을 확인하십시오.
+** 애니메이션 데이터가 있거나 스켈레톤이 필요한 경우에만 ``스켈레탈 메쉬``를 체크하십시오.
+** ``디제너레이트 제거``가 체크되어 있어야 합니다.
+** ``노멀 임포트 메서드``가 ``Import Normals``로 설정되어 있어야 합니다.
+* ``기타 > 씬 변환``이 체크되어 있는지 확인하십시오.
+* `머티리얼` 섹션에서 다음 설정을 확인하십시오.
+** ``위치 검색``이 ``All Assets``로 설정되어 있어야 합니다.
+** ``머티리얼 임포트 메서드``가 ``Do Not Create Material``로 설정되어 있어야 합니다.
+* 스켈레탈 메쉬를 가져오는 경우 몇 가지 더 있습니다.
+** ``메쉬 > T0을 레퍼런스 포즈로 사용``이 체크되어 있는지 확인하십시오.
+** 메쉬에 애니메이션이 있다면 ``애니메이션 임포트``가 체크되어 있는지 확인하십시오.
 
-Hopefully it will of found the correct materials, but if it hasn't those should be easy enough to hook up. Track down the xref:Development/Modeling/MainMaterials.adoc[correct materials] and set them on your mesh.
+올바른 머티리얼을 찾았기를 바랍니다만, 그렇지 않더라도 연결하기는 쉽습니다. xref:Development/Modeling/MainMaterials.adoc[올바른 머티리얼을]을 찾아서 메쉬에 설정하십시오.
 
 [WARNING]
 ====
-The import menu for a static mesh and a skeletal mesh are different menus with many similar options. E.G. Setting import normals for a static mesh will not be remembered for a skeletal mesh despite being remembered between different static meshes.
+정적 메쉬와 스켈레탈 메쉬의 가져오기 메뉴는 비슷한 옵션이 많이 있지만 서로 다른 메뉴입니다. 예를 들어, 정적 메쉬의 노멀 가져오기 설정은 서로 다른 정적 메쉬 간에는 기억되지만 스켈레탈 메쉬에는 기억되지 않습니다.
 ====
 
-Once you have all your new materials made or existing materials assigned you're good to go. Remember the new meshes and materials have to be in your mod's folder, but the existing game materials should not be in your mod folder.
+새로운 머티리얼을 만들거나 기존 머티리얼을 할당하는 작업이 모두 끝나면 준비가 완료됩니다. 새로운 메쉬와 머티리얼은 모드 폴더에 있어야 하지만, 기존 게임 머티리얼은 모드 폴더에 있으면 안 된다는 점을 기억하십시오.
 
 

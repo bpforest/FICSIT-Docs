@@ -1,67 +1,67 @@
-= Chat Commands
+= 채팅 명령어
 
-SML adds a system allowing you to add your own chat commands.
-It is highly recommended that you use this system as opposed to
-writing your own so that the behavior of chat commands is
-consistent across different mods.
+SML은 맞춤 채팅 명령어를 추가할 수 있는 시스템을 제공합니다.
+이 시스템을 사용하는 것이 좋으며,
+이를 통해 다양한 모드 간의
+채팅 명령어 동작이 일관되게 유지됩니다.
 
 == AChatCommandInstance
 
-Each chat command you want to implement in BP should inherit from `AChatCommandInstance`.
+BP에서 구현하고자 하는 각 채팅 명령어는 ``AChatCommandInstance``를 상속해야 합니다.
 
-This class contains some attributes you need to set to tell SML about your command:
+이 클래스에는 SML에 명령어에 대한 정보를 제공하기 위해 설정해야 할 몇 가지 속성이 포함되어 있습니다:
 
 - `Only Usable by Player`
 +
-This allows you to make sure only players can execute the command,
-as opposed to other mods calling them.
+이 속성을 사용하면 플레이어만 명령어를 실행할 수 있도록 보장할 수 있습니다.
+다른 모드가 이를 호출하는 것을 방지합니다.
 - `Min Number Of Arguments`
 +
-If the number of arguments used to execute the command is lower than this value,
-the command wont get executed.
+명령어를 실행하는 데 사용된 인수의 수가 이 값보다 적으면
+명령어가 실행되지 않습니다.
 - `Command Name`
 +
-This is the name of your command you want to add.
-It will be what the user types to run the command.
+추가하고자 하는 명령어의 이름입니다.
+사용자가 명령어를 실행하기 위해 입력하는 내용입니다.
 - `Aliases`
 +
-This is a list alternative Command Names for your command.
-You will be able to use them in place of the Command Name when running the command.
+명령어에 대한 대체 명령어 이름 목록입니다.
+명령어를 실행할 때 명령어 이름 대신 사용할 수 있습니다.
 - `Usage`
 +
-This is the description of your command how it should get used by the player.
-It will be displayed in help menus and when the command is not given enough arguments.
-You should provide a description of what the command does, what each parameter is,
-and possibly an example valid command.
+명령어의 사용 방법에 대한 설명입니다.
+도움말 및 인수가 충분하지 않을 때 표시됩니다.
+명령어가 수행하는 작업, 각 매개변수가 무엇인지,
+그리고 유효한 명령어의 예를 제공해야 합니다.
 
-To give the command now some functionality,
-you just need to override the `Execute Command` function and add your own logic to it.
+이제 명령어에 기능을 추가하려면,
+`Execute Command` 함수를 오버라이드하고 여기에 자신의 로직을 추가하면 됩니다.
 
-This function receives the command sender, the command arguments, and the used alias (if any)
-and should either return COMPLETED in the case of success, or, in the case of an error,
-logging an error about what in the execution didn't work and returning
-UNCOMPLETED, INSUFFICIENT_PERMISSIONS, or BAD_ARGUMENTS.
+이 함수는 명령어 발신자, 명령어 인수 및 사용된 별칭(있는 경우)을 수신하며,
+성공 시 COMPLETED를 반환하거나, 오류가 발생한 경우
+실행이 실패한 이유에 대한 오류를 기록하고
+UNCOMPLETED, INSUFFICIENT_PERMISSIONS 또는 BAD_ARGUMENTS를 반환합니다.
 
-After that you need to register your command for SML to be able to load it.
-You can do that by simply adding it to the `M Chat Commands` array of your
-xref:Development/ModLoader/ModModules.adoc#_game_world_module_ugameworldmodule[Game World Module].
+그 후, SML이 이를 로드할 수 있도록 명령어를 등록해야 합니다. 이는 단순히
+xref:Development/ModLoader/ModModules.adoc#_게임_월드_모듈ugameworldmodule[게임 월드 모듈]의
+`M Chat Commands` 배열에 추가함으로써 가능합니다.
 
 == UCommandSender
 
-This class represents the sender of a chat command
-and allows you to get abstract information about the sender.
+이 클래스는 채팅 명령어의 발신자를 나타내며,
+발신자에 대한 추상 정보를 얻을 수 있게 해줍니다.
 
-A sender could be a player, for example.
+발신자는 예를 들어 플레이어일 수 있습니다.
 
 == AChatCommandSubsystem
 
-This subsystem provides a number of helpful chat command utilities.
-It allows you to...
+이 서브시스템은 여러 유용한 채팅 명령어 유틸리티를 제공합니다.
+이를 통해...
 
-* Register a chat command instance manually
-* Get a list of registered commands
-* Executed a command programmatically
-* Access the `ParsePlayerName` function, which allows you to get the `AFGPlayerController`
-based on the player name. 
-** This is generally used to parse the player name that was passed as command argument.
-It also allows you to parse selectors in the command like @all and @self.
+* 채팅 명령어 인스턴스를 수동으로 등록할 수 있습니다.
+* 등록된 명령어 목록을 가져올 수 있습니다.
+* 명령어를 프로그래밍적으로 실행할 수 있습니다.
+* `ParsePlayerName` 함수를 접근할 수 있으며, 이를 통해 플레이어 이름에 따라
+``AFGPlayerController``를 얻을 수 있습니다.
+** 이는 일반적으로 명령어 인수로 전달된 플레이어 이름을 파싱하는 데 사용됩니다.
+또한 @all 및 @self와 같은 명령어에서 선택자를 파싱할 수 있습니다.

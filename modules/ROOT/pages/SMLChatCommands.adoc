@@ -65,7 +65,7 @@ https://satisfactory.wiki.gg/wiki/Console#Accessing[새티스팩토리 위키의
 2. SML의 "Enable Cheats(치트 활성화)" 모드 저장 설정을 사용하십시오.
 .. 옵션 1: xref:ForUsers/ConfiguringMods.adoc#_mod_savegame_settings[게임 내 메뉴]에서 설정을 활성화하십시오.
 .. 옵션 2: 콘솔에서 `SML.ForceAllowCheats 1` 을 실행하여 세션 설정 값을 직접 조정하십시오.
-3. `EnableCheats` 콘솔 명령어를 실행하여 SML의 치트 시스템에 대한 후크를 활성화하십시오.
+3. `EnableCheats` 콘솔 명령어를 실행하여 SML의 치트 시스템에 대한 훅을 활성화하십시오.
 명령어가 구현된 방식 때문에, 이를 실행하면 게임이 명령어를 인식하지 못한다고 주장할 것입니다.
 이는 예상되는 동작입니다.
 4. 이제 이 게임 세션에 대해 치트가 활성화되어야 합니다.
