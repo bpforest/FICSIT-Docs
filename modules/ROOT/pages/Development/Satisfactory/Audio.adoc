@@ -1,322 +1,320 @@
-= Audio
+= 오디오
 
 [NOTE]
 ====
-This page is a work in progress.
+이 페이지는 작업 중입니다.
 ====
 
-Adding sound effects and music via mods can really help bring them to life.
-Coffee Stain uses the Wwise audio system to play sounds in Satisfactory.
-Depending on what your mod is trying to do, you may want to use the built in Unreal system or the Wwise system.
+모드에서 사운드 효과와 음악을 추가하는 것은 게임에 생명을 불어넣는 데 큰 도움이 될 수 있습니다.
+커피 스테인은 새티스팩토리에서 사운드를 재생하기 위해 Wwise 오디오 시스템을 사용합니다.
+모드가 수행하려는 작업에 따라, 내장된 언리얼 시스템이나 Wwise 시스템을 사용하는 것이 좋습니다.
 
-== Audio for ADA Messages
+== ADA 메시지를 위한 오디오
 
-See the xref:Development/Satisfactory/AdaMessages.adoc[dedicated page on ADA Messages] for more information.
+자세한 정보는 xref:Development/Satisfactory/AdaMessages.adoc[ADA 메시지 전용 페이지]를 참조하십시오.
 
-== Unreal Audio System
+== 언리얼 오디오 시스템
 
-If you're playing sound for the purpose of user interfaces (UI) or client-side only effects,
-it may be easier to use Unreal's built in sound system
-at the cost of losing integration with some of the game's systems (ex. ADA) and the advanced features of Wwise.
+UI(사용자 인터페이스) 또는 클라이언트 전용 효과를 위해 사운드를 재생하는 경우,
+언리얼의 내장 사운드 시스템을 사용하는 것이 더 쉬울 수 있습니다.
+이 경우 ADA와 같은 게임 시스템과의 통합 및 Wwise의 고급 기능을 잃게 됩니다.
 
-The "Play Sound 2D" and "Play Sound at Location" blueprint nodes are useful for this purpose.
+"Play Sound 2D" 및 "Play Sound at Location" 블루프린트 노드는 이 목적에 유용합니다.
 
 == Wwise
 
-Interfacing with the Wwise sound system will require setting up and integrating a Wwise project and integrating it with the modding project.
+Wwise 사운드 시스템과 인터페이스하려면 Wwise 프로젝트를 설정하고 이를 모딩 프로젝트와 통합해야 합니다.
 
-Note that using large numbers of Wwise sounds may require getting a
-https://www.audiokinetic.com/en/blog/free-wwise-indie-license/[Wwise indie license]
-for your project.
+많은 수의 Wwise 사운드를 사용하는 경우, 프로젝트에 대한
+https://www.audiokinetic.com/en/blog/free-wwise-indie-license/[Wwise 인디 라이센스]를
+받아야 할 수 있습니다.
 
-=== Setting Up Audio Buses
+=== 오디오 버스 설정
 
-By default when using Wwise audio only the `Master` volume slider will work.
+기본적으로 Wwise 오디오를 사용할 때 `Master` 볼륨 슬라이더만 작동합니다.
 
-You will need to manually create the different Audio Buses that link to the other sliders.
+다른 슬라이더에 연결된 다양한 오디오 버스를 수동으로 생성해야 합니다.
 
-TODO: Waiting for CSS to provide the correct audio bus names.
+TODO: CSS에서 올바른 오디오 버스 이름을 제공할 때까지 기다립니다.
 
-=== Setting Up Attenuation
+=== 감쇠 설정
 
-If you plan to use Wwise audio for buildings or equipment, you must set up **attenuation**.
-By default, the audio will play at full volume even if you are on the other side of the map from its origin.
-Attenuation causes the sound to become quieter at a distance or not play at all.
+Wwise 오디오를 건물이나 장비에 사용할 계획이라면 **감쇠**를 설정해야 합니다.
+기본적으로 오디오는 맵의 반대편에 있어도 전체 볼륨으로 재생됩니다.
+감쇠는 소리의 거리에 따라 소리가 더 조용해지거나 전혀 재생되지 않도록 합니다.
 
 [NOTE]
 ====
-Attenuation is not required if you plan to use Audio for UI or ADA messages, and this step can be skipped.
+UI 또는 ADA 메시지에 대한 오디오를 사용할 계획이라면 감쇠는 필수 사항이 아니며 이 단계를 건너뛸 수 있습니다.
 ====
 
-On Wwise's Project Explorer, go to the `ShareSets` tab. Share Sets are useful for providing the same configuration to multiple Wwise objects.
+Wwise의 프로젝트 탐색기에서 `ShareSets` 탭으로 이동합니다. Share Sets는 여러 Wwise 객체에 동일한 구성을 제공하는 데 유용합니다.
 
-You will see the section `Attenuations -> Default Work Unit` 
+`Attenuations -> Default Work Unit` 섹션을 볼 수 있습니다.
 
 image:Satisfactory/Wwise/Wwise_Attenuation_ProjectExplorer.png[Wwise_Attenuation_ProjectExplorer, 350]
 
-Create a new Attenuation object by right-clicking the `Default Work Unit` then `New Child -> Attenuation`
+``Default Work Unit``을 우클릭 후 ``New Child -> Attenuation``을 선택하여 새 감쇠 객체를 생성합니다.
 
 image:Satisfactory/Wwise/Wwise_Attenuation_Create.png[Wwise_Attenuation_Create, 100%]
 
-You can name this whatever you want; just be mindful that you can't use the same name twice.
+이름은 원하는 대로 지정할 수 있지만, 같은 이름을 두 번 사용할 수는 없습니다.
 
-Open the new Attenuation ShareSet by double clicking the new attenuation shareset.
+새 감쇠 ShareSet을 두 번 클릭하여 엽니다.
 
-In the main section, you will be presented with the following:
+주요 섹션에서 다음을 볼 수 있습니다:
 
 image:Satisfactory/Wwise/Wwise_Attenuation_Info.png[Wwise_Attenuation_Info, 100%]
 
-==== Distance
+==== 거리
 
-Click on the First setting, Volume (by default, will automatically be selected). This is marked in Yellow on the screenshot.
+첫 번째 설정인 볼륨을 클릭합니다(기본적으로 자동으로 선택됨). 이 항목은 스크린샷에서 노란색으로 표시됩니다.
 
-You will then need to set the `Max Distance` setting.
+그런 다음 `Max Distance` 설정을 설정해야 합니다.
 
 [TIP]
 ====
-This number is in Unreal Units (uu); the conversion is 100uu = 1 meter.
+이 숫자는 언리얼 단위(uu)입니다. 변환은 100uu = 1미터입니다.
 ====
 
-The Max Distance will be the distance away from the building that the player can still hear the sound. 
+최대 거리는 플레이어가 소리를 들을 수 있는 건물에서의 거리입니다.
 
-Based on the vanilla buildings, smaller buildings have a maximum distance of 4,000 to 6,000, and larger vanilla buildings are around 6,000 to 10,000.
+기본 건물에 따라, 작은 건물은 최대 거리가 4,000에서 6,000 사이이며, 큰 기본 건물은 약 6,000에서 10,000 사이입니다.
 
-==== Spread
+==== 확산
 
-By default, the spread will be set to 0. This means that the sound comes from a specific point when rotating the player.
+기본적으로 확산은 0으로 설정됩니다. 이는 소리가 플레이어가 회전할 때 특정 지점에서 나오는 것을 의미합니다.
 
-This can become very confusing to players when they are standing right next to the building.
+이것은 플레이어가 건물 바로 옆에 서 있을 때 매우 혼란스러울 수 있습니다.
 
-On the screenshot above, change the dropdown marked in Red to `Custom`. This will then show the spread graph in the bottom section.
+위의 스크린샷에서 빨간색으로 표시된 드롭다운을 ``Custom``으로 변경합니다. 그러면 하단 섹션에 확산 그래프가 표시됩니다.
 
-You can add a new point to the graph by double-clicking the line. Then, set the `X` value to roughly the size of your building and the `Y` value to 100.
+라인을 더블 클릭하여 그래프에 새 포인트를 추가할 수 있습니다. 그런 다음 `X` 값을 대략 건물의 크기로 설정하고 `Y` 값을 100으로 설정합니다.
 
-Add another point to the graph slightly further on, set the `X` value to the size of the building plus a bit more, and set the `Y` value to 0.
+그래프에서 약간 더 멀리 있는 또 다른 포인트를 추가하고, `X` 값을 건물의 크기보다 약간 더 크게 설정하고 `Y` 값을 0으로 설정합니다.
 
 image:Satisfactory/Wwise/Wwise_Attenuation_Spread_Graph.png[Wwise_Attenuation_Spread_Graph, 100%]
 
-=== Importing Media Files to Wwise
+=== Wwise에 미디어 파일 가져오기
 
-Open the Wwise project file, typically in `SMLProject/SMLProject_WwiseProject/SMLProject_WwiseProject.wproj`. Double-clicking this file will open Wwise.
+Wwise 프로젝트 파일을 열고, 일반적으로 ``SMLProject/SMLProject_WwiseProject/SMLProject_WwiseProject.wproj``에 있습니다. 이 파일을 두 번 클릭하면 Wwise가 열립니다.
 
-To make sure you are in the correct layout at the top, go to `Layout -> Designer`
+상단에서 올바른 레이아웃에 있는지 확인하려면 ``Layout -> Designer``로 이동합니다.
 
-On the left-hand side, you will see the project explorer; select the Audio Tab.
+왼쪽에 있는 프로젝트 탐색기에서 오디오 탭을 선택합니다.
 
 image:Satisfactory/Wwise/Wwise_Import_ProjectExplorer.png[Wwise_Import_ProjectExplorer, 350]
 
-Under `Actor-Mixer Hierarchy`, there will be `Default Work Unit`
+`Actor-Mixer Hierarchy` 아래에 ``Default Work Unit``이 있습니다.
 
-To keep everything organized, create a new Virtual Folder to house your Wwise files and name it the same as your
-xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc#ModReference[mod reference].
+모든 것을 정리하기 위해 Wwise 파일을 보관할 새 가상 폴더를 만들고 이를 모드 참조와 동일한 이름으로 지정합니다.
 
 image:Satisfactory/Wwise/Wwise_Import_VirtualFolderCreate.png[Wwise_Import_VirtualFolderCreate, 600]
 
-Now, to import audio files!
+이제 오디오 파일을 가져올 차례입니다!
 
-Drag your `.wav` files into this newly created Virtual Folder. The `Audio File Importer` window will show.
+`.wav` 파일을 이 새로 생성된 가상 폴더로 드래그합니다. `Audio File Importer` 창이 표시됩니다.
 
 image:Satisfactory/Wwise/Wwise_Import_ImportWindow.png[Wwise_Import_ImportWindow, 600]
 
-Ensure that you have `Create New Objects` selected under import mode. Verify it is going to the correct folder and then click `Import`
+가져오기 모드에서 ``Create New Objects``가 선택되어 있는지 확인하고, 올바른 폴더로 가고 있는지 확인한 후 ``Import``를 클릭합니다.
 
-Your audio files are now imported to Wwise and ready to be referenced by Unreal systems.
+이제 오디오 파일이 Wwise에 가져와졌으며 언리얼 시스템에서 참조할 준비가 되었습니다.
 
-=== Adding Attenuation To Audio
+=== 오디오에 감쇠 추가하기
 
-If you plan on using attenuation on audio, you must first follow the attenuation section of the documentation. xref:Development/Satisfactory/Audio.adoc#_setting_up_attenuation[Setting Up Attenuation].
+오디오에 감쇠를 사용할 계획이라면, 먼저 문서의 감쇠 섹션을 따라야 합니다. xref:Development/Satisfactory/Audio.adoc#_setting_up_attenuation[감쇠 설정].
 
-To set up attenuation on the audio, double-click the audio file in the Wwise Project Explorer `Audio` tab.
+오디오에 감쇠를 설정하려면 Wwise 프로젝트 탐색기 `Audio` 탭에서 오디오 파일을 두 번 클릭합니다.
 
-Then, once the audio opens in the main section, go to the `Positioning` tab.
+그런 다음 오디오가 주요 섹션에서 열리면 `Positioning` 탭으로 이동합니다.
 
-Change the `3D Spatialization` setting to `Position + Orientation` (Marked in blue in the screenshot).
+`3D Spatialization` 설정을 ``Position + Orientation``으로 변경합니다(스크린샷에서 파란색으로 표시됨).
 
-Click the `>>` button, then select the Attenuation ShareSet from the list (Marked in red in the screenshot).
+`>>` 버튼을 클릭한 다음 목록에서 감쇠 ShareSet을 선택합니다(스크린샷에서 빨간색으로 표시됨).
 
 image:Satisfactory/Wwise/Wwise_Attenuation_Audio_Settings.png[Wwise_Attenuation_Audio_Settings, 500]
 
-=== Creating Audiokinetic Events
+=== Audiokinetic 이벤트 생성하기
 
-**Audiokinetic Events** (typically shortened to `AKEvents`) allow your mod code to tell the Wwise sound system to do something.
-Example AKEvent types include Play, Pause, and Stop.
-Each sound you want to use typically needs multiple events associated with it.
+**Audiokinetic 이벤트**(일반적으로 `AKEvents`로 축약됨)는 모드 코드가 Wwise 사운드 시스템에 작업을 수행하도록 지시할 수 있게 해줍니다.
+예제 AKEvent 유형에는 Play, Pause, Stop이 포함됩니다.
+사용하려는 각 사운드는 일반적으로 여러 이벤트와 연결되어야 합니다.
 
-To play the audio in your mod, you will need to create an event in Wwise. First, make sure that you have followed the above steps to import your `.wav` files to Wwise.
+모드에서 오디오를 재생하려면 Wwise에서 이벤트를 생성해야 합니다. 먼저, `.wav` 파일을 Wwise에 가져오는 위의 단계를 따르십시오.
 
-In Wwise's Project Explorer, go to the `Audio` tab and locate the audio for which you want to create an event.
+Wwise의 프로젝트 탐색기에서 `Audio` 탭으로 이동하고 이벤트를 생성하려는 오디오를 찾습니다.
 
-Right-click the audio and select `New Event -> Play`. This will create a new Play event.
+오디오를 우클릭 후 ``New Event -> Play``를 선택합니다. 이렇게 하면 새 Play 이벤트가 생성됩니다.
 
 image:Satisfactory/Wwise/Wwise_AkEvent_Create.png[Wwise_AkEvent_Create, 600]
 
-Verify the event was created successfully by going to the Project Explorer's `Events` tab.
-You should see the event `Play_<AudioName>`.
-Double-clicking the event will show the Event's details in the main center section.
+이벤트가 성공적으로 생성되었는지 확인하려면 프로젝트 탐색기의 `Events` 탭으로 이동합니다.
+`Play_<오디오이름>` 이벤트를 볼 수 있어야 합니다.
+이벤트를 두 번 클릭하면 이벤트의 세부 정보가 중앙 섹션에 표시됩니다.
 
-There are a few things to take note of and verify:
+확인해야 할 몇 가지 사항이 있습니다:
 
-* Take a note of the Event ID. You will need to compare it with values in the Unreal Editor later. (Red in the screenshot)
-* Make sure that `Inclusion` is checked (Green in the screenshot)
-* Verify that the target is for the correct audio (Blue in the screenshot)
+* 이벤트 ID를 기록해 두십시오. 나중에 언리얼 에디터의 값과 비교해야 합니다(스크린샷에서 빨간색).
+* ``Inclusion``이 체크되어 있는지 확인하십시오(스크린샷에서 녹색).
+* 대상이 올바른 오디오인지 확인하십시오(스크린샷에서 파란색).
 
 image:Satisfactory/Wwise/Wwise_AkEvent_Info.png[Wwise_AkEvent_Info, 600]
 
-Repeat the process for all other audio you want to play in your mod.
+모드에서 재생하려는 모든 다른 오디오에 대해 이 프로세스를 반복하십시오.
 
 [TIP]
 ====
-Consider creating one or more Virtual Folders within your mod's folder to store your AKEvents for ease of organization.
+조직을 쉽게 하기 위해 모드 폴더 내에 하나 이상의 가상 폴더를 생성하여 AKEvents를 저장하는 것을 고려하십시오.
 ====
 
-=== Creating Audiokinetic Soundbanks
+=== Audiokinetic 사운드뱅크 생성하기
 
-You will need to create a new Soundbank for all your Events to be stored.
+모든 이벤트를 저장할 새 사운드뱅크를 생성해야 합니다.
 
-In Wwise, change the layout to Soundbanks. This can be found at the top under `Layouts -> Soundbanks`.
+Wwise에서 레이아웃을 사운드뱅크로 변경합니다. 이는 상단의 ``Layouts -> Soundbanks``에서 찾을 수 있습니다.
 
-Select the `Soundbanks` tab in the Project Explorer on the left.
+왼쪽의 프로젝트 탐색기에서 `Soundbanks` 탭을 선택합니다.
 
-
-By default, you will have the following tree structure:
+기본적으로 다음과 같은 트리 구조가 있습니다:
 
 image:Satisfactory/Wwise/Wwise_Soundbank_ProjectExplorer.png[Wwise_Soundbank_ProjectExplorer, 600]
 
-Create a new Soundbank by Right-clicking the `Default Work Unit` then `New Child -> Soundbank`
+``Default Work Unit``을 우클릭 후 ``New Child -> Soundbank``를 선택하여 새 사운드뱅크를 생성합니다.
 
 image:Satisfactory/Wwise/Wwise_Soundbank_Create.png[Wwise_Soundbank_Create, 600]
 
-Name the Soundbank `YourModReference_Soundbank`.
-Soundbank names do not need to be in this format, but including the mod reference helps with organization.
+사운드뱅크 이름을 ``모드참조_Soundbank``로 지정합니다.
+사운드뱅크 이름은 이 형식일 필요는 없지만, 모드 참조를 포함하면 조직에 도움이 됩니다.
 
-Double-click the newly created Soundbank, which will open in a new window.
+새로 생성된 사운드뱅크를 두 번 클릭하면 새 창이 열립니다.
 
-In the main Wwise window, navigate to the Events tab in the Project Explorer.
+주요 Wwise 창에서 프로젝트 탐색기의 Events 탭으로 이동합니다.
 
-With the Soundbank window still open, drag the `Default Work Unit` to the Soundbank window. If you created a specific Virtual Folder for your event, drag that folder instead.
+사운드뱅크 창이 여전히 열려 있는 상태에서 ``Default Work Unit``을 사운드뱅크 창으로 드래그합니다. 이벤트를 위한 특정 가상 폴더를 생성한 경우 해당 폴더를 대신 드래그합니다.
 
 image:Satisfactory/Wwise/Wwise_Soundbank_Window.png[Wwise_Soundbank_Window, 700]
 
-Go to the `Edit` tab to verify that all the events are included in the Soundbank.
+`Edit` 탭으로 이동하여 모든 이벤트가 사운드뱅크에 포함되어 있는지 확인합니다.
 
 image:Satisfactory/Wwise/Wwise_Soundbank_EditTab.png[Wwise_Soundbank_EditTab, 600]
 
-Now, it's finally time to generate the Soundbank for Unreal Engine.
+이제 Unreal Engine을 위한 사운드뱅크를 생성할 시간입니다.
 
-In the Wwise Project Explorer, on the `Soundbanks` tab, right-click on the soundbank and click `Generate Soundbank(s) for all platforms`.
+Wwise 프로젝트 탐색기에서 `Soundbanks` 탭에서 사운드뱅크를 마우스 오른쪽 버튼으로 클릭하고 ``Generate Soundbank(s) for all platforms``를 클릭합니다.
 
 image:Satisfactory/Wwise/Wwise_Soundbank_Generate.png[Wwise_Soundbank_Generate, 500]
 
-=== Unreal Project Configuration
+=== 언리얼 프로젝트 구성
 
-Open the Unreal Engine project settings and Navigate to the Wwise integration settings.
+언리얼 엔진 프로젝트 설정을 열고 Wwise 통합 설정으로 이동합니다.
 
-Change the `Root Output Path` setting to `<WwiseProjectPath>/GeneratedSoundBanks`.
-Then change the `Unreal Audio Routing` setting to `Both Wwise and Unreal audio`.
-You may need to restart the Unreal Editor after making these changes.
+`Root Output Path` 설정을 ``<Wwise프로젝트경로>/GeneratedSoundBanks``로 변경합니다.
+그런 다음 `Unreal Audio Routing` 설정을 ``Both Wwise and Unreal audio``로 변경합니다.
+이 변경을 한 후 언리얼 에디터를 다시 시작해야 할 수 있습니다.
 
-=== Creating AKEvents In Unreal Engine
+=== 언리얼 엔진에서 AKEvents 생성하기
 
-Now that you've defined your audio, events, and soundbanks in Wwise, it's time to utilize them in the Unreal Engine.
-The first step in doing this is to create Unreal assets that reference your Wwise assets.
-Although it is possible to use the Wwise Browser to create these, this is not recommended,
-as it places them in the wrong project folders.
-As such, follow the steps below to create them via the Unreal Editor.
+이제 Wwise에서 오디오, 이벤트 및 사운드뱅크를 정의했으므로, 이를 언리얼 엔진에서 활용할 시간입니다.
+이 작업을 수행하는 첫 번째 단계는 Wwise 자산을 참조하는 언리얼 애셋을 생성하는 것입니다.
+Wwise 브라우저를 사용하여 이를 생성하는 것이 가능하지만, 이는 권장되지 않습니다.
+이렇게 하면 잘못된 프로젝트 폴더에 배치됩니다.
+따라서 아래 단계를 따라 언리얼 에디터를 통해 생성하십시오.
 
-Create a new Audiokinetic Event by right-clicking on an empty area in the Content Browser.
+콘텐츠 브라우저의 빈 영역을 우클릭 후 새 Audiokinetic 이벤트를 생성합니다.
 
-Go To `Audiokinetic -> Audiokinetic Event`
+``Audiokinetic -> Audiokinetic Event``로 이동합니다.
 
 image:Satisfactory/Wwise/Wwise_UEAkEvent_Create.png[Wwise_UEAkEvent_Create, 500]
 
-Name the new asset **exactly** the same name as the event you created earlier in Wwise. This enables Unreal to automatically populate the correct event information in the asset's fields.
+새 자산의 이름을 Wwise에서 생성한 이벤트와 **정확히** 동일하게 지정합니다. 이렇게 하면 언리얼이 애셋의 필드에 올바른 이벤트 정보를 자동으로 채울 수 있습니다.
 
-Open the asset and verify that its settings match those configured in Wwise:
+자산을 열고 설정이 Wwise에서 구성한 것과 일치하는지 확인합니다:
 
-* Verify that the `Wwise Short ID` matches the event ID in Wwise.
-* Verify the `Wwise Name` matches the event name.
+* ``Wwise Short ID``가 Wwise의 이벤트 ID와 일치하는지 확인합니다.
+* ``Wwise Name``이 이벤트 이름과 일치하는지 확인합니다.
 
 image:Satisfactory/Wwise/Wwise_UEAkEvent_Verify.png[Wwise_UEAkEvent_Verify, 500]
 
-If everything has worked correctly, you can now test the event by right-clicking the event in Unreal and clicking `Play Event`.
-This will trigger the event in the editor, for example, playing the sound if the event is a Play-type event.
+모든 것이 올바르게 작동했다면, 이제 언리얼에서 이벤트를 테스트할 수 있습니다. 언리얼에서 이벤트를 우클릭 후 ``Play Event``를 클릭합니다.
+이렇게 하면 이벤트가 에디터에서 발동되어, 예를 들어 이벤트가 Play 유형 이벤트인 경우 소리가 재생됩니다.
 
-=== Triggering AKEvents in Code
+=== 코드에서 AKEvents 발동하기
 
-Triggering AKEvents is typically done in Blueprint code.
-Although it is possible to trigger them from {cpp}, this is not recommended, as it would require passing lots of asset references to the {cpp} side. If you want to trigger events from {cpp}, define a `BlueprintImplementableEvent` UFUNCTION for your {cpp} code to call, allowing you to define the implementation in Blueprint.
+AKEvents를 발동하는 것은 일반적으로 블루프린트 코드에서 수행됩니다.
+{cpp}에서 트리거하는 것도 가능하지만, 이는 권장되지 않습니다. 많은 애셋 참조를 {cpp} 쪽으로 전달해야 하기 때문입니다. {cpp}에서 이벤트를 발동하려면, `BlueprintImplementableEvent` UFUNCTION을 정의하여 {cpp} 코드가 호출할 수 있도록 하고, 블루프린트에서 구현을 정의할 수 있습니다.
 
-==== Fire & Forget Events
+==== Fire & Forget 이벤트
 
-If you would like to play a one-off AK event, such as a spark sound, you will need to use the following method in your blueprint.
+스파크 소리와 같은 일회성 AK 이벤트를 재생하려면, 블루프린트에서 다음 방법을 사용해야 합니다.
 
 image:Satisfactory/Wwise/Wwise_UEAkEvent_FireAndForget.png[Wwise_UEAkEvent_FireAndForget, 100%]
 
-This will create a new temporary `AK Component` and then play the AK Event specified.
+이렇게 하면 새로운 임시 ``AK Component``가 생성되고 지정된 AK 이벤트가 재생됩니다.
 
-Once the AK event has ended, the temporary `AK Component` will be automatically cleaned up.
+AK 이벤트가 종료되면 임시 ``AK Component``는 자동으로 정리됩니다.
 
-==== Looping Events
+==== 루프 이벤트
 
-If you would like to play a sound effect that might loop, for example, a humming/buzzing sound for a building, you should use the same AK Component for ease of reference and to avoid the creation/destruction overhead. Add an `AK Component` to your actor blueprint and set the `AK Audio Event` variable on the component.
+반복할 수 있는 사운드 효과(예: 건물의 우웅거리는 소리)를 재생하려면, 참조를 쉽게 하고 생성/파괴 오버헤드를 피하기 위해 동일한 AK Component를 사용해야 합니다. 액터 블루프린트에 ``AK Component``를 추가하고 해당 구성 요소의 `AK Audio Event` 변수를 설정합니다.
 
-Make sure to stop the audio when the actor is destroyed,
-otherwise it will continue to play with no way to stop it.
+액터가 파괴될 때 오디오를 중지해야 하며,
+그렇지 않으면 중지할 방법 없이 계속 재생됩니다.
 
 image:Satisfactory/Wwise/Wwise_UEAkEvent_EndPlay.png[Wwise_UEAkEvent_EndPlay, 100%]
 
-=== Updating Wwise Values From Your Mod
+=== 모드에서 Wwise 값 업데이트하기
 
-Wwise uses a feature called Real-Time Parameter Control (RTPC) that allows game engines like Unreal or Unity to change values on Wwise assets in real-time.
-This enables special behaviors like a manufacturing building's sound volume to fluctuate based on recipe progress.
+Wwise는 현실 시간 매개변수 제어(RTPC)라는 기능을 사용하여 언리얼 또는 유니티와 같은 게임 엔진이 Wwise 애셋의 값을 실시간으로 변경할 수 있도록 합니다.
+이 기능은 제조 건물의 사운드 볼륨이 제작법 진행에 따라 변동하는 것과 같은 특별한 동작을 가능하게 합니다.
 
-After setting up RTPC in Wwise and Unreal, blueprint code can update audio parameter values.
+Wwise와 언리얼에서 RTPC를 설정한 후, 블루프린트 코드는 오디오 매개변수 값을 업데이트할 수 있습니다.
 
-To set these up, in your Wwise project, go to Project Explorer and the `Game Syncs` tab.
+이 설정을 하려면, Wwise 프로젝트에서 프로젝트 탐색기로 이동하여 `Game Syncs` 탭으로 이동합니다.
 
-Under `Game Parameters -> Default Work Unit` create a new game parameter by right-clicking the `Default Work Unit` and then `New Child -> Game Parameter`
+`Game Parameters -> Default Work Unit` 아래에서 기본 작업 단위를 우클릭 후 ``New Child -> Game Parameter``를 선택하여 새 게임 매개변수를 생성합니다.
 
 image:Satisfactory/Wwise/Wwise_RTPC_Create.png[Wwise_RTPC_Create, 100%]
 
-Name this whatever you want.
+이름은 원하는 대로 지정할 수 있습니다.
 
-Open the newly created Game Parameter, and you should see the following in the main section:
+새로 생성된 게임 매개변수를 열면 다음과 같은 내용을 볼 수 있습니다:
 
 image:Satisfactory/Wwise/Wwise_RTPC_Range.png[Wwise_RTPC_Range, 100%]
 
-The parameter must have a range defined.
-A useful range is `0.0` to `1.0` since many existing game and engine systems already use that range as a start-finish, minimum-maximum, or off-on scale.
+매개변수는 범위가 정의되어야 합니다.
+유용한 범위는 ``0.0``에서 ``1.0``까지입니다. 많은 기존 게임 및 엔진 시스템이 이 범위를 시작-끝, 최소-최대 또는 꺼짐-켜짐 스케일로 사용합니다.
 
-Now, assign the RTPC Game Parameter to your audio.
+이제 RTPC 게임 매개변수를 오디오에 할당합니다.
 
-Open your Audio in Wwise and go to the `RTPC` tab.
-Click the `>>` in the main section to set what you want to update.
-This example case shows updating the `Voice Volume`.
+Wwise에서 오디오를 열고 `RTPC` 탭으로 이동합니다.
+메인 섹션에서 ``>>``을 클릭하여 업데이트할 항목을 설정합니다.
+이 예는 `음성 볼륨` 업데이트를 보여줍니다.
 
-Then click the `>>` to the right of the first one and select your game parameter.
+그 후 첫 번째 항목의 오른쪽에 있는 ``>>``를 클릭하고 게임 매개변수를 선택합니다.
 
 image:Satisfactory/Wwise/Wwise_RTPC_Configure.png[Wwise_RTPC_Configure, 500]
 
-Once that is done, you should see something similar to the following:
+완료했다면, 다음과 비슷한 것이 보일 것입니다.
 
 image:Satisfactory/Wwise/Wwise_RTPC_Overview.png[Wwise_RTPC_Overview, 100%]
 
-Now, to create the link between Unreal Engine and Wwise you will need to create the Game Parameter in Unreal Engine:
+다음으로, 언리얼 엔진과 Wwise의 연결을 생성하려면 언리얼 엔진에서 게임 매개변수를 생성해야 합니다.
 
 image:Satisfactory/Wwise/Wwise_UE_RTPC_Create.png[Wwise_UE_RTPC_Create, 600]
 
-Name it the same as you have in Wwise.
+Wwise에 있는 것과 동일한 이름을 사용하십시오.
 
-You can now update the RTPC Game Parameter value using blueprints:
+이제 블루프린트를 사용하여 RTPC 게임 매개변수 값을 업데이트할 수 있습니다.
 
 image:Satisfactory/Wwise/Wwise_UE_RTPC_Usage.png[Wwise_UE_RTPC_Usage, 700]
 
-=== Playback Limits
+=== 재생 제한
 
-Wwise limits the amount of audio that can be played at once. 
-Trying to play more than this limit will result in lower-priority audio like footsteps, music, or animals to stop playing.
+Wwise는 동시에 재생할 수 있는 오디오의 양을 제한합니다.
+이 제한을 초과하여 재생하려고 하면 발자국 소리, 음악 또는 동물과 같은 낮은 우선 순위 오디오가 중지됩니다.
 
-To resolve this, you will need to set playback limits for each of your audio files. This can be done in the audio's advanced settings tab.
+이를 해결하려면 각 오디오 파일에 대한 재생 제한을 설정해야 합니다. 이는 오디오의 고급 설정 탭에서 수행할 수 있습니다.
 
 image:Satisfactory/Wwise/Wwise_PlaybackLimit.png[Wwise_PlaybackLimit, 700]
 
@@ -347,35 +345,35 @@ For fire and forget AK events, use the `Get Is Significant` function before post
 
 image:Satisfactory/Wwise/Wwise_IsSignificant.png[Wwise_IsSignificant, 700]
 
-== Wwise and Source Control
+== Wwise 및 소스 제어
 
 [NOTE]
 ====
-This heading is a work in progress.
-The SML team plans to ship a Wwise project that includes stubs for base game Wwise events in the future.
-The suggested approach in this heading may change once that process is complete.
+이 제목은 진행 중입니다.
+SML 팀은 향후 기본 게임 Wwise 이벤트에 대한 스텁을 포함하는 Wwise 프로젝트를 배포할 계획입니다.
+이 제목에서 제안된 접근 방식은 해당 과정이 완료되면 변경될 수 있습니다.
 ====
 
-Wwise project files require extra consideration to store in
-xref:Development/BeginnersGuide/LearnGit.adoc[source control].
-Distributing the raw audio assets is sometimes prohibited by audio licenses.
+Wwise 프로젝트 파일은
+xref:Development/BeginnersGuide/LearnGit.adoc[소스 제어]에 저장하는 데 추가 고려가 필요합니다.
+원시 오디오 애셋을 배포하는 것은 때때로 오디오 라이센스에 의해 금지됩니다.
 
-One approach is to create a separate (private) repository to store the Wwise project and to enable Git LFS for raw audio files.
-However, this interferes with the typical one-repo-per-mod structure by tying multiple mod's files together in one repository.
+한 가지 접근 방식은 Wwise 프로젝트를 저장할 별도의(비공식) 저장소를 만들고 원시 오디오 파일에 대해 Git LFS를 활성화하는 것입니다.
+그러나 이는 여러 모드의 파일을 하나의 저장소에 묶어 여러 모드의 파일을 연결함으로써 일반적인 하나의 저장소 당 하나의 모드 구조를 방해합니다.
 
-Wwise offers advice on connecting to source control
-https://www.audiokinetic.com/en/library/edge/?source=Help&id=using_wwise_with_source_control_system[in their documentation].
+Wwise는 https://www.audiokinetic.com/en/library/edge/?source=Help&id=using_wwise_with_source_control_system[자체 문서]에서
+소스 제어에 연결하는 방법에 대한 조언을 제공합니다.
 
 
-== Volume Options
+== 볼륨 옵션
 
-To retrieve the user's volume options, use "Get FGGame User Settings" and "Get Float Option Value".
+사용자의 볼륨 옵션을 검색하려면 "Get FGGame User Settings" 및 "Get Float Option Value"를 사용하십시오.
 
-To find out what CVARs to use in,
-adjusting your own user setting for the value then checking your
-xref:faq.adoc#Files_GameConfig[GameUserSettings.ini file] to see what they are saved as.
+조정할 CVAR를 찾으려면,
+자신의 사용자 설정 값을 조정한 다음 해당 값이 저장된 내용을 확인하십시오.
+xref:faq.adoc#Files_GameConfig[GameUserSettings.ini 파일]에서 확인할 수 있습니다.
 
-As of the 1.0 release update, these are the CVARs for the main volume categories:
+1.0 배포 업데이트 기준으로, 주요 볼륨 카테고리에 대한 CVAR는 다음과 같습니다:
 
 // cspell:ignore Menu_Volume_Vehicules
 ```
@@ -394,23 +392,23 @@ RTPC.Menu_Volume_Vehicules
 RTPC.Menu_Volume_Weapons
 ```
 
-These values are on a scale of `0.0` (off) to `1.0` (full volume).
-If multiple categories apply, multiply them together to reach the final volume value.
-For example, the Chainsaw's volume is probably Master multiplied with Equipment multiplied with the chainsaw's specific category.
+이 값들은 `0.0`(꺼짐)에서 `1.0`(전체 볼륨)까지의 스케일로 설정됩니다.
+여러 카테고리가 적용되는 경우, 최종 볼륨 값을 얻기 위해 이들을 곱해야 합니다.
+예를 들어, 전기톱의 볼륨은 아마도 Master와 Equipment, 전기톱의 특정 범주를 곱한 값일 것입니다.
 
-You may also wish to implement your own volume slider to factor into the mix.
-The suggested approach is to create a
-xref:Development/ModLoader/Configuration.adoc[mod float config option]
-combobox ranging from 0.0 to 1.0 and multiplying it with the other relevant volume categories to use as the final volume.
+자신의 볼륨 슬라이더를 구현하고 이를 믹스에 포함시키는 것도 원할 수 있습니다.
+제안된 접근 방식은
+xref:Development/ModLoader/Configuration.adoc[모드 실수형 구성 옵션]을 생성하여
+0.0에서 1.0까지의 범위를 가지며, 이를 다른 관련 볼륨 범주와 곱하여 최종 볼륨으로 사용하는 것입니다.
 
-=== Volume with the Unreal Audio System
+=== 언리얼 오디오 시스템의 볼륨
 
-Unreal's play sound nodes take volume as a float parameter.
-Follow the steps in the main Volume Options section to combine the relevant volume slider values to obtain the final input volume.
+언리얼의 사운드 재생 노드는 볼륨을 실수형 매개변수로 사용합니다.
+주요 볼륨 옵션 섹션의 단계를 따라 관련 볼륨 슬라이더 값을 결합하여 최종 입력 볼륨을 얻으십시오.
 
-=== Volume with Wwise
+=== Wwise의 볼륨
 
-The game's master volume slider is automatically applied to any sounds played through Wwise.
-Following other base game volume sliders requires using the respective audio busses on the event.
+게임의 마스터 볼륨 슬라이더는 Wwise를 통해 재생되는 모든 사운드에 자동으로 적용됩니다.
+기타 기본 게임 볼륨 슬라이더를 따르려면 이벤트의 해당 오디오 버스를 사용해야 합니다.
 
-The RTPC system can be used to factor in arbitrary volume options from other sources.
+RTPC 시스템은 다른 소스의 임의 볼륨 옵션을 고려하는 데 사용될 수 있습니다.

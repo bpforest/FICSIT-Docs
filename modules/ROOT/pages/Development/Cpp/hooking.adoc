@@ -1,55 +1,55 @@
-= Hooking
+= 후킹
 
-Hooking is a {cpp} exclusive feature of SML that allows you to attach a custom function body to an existing function.
+후킹은 기존 함수에 맞춤 함수 본문을 첨부할 수 있게 해주는 SML의 {cpp} 전용 기능입니다.
 
-All C/{cpp} functioning hooking stuff can be found in `#include "Patching/NativeHookManager.h"`.
-All Blueprint function hook stuff can be found in `#include "Patching/BlueprintHookManager.h"`.
+모든 C/{cpp} 기능 후킹 관련 내용은 ``#include "Patching/NativeHookManager.h"``에서 찾을 수 있습니다.
+모든 블루프린트 함수 후킹 관련 내용은 ``#include "Patching/BlueprintHookManager.h"``에서 찾을 수 있습니다.
 
-== Background Information
+== 배경 정보
 
-The hooking system SML is using is just C / {cpp} function hooking, as Unreal Engine is {cpp}.
-This system can theoretically be used on any executable,
-but you need to know the location of functions in memory, which is difficult.
-For general {cpp} executables, and most UE games, you only have a .exe,
-which provides no information about where functions are located,
-so to figure that out you need very good reverse engineering skills,
-and it needs to be done on an exe-by-exe basis, so if the game updates, everything breaks.
+SML이 사용하는 후킹 시스템은 단순히 C / {cpp} 함수 후킹입니다. 언리얼 엔진은 {cpp}로 작성되었습니다.
+이 시스템은 이론적으로 모든 실행 파일에서 사용할 수 있지만,
+메모리에서 함수의 위치를 알아야 하므로 어렵습니다.
+일반적인 {cpp} 실행 파일과 대부분의 UE 게임에서는 .exe 파일만 제공되며,
+이는 함수의 위치에 대한 정보를 제공하지 않습니다.
+따라서 이를 알아내려면 매우 뛰어난 역공학 기술이 필요하며,
+게임이 업데이트되면 모든 것이 망가질 수 있습니다.
 
-What's different about Satisfactory is that it provides PDBs,
-which normally are used to determine the call stack when a crash happens,
-but they can also be used in the other direction: to find a function address based on the name.
+새티스팩토리의 차이점은 PDB를 제공한다는 것입니다.
+PDB는 일반적으로 충돌이 발생했을 때 호출 스택을 결정하는 데 사용되지만,
+이름을 기반으로 함수 주소를 찾는 데도 사용할 수 있습니다.
 
-Finding a function address based on the name is the technique that SML v1 used to implement hooking.
-The trouble there is that many functions may be stripped, or inlined, which makes {cpp} modding in general harder,
-but also complicates hooking, as methods might suddenly disappear and be embedded into the place they are called from.
+이름을 기반으로 함수 주소를 찾는 것은 SML v1이 후킹을 구현하는 데 사용한 기술입니다.
+문제는 많은 함수가 제거되거나 인라인화될 수 있다는 점입니다.
+이는 {cpp} 모딩을 일반적으로 더 어렵게 만들고, 후킹을 복잡하게 만듭니다. 메서드가 갑자기 사라지고 호출된 위치에 포함될 수 있기 때문입니다.
 
-At our request, Coffee Stain enabled Modular Build in
-https://satisfactory.wiki.gg/wiki/Patch_0.4.1.0#Modular_builds[Update 4], which means each Unreal Engine module is a dll on its own.
-This means that all functions are exported, so their address can be natively found by the linker, and also that no function can be inlined.
-Modular builds also enable the native Unreal Engine mod support (i.e., loading mod plugins from the Mods folder).
+우리의 요청에 따라 커피 스테인은
+https://satisfactory.wiki.gg/wiki/Patch_0.4.1.0#Modular_builds[업데이트 4]에서 모듈식 빌드를 활성화했습니다.
+이는 각 언리얼 엔진 모듈이 자체 dll로 되어 있음을 의미합니다. 따라서 모든 함수가 내보내지므로 주소를 링커에서 네이티브로 찾을 수 있으며, 어떤 함수도 인라인화될 수 없습니다.
+모듈식 빌드는 네이티브 언리얼 엔진 모드 지원(즉, Mods 폴더에서 모드 플러그인 로드)을 가능하게 합니다.
 
 [id="CppFunctionHooks"]
-== {cpp} Function Hooks
+== {cpp} 함수 후킹
 
-{cpp} hooks, also known as native hooks,
-allow changing the behavior of game and engine functions implemented in {cpp} without modifying their source code.
+{cpp} 후킹, 네이티브 후킹이라고도 불리며,
+소스 코드를 수정하지 않고 {cpp}로 구현된 게임 및 엔진 함수의 동작을 변경할 수 있습니다.
 
-SML's hooking interface provides distinct 3 ways of hooking functions, each of which have two types of call order.
+SML의 후킹 인터페이스는 각기 다른 3가지 방법으로 함수를 후킹할 수 있으며, 각 방법에는 두 가지 호출 순서 유형이 있습니다.
 
-If multiple hooks are attached to the same function, these hooks will then get called in the order they were registered.
+같은 함수에 여러 후킹이 첨부된 경우, 이러한 후킹은 등록된 순서대로 호출됩니다.
 
-There is a normal hook that gets called before the actual function gets called.
-Through this hook, you are able to prevent the final function call and you are also able to overwrite the return value.
-If you cancel the execution of the final function, you can prevent the following hooks from being called.
-Keep in mind that this means that another hook can prevent your hooks from being called by Satisfactory.
-The normal hook's signature is `void(TCallScope<HookFuncSignature>&, hookFuncParams)`.
-If you hook a member function, the `this` pointer is handled like a parameter and is the first parameter used.
-As long as you don't cancel the final function execution, or do it yourself by calling the scope object,
-the final function will be implicitly called after your hook function returns.
+실제 함수가 호출되기 전에 호출되는 일반 후킹이 있습니다.
+이 후킹을 통해 최종 함수 호출을 방지할 수 있으며 반환 값을 덮어쓸 수도 있습니다.
+최종 함수 실행을 취소하면 다음 후킹이 호출되지 않도록 할 수 있습니다.
+다른 후킹이 새티스팩토리에 의해 호출되지 않도록 방지할 수 있다는 점을 유의하십시오.
+일반 후킹의 시그니처는 ``void(TCallScope<HookFuncSignature>&, hookFuncParams)``입니다.
+멤버 함수를 후킹하는 경우, `this` 포인터는 매개변수처럼 처리되며 첫 번째 매개변수로 사용됩니다.
+최종 함수 실행을 취소하지 않거나 범위 객체를 호출하여 직접 실행하지 않는 한,
+최종 함수는 후킹 함수가 반환된 후 암시적으로 호출됩니다.
 
-The call scope object allows you to:
+호출 범위 객체를 통해 다음을 수행할 수 있습니다:
 
-- Cancel the final function execution (if the hook function returns void).
+- 최종 함수 실행 취소(후킹 함수가 void를 반환하는 경우).
 +
 [source,cpp]
 ----
@@ -57,160 +57,160 @@ void hook(TCallScope<...>& Scope, class* exampleClass, int exampleArg) {
  Scope.Cancel();
 }
 ----
-- Call the next hooks and the final function within your body.
-Calling the scope need to have all the same parameters as the func hook signature.
+- 후킹 내에서 다음 후킹 및 최종 함수를 호출합니다.
+범위를 호출하려면 후킹 시그니처와 동일한 매개변수가 필요합니다.
 +
 [source,cpp]
 ----
 void hook(TCallScope<int(int)>& Scope, class* exampleClass, int exampleArg) {
-	// stuff before final function call
-	int result = Scope(exampleClass, exampleArg); // call following hooks (final function might get called as long as following hooks don't cancel/overwrite it)
-	// stuff after final function call
+    // 최종 함수 호출 전 작업
+    int result = Scope(exampleClass, exampleArg); // 다음 후킹 호출(다음 후킹이 취소/덮어쓰지 않는 한 최종 함수가 호출될 수 있음)
+    // 최종 함수 호출 후 작업
 }
 ----
-- You can also override the return value before the final call (causes the final call to not occur)
+- 최종 호출 전 반환 값을 덮어쓸 수도 있습니다(최종 호출이 발생하지 않음).
 +
 [source,cpp]
 ----
 void hook(TCallScope<int(int)>& Scope, class* exampleClass, int exampleArg) {
-	// final function might get called
-	Scope.Override(customReturnValue);
-	// final function wont get called anymore
+    // 최종 함수가 호출될 수 있음
+    Scope.Override(customReturnValue);
+    // 최종 함수는 더 이상 호출되지 않음
 }
 ----
 
-Since you still want to make sure your hook gets called,
-no care about whether the final function got called or not we introduce the "after" hooks.
-These hooks get all called after the normal hook calls and only allow you to
-read the parameters as well as the resulting return value.
-That means you can't influence the final function call.
-Also, don't use the TCallScope object, instead the first parameter of your hooks signature
-is the return value followed by the function call parameters.
+후킹이 호출되도록 하려면,
+최종 함수가 호출되었는지 여부에 관계없이 "after" 후킹을 도입합니다.
+이 후킹은 일반 후킹 호출 후 모두 호출되며,
+매개변수와 결과 반환 값을 읽을 수만 있습니다.
+즉, 최종 함수 호출에 영향을 줄 수 없습니다.
+또한, TCallScope 객체를 사용하지 마십시오. 대신 후킹 시그니처의 첫 번째 매개변수는 반환 값이며,
+그 뒤에 함수 호출 매개변수가 옵니다.
 
 [source,cpp]
 ----
 void hook(int returnValue, int exampleArg) {
-	// do some stuff
+    // 작업 수행
 }
 ----
 
-=== The 2 Types of Hooks
+=== 후킹의 2가지 유형
 
-By 'hook types' we mean the different ways of attaching a hook to a function.
-Each attachment method works differently under the hood, and it's important to pay attention to the key differences between the different types of hooks.
+'후킹 유형'이란 함수에 후킹을 첨부하는 다양한 방법을 의미합니다.
+각 첨부 방법은 내부적으로 다르게 작동하며, 후킹 유형 간의 주요 차이점을 주의 깊게 살펴보는 것이 중요합니다.
 
-Be aware that the type of return values and parameters etc has nothing to do with each other or if it is a member function, you can use them in any way.
-Note that the Hook function is a std::function, which means that it can be any type a std::function can accept, such as function pointers, function pointers with bound placeholders, or even lambdas.
+반환 값 및 매개변수 유형 등은 서로 관련이 없으며, 멤버 함수인지 여부와 관계없이 사용할 수 있습니다.
+후킹 함수는 std::function이므로, std::function이 수락할 수 있는 모든 유형(예: 함수 포인터, 바인딩된 자리 표시자가 있는 함수 포인터, 람다 등)을 사용할 수 있습니다.
 
 [IMPORTANT]
 ====
-The behavior of hooks at editor time is highly unpredictable and can cause crashes.
-As such, you should ensure that your hooks are not applied at editor time,
-else you could potentially be unable to open the Unreal Editor until you edit the hook code externally.
+에디터 시간의 후킹 동작은 매우 예측할 수 없으며 충돌을 일으킬 수 있습니다.
+따라서 후킹이 에디터 시간에 적용되지 않도록 해야 합니다.
+그렇지 않으면 후킹 코드를 외부에서 편집할 때까지 언리얼 에디터를 열 수 없게 될 수 있습니다.
 
-The most convenient way is to put the `SUBSCRIBE_` macros in your code inside an `if (!WITH_EDITOR) { ... }` block:
+가장 편리한 방법은 `SUBSCRIBE_` 매크로를 코드 내 `if (!WITH_EDITOR) { ... }` 블록 안에 넣는 것입니다:
 
 [source,cpp]
 ----
 if (!WITH_EDITOR) {
-	SUBSCRIBE_METHOD(SomeClass::SomeMethod, &Hook_SomeMethod);
+    SUBSCRIBE_METHOD(SomeClass::SomeMethod, &Hook_SomeMethod);
 }
 ----
 
-Using `#if !WITH_EDITOR` and `#endif` directives are also an option, but it is not recommended: they hide errors until building shipping and confuse IDEs, making development and debugging slightly more annoying with no benefit.
+`#if !WITH_EDITOR` 및 `#endif` 지시문을 사용하는 것도 옵션이지만, 이는 빌드 시 오류를 숨기고 IDE를 혼란스럽게 하여 개발 및 디버깅을 약간 더 번거롭게 만듭니다.
 ====
 
-=== Type: SUBSCRIBE_METHOD
+=== 유형: SUBSCRIBE_METHOD
 
-The `SUBSCRIBE_METHOD`-Macro attaches a hook
-such that the code you pass will be called before the function executes.
+`SUBSCRIBE_METHOD` 매크로는 후킹을 첨부하여
+지정한 코드가 함수 실행 전에 호출되도록 합니다.
 
-If multiple mods have subscribed to the same function,
-the hooks will be called in the order they were registered.
+여러 모드가 동일한 함수에 구독된 경우,
+후킹은 등록된 순서대로 호출됩니다.
 
-Usage goes as follows:
+사용법은 다음과 같습니다:
 
 [source,cpp]
 ----
-// in target class SomeClass
+// 대상 클래스 SomeClass에서
 public:
-	int MemberFunction(int arg1);
-	static void StaticFunction();
+    int MemberFunction(int arg1);
+    static void StaticFunction();
 
-// in your code
+// 코드에서
 #include "Patching/NativeHookManager.h"
 
 void registerHooks() {
-	SUBSCRIBE_METHOD(SomeClass::MemberFunction, [](auto& scope, SomeClass* self, int arg1) {
-		// do some nice stuff there
-	});
+    SUBSCRIBE_METHOD(SomeClass::MemberFunction, [](auto& scope, SomeClass* self, int arg1) {
+        // 멋진 작업 수행
+    });
 
-	SUBSCRIBE_METHOD(SomeClass::StaticFunction, [](auto& scope) {
-		// do some nice stuff there
-	});
+    SUBSCRIBE_METHOD(SomeClass::StaticFunction, [](auto& scope) {
+        // 멋진 작업 수행
+    });
 }
 ----
 
 [WARNING]
 ====
-Hooking an overloaded function might not work as intended since the compiler has no clue what exact symbol you now want to hook.
-For that, you should have a look at the `SUBSCRIBE_METHOD_MANUAL`-Macro which allows you
-to explicitly set the symbol you want to hook.
+오버로드된 함수를 후킹하면 컴파일러가 후킹하려는 정확한 심볼을 알 수 없기 때문에 의도한 대로 작동하지 않을 수 있습니다.
+이를 위해 `SUBSCRIBE_METHOD_MANUAL` 매크로를 사용하여
+후킹하려는 심볼을 명시적으로 설정할 수 있습니다.
 ====
 
-=== Type: SUBSCRIBE_METHOD_VIRTUAL
+=== 유형: SUBSCRIBE_METHOD_VIRTUAL
 
-The `SUBSCRIBE_METHOD_VIRTUAL` macro attaches the given hook to the function passed by pointer for the given class.
+`SUBSCRIBE_METHOD_VIRTUAL` 매크로는 주어진 클래스의 포인터로 전달된 함수에 후킹을 첨부합니다.
 
-This hook only modifies the function that the virtual table for the given class points to.
-Functions in subclasses overriding the virtual function of the given class won't be modified,
-but the hook will still run if the hooked function is called by the overriding implementation (i.e. "calls super").
-If the overriding implementation of a subclass does not "call super", you have to hook said subclass separately.
-Because pure virtual functions do not have a proper function body, they cannot possibly be hooked.
+이 후킹은 주어진 클래스의 가상 테이블이 가리키는 함수만 수정합니다.
+서브클래스에서 주어진 클래스의 가상 함수를 오버라이드하는 함수는 수정되지 않지만,
+오버라이드 구현에서 후킹된 함수가 호출되면 후킹이 여전히 실행됩니다(즉, "super 호출").
+서브클래스의 오버라이드 구현이 "super 호출"을 하지 않는 경우, 해당 서브클래스를 별도로 후킹해야 합니다.
+순수 가상 함수는 적절한 함수 본문이 없으므로 후킹할 수 없습니다.
 
-Usage goes as follows:
+사용법은 다음과 같습니다:
 
 [source,cpp]
 ----
-// in target parent class SomeClass
+// 대상 부모 클래스 SomeClass에서
 public:
-	virtual int MemberFunction(int arg1);
+    virtual int MemberFunction(int arg1);
 
-// in child class SomeChild that we don't want to hook
+// 후킹하지 않으려는 자식 클래스 SomeChild에서
 // class SomeChild : public SomeClass
 public:
-	virtual int MemberFunction(int arg1) override;
+    virtual int MemberFunction(int arg1) override;
 
-// in your code
+// 코드에서
 #include "Patching/NativeHookManager.h"
 
 void registerHooks() {
-	SomeClass* SampleObject = GetMutableDefault<SomeClass>(); // For UObject derived classes, use SUBSCRIBE_UOBJECT_METHOD instead
-	SUBSCRIBE_METHOD_VIRTUAL(SomeClass::MemberFunction, SampleObject, [](auto& scope, SomeClass* self, int arg1) {
-		// do some nice stuff there
-	});
+    SomeClass* SampleObject = GetMutableDefault<SomeClass>(); // UObject 파생 클래스의 경우, SUBSCRIBE_UOBJECT_METHOD를 대신 사용
+    SUBSCRIBE_METHOD_VIRTUAL(SomeClass::MemberFunction, SampleObject, [](auto& scope, SomeClass* self, int arg1) {
+        // 멋진 작업 수행
+    });
 
-	SomeClass parent;
-	parent->MemberFunction(0); // hook gets called
-	SomeChild c;
-	c->MemberFunction(1); // hook does not get called
+    SomeClass parent;
+    parent->MemberFunction(0); // 후킹이 호출됨
+    SomeChild c;
+    c->MemberFunction(1); // 후킹이 호출되지 않음
 }
 ----
 
 
-=== Special Cases
+=== 특수 사례
 
-Depending on the type of function you are attempting to hook and what you want to do with it, you may need to make some adjustments.
+후킹하려는 함수의 유형과 수행하려는 작업에 따라 일부 조정이 필요할 수 있습니다.
 
-==== Const Functions
+==== Const 함수
 
-When hooking a `const` function you will need to prefix the "self" pointer with `const`. 
+`const` 함수를 후킹할 때는 "self" 포인터 앞에 ``const``를 추가해야 합니다.
 
 [cols="1,4a"]
 |===
-| Is Const? | Format
+| Const 여부 | 형식
 
-| Non-Const
+| 비-Const
 | `(auto& scope, SomeClass* self)`
 
 | Const
@@ -218,18 +218,18 @@ When hooking a `const` function you will need to prefix the "self" pointer with 
 
 |===
 
-==== Hooking AFTER
+==== 후킹 AFTER
 
-For "after" hooks, add the `_AFTER` postfix to the macro names.
+"after" 후킹의 경우, 매크로 이름에 `_AFTER` 접미사를 추가합니다.
 
-Be aware that the hook function signature changes accordingly and no longer needs the "scope".
+후킹 함수 시그니처가 이에 따라 변경되며 더 이상 "scope"가 필요하지 않습니다.
 
-The below examples are for non-virtual functions.
-For virtual functions, use `SUBSCRIBE_METHOD_VIRTUAL_AFTER` instead of `SUBSCRIBE_METHOD_AFTER`.
+다음 예제는 비-가상 함수에 대한 것입니다.
+가상 함수의 경우, ``SUBSCRIBE_METHOD_VIRTUAL_AFTER``를 `SUBSCRIBE_METHOD_AFTER` 대신 사용합니다.
 
 [cols="1,1,4a"]
 |===
-| Return? | Parameters? | Format
+| 반환 여부 | 매개변수 여부 | 형식
 
 | ❌
 | ❌
@@ -249,99 +249,98 @@ For virtual functions, use `SUBSCRIBE_METHOD_VIRTUAL_AFTER` instead of `SUBSCRIB
 
 |===
 
-==== FORCEINLINE Functions
+==== FORCEINLINE 함수
 
-Functions that are `FORCEINLINE` cannot be hooked.
+`FORCEINLINE` 함수는 후킹할 수 없습니다.
 
 ==== UFUNCTIONs
 
-A function being a `UFUNCTION` or not makes no difference on whether it can be hooked.
+함수가 ``UFUNCTION``인지 여부는 후킹 가능 여부에 영향을 미치지 않습니다.
 
-=== Unhooking
+=== 후킹 해제
 
 [WARNING]
 ====
-Unhooking functionality has not been extensively tested. Please report issues you encounter on the Discord.
+후킹 해제 기능은 광범위하게 테스트되지 않았습니다. 발생한 문제를 디스코드에서 보고해 주십시오.
 ====
 
-Macros will return a delegate that can be used with the
-`UNSUBSCRIBE_METHOD` or `UNSUBSCRIBE_UOBJECT_METHOD` macro respectively
-in order to unsubscribe from the function.
+매크로는
+`UNSUBSCRIBE_METHOD` 또는 `UNSUBSCRIBE_UOBJECT_METHOD` 매크로와 함께 사용할 수 있는 델리게이트를 반환하여
+함수 구독을 취소할 수 있습니다.
 
 
 [id="BpFunctionHooks"]
-== Blueprint Function Hooks
+== 블루프린트 함수 후킹
 
-Blueprint function hooking works by changing the instructions of a Blueprint UFunction so that your hook gets called at a specific point in the execution of that function.
+블루프린트 함수 후킹은 블루프린트 UFunction의 명령을 변경하여 함수 실행의 특정 지점에서 후킹이 호출되도록 합니다.
 
-Like native hooks, you can hook before and after the function execution. Unlike native hooks, you can also hook at any top-level statement in the function if you know its original instruction index (which itself requires decompiling the function - look at `DEBUG_BLUEPRINT_HOOKING` in SML's BlueprintHookManager.cpp for one way to get a JSON dump of the instructions).
-
-[WARNING]
-====
-Some blueprints (like UI blueprints) do not exist in the dedicated server build. If your mod attempts to hook such a blueprint in a dedicated server, it will crash the server. You can use the global function `IsRunningDedicatedServer()` to skip hooking in this case.
-====
+네이티브 후킹과 마찬가지로 함수 실행 전후에 후킹할 수 있습니다. 네이티브 후킹과 달리, 원래 명령 인덱스를 알고 있다면 함수의 최상위 문에서 후킹할 수도 있습니다(이는 함수를 디컴파일해야 합니다. SML의 BlueprintHookManager.cpp에서 ``DEBUG_BLUEPRINT_HOOKING``을 참조하여 명령의 JSON 덤프를 얻는 방법을 확인하십시오).
 
 [WARNING]
 ====
-Once you have hooked a blueprint function, there is currently no way to unhook it without fully exiting Satisfactory. For this reason, it is recommended that you create/have a root UGameInstanceModule that installs all blueprint function hooks on game startup, usually when DispatchLifecycleEvent is first called.
+일부 블루프린트(예: UI 블루프린트)는 전용 서버 빌드에 존재하지 않습니다. 모드가 전용 서버에서 이러한 블루프린트를 후킹하려고 하면 서버가 충돌합니다. 이 경우 후킹을 건너뛰려면 전역 함수 ``IsRunningDedicatedServer()``를 사용할 수 있습니다.
 ====
 
-The hook function signature is `void(FBlueprintHookHelper&)`.
+[WARNING]
+====
+블루프린트 함수를 후킹한 후에는 새티스팩토리를 완전히 종료하지 않고는 후킹을 해제할 수 있는 방법이 현재 없습니다. 이 때문에, 게임 시작 시 모든 블루프린트 함수 후킹을 설치하는 루트 UGameInstanceModule을 생성하는 것이 좋습니다. 일반적으로 DispatchLifecycleEvent가 처음 호출될 때 설치합니다.
+====
 
-This FBlueprintHookHelper structure provides ways to:
+후킹 함수 시그니처는 ``void(FBlueprintHookHelper&)``입니다.
 
-- Access the Context object (Blueprint instance on which the function is executing).
-- Read/write variables of the Context, local variables of the hooked blueprint function (which include its Input variables), and Output variables of the function.
-- Skip from the hooked point to the end of the function's execution (though all hooks at that location will be executed prior to this jump).
+이 FBlueprintHookHelper 구조체는 다음을 수행할 수 있는 방법을 제공합니다:
 
-To attach a blueprint hook, you need a reference to the Blueprint _class_ containing the function you want to hook. There are {cpp}-only ways to do this using LoadClass, but they require hardcoding resource paths, which is not recommended. Instead, you should add these types as member variables to your UGameInstanceModule and then assign them using the picker in the Unreal Editor.
+- 컨텍스트 객체(함수가 실행되는 블루프린트 인스턴스)에 접근합니다.
+- 컨텍스트의 변수, 후킹된 블루프린트 함수의 로컬 변수(입력 변수 포함), 함수의 출력 변수를 읽고/쓰는 기능을 제공합니다.
+- 후킹된 지점에서 함수 실행의 끝으로 건너뜁니다(이 지점의 모든 후킹이 이 점프 전에 실행됩니다).
 
-Here's an example of getting a reference to the `BPW_MapMenu` class for hooking (this widget is the left-hand-side menu in the map screen of Satisfactory that lists all the map markers):
+블루프린트 후킹을 첨부하려면 후킹하려는 함수가 포함된 블루프린트 __클래스__에 대한 참조가 필요합니다. LoadClass를 사용하여 {cpp} 전용 방법으로 이를 수행할 수 있지만, 리소스 경로를 하드코딩해야 하므로 권장되지 않습니다. 대신, 이러한 유형을 UGameInstanceModule의 멤버 변수로 추가한 다음 언리얼 에디터에서 선택기를 사용하여 할당해야 합니다.
 
-First, determine the native parent class of the widget. A quick way to see this is to find the blueprint you wish to hook in the Content Browser of the Unreal Editor and hover over it to find the Native Parent Class line:
+다음은 후킹을 위한 `BPW_MapMenu` 클래스 참조를 얻는 예제입니다(이 위젯은 새티스팩토리의 지도 화면에서 모든 지도 마커를 나열하는 왼쪽 메뉴입니다):
 
-image:Development/Cpp/hooking/BPW_MapMenuHover.png[Hovering over BPW_MapMenu]
+먼저, 위젯의 네이티브 부모 클래스를 결정합니다. 이를 빠르게 확인하는 방법은 언리얼 에디터의 콘텐츠 브라우저에서 후킹하려는 블루프린트를 찾아 마우스를 올려 네이티브 부모 클래스 줄을 찾는 것입니다:
 
-Next, define a `TSoftClassPtr` property on a {cpp}-backed Root Game Instance Module.
-Use the Native Parent Class of the blueprint class you wish to hook as the generic type.
-Make it an EditAnywhere UPROPERTY so it will be available in the Unreal Editor.
-Optionally, assign a `Category` name to help organize the property if you plan to hook multiple things.
+image:Development/Cpp/hooking/BPW_MapMenuHover.png[BPW_MapMenu 위에 마우스 올리기]
 
+다음으로, {cpp} 지원 루트 게임 인스턴스 모듈에 `TSoftClassPtr` 속성을 정의합니다.
+후킹하려는 블루프린트 클래스의 네이티브 부모 클래스를 제네릭 유형으로 사용합니다.
+이를 EditAnywhere UPROPERTY로 만들어 언리얼 에디터에서 사용할 수 있도록 합니다.
+여러 항목을 후킹할 계획이라면 속성을 구성하는 데 도움이 되도록 `Category` 이름을 선택적으로 할당하십시오.
 
 [source,cpp]
 ----
-	UPROPERTY(EditAnywhere, Category = "UI Widget Types")
-	TSoftClassPtr<UFGUserWidget> BPW_MapMenuClass;
+    UPROPERTY(EditAnywhere, Category = "UI Widget Types")
+    TSoftClassPtr<UFGUserWidget> BPW_MapMenuClass;
 ----
 
-Next, close the editor and rebuild the project for Development Editor,
-since you just changed the class and field structure of your mod.
-After the build finishes, reopen the editor.
+다음으로, 에디터를 닫고 프로젝트를 Development Editor로 다시 빌드합니다.
+클래스 및 필드 구조를 변경했기 때문입니다.
+빌드가 완료되면 에디터를 다시 엽니다.
 
-If your mod doesn't have a blueprint Root Instance Module yet,
-create one by adding a new blueprint to your mod that uses your {cpp} Root Instance Module class as its base class.
-If your mod already has an existing blueprint-implemented Root Instance Module, reparent it to your {cpp} class,
-or use a submodule instead (remember, there can only be one root module of each type).
+모드에 블루프린트 루트 인스턴스 모듈이 아직 없는 경우,
+모드에 {cpp} 루트 인스턴스 모듈 클래스를 기본 클래스로 사용하는 새 블루프린트를 추가하여 만듭니다.
+모드에 기존 블루프린트 구현 루트 인스턴스 모듈이 있는 경우, 이를 {cpp} 클래스로 재부모하거나,
+대신 서브모듈을 사용합니다(각 유형의 루트 모듈은 하나만 있을 수 있습니다).
 
-Regardless, open your Root Instance Module blueprint in Unreal Editor.
-Find the appropriate row in the module blueprint's Details section under the Category you used, click the dropdown, and find/select the type:
+어쨌든, 언리얼 에디터에서 루트 인스턴스 모듈 블루프린트를 엽니다.
+모듈 블루프린트의 세부 정보 섹션에서 사용한 카테고리 아래의 적절한 행을 찾아 드롭다운을 클릭하고 유형을 찾아 선택합니다:
 
-image:Development/Cpp/hooking/BPW_MapMenuTypeSelected.png[BPW_MapMenu selected]
+image:Development/Cpp/hooking/BPW_MapMenuTypeSelected.png[BPW_MapMenu 선택됨]
 
-The class is now availabe to your module for hooking.
+이제 클래스가 후킹을 위해 모듈에서 사용할 수 있습니다.
 
 [WARNING]
 ====
-It is possible that a class might not be fully loaded by the game before your mod needs it.
-Call `LoadSynchronous` on each TSoftClassPtr in your mod's initialization to ensure it is loaded.
+클래스가 게임이 필요로 하기 전에 완전히 로드되지 않을 수 있습니다.
+모드 초기화 시 각 TSoftClassPtr에서 ``LoadSynchronous``를 호출하여 로드되었는지 확인합니다.
 ====
 
-Now that we have a reference to the blueprint class, we can hook its functions.
-If you don't already know the name of the blueprint function you wish to hook, these can be found by opening the blueprint in the Unreal Editor, going to the Graph view, and then viewing the FUNCTIONS accordion under the My Blueprint tab:
+이제 블루프린트 클래스에 대한 참조가 있으므로 함수 후킹을 수행할 수 있습니다.
+후킹하려는 블루프린트 함수의 이름을 아직 모르는 경우, 이는 언리얼 에디터에서 블루프린트를 열고 그래프 보기로 이동한 다음 내 블루프린트 탭 아래의 FUNCTIONS 아코디언을 확인하여 찾을 수 있습니다:
 
-image:Development/Cpp/hooking/BPW_MapMenuFunctions.png[BPW_MapMenu functions]
+image:Development/Cpp/hooking/BPW_MapMenuFunctions.png[BPW_MapMenu 함수]
 
-Now you can create the actual hook in {cpp}. Make sure you have the proper includes:
+이제 실제 후킹을 {cpp}로 생성할 수 있습니다. 적절한 포함 파일이 있는지 확인합니다:
 
 [source,cpp]
 ----
@@ -349,7 +348,7 @@ Now you can create the actual hook in {cpp}. Make sure you have the proper inclu
 #include "Patching/BlueprintHookHelper.h"
 ----
 
-Get a reference to the UBlueprintHookManager like so: 
+다음과 같이 UBlueprintHookManager에 대한 참조를 얻습니다:
 
 [source,cpp]
 ----
@@ -358,85 +357,85 @@ UBlueprintHookManager* hookManager = GEngine->GetEngineSubsystem<UBlueprintHookM
 
 [WARNING]
 ====
-If you attempt to get the UBlueprintHookManager extremely early in startup, the game will crash.
-It will be available by the time DispatchLifecycleEvent is called on your UGameInstanceModule.
-Remember that DispatchLifecycleEvent is called three times with three different phase values as the game initializes
-- be sure to only create the hooks in one of these phases (ELifecyclePhase::CONSTRUCTION should be fine).
+시작 시 매우 일찍 UBlueprintHookManager를 얻으려고 하면 게임이 충돌합니다.
+UGameInstanceModule에서 DispatchLifecycleEvent가 호출될 때까지 사용할 수 있습니다.
+DispatchLifecycleEvent는 게임이 초기화될 때 세 가지 다른 단계 값으로 세 번 호출된다는 점을 기억하십시오.
+이 단계 중 하나에서만 후크를 생성해야 합니다(ELlifecyclePhase::CONSTRUCTION이 괜찮을 것입니다).
 ====
 
-Hooks can be created by calling `HookBlueprintFunction` on the hook manager:
+후킹은 다음과 같이 ``HookBlueprintFunction``을 호출하여 생성할 수 있습니다:
 
 [source,cpp]
 ----
 hookManager->HookBlueprintFunction(
-	BPW_MapMenuClass->FindFunctionByName(TEXT("AddActorRepresentationToMenu")), // Will crash if you typo the function name
-	[](FBlueprintHookHelper& helper) {
-		// Hook code here
-	},
-	EPredefinedHookOffset::Start );
-	// EPredefinedHookOffset::Start hooks just before the function executes.
-	// For a hook just before the function returns, use EPredefinedHookOffset::Return
+    BPW_MapMenuClass->FindFunctionByName(TEXT("AddActorRepresentationToMenu")), // 함수 이름을 잘못 입력하면 충돌합니다.
+    [](FBlueprintHookHelper& helper) {
+        // 후킹 코드
+    },
+    EPredefinedHookOffset::Start );
+    // EPredefinedHookOffset::Start는 함수가 실행되기 직전에 후킹합니다.
+    // 함수가 반환되기 직전에 후킹하려면 EPredefinedHookOffset::Return을 사용합니다.
 ----
 
 [WARNING]
 ====
-You can create hooks at nearly-arbitrary points in the function by passing the integer offset of the statement where you'd like to hook instead of an EPredefinedHookOffset. Only do this if you know exactly what you're doing and why!
+함수의 거의 임의의 지점에서 후킹을 생성할 수 있지만, EPredefinedHookOffset 대신 명령이 실행될 위치의 정수 오프셋을 전달하여 후킹을 생성할 수 있습니다. 정확히 무엇을 하고 왜 하는지 알고 있는 경우에만 이 작업을 수행하십시오!
 ====
 
-FBlueprintHookHelper has all the functionality you should need if you wish to modify the state of the blueprint or function execution. To get and/or set the values of variables, use one of:
+FBlueprintHookHelper는 블루프린트 또는 함수 실행 상태를 수정하려는 경우 필요한 모든 기능을 제공합니다. 변수의 값을 가져오거나 설정하려면 다음 중 하나를 사용하십시오:
 
 [source,cpp]
 ----
-// For reading/writing variables on the blueprint that is being hooked (in the example above, this means member variables of BPW_MapMenu)
+// 후킹된 블루프린트의 변수(위 예제에서는 BPW_MapMenu의 멤버 변수)를 읽고/쓰는 경우
 TSharedRef<FBlueprintHookVariableHelper_Context> contextHelper = helper.GetContextVariableHelper(); 
 
-// For reading/writing Input variables of the function, as well as any local variables the function is using for execution (but you have to know their names by decompiling the function)
+// 함수의 입력 변수 및 함수 실행에 사용하는 로컬 변수를 읽고/쓰는 경우(변수 이름을 알고 있어야 함)
 TSharedRef<FBlueprintHookVariableHelper_Local> localHelper = helper.GetLocalVariableHelper();
 
-// For reading/writing Output variables of the function
+// 함수의 출력 변수를 읽고/쓰는 경우
 TSharedRef<FBlueprintHookVariableHelper_Out> outHelper = helper.GetOutVariableHelper();
 ----
 
-Check the header comments on each `Get*VariableHelper` method to learn which helper to use in what situation.
-Here is a quick example:
+각 `Get*VariableHelper` 메서드의 헤더 주석을 확인하여 어떤 상황에서 어떤 헬퍼를 사용해야 하는지 알아보세요.
+다음은 간단한 예제입니다:
 
 [source,cpp]
 ----
 TSharedRef<FBlueprintHookVariableHelper_Local> localHelper = helper.GetLocalVariableHelper();
 ERepresentationType* representationType = localHelper->GetEnumVariablePtr<ERepresentationType>(TEXT("representationType"));
 int* intValuePtr = localHelper->GetVariablePtr<FIntProperty>(TEXT("someIntValue"));
-*intValuePtr = 42; // You can write values to variables simply by using the returned pointers
+*intValuePtr = 42; // 반환된 포인터를 사용하여 변수에 값을 쓸 수 있습니다.
 ----
 
 
-== Protected/Private Function Hooking
+== 보호/비공개 함수 후킹
 
-If the function you are attempting to hook is protected or private to that specific class, you must use the `friend` declaration.
+후킹하려는 함수가 특정 클래스에 보호되거나 비공개된 경우, `friend` 선언을 사용해야 합니다.
 
-This also means that you can only hook this function from a class, not global scope.
+이는 클래스에서만 후킹할 수 있음을 의미합니다. 전역 범위에서는 불가능합니다.
 
-For example, let's assume you have a class called `MyWatcher` in a namespace called `MyMod`, and you wish to hook the function `EnterChatMessage` from `AFGPlayerController` class.
+예를 들어, ``MyMod``라는 네임스페이스에 ``MyWatcher``라는 클래스가 있고, `AFGPlayerController` 클래스의 `EnterChatMessage` 함수를 후킹하려는 경우를 가정해 보겠습니다.
 
-The suggested method of doing this is with xref:Development/ModLoader/AccessTransformers.adoc[Access Transformers].
-In your AccessTransformers.ini file you would create the entry:
+권장되는 방법은 xref:Development/ModLoader/AccessTransformers.adoc[접근 변환기]를 사용하는 것입니다.
+AccessTransformers.ini 파일에 다음 항목을 생성합니다:
 
 [source,ini]
 ----
 Friend=(Class="AFGPlayerController", FriendClass="MyWatcher")
 ----
 
-Alternatively, you can edit the header files directly. This is not advisable for reasons described in more detail on the xref:Development/ModLoader/AccessTransformers.adoc[Access Transformers] page.
-You must first edit the `FGPlayerController.h` header and add the following block of code to it:
+또는 헤더 파일을 직접 편집할 수도 있습니다. 이는 xref:Development/ModLoader/AccessTransformers.adoc[접근 변환기] 페이지에서 자세히 설명된 이유로 권장되지 않습니다.
+먼저 `FGPlayerController.h` 헤더를 편집하고 다음 코드 블록을 추가합니다:
 
 [source,cpp]
 ----
 namespace MyMod
 {
-	class MyWatcher;
+    class MyWatcher;
 }
 ----
 
-Then you have to add the `friend` declaration to the class itself, in result, it should look like this:
+그런 다음 클래스 자체에 `friend` 선언을 추가해야 합니다. 결과적으로 다음과 같이 보일 것입니다:
 
 [source,cpp]
 ----
@@ -444,9 +443,9 @@ Then you have to add the `friend` declaration to the class itself, in result, it
 
 class FACTORYGAME_API AFGPlayerController : public AFGPlayerControllerBase
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 public:
-	friend MyMod::MyWatcher;
+    friend MyMod::MyWatcher;
 
 ...
 }

@@ -1,15 +1,15 @@
-= Vanilla Dedicated Server API
+= 전용 서버 바닐라 API
 
-The 1.0 release introduced two API endpoints to the base game's dedicated servers.
+1.0 배포에서는 기본 게임의 전용 서버에 두 개의 API 엔드포인트가 도입되었습니다.
 
-* **Dedicated Server Lightweight Query API**:
-  a simple UDP protocol designed for polling the server state through UDP continuously with minimal overhead.
-* **Dedicated Server HTTPS API**:
-  a HTTPS server serving the requests to retrieve the more detailed state of the server, and control it's behavior.
+* **전용 서버 경량 쿼리 API**:
+  UDP를 통해 서버 상태를 지속적으로 폴링하기 위해 설계된 간단한 UDP 프로토콜로, 최소한의 오버헤드를 제공합니다.
+* **전용 서버 HTTPS API**:
+  서버의 보다 자세한 상태를 검색하고 동작을 제어하기 위한 요청을 제공하는 HTTPS 서버입니다.
 
-The documentation for these APIs is provided in the
-`DedicatedServerAPIDocs.md` markdown file
-in the `CommunityResources` folder of your
-xref:faq.adoc#Files_GameInstall[game install directory].
-In the interest of keeping this documentation up-to-date
-we will not be duplicating the API documentation here.
+이 API에 대한 문서는
+`DedicatedServerAPIDocs.md` 마크다운 파일에 제공되며
+`CommunityResources` 폴더의
+xref:faq.adoc#Files_GameInstall[게임 설치 디렉터리]에 위치합니다.
+이 문서의 최신 상태를 유지하기 위해
+여기에서 API 문서를 중복하지 않을 것입니다.

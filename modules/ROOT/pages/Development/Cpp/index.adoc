@@ -1,106 +1,106 @@
-= C++ Modding
+= C++ 모딩
 
-Utilizing {cpp} code in your mod allows access to a much wider variety of game systems and features.
-Furthermore, {cpp} code is often compiled into far more performance friendly code than its Blueprint equivalent.
+모드에서 {cpp}를 활용하면 게임 시스템과 기능에 훨씬 더 다양하게 접근할 수 있게 해 줍니다.
+심지어 {cpp} 코드는 동일한 블루프린트보다 더욱 성능 친화적으로 컴파일됩니다.
 
-However, {cpp} systems have their own shortcomings as well.
-Writing a mod with {cpp} does not mean replacing all of your Blueprint assets with {cpp} code.
-The best mods are implemented with a careful combination of both {cpp} and Blueprint code.
+그러나, {cpp} 시스템도 자체적인 단점은 있습니다.
+{cpp}로 모드를 작성한다고 해서 모든 블루프린트 애셋을 {cpp} 코드로 바꾸는 것은 아닙니다.
+최고의 모드는 {cpp}와 블루프린트 코드를 신중하게 조합하여 구현합니다.
 
-== Understanding Blueprint vs C++
+== 블루프린트와 C++ 이해하기
 
-Alex Forsythe has an excellent writeup (and corresponding video)
-that explains the different roles of {cpp} and blueprint in an Unreal project.
-Alex's summary of the article:
+Alex Forsythe는 언리얼 프로젝트에서 {cpp}와 청사진의
+다양한 역할을 설명하는 훌륭한 글(및 해당 동영상)을 보유하고 있습니다.
+알렉스의 기사 요약:
 
+==== 
+둘 중 하나만 선택해야 하는 것은 아닙니다.
+C++와 청사진의 차이점, 공통점, 그리고 이를 효과적으로 함께 사용하는 방법을 알아보십시오.
 ====
-It's not an either/or decision.
-Learn what makes C++ and Blueprints different, what they have in common, and how to use them together effectively.
-====
 
-You can find the article (and a link to the video) http://awforsythe.com/unreal/blueprints_vs_cpp/[here].
-You should at the very least watch the video before proceeding.
-Reading the article is also highly recommended.
+기사(및 영상 링크)는 http://awforsythe.com/unreal/blueprints_vs_cpp/[여기]에서 찾을 수 있습니다.
+진행하기 전에 최소한 비디오를 시청해야 합니다.
+기사를 읽는 것도 강력히 추천합니다.
 
-== Requirements
+== 요구사항
 
-Well, since this is a very advanced topic, we recommend you to learn {cpp}
-and {cpp} for Unreal Engine first.
+흠, 이 주제는 매우 심층적이므로, {cpp} 및 언리얼 엔진을 위한
+{cpp}를 먼저 배우고 오는 것을 추천합니다.
 
-We have compiled a list of some helpful learning resources xref:Development/index.adoc#_resources[here], but you will probably want to search out some more on your own.
+xref:Development/index.adoc#_자원[여기]에 유용한 학습 자료 목록을 작성했지만, 직접 더 찾아보시는 것이 좋을 것 같습니다.
 
-Here is a list of some concepts you should learn before going further:
+다음은 더 나아가기 전에 배워야 할 몇 가지 개념 목록입니다:
 
-{Cpp} specific:
+{Cpp} 세부:
 
-* If/Else
-* Loop Structures
+* 만일/아니면
+* 반복 구조
 ** While
 ** For
 ** For Each
-* Lambda Functions
-* Pointers
-* References
+* 람다 함수
+* 포인터
+* 참조
 
-{Cpp} concepts which are used but are implemented differently in Unreal Engine:
+사용되지만 언리얼 엔진에서 구현 방식이 다른 {Cpp} 개념들:
 
 - std::string
 - std::vector
-- std::set (And the differences between it and std::vector)
-- Smart Pointers
+- std::set (그리고 그것과 std::vector의 차이점)
+- 스마트 포인터
 
-The Unreal Engine synonyms for the aforementioned concepts (the UE implementation of them):
+앞서 언급한 개념들의 언리얼 엔진 동의어(UE 구현):
 
 - std::string -> FString
 - std::vector -> TArray
 - std::set -> TSet
 - std::(unordered_)set<T> -> TSet<T>
 - std::(unordered_)map<K, V> -> TMap<K, V>
-- Unreal Smart Pointers
+- 언리얼 스마트 포인터
 
-Other stuff added only by UE or general programming concepts:
+UE 또는 일반 프로그래밍 개념으로만 추가되는 기타 항목:
 
-- What a UObject/UProperty/UFunction (reflection system) is
-- What an AActor is
-- What garbage collection means, how it works, and how to make use of it
+- UObject/UProperty/UFunction(반사 시스템)이란 무엇인지
+- AActor란 무엇인지
+- 가비지 컬렉션의 의미, 작동 방식, 사용 방법
 
-If you have a good understanding of most these concepts, then you have a very solid foundation from which to start modding. If so, this is likely not your first time working on a project or mod like this, and you'll be able to judge what content you can skip over and learn when needed.
+이 개념들에 대한 이해가 충분하다면, 모딩을 시작할 수 있는 매우 탄탄한 기초를 갖추고 있는 것입니다. 그렇다면, 이 프로젝트나 모드 작업이 처음이 아닐 것이며, 어떤 내용을 건너뛰고 필요할 때 배우는지를 판단할 수 있을 것입니다.
 
-We can not understate the value of learning through doing. Especially if just starting out with these concepts, we suggest that instead of immediately beginning working on a mod, taking the time to make a separate Unreal {cpp} project for testing and practice. Try out working with the concepts mentioned above before trying to make use of them in a mod.
+우리는 실습을 통한 학습의 가치를 과소평가할 수 없습니다. 특히 이러한 개념을 처음 접하는 경우, 모드 작업을 즉시 시작하기보다는 테스트 및 연습을 위한 별도의 언리얼 {cpp} 프로젝트를 만드는 시간을 가지는 것을 권장합니다. 위에서 언급한 개념들을 사용하기 전에 시도해 보십시오.
 
-The following resources may be helpful for you in the creation of your {cpp} mods:
+다음 자원은 {cpp} 모드를 만드는 데 도움이 될 수 있습니다:
 
-* CSS has been kind enough to provide us with the Satisfactory {cpp} headers.
-You can find them in the `CommunityResources` folder of your install.
-* You can find the `.pdb` files for the game in your install's Binaries folder.
+* CSS는 새티스팩토리 {cpp} 헤더를 제공해 주었습니다.
+설치의 `CommunityResources` 폴더에서 찾을 수 있습니다.
+* 게임의 `.pdb` 파일은 설치의 Binaries 폴더에서 찾을 수 있습니다.
 
-== Dll, pdb & more
+== Dll, pdb 그리고 더
 
-When you compile your {cpp} code into the final binaries (stuff that actually is used by the game) you will get a Dynamic Link Library (`.dll`) file.
-When you distribute your mod, you will have to make sure it includes this file. You will need to add it also to your `data.json` as an `sml_mod` object. More info on the upload process can be found on the xref:UploadToSMR.adoc[Uploading to SMR page.]
+{cpp} 코드를 최종 바이너리(게임에서 실제로 사용되는 것)로 컴파일하면 동적 링크 라이브러리(`.dll`) 파일이 생성됩니다.
+모드를 배포할 때 이 파일을 포함해야 합니다. 또한 ``data.json``에 `sml_mod` 객체로 추가해야 합니다. 업로드 과정 대한 자세한 내용은 xref:UploadToSMR.adoc[SMR에 업로드 페이지]에서 확인할 수 있습니다.
 
-This file comes with a companion, the Program Database (`.pdb`) file.
-This file holds additional information about the original source code and allows you to debug your code more easily in runtime.
-You can ship this file with your mod, but don't need to.
-If you do decide to ship it, it doesn't needed to be added to the `data.json` file.
+이 파일에는 프로그램 데이터베이스(`.pdb`) 파일이 함께 제공됩니다.
+이 파일은 원본 소스 코드에 대한 추가 정보를 보유하고 있으며, 런타임에서 코드를 더 쉽게 디버깅할 수 있게 해줍니다.
+이 파일을 모드와 함께 배포할 수 있지만, 반드시 필요하지는 않습니다.
+배포하기로 결정한 경우, `data.json` 파일에 추가할 필요는 없습니다.
 
-We won't go into detail about the general technical stuff aspects of {cpp} in this documentation.
-If you want to learn more about that, there are plenty of good resources available elsewhere on the Internet.
-In order to write {cpp} mods, you will require both general {cpp} knowledge, and knowledge about how {cpp} applies to Unreal Engine systems.
-You can find a quick guide to the Unreal portion in the https://docs.unrealengine.com/en-US/Programming/Introduction/index.html[Unreal Documentation].
+이 문서에서는 {cpp}의 일반적인 기술적 측면에 대해 자세히 설명하지 않을 것입니다.
+더 많은 정보를 원하신다면, 인터넷에 좋은 자원이 많이 있습니다.
+{cpp} 모드를 작성하려면 일반 {cpp} 지식과 {cpp}가 언리얼 엔진 시스템에 어떻게 적용되는지에 대한 지식이 필요합니다.
+언리얼 부분에 대한 빠른 가이드는 https://docs.unrealengine.com/en-US/Programming/Introduction/index.html[언리얼 문서]에서 찾을 수 있습니다.
 
-== Modding Capabilities
+== 모딩 기능
 
-As Satisfactory is packaged as a modular build and the developers distribute the headers and `pdb`s for us,
-and mods are loaded as Unreal plugins,
-there is very little of the game that {cpp} mods _can't_ modify.
-It usually just comes down to how much patience you have to figure out how to do it.
+새티스팩토리는 모듈식 빌드로 패키징되어 있으며 개발자들이 헤더와 ``pdb``를 배포해 주기 때문에,
+모드는 언리얼 플러그인으로 로드되므로,
+{cpp} 모드가 수정할 수 없는 게임의 부분은 거의 없습니다.
+보통은 어떻게 하는지를 알아내는 데 필요한 인내심의 문제입니다.
 
-If you experience a crash or some undefined behavior while using a function from Unreal Engine or Satisfactory,
-you should read the doc comment that has been added to the function.
-Sometimes the comment will tell you that it doesn't work
-and suggest you use the workaround written in the comment,
-or it may contain valuable context about how the function can be used.
+언리얼 엔진이나 새티스팩토리의 함수 사용 중 충돌이나 정의되지 않은 동작이 발생하면,
+해당 함수에 추가된 문서 주석을 읽어보아야 합니다.
+때때로 주석은 작동하지 않는다고 알려주고,
+주석에 작성된 해결 방법을 사용하라고 제안할 수 있으며,
+함수를 사용하는 방법에 대한 귀중한 맥락을 포함할 수 있습니다.
 
-If it still doesn't work, and you are **absolutely sure** that you are using it correctly,
-contact the SML developers on the Discord for further advice.
+그래도 작동하지 않고, **절대적으로** 올바르게 사용하고 있다고 확신하는 경우,
+추가 조언을 위해 디스코드에서 SML 개발자에게 문의하십시오.

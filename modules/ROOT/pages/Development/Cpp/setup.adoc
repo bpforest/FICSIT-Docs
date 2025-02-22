@@ -1,103 +1,97 @@
-= C++ Setup
+= C++ 설정
 
 [WARNING]
 ====
-This page is in the process of being updated.
+이 페이지는 업데이트 중입니다.
 ====
 
-In order to get started with C++ modding, you should first begin by performing the setup the project for a Blueprint-based modding project, as shown in the xref:Development/BeginnersGuide/project_setup.adoc[Getting Started guide].
-This guide assumes that you have already installed all required dependencies and followed the setup process described there.
+C++ 모딩을 시작하려면 먼저 블루프린트 기반 모딩 프로젝트를 위한 설정을 수행해야 합니다. 이는 xref:Development/BeginnersGuide/project_setup.adoc[시작 가이드]에 설명되어 있습니다.
+이 가이드는 필요한 모든 의존성을 설치하고 그곳에 설명된 설정 과정을 따랐다고 가정합니다.
 
-== Background Information
+== 배경 정보
 
-To build {cpp} code, Unreal uses its own written build pipeline called the "Unreal Build Tool" (aka. UBT).
-The UBT then does the job of copying files, running the "Unreal Header Tool" (UHT), and building for the desired platform automatically.
-The UHT is a tool which analyzes the source code you have written and replaces specific macros, like the `UFUNCTION`-Macro, with automatically generated code.
-It also generates separate files containing even more additional automatically generated code for you.
+{cpp} 코드를 빌드하기 위해 언리얼은 "언리얼 빌드 도구"(UBT)라고 불리는 자체 빌드 파이프라인을 사용합니다.
+UBT는 파일 복사, "언리얼 헤더 도구"(UHT) 실행 및 원하는 플랫폼에 대한 빌드를 자동으로 수행합니다.
+UHT는 작성한 소스 코드를 분석하고 `UFUNCTION` 매크로와 같은 특정 매크로를 자동으로 생성된 코드로 대체하는 도구입니다.
+또한 추가로 자동 생성된 코드를 포함하는 별도의 파일을 생성합니다.
 
-The UBT will run in the "Development Editor" configuration automatically
-when you open the `.uproject` file in the editor or when you run a build in the Visual Studio solution file.
+UBT는 에디터에서 `.uproject` 파일을 열거나 Visual Studio 솔루션 파일에서
+빌드를 실행할 때 자동으로 "Development Editor" 구성에서 실행됩니다.
 
-UBT uses multiple files placed into your source code for configuration of the source component you make.
-An overview of these files is provided below.
+UBT는 소스 구성 요소를 구성하기 위해 소스 코드에 배치된 여러 파일을 사용합니다.
+이 파일들에 대한 개요는 아래에 제공됩니다.
 
-=== Targets
+=== 대상
 
-Targets are like UBT "programs" that define how the game gets packaged.
-As of the 1.0 release, mods no longer define their own Targets, instead using the base game's targets,
-which you can find in `Source/TargetName.Target.cs`.
-You should not modify these target files.
+대상은 게임이 패키징되는 방식을 정의하는 UBT "프로그램"과 같습니다.
+1.0 배포 기준으로, 모드는 더 이상 자체 대상을 정의하지 않고 기본 게임의 대상을 사용합니다.
+이 대상은 ``Source/TargetName.Target.cs``에서 찾을 수 있습니다.
+이 대상 파일을 수정하지 마십시오.
 
-=== Modules
+=== 모듈
 
-`Modules` are UBTs components of programs. Each target depends on at least one `module`.
-A `module` can be a library, Unreal Engine itself, plugins, the headers of Satisfactory, or your mod code.
-Most `modules` are located within their own folders in the `/Source` folder of the project.
+``모듈``은 UBT의 프로그램 구성 요소입니다. 각 대상은 최소한 하나의 ``모듈``에 의존합니다.
+``모듈``은 라이브러리, 언리얼 엔진 자체, 플러그인, 새티스팩토리의 헤더 또는 모드 코드를 포함할 수 있습니다.
+대부분의 ``모듈``은 프로젝트의 `/Source` 폴더 내에 각자의 폴더에 위치합니다.
 
-For example, the Satisfactory headers used to reference functions and data structures
-are contained in the "FactoryGame" `module` located under `/Source/FactoryGame`.
-Each `module` folder then has again a configuration file in its root folder.
-For the "FactoryGame" `module`, this will be the file `/Source/FactoryGame/FactoryGame.Build.cs`.
+예를 들어, 함수 및 데이터 구조를 참조하는 데 사용되는 새티스팩토리 헤더는
+`/Source/FactoryGame` 아래에 위치한 "FactoryGame" ``모듈``에 포함되어 있습니다.
+각 `모듈` 폴더는 다시 루트 폴더에 구성 파일을 가지고 있습니다.
+"FactoryGame" `모듈`의 경우, 이 파일은 ``/Source/FactoryGame/FactoryGame.Build.cs``입니다.
 
-Module configuration files allow for writing custom code to control how your module is compiled.
-Unreal uses C# to implement this configuration system.
+모듈 구성 파일은 모듈이 어떻게 컴파일되는지를 제어하는 맞춤 코드를 작성할 수 있게 해줍니다.
+언리얼은 이 구성 시스템을 구현하기 위해 C#을 사용합니다.
 
-Example uses cases include:
+예제 사용 사례는 다음과 같습니다:
 
-- Specifying dependencies to Satisfactory, Unreal Engine, or third-party code
-- Doing defines for public/private build based on env vars
-- Adding external .lib files
-- Calculating information (such as build ID) from the state of the file system
+- 새티스팩토리, 언리얼 엔진 또는 제3자 코드에 대한 의존성 지정
+- 환경 변수에 따라 공개/비공개 빌드를 위한 정의 수행
+- 외부 .lib 파일 추가
+- 파일 시스템의 상태에서 정보(예: 빌드 ID) 계산
 
-== Using the Alpakit Template
+== 알파킷 템플릿 사용하기
 
-The Alpakit Create Mod wizard contains a template
-that creates most of the files mentioned in the below sections automatically.
-You can learn more about the wizard on the
-xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc[Plugin Setup and Game World Module] page.
+알파킷 모드 생성 마법사는 아래 섹션에서 언급된
+대부분의 파일을 자동으로 생성하는 템플릿을 포함하고 있습니다.
+마법사에 대한 자세한 내용은 xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc[플러그인 설정 및 게임 월드 모듈]
+페이지에서 확인할 수 있습니다.
 
-== Creating the Mod-Module From Scratch
+== 처음부터 모드 모듈 만들기
 
-To begin adding {cpp} code to your mod you'll have to create a Module build configuration file.
+모드에 {cpp} 코드를 추가하려면 모듈 빌드 구성 파일을 생성해야 합니다.
 
-Navigate to your mod's folder, `Mods/YourModReference/`, where your 'YourModReference.uplugin' file is located.
-Create a new folder named `Source` and within it a subfolder named `YourModReference`.
-As a reminder, the concept of a mod reference is explained xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc[here].
-Within this folder, you should create a new file called `YourModReference.Build.cs`.
-You can do this by creating a new text file and then changing the extension to a `.cs` file, for example.
-If you chose to create the file in this manner, we suggest you turn on
-https://www.howtogeek.com/205086/beginner-how-to-make-windows-show-file-extensions/[showing file name extensions]
-to assist with this.
+모드의 폴더인 ``Mods/모드참조/``로 이동하십시오. '모드참조.uplugin' 파일이 위치한 곳입니다.
+``Source``라는 새 폴더를 만들고 그 안에 ``모드참조`` 하위 폴더를 만드십시오.
+모드 참조의 개념은 xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc[여기]에 설명되어 있습니다.
+이 폴더 내에 ``모드참조.Build.cs``라는 새 파일을 생성해야 합니다.
+새 텍스트 파일을 만들고 확장자를 `.cs` 파일로 변경하여 생성할 수 있습니다.
+이 방법으로 파일을 생성하기로 선택한 경우, 파일 이름 확장자를 표시하는 것을 권장합니다.
 
-Within this new file you will need to add the following configuration text.
+이 새 파일 내에 다음 구성 텍스트를 추가해야 합니다.
 
-The latest version of this template can be found in the
-https://github.com/satisfactorymodding/SatisfactoryModLoader/blob/master/Mods/Alpakit/Templates/CPPAndBlueprintBlank/Source/PLUGIN_NAME/PLUGIN_NAME.Build.cs[Starter Project Repository as an Alpakit template].
+이 템플릿의 최신 버전은
+https://github.com/satisfactorymodding/SatisfactoryModLoader/blob/master/Mods/Alpakit/Templates/CPPAndBlueprintBlank/Source/PLUGIN_NAME/PLUGIN_NAME.Build.cs[시작 프로젝트 저장소에서 알파킷 템플릿으로 확인할 수 있습니다].
 
-Make sure to replace all instances of `PLUGIN_NAME` with your actual mod reference.
+모든 `PLUGIN_NAME` 보기를 실제 모드 참조로 바꾸는 것을 잊지 마십시오.
 
 [WARNING]
 ====
-Note that the file we just created is a C# file (.cs) and not a C++ file (.cpp).
+우리가 방금 생성한 파일은 C# 파일(.cs)이며 C++ 파일(.cpp)이 아님을 유의하십시오.
 ====
 
-This configuration will add the basic Unreal Engine framework,
-Satisfactory, and the Mod Loader as dependencies to your module,
-in addition to setting up some other useful stuff for you.
+이 구성은 기본 언리얼 엔진 프레임워크, 새티스팩토리 및 모드 로더를 모듈의 의존성으로 추가하며, 유용한 다른 설정도 수행합니다.
 
-It's important to note that this example lists more PublicDependencyModuleNames than are required bare minimum.
-They are included "just in case" - without them, if you were to include a FG header that happens to use one of those,
-you would get a confusing error because module dependencies are not transitive.
-Upon encountering that error you would need to add the module containing the mentioned header to this file,
-but the error message contains no indication of what that Module Name you need to add is.
+이 예제는 필요한 최소한의 PublicDependencyModuleNames보다 더 많은 항목을 나열합니다.
+이들은 "혹시나" 포함된 것이며, 그렇지 않으면 FG 헤더를 포함할 경우 혼란스러운 오류가 발생할 수 있습니다.
+이 오류에 직면하면 이 파일에 언급된 헤더를 포함하는 모듈을 추가해야 하지만, 오류 메시지에는 추가해야 할 모듈 이름에 대한 언급이 없습니다.
 
-You can come back to this configuration file later and change things here if needed.
+필요한 경우 나중에 이 구성 파일로 돌아와서 변경할 수 있습니다.
 
-It's now time to get started adding the module source code.
+이제 모듈 소스 코드를 추가할 준비가 되었습니다.
 
-Do this by creating a file called `YourModReferenceModule.h` and fill it with this template.
-Replace `YourModReference` with your actual mod reference.
-Remember to replace all instances of `YourModReference` with your actual mod reference.
+``모드참조Module.h``라는 파일을 생성하고 이 템플릿으로 채우십시오.
+``모드참조``를 실제 모드 참조로 바꾸는 것을 잊지 마십시오.
+모든 `모드참조` 보기를 실제 모드 참조로 바꾸는 것을 기억하십시오.
 
 [source,cpp]
 ----
@@ -111,72 +105,70 @@ public:
 };
 ----
 
-Next up we need another new file called `YourModReferenceModule.cpp`. Go ahead and fill it with the following template code.
-Again, replace `YourModReference` with your actual mod reference.
+다음으로 ``모드참조Module.cpp``라는 또 다른 새 파일이 필요합니다. 다음 템플릿 코드를 채워 넣으십시오.
+다시 한 번, ``모드참조``를 실제 모드 참조로 바꾸십시오.
 
 [source,cpp]
 ----
-#include "YourModReferenceModule.h"
+#include "모드참조Module.h"
 
-void FYourModReferenceModule::StartupModule() {
+void F모드참조Module::StartupModule() {
 	
 }
 
-IMPLEMENT_GAME_MODULE(FYourModReferenceModule, YourModReference);
+IMPLEMENT_GAME_MODULE(F모드참조Module, 모드참조);
 ----
 
-== Adding the Module to the UPlugin
+== UPlugin에 모듈 추가하기
 
-Next we need to tell the Unreal Editor to use our editor module.
-For this open up the `YourModReference.uplugin` file in your plugin root.
-Add the `Modules` array in the root json, then add your module with your `mod_reference` as name, `Runtime` as Type and `Default` as LoadingPhase.
-Like this:
+다음으로 언리얼 에디터에 우리의 에디터 모듈을 사용하도록 지시해야 합니다.
+이를 위해 플러그인 루트에 있는 `모드참조.uplugin` 파일을 엽니다.
+루트 JSON에 `Modules` 배열을 추가한 다음, Name을 ``모드참조``로, Type을 ``Runtime``으로, LoadingPhase를 ``Default``로 추가하십시오.
+예시:
 [source,json]
 ----
 "Modules": [
         {
-            "Name": "YourModReference",
+            "Name": "모드참조",
             "Type": "Runtime",
             "LoadingPhase": "Default"
         }
     ]
 ----
-(the name used was `YourModReference`, make sure you use your own mod reference instead)
+(사용된 이름은 ``모드참조``이며, 반드시 자신의 모드 참조를 사용해야 합니다)
 
-== Finishing Up
+== 마무리
 
-Now that you have added your module folder, configuration, source, and added it to the targets,
-you will need to regenerate your Visual Studio project files. Directions on how to do this can be found xref:Development/BeginnersGuide/project_setup.adoc#_visual_studio_파일_생성[here].
+이제 모듈 폴더, 구성, 소스를 추가하고 대상에 추가했으므로 Visual Studio 프로젝트 파일을 다시 생성해야 합니다. 이 과정에 대한 지침은 xref:Development/BeginnersGuide/project_setup.adoc#_visual_studio_파일_생성[여기]에서 확인할 수 있습니다.
 
-After this process completes, you should be able to start working on the {cpp} code for your mod.
-
-[WARNING]
-====
-Make always sure you code in a custom created module!
-Don't write your code in the FactoryGame or SML modules by accident.
-====
-
-== Adding a Class
-
-When you want to add a new class, there are two generally safe ways to go about it.
-Note that **you should not create new files from Visual Studio directly** -
-it is not knowledgeable about the project structure
-and will create files in a temporary directory where they won't be detected by UBT.
-
-1. Navigate to the folder in which you want to add your class in Windows Explorer
-and create the `.cpp`-File and the `.h`-File manually.
-You can now open them in Visual Studio or a text editor of your choice.
-Fill them with a template code or just directly the class you need.
-
-2. Open the Unreal editor and open the "tree view" of the content browser.
-Then navigate to the `C++-Classes` root folder and open the folder named with your mod reference.
-Within that folder, right-click into empty space and select `New {cpp}-Class`.
-Then select your desired base class, hit next, and name your class.
-Change the other settings as your desire and finish with `create class`.
+이 과정이 완료되면 모드의 {cpp} 코드를 작업할 수 있어야 합니다.
 
 [WARNING]
 ====
-Make sure you select your custom {cpp}-module when using the Unreal editor method of creating a new class file. In this screenshot, the mod reference is 'LightItUp'.
+항상 맞춤 생성된 모듈에서 코딩하는 것을 확인하십시오!
+FactoryGame 또는 SML 모듈에 실수로 코드를 작성하지 마십시오.
+====
 
-image:Cpp/EditorCreateClass.jpg[image]
+== 클래스 추가하기
+
+새 클래스를 추가하려면 일반적으로 두 가지 안전한 방법이 있습니다.
+참고로, **Visual Studio에서 직접 새 파일을 생성하지 마십시오**.
+프로젝트 구조에 대해 정보가 없으며
+임시 디렉토리에 파일을 생성하는 것이므로 UBT에서 감지되지 않습니다.
+
+1. Windows 탐색기에서 클래스를 추가할 폴더로 이동하여 `.cpp` 파일과 `.h` 파일을 수동으로 생성하십시오.
+이제 이를 Visual Studio 또는 선택한 텍스트 편집기에서 열 수 있습니다.
+템플릿 코드로 채우거나 필요한 클래스를 직접 작성할 수 있습니다.
+
+2. 언리얼 에디터를 열고 콘텐츠 브라우저의 "트리 뷰"를 엽니다.
+그런 다음 `C++ 클래스` 루트 폴더로 이동하고 모드 참조로 이름이 지정된 폴더를 엽니다.
+그 폴더 내에서 빈 공간을 마우스 오른쪽 버튼으로 클릭하고 ``새 {cpp} 클래스``를 선택합니다.
+그런 다음 원하는 기본 클래스를 선택하고 다음을 클릭한 후 클래스를 이름 짓습니다.
+다른 설정을 원하는 대로 변경하고 ``클래스 생성``으로 마무리합니다.
+
+[WARNING]
+====
+언리얼 에디터 방법으로 새 클래스 파일을 생성할 때 맞춤 {cpp} 모듈을 선택했는지 확인하십시오. 이 스크린샷에서 모드 참조는 'LightItUp'입니다.
+
+image:Cpp/EditorCreateClass.jpg[이미지]
 ====

@@ -76,7 +76,7 @@ link:{attachmentsdir}/BeginnersGuide/dependencies/SML.vsconfig[이 구성 파일
 검색 후 선택:
 
 - `MSVC v143 - VS 2022 C++ x64/x86 빌드 도구 (v14.34-17.4)(지원 중단)`
-- `.NET 6.0 Runtime (Out of support)`
+- `.NET 6.0 런타임(지원 부족)`
 - `.NET Framework 4.8.1 SDK`
 
 === Visual Studio가 설치되는 동안

@@ -1,22 +1,22 @@
-= Third Party Libraries
+= 제3자 라이브러리
 
-Adding third-party {cpp} libaries to your mod is possible but requires some additional setup.
-The third party library must be included as a Module in your mod plugin.
+제3자 {cpp} 라이브러리를 모드에 추가하는 것은 가능하지만, 추가 설정이 필요합니다.
+제3자 라이브러리는 모드 플러그인에 모듈로 포함되어야 합니다.
 
-== Module Definition
+== 모듈 정의
 
-You must first create a directory structure that follows this example:
-`Mods/<mod_reference>/Source/ThirdParty/<third_party>Library/`
-and place a file named after that library in the directory called `<third_party>Library.Build.cs`
+먼저 다음 예제를 따르는 디렉터리 구조를 생성해야 합니다:
+`Mods/<모드참조>/Source/ThirdParty/<third_party>Library/`
+그리고 해당 라이브러리 이름으로 ``<제3자>Library.Build.cs``라는 파일을 디렉터리에 배치합니다.
 
-The file must contain a class named after the module, and references to any include paths and library paths.
+파일에는 모듈 이름과, 포함 경로 및 라이브러리 경로에 대한 참조가 포함되어야 합니다.
 
-The recommended structure is
-`inc` (or `include`) containing the library header files,
-and `lib/<PlatformName>` containing the compiled library files,
-where `<PlatformName>` is one of the
-https://github.com/EpicGames/UnrealEngine/blob/release/Engine/Source/Programs/UnrealBuildTool/Configuration/UEBuildTarget.cs#L254-L292[Unreal Target Platform names].
-Currently, Satisfactory is released for `Win64` and `Linux`.
+추천 구조는
+`inc`(또는 `include`)에 라이브러리 헤더 파일을 포함하고,
+`lib/<플랫폼이름>`에 컴파일된 라이브러리 파일을 포함하는 것입니다,
+여기서 ``<플랫폼이름>``은
+https://github.com/EpicGames/UnrealEngine/blob/release/Engine/Source/Programs/UnrealBuildTool/Configuration/UEBuildTarget.cs#L254-L292[언리얼 대상 플랫폼 이름] 중 하나입니다.
+현재 새티스팩토리는 `Win64` 및 ``Linux``에 대해 출시되었습니다.
 
 [source,cs]
 ----
@@ -45,22 +45,22 @@ public class <third_party>Library : ModuleRules
 }
 ----
 
-== Shared (Dynamic) Libraries
+== 공유(동적) 라이브러리
 
-Shared libraries need some additional setup,
-since the runtime linker only looks for shared libraries under the relevant `Binaries/<PlatformName>` folders of Plugins, Mods, and the game.
+공유 라이브러리는 추가 설정이 필요합니다,
+런타임 링커는 플러그인, 모드 및 게임의 관련 `Binaries/<플랫폼이름>` 폴더에서만 공유 라이브러리를 찾기 때문입니다.
 
-To have the `.dll` or `.so` files copied from the source folder to `Binaries`,
-you can make use of the `RuntimeDependencies` list of the module.
-This marks files that should be included in the build output of the mod,
-and can additionally copy files to a different location than the original one, which is what you need for shared libraries.
+`.dll` 또는 `.so` 파일을 소스 폴더에서 ``Binaries``로 복사하려면,
+모듈의 `RuntimeDependencies` 목록을 활용할 수 있습니다.
+이것은 모드의 빌드 출력에 포함되어야 하는 파일을 표시하며,
+원본 위치와 다른 위치로 파일을 복사할 수 있습니다. 이는 공유 라이브러리에 필요합니다.
 
 [WARNING]
 ====
-Unreal Engine overrides the `new` and `delete` functions using its custom memory management system.
-Because of this, passing STL objects to/from externally compiled shared libraries is not possible,
-as they will be allocated with one `new` function on one side, and deallocated with an unmatched `delete` function on the other. 
-Doing so will result in a crash similar to `FMallocBinned2 Attempt to realloc an unrecognized block 0000023E58B80000 canary == 0x0 != 0xe3`
+언리얼 엔진은 `new` 및 `delete` 함수를 맞춤 메모리 관리 시스템을 사용하여 오버라이드합니다.
+이로 인해 STL 객체를 외부에서 컴파일된 공유 라이브러리로 전달하는 것이 불가능합니다,
+왜냐하면 한 쪽에서 `new` 함수로 할당되고, 다른 쪽에서 일치하지 않는 `delete` 함수로 해제되기 때문입니다.
+이렇게 하면 ``FMallocBinned2 Attempt to realloc an unrecognized block 0000023E58B80000 canary == 0x0 != 0xe3``와 유사한 충돌이 발생합니다.
 ====
 
 [source,cs]
@@ -93,21 +93,21 @@ public class <third_party>Library : ModuleRules
 }
 ----
 
-== Module Usage
+== 모듈 사용
 
-After you have defined the third party module, you need to reference it in your mod's base module's `<mod_reference>.Build.cs` file as a public dependency.
+제3자 모듈을 정의한 후, 모드의 기본 모듈의 `<모드참조>.Build.cs` 파일에서 이를 공개 의존성으로 참조해야 합니다.
 
 [source,cpp]
 ----
-PublicDependencyModuleNames.AddRange(new string[] {"<third_party>Library"});
+PublicDependencyModuleNames.AddRange(new string[] {"<제3자>Library"});
 ----
 
-== Import Errors
+== 가져오기 오류
 
-Unreal Engine has stricter standards about what warnings are treated as errors,
-but some libraries ignore those warnings as they are non-critical to their use case.
+언리얼 엔진은 경고가 오류로 처리되는 기준이 더 엄격하지만,
+일부 라이브러리는 이러한 경고를 무시합니다. 이는 사용 사례에 중요하지 않기 때문입니다.
 
-In those cases, you need to wrap any imports from that library in several layers of compatibility macros and headers.
+이 경우, 해당 라이브러리에서 가져온 모든 항목을 여러 레이어의 호환성 매크로 및 헤더로 감싸야 합니다.
 
 [source,cpp]
 ----
@@ -121,7 +121,7 @@ THIRD_PARTY_INCLUDES_START
 #pragma push_macro("check")
 #undef check
 
-<your_imports_here>
+<원하는_임포트_입력>
 
 #pragma pop_macro("check")
 
@@ -132,22 +132,22 @@ PRAGMA_POP_PLATFORM_DEFAULT_PACKING
 #include "Windows/HideWindowsPlatformTypes.h"
 ----
 
-If you are getting errors from compiling the library
-even after wrapping the imports,
-you will need to fix those errors and recompile the library.
+라이브러리를 컴파일할 때 오류가 발생하는 경우
+가져오기를 감싸더라도,
+해당 오류를 수정하고 라이브러리를 다시 컴파일해야 합니다.
 
-== Multiple Mods Using the Same Third Party Library
+== 동일한 제3자 라이브러리를 사용하는 여러 모드
 
-If you plan to develop multiple mods using the same external library
-you should consider creating a dependency mod to hold the library.
-Although there shouldn't be any issues at runtime if each mod contains the library as a module (untested),
-at development time, Unreal will complain about it when building if both mods are in the project at the same time
-and the third party module name is the same in both.
+동일한 외부 라이브러리를 사용하는 여러 모드를 개발할 계획이라면
+라이브러리를 보유할 의존성 모드를 만드는 것을 고려해야 합니다.
+각 모드가 모듈로 라이브러리를 포함하더라도 런타임에 문제는 없지만(검증되지 않음),
+개발 중에는 두 모드가 동시에 프로젝트에 있을 경우 언리얼이 빌드할 때 문제를 제기할 것입니다.
+그리고 두 모드에서 제3자 모듈 이름이 동일할 경우 문제가 발생합니다.
 
-== Existing Plugins
+== 기존 플러그인
 
-If the library you wish to use is already a complete uplugin,
-try bringing it into your project folder and packaging it via Alpakit.
-If that works, the library can then be released as a separate mod
-and requirements handled via the normal mod dependency system.
-Ensure you have permission from the library creator to redistribute it before publishing.
+사용하려는 라이브러리가 이미 완전한 uplugin인 경우,
+프로젝트 폴더로 가져와 알파킷을 통해 패키징해 보십시오.
+그것이 작동하면, 라이브러리는 별도의 모드로 출시될 수 있으며,
+요구 사항은 일반 모드 종속성 시스템을 통해 처리됩니다.
+배포하기 전에 라이브러리 제작자로부터 재배포 허가를 받는 것을 잊지 마십시오.

@@ -83,7 +83,7 @@
             **** xref:Development/Satisfactory/AbstractInstance.adoc[추상 인스턴스]
             **** xref:Development/Satisfactory/ConditionalPropertyReplication.adoc[조건부 속성 복제]
             **** xref:Development/Satisfactory/Savegame.adoc[저장 게임]
-            **** xref:Development/Satisfactory/DedicatedServerAPIDocs.adoc[바닐라 전용 서버 API]
+            **** xref:Development/Satisfactory/DedicatedServerAPIDocs.adoc[전용 서버 바닐라 API]
         *** xref:Development/Satisfactory/ModsWithoutSML.adoc[SML 없이 모딩]
         *** 기존
             **** xref:Development/Satisfactory/ConveyorRendering.adoc[컨베이어 렌더링(오래됨)]
