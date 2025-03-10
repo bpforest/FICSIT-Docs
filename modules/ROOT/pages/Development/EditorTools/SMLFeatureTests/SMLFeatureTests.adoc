@@ -1,14 +1,13 @@
-= SML Feature Tests
+= SML 기능 테스트
 
-**SML Feature Tests** is a mod that contains code for verifying that SML features are behaving as intended.
-Since it does not always follow good mod coding practices in the interest of being a more useful test,
-it is purposefully not distributed with the Starter Project to avoid confusing developers with bad examples
-and polluting the project with classes and assets that will never be present in an end user's game.
+**SML 기능 테스트**는 SML 기능이 의도한 대로 작동하는지 확인하기 위한 코드를 포함하는 모드입니다.
+좋은 모드 코딩 관행을 항상 따르지 않기 때문에 더 유용한 테스트를 위해
+혼란을 주지 않기 위해 시작 프로젝트와 함께 배포되지 않으며,
+최종 사용자의 게임에 존재하지 않을 클래스와 애셋으로 프로젝트를 더럽히지 않기 위해 의도적으로 그렇게 설계되었습니다.
 
-That being said,
-it can be a useful resource for understanding how various SML features are expected to behave
-and as an inspiration for how to test your own mods.
+그렇긴 하지만,
+다양한 SML 기능이 어떻게 작동하는지 이해하는 데 유용한 자원이 될 수 있으며
+자신의 모드를 테스트하는 방법에 대한 영감을 줄 수 있습니다.
 
-The mod is available https://github.com/satisfactorymodding/SMLFeatureTests[on GitHub]
-and can be brought into the project via
-xref:Development/BeginnersGuide/ImportingAnotherMod.adoc[standard mod importing procedures].
+이 모드는 https://github.com/satisfactorymodding/SMLFeatureTests[깃허브에서] 사용할 수 있으며,
+xref:Development/BeginnersGuide/ImportingAnotherMod.adoc[표준 모드 가져오기 절차]를 통해 프로젝트에 가져올 수 있습니다.

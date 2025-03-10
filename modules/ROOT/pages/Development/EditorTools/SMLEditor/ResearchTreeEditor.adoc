@@ -1,22 +1,22 @@
-= Research Tree Editor
+= 연구 트리 에디터
 
 [NOTE]
 ====
-This page is still a work in progress.
+이 페이지는 아직 작업 중입니다.
 
-If you have any feedback, please let us know in the Discord.
+피드백이 있으시면 디스코드에서 알려주십시오.
 ====
 
-Have you been holding off on implementing a MAM research tree in your mod because of how tedious it is?
-Wait no more!
+모드에서 M.A.M. 연구 트리를 구현하는 것을 지루하게 느끼고 계십니까?
+더 이상 그럴 필요 없습니다!
 
-The new Research Tree Editor allows you to create and edit research trees in a visual interface
-and provides basic error checking functionality.
+새로운 연구 트리 에디터를 사용하면 시각적 인터페이스에서 연구 트리를 생성하고 편집할 수 있으며
+기본 오류 검사 기능을 제공합니다.
 
-To launch the tool, navigate to the `SMLEditor Content/ResearchTree/` folder in the Content Browser,
-right click on the `ResearchTreeHelper` asset, then select `Run Editor Utility Widget`.
-Hover over elements in the tool to see tooltips explaining what they do.
+도구를 실행하려면 콘텐츠 브라우저에서 `SMLEditor Content/ResearchTree/` 폴더로 이동하여,
+`ResearchTreeHelper` 애셋을 우클릭 후 ``Run Editor Utility Widget``을 선택하십시오.
+도구의 요소 위에 마우스를 올리면 해당 요소의 기능을 설명하는 툴팁이 표시됩니다.
 
-The Example Mod has been updated with a complex research tree (created by the tool)
-to demonstrate and explain some important research tree concepts.
-Explore this tree, and the base game's trees, to learn more about how research trees work.
+예제 모드는 도구로 생성된 복잡한 연구 트리로 업데이트되어
+중요한 연구 트리 개념을 설명하고 시연합니다.
+이 트리와 기본 게임의 트리를 탐색하여 연구 트리가 어떻게 작동하는지 더 알아보십시오.

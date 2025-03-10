@@ -25,7 +25,7 @@
         *** xref:Development/BeginnersGuide/StarterProjectStructure.adoc[시작 프로젝트 구조]
         *** xref:Development/BeginnersGuide/SimpleMod/index.adoc[간단한 모드 제작]
             **** xref:Development/BeginnersGuide/SimpleMod/gameworldmodule.adoc[플러그인 설정 및 게임 월드 모듈]
-            **** xref:Development/BeginnersGuide/SimpleMod/recipe.adoc[제작법 vs 도면]
+            **** xref:Development/BeginnersGuide/SimpleMod/recipe.adoc[제작법과 도면]
             **** xref:Development/BeginnersGuide/SimpleMod/item.adoc[아이템 생성]
             **** xref:Development/BeginnersGuide/SimpleMod/buildable.adoc[건물]
             **** xref:Development/BeginnersGuide/SimpleMod/machines/SimpleMachine.adoc[아이템 카운트 기계]
