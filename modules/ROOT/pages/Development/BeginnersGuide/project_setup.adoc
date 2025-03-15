@@ -27,11 +27,14 @@ Wwise는 종종 헷갈릴 수 있는 오류나 경고 메시지를 제공하지�
 여기로 돌아가서 이 단계를 올바르게 따랐는지 확인하십시오.
 ====
 
+[id="Wwise_Integrate"]
+=== 프로젝트와 Wwise 통합
+
 이전에 설치한 Wwise 런처를 시작하고 메시지가 나타나면 런처를 업데이트합니다.
 런처에 로그인했는지 확인합니다.
 로그인하지 않은 경우 Wwise를 통합하려고 할 때 모호한 오류 메시지가 표시될 수 있습니다.
 
-다음으로 사이드바에서 `Unreal Engine` 탭을 엽니다.
+다음으로 왼쪽의 사이드바에서 `Unreal Engine` 탭을 엽니다.
 언리얼 엔진 Wwise 탭의 어느 업데이트 버튼도 _클릭하지 마십시오_.
 새티스팩토리의 경우 특정 버전의 Wwise를 통해 작동하며,
 업데이트로 인해 모드가 제대로 작동하지 않을 수 있습니다.
@@ -43,7 +46,7 @@ Wwise는 종종 헷갈릴 수 있는 오류나 경고 메시지를 제공하지�
 삼각형 버튼을 클릭하여 세부 정보를 확장하고
 "Unreal Engine project path"가 프로젝트 경로와 일치하는지 확인하십시오.
 
-`Integrate Wwise into Project...` 버튼을 클릭합니다.
+`Integrate Wwise in Project...` 버튼을 클릭합니다.
 
 "Integration Version" 드롭다운을 `Latest` 에서 `All` 로 변경하지 않으면 Wwise에서 원하는 버전이 표시되지 않을 것입니다.
 그런 다음 "Major" 및 "Version" 드롭다운을 사용하여 이전에 설치한 버전과 동일한 버전(아마도 `2022.1.10.8393`)을 선택합니다.
@@ -66,16 +69,15 @@ Wwise가 빨간색 경고 상자에서 설치를 찾을 수 없다고 경고하�
 올바르게 구성되었음을 의미하므로
 다음 단계를 진행하십시오.
 
-"Wwise Project Path" 아래에서 오른쪽의 작은 삼각형 드롭다운을 클릭하고
-`New project` 를 선택하여 경로를 지웁니다.
+"Wwise Project" 제목 아래에서 오른쪽의 작은 삼각형 드롭다운을 클릭하고
+``New project``를 선택하여 경로를 지웁니다.
 
 모든 것이 계획대로 작동했다면
-이제 파란색 통합 버튼을 클릭할 수 있습니다.
+이제 파란색 `통합` 버튼을 클릭할 수 있습니다.
 그렇게 하고 약관에 동의하여 과정을 시작할 수 있습니다.
 
 좋습니다! Wwise에 "Operation completed successfully"라고 표시되면,
 Wwise를 프로젝트에 통합한 것입니다.
-이제 Wwise 런처를 닫아도 됩니다.
 
 _참고: 아래 시범 영상은 위에 작성된 내용과 일치하지 않는 버전을 선택할 수 있습니다._
 _위 문장에 언급된 버전을 사용해 주십시오._
@@ -89,12 +91,36 @@ Wwise 통합 도중 checksum 오류가 발생했다면
 버전 번호가 비슷한 다른 Wwise 버전을 설치하면 문제가 해결될 것입니다.
 ====
 
+[id="Wwise_GenerateBanks"]
+=== 사운드 뱅크 생성
+
+다음으로, 언리얼 엔진 에디터의 사후 충돌을 피하기 위해 Wwise를 통해 일부 빈 데이터를 생성해야 합니다.
+
+Wwise와 프로젝트를 통합할 때 시작 프로젝트 디렉터리에 새 하위 폴더가 생성됩니다.
+폴더가 ``SatisfactoryModLoader``라고 하면,
+새 폴더는 ``SatisfactoryModLoader_WwiseProject``일 것입니다.
+
+하위 폴더에서 ``SatisfactoryModLoader_WwiseProject.wproj``와 비슷한 이름을 찾고 여십시오.
+Wwise 에디터 앱이 열릴 것입니다.
+
+Wwise 에디터의 "Project Explorer"(왼쪽 사이드바)에서
+`SoundBanks` 하위 탭을 선택하십시오.
+상위 폴더를 우클릭 후 ``Generate Soundbank(s) for all platforms``를 클릭하십시오.
+
+image:Satisfactory/Wwise/Wwise_Soundbank_Generate.png[Wwise 사운드뱅크 생성]
+
+"Completed with message(s)"를 포함한 팝업이 열릴 것입니다.
+우측 하단의 `Close` 버튼을 누르십시오.
+
+마지막으로, 프로젝트 설정에 더 이상 필요하지 않으므로
+Wwise 에디터와 Wwise 런처 앱을 닫습니다.
+
 == Visual Studio 파일 생성
 
 다음으로, 언리얼 엔진의 "Visual Studio 프로젝트 파일 생성" 도구를 통해
 프로젝트의 나머지 파일을 생성해야 합니다.
 
-Windows 탐색기에서 시작 프로젝트 폴더의 `.uproject` 파일을 우클릭 후 Generate Visual Studio project files를 선택합니다.
+Windows 파일 탐색기에서 시작 프로젝트 폴더의 `.uproject` 파일을 우클릭 후 Generate Visual Studio project files를 선택합니다.
 Windows 11에서는 "더 많은 옵션"을 통해 세부 메뉴를 펼쳐야 할 수 있습니다.
 이 옵션이 표시되고 오류 없이 실행되는 경우 link:#_프로젝트_컴파일[다음 섹션]으로 건너뛸 수 있습니다.
 이 옵션에 오류가 발생하면 link:#GenerateVSFiles_Troubleshooting[아래 문제 해결 섹션]을 확인하십시오.
@@ -169,18 +195,19 @@ Visual Studio는 솔루션 탐색기 창 상단에 "솔루션에 따라서는 �
 언급하지 않도록 할 수도 있습니다.
 ====
 
-Visual Studio가 로드되면
-솔루션 탐색기에 `UE5`, `AccessTransformers`, `FactoryGame` 등의 항목이 포함된
-폴더 트리가 표시됩니다.
+Visual Studio가 로드되면 솔루션 탐색기에
+`Engine`, `Games`, `Programs` 등의
+항목이 포함된 폴더 트리가 표시됩니다.
+`Games` 폴더를 펼쳐 `FactoryGame` 및 ``FactoryGamesEGS``와 같은 여러 프로젝트를 보일 수 있습니다.
 
-이러한 프로젝트 중 일부는 "실제" 프로젝트이고 일부는 구조 목적으로만 존재합니다.
-모드를 컴파일할 때는 `FactoryGame` 프로젝트만 컴파일하면 됩니다.
+이러한 프로젝트 중 일부는 "실제" 프로젝트이고, 일부는 구조 목적으로만 존재합니다.
+모드를 컴파일할 때는 `FactoryGame` 프로젝트만 컴파일하면 됩니다(`Games/` 폴더에서).
 따라서 Visual Studio에서 제공하는 **일반적인 '솔루션 빌드' 작업을 사용하지 않을 겁니다**.
 이렇게 하면 솔루션의 각 프로젝트 항목에 대해 빌드를 한 번씩 실행하여
 성공하지 못하는 타겟을 만들기 위해 시간을 낭비하고 오류 메시지가 있는 경우
 여러 번 반복하여 빌드를 실행할 수 있습니다!
 
-image:BeginnersGuide/DoNotBuildSolution.png[개발 에디터 빌드 타깃 선택]
+image:BeginnersGuide/DoNotBuildSolution.png["빌드" > "솔루션 빌드"를 사용하지 마십시오]
 
 프로젝트 컴파일을 준비하려면 먼저
 상단 바에서 `Development Editor` 솔루션 구성과
@@ -190,7 +217,7 @@ image:BeginnersGuide/DoNotBuildSolution.png[개발 에디터 빌드 타깃 선�
 
 "Development Editor"를 선택한다는 것은 모드를 만드는 데 사용할 언리얼 에디터 프로그램을 컴파일하는 것을 의미합니다.
 
-image:BeginnersGuide/BuildTargetSelection.png[빌드 타깃 선택]
+image:BeginnersGuide/BuildTargetSelection.png[Development Editor 빌드 대상 선택]
 
 실제 컴파일 과정을 시작하려면
 `Games/FactoryGame` 솔루션 탐색기 트리에서 FactoryGame 프로젝트 항목을 찾아
@@ -198,7 +225,7 @@ image:BeginnersGuide/BuildTargetSelection.png[빌드 타깃 선택]
 
 image:BeginnersGuide/BuildFromMenu.png[솔루션 트리 메뉴에서 FactoryGame 빌드]
 
-그곳에 있는 동안 "시작 프로젝트로 설정"을 클릭하면
+그곳에 있는 동안 ``시작 프로젝트로 설정``을 클릭하면
 나중에 필요한 경우 {cpp} 디버거를 더 쉽게 사용할 수 있습니다.
 시작 프로젝트를 변경하지 않는 한 이 작업은 한 번만 수행하면 됩니다.
 
@@ -207,16 +234,6 @@ image:BeginnersGuide/BuildFromMenu.png[솔루션 트리 메뉴에서 FactoryGame
 Visual Studio 하단의 진행 바 옆에 있는 상자를 사각형으로 채우고 있는 아이콘이 사라지면
 완료된다는 것을 알 수 있습니다.
 원하는 경우 출력 창 (보기 > 출력) 에서 진행 상황을 모니터링할 수 있습니다.
-
-// TODO 1.0 Release - which Shipping configuration should be built? Or delay it until later and let Alpakit handle it?
-
-// Shipping - FactoryGame will not work, maybe Shipping - FactoryGameSteam/EGS depending on what people have?
-
-// After it completes, you should select the `Shipping` Solution Configuration from the top toolbar
-// (the same place you selected `Development Editor` earlier)
-// and start another build.
-// Building both of these is required for the editor to function correctly
-// and for you to be able to distribute your mod.
 
 이제 바이너리를 구축했으니 언리얼 에디터가 문제 없이 열릴 것입니다.
 
@@ -248,10 +265,12 @@ Visual Studio에서 Shipping을 제작하려면 `Shipping` 구성을 사용하�
 빌드가 완료될 때까지 실제 오류 메시지가 나타나지 않을 때도 있고,
 오류 목록에 실제 오류 메시지가 포함되지 않을 때도 있습니다.
 또한 실제 오류 메시지를 보려면 오류 목록 대신
-출력 창의 '출력' 하위 탭을 확인해야 할 수도 있습니다 ('출력 보기 선택:' `빌드` 선택).
+출력 창의 '출력' 하위 탭을 확인해야 할 수도 있습니다('출력 보기 선택:' `빌드` 선택).
 
 문제 해결을 위해 다른 사람들과 오류 메시지를 공유하는 경우,
-전체 빌드 출력을 공유하는 것이 가장 좋습니다.
+**전체 빌드 출력**을 공유하는 것이 가장 좋습니다.
+이 상자의 내용을 복사 붙여넣기하여 공유하십시오.
+스크린샷 한 장으로는 유용한 정보를 담지 못합니다.
 
 .실제 빌드 출력을 보여주는 Visual Studio 탭
 image::BeginnersGuide/ShowFullBuildOutput.png[Visual Studio 스크린샷]

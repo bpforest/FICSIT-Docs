@@ -85,16 +85,15 @@ SuitCostToUse = Parent->EquipmentParent.GetmCostToUse();
 지정된 UFUNCTION에 ``BlueprintCallable``을 추가하여 블루프린트에서 해당 함수를 호출할 수 있게 합니다.
 ``UFUNCTION``이 아닌 함수에는 추가할 수 없습니다.
 
-// TODO SML3.10.0
+=== EditAnywhere
 
-// === EditAnywhere
+지정된 UPROPERTY에 ``EditAnywhere``를 추가하여
+블루프린트 애셋과 인스턴스의 디테일 패널에서 프로퍼티를 수정할 수 있게 합니다.
 
-// 지정된 UPROPERTY에 ``EditAnywhere``를 추가하여
-// 블루프린트 애셋과 인스턴스의 디테일 패널에서 프로퍼티를 수정할 수 있게 합니다.
+=== BlueprintType
 
-// === BlueprintType
-
-// 지정된 USTRUCT에 ``BlueprintType``을 추가하여 해당 구조체를 블루프린트 노드로 만들거나 분할할 수 있게 합니다.
+지정된 USTRUCT에 ``BlueprintType``을 추가하여
+해당 구조체를 블루프린트 노드로 만들거나 분할할 수 있게 합니다.
 
 == 로딩
 
@@ -154,24 +153,22 @@ Friend=(Class="AFGHologram", FriendClass="UAACopyBuildingsComponent")
 Accessor=(Class="AFGBuildableFactory", Property="mInventoryPotential")
 BlueprintReadWrite=(Class="/Script/FactoryGame.FGSchematicManager", Property="mPurchasedSchematics")
 BlueprintCallable=(Class="/Script/FactoryGame.FGDismantleInterface", Function="Dismantle")
+EditAnywhere=(Class="/Script/FactoryGame.IconData", Property="ID")
+BlueprintType=(Struct="/Script/FactoryGame.WorldScannableData")
 ----
 
-// TODO SML3.10.0
-// EditAnywhere=(Class="/Script/FactoryGame.IconData", Property="ID")
-// BlueprintType=(Struct="/Script/FactoryGame.WorldScannableData")
+=== 블루프린트 에셋 속성 추적 예시
 
-=== 블루프린트 에셋 프로퍼티 추적 예시
-
-예를 들어, 블루프린트 에셋 ``Holo_Foundation``의 `mMaxZoopAmount` 프로퍼티를 블루프린트에서 읽고 쓰게 만들고 싶다면,
+예를 들어, 블루프린트 에셋 ``Holo_Foundation``의 `mMaxZoopAmount` 속성을 블루프린트에서 읽고 쓰게 만들고 싶다면,
 해당 에셋의 부모 {cpp} 클래스를 확인해야 합니다
 (에셋을 열면 UE 에디터의 오른쪽 상단에 표시됨).
 이를 접근 변환기의 ``Class``로 사용하면 됩니다.
 부모 {cpp} 클래스가 또 다른 부모 클래스를 가질 수 있다는 점에 주의하십시오.
-찾고자 하는 프로퍼티를 찾기 위해 여러 클래스를 검색해야 할 수 있습니다.
+찾고자 하는 속성을 찾기 위해 여러 클래스를 검색해야 할 수 있습니다.
 
-이 예시에서는 프로퍼티가 `AFGFoundationHologram` 클래스에 속하므로,
+이 예시에서는 속성이 `AFGFoundationHologram` 클래스에 속하므로,
 아래의 접근 변환기를 사용해야 합니다.
-이렇게 하면 ``AFGFoundationHologram``의 자식인 _모든 에셋_ 의 `mMaxZoopAmount` 프로퍼티가 블루프린트에서 읽고 쓸 수 있게 됩니다.
+이렇게 하면 ``AFGFoundationHologram``의 자식인 _모든 에셋_ 의 `mMaxZoopAmount` 속성이 블루프린트에서 읽고 쓸 수 있게 됩니다.
 
 [source,ini]
 ----

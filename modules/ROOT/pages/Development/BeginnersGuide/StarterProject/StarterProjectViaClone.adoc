@@ -19,9 +19,9 @@ Git과 같은 버전 제어 소프트웨어(VCS)에 익숙하지 않다면,
 이는 문서의 *최신 안정적* 버전입니다.
 // 이는 문서의 *개발* 버전입니다.
 
-안정적 (릴리스) 및 실험은 현재 둘 다 1.0 릴리스로 동일한 버전입니다.
+// 안정적 (릴리스) 및 실험은 현재 둘 다 1.0 릴리스로 동일한 버전입니다.
 
-SML 3.9.0의 모드를 개발하기 위해 **`master` 분기**를 복제하십시오.
+SML 3.9.0의 안정적 버전에 대한 모드를 개발하기 위해 **`master` 분기**를 복제하십시오.
 // You should clone the **`dev` branch** because SML 3.8.? is not released yet.
 
 // You should clone either the **`dev` branch** or the **`master` branch**.

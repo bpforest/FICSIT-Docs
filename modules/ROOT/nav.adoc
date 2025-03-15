@@ -12,8 +12,8 @@
     ** xref:ManualInstallDirections.adoc[수동 설치]
 
 * xref:Development/index.adoc[개발]
-    ** xref:Development/UpdatingFromSml38.adoc[SML 3.8.0에서 업데이트]
-    // ** xref:Development/UpdatingFromSml39.adoc[SML 3.9.0에서 업데이트] // TODO SML3.10.0
+
+    ** xref:Development/UpdatingFromSml39.adoc[SML 3.9.0에서 업데이트]
     ** xref:Development/UpdatingToNewVersions.adoc[_모드 업데이트_]
     ** xref:Development/BeginnersGuide/index.adoc[시작하기]
         *** 의존성 설치
@@ -83,6 +83,7 @@
             **** xref:Development/Satisfactory/AbstractInstance.adoc[추상 인스턴스]
             **** xref:Development/Satisfactory/ConditionalPropertyReplication.adoc[조건부 속성 복제]
             **** xref:Development/Satisfactory/Savegame.adoc[저장 게임]
+            **** xref:Development/Satisfactory/IconLibrary.adoc[아이콘 라이브러리]
             **** xref:Development/Satisfactory/DedicatedServerAPIDocs.adoc[전용 서버 바닐라 API]
         *** xref:Development/Satisfactory/ModsWithoutSML.adoc[SML 없이 모딩]
         *** 기존
@@ -104,6 +105,7 @@
         *** xref:Development/ModLoader/ExtendedAttributeProvider.adoc[확장 속성 제공자]
         *** xref:SMLConfiguration.adoc[SML 구성]
         *** 기존
+            **** xref:Development/UpdatingFromSml38.adoc[SML 3.8.0에서 업데이트]
             **** xref:Development/UpdatingFromSml37.adoc[SML 3.7.0에서 업데이트]
             **** xref:Development/UpdatingFromSml36.adoc[SML 3.6.1에서 업데이트]
             **** xref:Development/UpdatingFromSml35.adoc[SML 3.5.1에서 업데이트]

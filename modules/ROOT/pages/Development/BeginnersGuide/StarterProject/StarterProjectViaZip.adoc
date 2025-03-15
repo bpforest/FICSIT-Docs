@@ -13,9 +13,9 @@
 이는 문서의 *최신 안정적* 버전입니다.
 // 이는 문서의 *개발* 버전입니다.
 
-안정적 (릴리스) 및 실험은 현재 둘 다 1.0 릴리스로 동일한 버전입니다.
+// 안정적 (릴리스) 및 실험은 현재 둘 다 1.0 릴리스로 동일한 버전입니다.
 
-SML 3.9.0의 모드를 개발하기 위해 https://github.com/satisfactorymodding/SatisfactoryModLoader/archive/refs/heads/master.zip[여기]를
+SML 3.9.0의 안정적 버전에 대한 모드를 개발하기 위해 https://github.com/satisfactorymodding/SatisfactoryModLoader/archive/refs/heads/master.zip[여기]를
 클릭하여 **`master` 분기**의 zip 파일을 다운로드하십시오.
 
 // Download a zip of the **`dev` branch** (because SML 3.8.? is not released yet)
